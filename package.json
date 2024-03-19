@@ -10,7 +10,10 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxtjs/tailwindcss": "^6.11.4",
+    "@vue/language-plugin-pug": "^2.0.6",
     "nuxt": "^3.11.0",
+    "pug": "^3.0.2",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   }
