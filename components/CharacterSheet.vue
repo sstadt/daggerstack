@@ -1,7 +1,7 @@
 <template lang="pug">
   .character-sheet
     SheetHeader
-    p character sheet
+    SheetStatistics
 </template>
 
 <script>
