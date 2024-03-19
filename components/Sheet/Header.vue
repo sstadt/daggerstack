@@ -6,8 +6,8 @@
     .sheet-header__info.flex-1.p-4.flex.flex-col.justify-center.items-end
       p.text-3xl Sledge (He/Him)
       p.text-slate-600.text-lg Soldierborne
-    .sheet-header__level.p-1.border.border-slate-600.border-solid.rounded-md.flex.flex-col.items-center
-      p.absolute.text-xs level
+    .sheet-header__level.p-1.border.border-slate-600.border-solid.rounded-md.flex.flex-col.items-center.w-16
+      p.absolute.text-xs.uppercase.font-bold level
       p.text-5xl.my-auto.py-4.px-2 1
 </template>
 
