@@ -26,9 +26,6 @@
 
 <style lang="scss" scoped>
   .input--checkbox {
-    font-size: 2rem;
-    font-weight: bold;
-    line-height: 1.1;
     display: grid;
     grid-template-columns: 1em auto;
     gap: 0.5em;
