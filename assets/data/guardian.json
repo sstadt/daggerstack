@@ -1,0 +1,256 @@
+{
+  "startingThreshold": {
+    "minor": 6,
+    "major": 11,
+    "severe": 16
+  },
+  "suggestedTraits": {
+    "agility": 1, "strength": 2, "finesse": -1,
+    "instinct": 0, "presence": 1, "knowledge": 0
+  },
+  "suggestedWeapon": {
+    "name": "Battleaxe",
+    "trait": "Strength Melee",
+    "damage": "d10 (mag)"
+  },
+  "startingGear": {
+    "choose": [
+      "a stone totem from your mentor",
+      "a secret key"
+    ]
+  },
+  "classFeatures": [
+    {
+      "name": "Unstoppable",
+      "description": "Once per Long Rest, you can become Unstoppable. Your Unstoppable die begins as a *d4*. Place it on the spot to the right, starting with the die's highest value facing up. While Unstoppable, you:\n- Gain resistance to physical damage.\n- Add an additional d6 to any damage rolls you make.\n- Can spend stress to reroll any single die you've rolled.\nAnytime you roll your damage dice, reduce the Unstoppable die value by one. When you would reduce the value below 1 or the scene ends, remove it and drop out of Unstoppable. At Level 3, upgrade your Unstoppable die to a *d6*. At Level 7, upgrade it to a *d8*."
+    }
+  ],
+  "backgroundQuestions": [
+    "Who from your community did you fail to protect, and why do you still think of them?",
+    "You've recently been tasked with protecting something important, with the goal of delivering it somewhere dangerous. What is it and where does it need to go?",
+    "You've always felt uncomfortable in your skin. What are you self-conscious of?"
+  ],
+  "connectionQuestions": [
+    "What lie have you told me about yourself that I absolutely believe?",
+    "What small gift did you give me that you notice I still carry with me?",
+    "How did I save your life the first time we met?"
+  ],
+  "tier1": {
+    "upgrades": [
+      {
+        "type": "single",
+        "increase": "trait",
+        "quantity": 2,
+        "amount": 1,
+        "max": 3
+      },
+      {
+        "type": "single",
+        "increase": "hitPoint",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "stress",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "experience",
+        "quantity": 2,
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "proficiency",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "choice",
+        "increase": ["armorSlot", "evasion"],
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 3,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "minorDamageThreshold",
+        "amount": 1,
+        "max": 1
+      }
+    ],
+    "always": [
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 2
+      }
+    ]
+  },
+  "tier2": {
+    "upgrades": [
+      {
+        "type": "single",
+        "increase": "trait",
+        "quantity": 2,
+        "amount": 1,
+        "max": 3
+      },
+      {
+        "type": "single",
+        "increase": "hitPoint",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "stress",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "experience",
+        "quantity": 2,
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "proficiency",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "choice",
+        "increase": ["armorSlot", "evasion"],
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 3,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "minorDamageThreshold",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "subclass",
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "multiclass",
+        "max": 2
+      }
+    ],
+    "always": [
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 2
+      },
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 4
+      }
+    ]
+  },
+  "tier3": {
+    "upgrades": [
+      {
+        "type": "single",
+        "increase": "trait",
+        "quantity": 2,
+        "amount": 1,
+        "max": 3
+      },
+      {
+        "type": "single",
+        "increase": "hitPoint",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "stress",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "experience",
+        "quantity": 2,
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "proficiency",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "choice",
+        "increase": ["armorSlot", "evasion"],
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 3,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "minorDamageThreshold",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "subclass",
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "multiclass",
+        "max": 2
+      }
+    ],
+    "always": [
+      {
+        "type": "single",
+        "increase": "minorDamageThreshold",
+        "amount": 1
+      },
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 2
+      },
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 5
+      }
+    ]
+  }
+}

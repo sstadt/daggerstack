@@ -1,5 +1,6 @@
 <template lang="pug">
   .character-sheet
+    SheetHeader
     p character sheet
 </template>
 

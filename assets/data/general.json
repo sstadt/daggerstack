@@ -1,0 +1,16 @@
+{
+  "startingGear": {
+    "gold": {
+      "handful": 1
+    },
+    "take": [
+      "torch",
+      "50ft of rope",
+      "basic supplies"
+    ],
+    "choose": [
+      "minor health potion",
+      "minor stamina potion"
+    ]
+  }
+}
