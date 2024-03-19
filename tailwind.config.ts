@@ -6,15 +6,19 @@ module.exports = {
     './plugins/**/*.{js,ts}',
     './nuxt.config.{js,ts}',
   ],
-  darkMode: true, // or 'media' or 'class'
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'sans': ['Arial', 'sans-serif'],
+      },
+    },
     container: {
       center: true,
       padding: {
         DEFAULT: '10px',
         md: '20px',
-      }
+      },
     },
   },
   variants: {
