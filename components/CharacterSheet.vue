@@ -8,8 +8,12 @@
         SheetExperience
         SheetGold
         SheetClassFeature
+        SheetBackground
+        SheetConnections
       .character-sheet__right(class="w-7/12")
         SheetWeapons
+        SheetArmor
+        SheetInventory
 </template>
 
 <script>

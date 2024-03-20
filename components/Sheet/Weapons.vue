@@ -1,5 +1,5 @@
 <template lang="pug">
-  BasicCard(title="Weapons")
+  BasicCard(title="Active Weapons")
     .flex.justify-center.mt-2.mb-4
       h3.uppercase.text-sm.font-bold.mr-4 Proficiency
       InputCheckbox
