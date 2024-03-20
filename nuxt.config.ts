@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
+    'nuxt-icons',
     '@nuxtjs/tailwindcss',
     [
       '@nuxtjs/google-fonts',

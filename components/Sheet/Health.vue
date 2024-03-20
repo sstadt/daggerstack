@@ -6,15 +6,21 @@
       .sheet-health__threshold.rounded.flex.items-center.justify-center.border.border-slate-400.shadow
         p.text-lg 1
       .px-2.py-1.bg-black
-        h3.text-lg.uppercase.font-bold.text-white minor
+        h3.uppercase.font-bold.text-white.flex.items-center
+          NuxtIcon.threshold-icon.mr-1(name="chevron-left")
+          span minor
       .sheet-health__threshold.rounded.flex.items-center.justify-center.border.border-slate-400.shadow
         p.text-lg 1
       .px-2.py-1.bg-black
-        h3.text-lg.uppercase.font-bold.text-white major
+        h3.uppercase.font-bold.text-white.flex.items-center
+          NuxtIcon.threshold-icon.mr-1(name="chevron-left")
+          span major
       .sheet-health__threshold.rounded.flex.items-center.justify-center.border.border-slate-400.shadow
         p.text-lg 1
       .px-2.py-1.bg-black
-        h3.text-lg.uppercase.font-bold.text-white severe
+        h3.uppercase.font-bold.text-white.flex.items-center
+          NuxtIcon.threshold-icon.mr-1(name="chevron-left")
+          span severe
     .hit-points.flex.items-center
       h3.text-lg.text-slate-500.font-bold.uppercase.w-20 HP
       InputCheckbox
@@ -52,5 +58,14 @@
   .sheet-health__threshold {
     height: 60px;
     width: 60px;
+  }
+
+  .threshold-icon {
+    transform: translateY(1px);
+
+    &:deep(svg) {
+      height: 12px;
+      width: 12px;
+    }
   }
 </style>
