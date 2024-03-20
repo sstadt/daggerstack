@@ -25,10 +25,15 @@
 </script>
 
 <style lang="scss" scoped>
+  $width: 20px;
+  $height: $width * 0.85;
+  $column: $width * 0.8;
+  $gap: 8px;
+
   .input--checkbox {
     display: grid;
-    grid-template-columns: 1em auto;
-    gap: 0.5em;
+    grid-template-columns: $column auto;
+    gap: $gap;
 
     &.disabled {
       pointer-events: none;
@@ -42,8 +47,8 @@
     background-color: #fff;
     margin: 0;
     color: currentColor;
-    width: 20px;
-    height: 17px;
+    width: $width;
+    height: $height;
     border: 2px solid currentColor;
     border-radius: 0.1em;
     display: grid;

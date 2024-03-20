@@ -3,12 +3,12 @@
     .sheet-defenses.flex.space-x-4(class="w-1/3")
       .sheet-defenses__evasion.text-center(class="w-1/3")
         .p-1.shadow.border.border-slate-400.border-solid.rounded-md.flex.flex-col.items-center
-          p.absolute.text-xs.uppercase evasion
+          p.text-xs.uppercase evasion
           p.text-5xl.my-auto.py-4.px-2 1
-        p.text-xs.text-slate-500 Starts at 6
+        p.text-xs.text-slate-500.mt-1 Starts at 6
       .sheet-defenses__armor(class="w-1/3")
         .p-1.shadow.border.border-slate-400.border-solid.rounded-md.flex.flex-col.items-center
-          p.absolute.text-xs.uppercase armor
+          p.text-xs.uppercase armor
           p.text-5xl.my-auto.py-4.px-2 1
       .sheet-defenses__durability.grid.grid-cols-3.grid-rows-3.gap-1
         InputCheckbox
@@ -75,6 +75,6 @@
   .sheet-defenses__durability {
     width: 70px;
     height: 70px;
-    margin-top: 11px;
+    margin-top: 20px;
   }
 </style>

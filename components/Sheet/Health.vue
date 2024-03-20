@@ -1,7 +1,5 @@
 <template lang="pug">
-  BasicCard.sheet-health
-    h2.text-center.text-2xl.font-black.uppercase Hit Points & Stress
-    p.text-center.mb-2.text-sm.text-slate-500 Start at MINOR 6, MAJOR 11, and SEVERE 16
+  BasicCard.sheet-health(title="Hit Points & Stress" subtitle="Start at MINOR 6, MAJOR 11, and SEVERE 16")
     .sheet-health__thresholds.flex.items-center.justify-center.mb-6.mt-4
       .sheet-health__threshold.rounded.flex.items-center.justify-center.border.border-slate-400.shadow
         p.text-lg 1

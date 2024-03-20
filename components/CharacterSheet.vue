@@ -6,8 +6,10 @@
       .character-sheet__left(class="w-5/12")
         SheetHealth
         SheetExperience
+        SheetGold
+        SheetClassFeature
       .character-sheet__right(class="w-7/12")
-        p right col
+        SheetWeapons
 </template>
 
 <script>
