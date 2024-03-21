@@ -1,30 +1,78 @@
 <template lang="pug">
   .character-sheet
     SheetHeader
-    SheetStatistics
-    .flex.space-x-6
-      .character-sheet__left(class="w-5/12")
-        SheetHealth
-        SheetExperience
-        SheetGold
-        SheetClassFeature
-        SheetBackground
-        SheetConnections
-      .character-sheet__right(class="w-7/12")
-        SheetWeapons
-        SheetArmor
-        SheetInventory
+      .flex.bg-black
+        NavButton(
+          v-for="(button, index) in navButtons"
+          :icon="button.icon"
+          class="w-1/4"
+          @click="slideTo(index)"
+        )
+    Swiper(
+      :slides-per-view="1"
+      :autoheight="true"
+      @swiper="onSwiper"
+      @slideChange="onSlideChange"
+    )
+      SwiperSlide
+        .container.space-y-4
+          SheetStatistics
+          SheetExperience
+          SheetClassFeature
+      SwiperSlide
+        .container.space-y-4
+          SheetWeapons
+          SheetArmor
+      SwiperSlide
+        .container.space-y-4
+          SheetGold
+          SheetInventory
+      SwiperSlide
+        .container.space-y-4
+          SheetHealth
+          SheetBackground
+          SheetConnections
 </template>
 
 <script>
+  // NOTE: cannot make this reactive without memory leak
+  let slider = null;
+
   export default {
     name: 'CharacterSheet',
+    data() {
+      return {
+        navButtons: [
+          { icon: 'attributes' },
+          { icon: 'equipment' },
+          { icon: 'inventory' },
+          { icon: 'background' },
+        ],
+      };
+    },
+    setup() {
+      const onSwiper = (swiper) => {
+        slider = swiper;
+      };
+      const onSlideChange = () => {
+        console.log('slide change');
+      };
+
+      return {
+        onSwiper,
+        onSlideChange,
+      };
+    },
+    methods: {
+      slideTo(slideIndex) {
+        slider.slideTo(slideIndex);
+      },
+    },
   };
 </script>
 
 <style lang="scss">
-  .character-sheet__left,
-  .character-sheet__right {
+  .character-sheet {
     & > *:not(:last-child) {
       margin-bottom: 20px;
     }

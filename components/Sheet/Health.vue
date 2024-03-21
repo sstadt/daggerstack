@@ -20,7 +20,7 @@
           NuxtIcon.threshold-icon.mr-1(name="chevron-left")
           span severe
     .hit-points.flex.items-center
-      h3.text-lg.text-slate-500.font-bold.uppercase.w-20 HP
+      h3.text-lg.font-bold.uppercase.w-20 HP
       InputCheckbox
       InputCheckbox
       InputCheckbox
@@ -34,7 +34,7 @@
       InputCheckbox(:disabled="true")
       InputCheckbox(:disabled="true")
     .stress.flex.items-center
-      h3.text-lg.text-slate-500.font-bold.uppercase.w-20 stress
+      h3.text-lg.font-bold.uppercase.w-20 stress
       InputCheckbox
       InputCheckbox
       InputCheckbox

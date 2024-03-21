@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     'nuxt-icons',
+    'nuxt-swiper',
     '@nuxtjs/tailwindcss',
     [
       '@nuxtjs/google-fonts',

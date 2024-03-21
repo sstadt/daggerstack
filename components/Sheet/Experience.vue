@@ -6,14 +6,14 @@
     .flex.space-x-2.justify-between.text-xl.py-4.border-b
       p Street Thug
       p +1
-    .hit-points.flex.items-center.pt-4
-      h3.text-lg.text-slate-500.font-bold.uppercase.w-20 hope
+    .hit-points.flex.items-center.pt-4.flex-wrap
+      h3.text-lg.font-bold.uppercase.w-20 hope
       InputCheckbox
       InputCheckbox
       InputCheckbox
       InputCheckbox
       InputCheckbox
-      p.text-xs.text-slate-500.ml-auto.pl-2 Spend hope to use experience or help an ally
+      p.text-xs.text-slate-500.ml-auto.w-full Spend hope to use experience or help an ally
 </template>
 
 <script>
