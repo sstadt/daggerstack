@@ -1,5 +1,5 @@
 <template lang="pug">
-  button.py-2
+  button.py-2.transition-colors(class="hover:bg-slate-800 active:bg-slate-800")
     NuxtIcon.nav-button__icon.text-white(:name="icon")
 </template>
 

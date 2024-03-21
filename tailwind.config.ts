@@ -20,6 +20,9 @@ module.exports = {
         md: '20px',
       },
     },
+    transitionDuration: {
+      DEFAULT: '300ms'
+    },
   },
   variants: {
     extend: {},

@@ -1,18 +1,22 @@
 <template lang="pug">
   .character-sheet
     SheetHeader
-      .flex.bg-black
+      .flex.bg-black.relative
         NavButton(
           v-for="(button, index) in navButtons"
           :icon="button.icon"
           class="w-1/4"
           @click="slideTo(index)"
         )
+        .absolute.bottom-0.h-2.bg-white.pointer-events-none.transition-all(
+          class="w-1/4"
+          :style="indicatorStyle"
+        )
     Swiper(
       :slides-per-view="1"
       :autoheight="true"
       @swiper="onSwiper"
-      @slideChange="onSlideChange"
+      @slide-change="onSlideChange"
     )
       SwiperSlide
         .container.space-y-4
@@ -42,6 +46,7 @@
     name: 'CharacterSheet',
     data() {
       return {
+        currentIndex: 0,
         navButtons: [
           { icon: 'attributes' },
           { icon: 'equipment' },
@@ -50,23 +55,25 @@
         ],
       };
     },
-    setup() {
-      const onSwiper = (swiper) => {
-        slider = swiper;
-      };
-      const onSlideChange = () => {
-        console.log('slide change');
-      };
+    computed: {
+      indicatorStyle() {
+        const left = this.currentIndex * 25;
 
-      return {
-        onSwiper,
-        onSlideChange,
-      };
+        return {
+          left: `${left}%`,
+        };
+      },
     },
     methods: {
       slideTo(slideIndex) {
         slider.slideTo(slideIndex);
       },
+      onSwiper(swiper) {
+        slider = swiper;
+      },
+      onSlideChange(swiper) {
+        this.currentIndex = swiper.activeIndex;
+      }
     },
   };
 </script>
