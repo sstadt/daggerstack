@@ -1,5 +1,6 @@
 <template lang="pug">
-  CharacterSheet
+  .index
+    CharacterSheet
 </template>
 
 <script>

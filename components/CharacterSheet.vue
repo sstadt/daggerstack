@@ -39,13 +39,11 @@
 </template>
 
 <script>
-  // NOTE: cannot make this reactive without memory leak
-  let slider = null;
-
   export default {
     name: 'CharacterSheet',
     data() {
       return {
+        swiper: null,
         currentIndex: 0,
         navButtons: [
           { icon: 'attributes' },
@@ -66,10 +64,10 @@
     },
     methods: {
       slideTo(slideIndex) {
-        slider.slideTo(slideIndex);
+        this.swiper.slideTo(slideIndex);
       },
       onSwiper(swiper) {
-        slider = swiper;
+        this.swiper = swiper;
       },
       onSlideChange(swiper) {
         this.currentIndex = swiper.activeIndex;

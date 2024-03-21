@@ -22,4 +22,27 @@
     width: 1px !important;
     white-space: nowrap !important; /* 3 */
   }
+
+  // transitions
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.3s ease;
+  }
+
+  .fade-enter,
+  .fade-leave-active {
+    opacity: 0;
+  }
+
+  .off-canvas-right-enter-active,
+  .off-canvas-right-leave-active {
+    transition: all 0.3s ease;
+  }
+
+  .off-canvas-right-enter,
+  .off-canvas-right-leave-active {
+    opacity: 0;
+    transform: translateX(100%);
+  }
 </style>
