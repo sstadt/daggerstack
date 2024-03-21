@@ -1,9 +1,9 @@
 <template lang="pug">
   .input--text.flex.flex-col-reverse(:class="wrapperClasses")
     label.uppercase.font-bold.text-slate-500(v-if="label && !hideLabel") {{ label }}
-    input.px-4.py-2.text-2xl.border-b.border-b-slate-500(
+    input.py-2.text-xl.border-b.border-b-slate-500(
       type="text"
-      class="focus:bg-slate-100"
+      class="focus:border-b-slate-800"
       :class="inputClasses"
     )
 </template>
@@ -37,6 +37,7 @@
       wrapperClasses() {
         return {
           'disabled': this.disabled,
+          'input--inline': this.inline,
         };
       },
       inputClasses() {
@@ -50,7 +51,17 @@
 </script>
 
 <style lang="scss" scoped>
-  input[type="text"]:focus {
-    outline: 0;
+  .input--inline + :deep(.input--text input[type="text"]) {
+    padding-left: 8px;
+  }
+
+  input[type="text"] {
+    &:focus {
+      outline: 0;
+    }
+
+    .input--inline & {
+      padding-right: 8px;
+    }
   }
 </style>

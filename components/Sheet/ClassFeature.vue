@@ -1,6 +1,6 @@
 <template lang="pug">
   BasicCard(title="Class Feature")
-    .p-8
+    .py-4
       h3.font-bold.mb-2 Do or do not
       p.mb-6 We're going in. We're going in full throttle. Right with you, boss. Luke, at that speed will you be able to pull out in time? It'll be just like Beggar's Canyon back home.
       h3.font-bold.mb-2 There is no try
