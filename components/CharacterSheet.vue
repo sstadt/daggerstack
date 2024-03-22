@@ -70,7 +70,7 @@
       },
       onSlideChange(swiper) {
         this.currentIndex = swiper.activeIndex;
-      }
+      },
     },
   };
 </script>

@@ -1,6 +1,8 @@
 <template lang="pug">
   .index
-    CharacterSheet
+    transition(name="fade" mode="out-in" appear)
+      CharacterSheet(v-if="false")
+      CharacterSelect.character-select(v-else)
 </template>
 
 <script>
@@ -8,3 +10,9 @@
     name: 'IndexPage',
   };
 </script>
+
+<style lang="scss" scoped>
+  .character-select {
+    min-height: 100vh;
+  }
+</style>

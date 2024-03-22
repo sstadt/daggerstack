@@ -1,9 +1,16 @@
 <template lang="pug">
-  div.pb-10
+  .app.pb-10
     NuxtPage
+    CharacterBuilder
 </template>
 
 <style lang="scss">
+  .app {
+    &, & > * {
+      min-height: 100vh;
+    }
+  }
+
   .nuxt-icon {
     display: inline-block;
   }
@@ -43,6 +50,17 @@
   .off-canvas-right-enter-from,
   .off-canvas-right-leave-active {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateX(50%);
+  }
+
+  .off-canvas-top-enter-active,
+  .off-canvas-top-leave-active {
+    transition: all 0.3s ease;
+  }
+
+  .off-canvas-top-enter-from,
+  .off-canvas-top-leave-active {
+    opacity: 0;
+    transform: translateY(-50%);
   }
 </style>
