@@ -6,9 +6,8 @@
         span Level 1 Soldierborne Guardian
         span He/Him
     slot
-    BasicDrawer(ref="health")
-      .foo
-        p foo
+    BasicDrawer(ref="health" title="Character")
+      SheetHealth
 </template>
 
 <script>
@@ -16,7 +15,6 @@
     name: 'SheetHeader',
     methods: {
       openHealth() {
-        console.log('open health', this.$refs.health);
         this.$refs.health.open();
       },
     },

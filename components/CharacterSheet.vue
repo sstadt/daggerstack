@@ -33,7 +33,6 @@
           SheetInventory
       SwiperSlide
         .container.space-y-4
-          SheetHealth
           SheetBackground
           SheetConnections
 </template>

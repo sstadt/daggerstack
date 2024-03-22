@@ -1,16 +1,17 @@
 <template lang="pug">
   .drawer.fixed.top-0.left-0.w-full.h-full.z-20(:class="drawerClasses")
-    transition(name="fade")
+    transition(name="fade" appear)
       .drawer__overlay.absolute.w-full.h-full.bg-black.opacity-30(v-if="isOpen")
-    transition(name="off-canvas-right")
+    transition(name="off-canvas-right" appear)
       .drawer__content.relative.bg-white.h-full.p-4.ml-auto.overflow-y-auto.shadow(
         v-if="isOpen"
         class="w-11/12"
       )
-        h2.text-center.text-2xl.font-black.uppercase.mb-6(v-if="title") {{ title }}
         button.p-3.absolute.top-3.right-3(@click="close")
           span.u-sr-only Close
           NuxtIcon(name="times")
+        .min-h-12.pb-4
+          h2.text-center.text-2xl.font-black.uppercase(v-if="title") {{ title }}
         slot
 </template>
 
@@ -19,7 +20,7 @@
     name: 'BasicDrawer',
     data() {
       return {
-        isOpen: true,
+        isOpen: false,
       };
     },
     props: {
@@ -37,7 +38,7 @@
     },
     methods: {
       open() {
-        this.isOpem = true;
+        this.isOpen = true;
       },
       close() {
         this.isOpen = false;

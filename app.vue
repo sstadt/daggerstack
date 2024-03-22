@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div.pb-10
     NuxtPage
 </template>
 
@@ -30,7 +30,7 @@
     transition: opacity 0.3s ease;
   }
 
-  .fade-enter,
+  .fade-enter-from,
   .fade-leave-active {
     opacity: 0;
   }
@@ -40,7 +40,7 @@
     transition: all 0.3s ease;
   }
 
-  .off-canvas-right-enter,
+  .off-canvas-right-enter-from,
   .off-canvas-right-leave-active {
     opacity: 0;
     transform: translateX(100%);
