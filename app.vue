@@ -30,6 +30,10 @@
     white-space: nowrap !important; /* 3 */
   }
 
+  .u-radius-50 {
+    border-radius: 50%;
+  }
+
   // transitions
 
   .fade-enter-active,

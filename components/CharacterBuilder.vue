@@ -1,10 +1,7 @@
 <template lang="pug">
   .character-builder
     BasicModal(title="New Character" :is-open="isOpen" :close="close")
-      BasicButton(@click="prev")
-        | Previous
-      BasicButton(@click="next")
-        | Next
+      BuilderProgress.mb-8(:page="currentIndex", @set="setStep")
       Swiper(
         :slides-per-view="1"
         :autoheight="true"
@@ -12,15 +9,15 @@
         @slide-change="onSlideChange"
       )
         SwiperSlide
-          | 1
+          BuilderStep1(@next="swiper.slideNext()")
         SwiperSlide
-          | 2
+          BuilderStep2(@next="swiper.slideNext()")
         SwiperSlide
-          | 3
+          BuilderStep3(@next="swiper.slideNext()")
         SwiperSlide
-          | 4
+          BuilderStep4(@next="swiper.slideNext()")
         SwiperSlide
-          | 5
+          BuilderStep5
 </template>
 
 <script>
@@ -53,11 +50,8 @@
       onSlideChange(swiper) {
         this.currentIndex = swiper.activeIndex;
       },
-      next() {
-        this.swiper.slideNext();
-      },
-      prev() {
-        this.swiper.slidePrev();
+      setStep(step) {
+        this.swiper.slideTo(step);
       },
       close() {
         this.builderStore.close();
