@@ -12,6 +12,7 @@
   export default {
     name: 'InputText',
     props: {
+      modelValue: {},
       label: {
         type: String,
         default: null,

@@ -1,5 +1,5 @@
 <template lang="pug">
-  .container
+  .container.p-8.space-y-8
     p Step 4
     BasicButton(@click="$emit('next')") Next
 </template>
