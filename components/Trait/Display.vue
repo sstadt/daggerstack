@@ -11,7 +11,7 @@
 
 <script>
   export default {
-    name: 'BasicAttribute',
+    name: 'AttributeDisplay',
     props: {
       title: {
         type: String,

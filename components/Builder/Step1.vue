@@ -1,9 +1,9 @@
 <template lang="pug">
-  .container.p-8.space-y-8
+  .container.px-8.pb-4.space-y-8
     InputSelect(:options="classOptions" label="class")
     InputText(label="subclass")
     InputText(label="heritage")
-    BasicButton(@click="$emit('next')") Next
+    BasicButton.block.ml-auto(@click="$emit('next')") Next
 </template>
 
 <script>

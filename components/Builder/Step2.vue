@@ -1,17 +1,58 @@
 <template lang="pug">
-  .container.p-8.space-y-8
+  .container.px-8.pb-4.space-y-8
     .space-2-y
-      h2.text-center.text-2xl.font-black.uppercase Traits
+      h2.text-center.text-2xl.font-black.uppercase Basic Traits
       p.text-center.mb-2.text-sm.text-slate-500
         | Distribute the following scores: +2, +1, +1, 0, 0, -1
     .grid.grid-cols-3.gap-4
-      TraitSelect(label="agility" :options="agilityOptions" v-model="agility")
-      TraitSelect(label="strength" :options="strengthOptions" v-model="strength")
-      TraitSelect(label="finesse" :options="finesseOptions" v-model="finesse")
-      TraitSelect(label="instinct" :options="instinctOptions" v-model="instinct")
-      TraitSelect(label="presence" :options="presenceOptions" v-model="presence")
-      TraitSelect(label="knowledge" :options="knowledgeOptions" v-model="knowledge")
-    BasicButton(@click="$emit('next')") Next
+      TraitSelect(
+        label="agility"
+        :options="agilityOptions"
+        v-model="agility"
+        helper-text="Sprint, Leap, Maneuver"
+      )
+      TraitSelect(
+        label="strength"
+        :options="strengthOptions"
+        helper-text="Lift, Smash, Grapple"
+        v-model="strength"
+      )
+      TraitSelect(
+        label="finesse"
+        :options="finesseOptions"
+        helper-text="Control, Hide, Tinker"
+        v-model="finesse"
+      )
+      TraitSelect(
+        label="instinct"
+        :options="instinctOptions"
+        helper-text="Perceive, Sense, Navigate"
+        v-model="instinct"
+      )
+      TraitSelect(
+        label="presence"
+        :options="presenceOptions"
+        helper-text="Charm, Perform, Deceive"
+        v-model="presence"
+      )
+      TraitSelect(
+        label="knowledge"
+        :options="knowledgeOptions"
+        helper-text="Recall, Analyze, Comprehend"
+        v-model="knowledge"
+      )
+    .space-2-y
+      h2.text-center.text-2xl.font-black.uppercase Additional Traits
+      .flex.space-x-2.justify-between.text-xl.py-4.border-b
+        p Evasion
+        p 6
+      .flex.space-x-2.justify-between.text-xl.py-4.border-b
+        p Damage Threshold
+        p 3 / 7 / 15
+      .flex.space-x-2.justify-between.text-xl.pt-4
+        p Hope
+        p 2
+    BasicButton.block.ml-auto(@click="$emit('next')") Next
 </template>
 
 <script>

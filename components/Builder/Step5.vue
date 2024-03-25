@@ -1,7 +1,7 @@
 <template lang="pug">
-  .container.p-8.space-y-8
+  .container.px-8.pb-4.space-y-8
     p Step 5
-    BasicButton Finish
+    BasicButton.block.ml-auto Finish
 </template>
 
 <script>
