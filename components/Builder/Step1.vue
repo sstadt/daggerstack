@@ -1,6 +1,6 @@
 <template lang="pug">
   .container.px-8.pb-4.space-y-8
-    InputSelect(:options="classOptions" label="class")
+    InputSelect(:options="classOptions" label="class" required)
     InputText(label="subclass")
     InputText(label="heritage")
     BasicButton.block.ml-auto(@click="$emit('next')") Next

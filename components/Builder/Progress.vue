@@ -6,7 +6,7 @@
         @click="$emit('set', n - 1)"
       )
         span.text-xl {{ n }}
-      .w-6.h-1.bg-black.shadow-md(v-if="n < steps")
+      .w-4.h-1.bg-black.shadow-md(v-if="n < steps")
 </template>
 
 <script>

@@ -12,3 +12,10 @@ export const excludeArrayItems = (excludeArray, arrayToFilter) => {
 
   return resultArray;
 };
+
+export const createSelectOptions = (arr) => {
+  return structuredClone(arr).map((item) => ({
+    label: item,
+    value: item,
+  }));
+};

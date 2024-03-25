@@ -1,7 +1,7 @@
 <template lang="pug">
   .container.px-8.pb-4.space-y-8
-    p Step 5
-    BasicButton.block.ml-auto(@click="$emit('next')") Next
+    p Step 6
+    BasicButton.block.ml-auto Finish
 </template>
 
 <script>

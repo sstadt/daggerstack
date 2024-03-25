@@ -5,7 +5,7 @@
         label.text-xs.uppercase.font-bold.text-white.truncate(v-if="label") {{ label }}
       select.text-3xl.my-auto.py-4.px-2.text-center(
         :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value, 10)"
+        @input="$emit('update:modelValue', $event.target.value)"
         class="w-5/6"
       )
         option

@@ -6,6 +6,8 @@
       type="text"
       class="focus:bg-slate-100"
       :class="inputClasses"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
       @keyup="resize"
     )
 </template>
@@ -16,6 +18,9 @@
   export default {
     name: 'InputTextarea',
     extends: Text,
+    mounted() {
+      this.resize();
+    },
     methods: {
       resize() {
         const $el = this.$refs.textarea;
