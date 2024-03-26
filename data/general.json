@@ -41,5 +41,12 @@
       "minor health potion",
       "minor stamina potion"
     ]
+  },
+  "description": {
+    "clothes": ["weathered", "casual", "padded", "tactical", "loose", "intricate", "royal"],
+    "eyes": ["fire", "lilacs", "endless ocean", "night", "ivy", "seafoam", "earth", "winter", "carnations"],
+    "body": ["lanky", "tall", "curvy", "rotund", "short", "thin", "toned", "stocky", "broad", "carved", "tiny"],
+    "skin": ["obsidian", "rose", "falling snow", "fine sand", "ashes", "clover", "sapphire", "wisteria"],
+    "attitude": ["a general", "a caretaker", "a wrestler", "an elephant", "a captain"]
   }
 }
