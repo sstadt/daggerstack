@@ -1,7 +1,7 @@
 <template lang="pug">
   .character-builder
     BasicModal(title="New Character" :is-open="isOpen" :close="close")
-      BuilderProgress.mb-8(:page="currentIndex" :steps="6" @set="setStep")
+      BuilderProgress.mb-8(:page="currentIndex" :steps="8" @set="setStep")
       Swiper(
         :slides-per-view="1"
         :autoheight="true"
@@ -19,7 +19,11 @@
         SwiperSlide
           BuilderStep5(@next="swiper.slideNext()")
         SwiperSlide
-          BuilderStep6
+          BuilderStep6(@next="swiper.slideNext()")
+        SwiperSlide
+          BuilderStep7(@next="swiper.slideNext()")
+        SwiperSlide
+          BuilderStep8
 </template>
 
 <script>

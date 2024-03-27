@@ -1,10 +1,10 @@
 <template lang="pug">
   .input--text.flex.flex-col-reverse(:class="wrapperClasses")
     label.uppercase.font-bold.text-slate-500(v-if="label && !hideLabel") {{ label }}
-    textarea.px-4.py-2.text-2xl.border-b.border-b-slate-500.resize-none.overflow-hidden(
+    textarea.px-4.py-2.text-xl.bg-slate-100.resize-none.overflow-hidden(
       ref="textarea"
       type="text"
-      class="focus:bg-slate-100"
+      class="focus:bg-slate-300"
       :class="inputClasses"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
