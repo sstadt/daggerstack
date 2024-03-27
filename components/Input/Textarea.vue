@@ -5,7 +5,6 @@
       ref="textarea"
       type="text"
       class="focus:bg-slate-300"
-      :class="inputClasses"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       @keyup="resize"

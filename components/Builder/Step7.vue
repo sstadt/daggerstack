@@ -1,7 +1,9 @@
 <template lang="pug">
   .container.p-8.space-y-8
     .space-y-4
-      h2.text-center.text-2xl.font-black.uppercase Experience
+      div
+        h2.text-center.text-2xl.font-black.uppercase Experience
+        p.text-center.mb-2.px-6.text-sm.text-slate-500 Describe two experiences, that make sense for your background, in a word or phrase
       .flex.items-center
         p.p-4.text-lg.font-bold +2
         InputText.flex-grow(v-model="experience1")
