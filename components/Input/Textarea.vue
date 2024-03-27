@@ -1,7 +1,7 @@
 <template lang="pug">
   .input--text.flex.flex-col-reverse(:class="wrapperClasses")
     label.uppercase.font-bold.text-slate-500(v-if="label && !hideLabel") {{ label }}
-    textarea.px-4.py-2.text-xl.bg-slate-100.resize-none.overflow-hidden(
+    textarea.px-4.py-2.text-xl.bg-slate-100.resize-none.overflow-hidden.outline-0(
       ref="textarea"
       type="text"
       class="focus:bg-slate-300"

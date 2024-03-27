@@ -34,6 +34,10 @@
     border-radius: 50%;
   }
 
+  .u-inline-button {
+    height: 44px;
+  }
+
   // transitions
 
   .fade-enter-active,

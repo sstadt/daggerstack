@@ -1,9 +1,9 @@
 <template lang="pug">
   .input--text.flex.flex-col-reverse(:class="wrapperClasses")
     label.uppercase.font-bold.text-slate-500(v-if="label && !hideLabel") {{ label }}
-    input.py-2.text-xl.border-b.border-b-slate-500(
+    input.px-4.py-2.text-xl.bg-slate-100.outline-0(
       type="text"
-      class="focus:border-b-slate-800"
+      class="focus:bg-slate-200"
       :class="inputClasses"
     )
 </template>
@@ -12,7 +12,6 @@
   export default {
     name: 'InputText',
     props: {
-      modelValue: {},
       label: {
         type: String,
         default: null,
@@ -54,19 +53,3 @@
     },
   };
 </script>
-
-<style lang="scss" scoped>
-  .input--inline + :deep(.input--text input[type="text"]) {
-    padding-left: 8px;
-  }
-
-  input[type="text"] {
-    &:focus {
-      outline: 0;
-    }
-
-    .input--inline & {
-      padding-right: 8px;
-    }
-  }
-</style>
