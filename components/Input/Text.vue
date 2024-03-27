@@ -4,7 +4,6 @@
     input.px-4.py-2.text-xl.bg-slate-100.outline-0(
       type="text"
       class="focus:bg-slate-200"
-      :class="inputClasses"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
     )
@@ -31,10 +30,6 @@
         type: Boolean,
         default: false,
       },
-      inline: {
-        type: Boolean,
-        default: false,
-      },
       required: {
         type: Boolean,
         default: false,
@@ -44,13 +39,6 @@
       wrapperClasses() {
         return {
           'disabled': this.disabled,
-          'input--inline': this.inline,
-        };
-      },
-      inputClasses() {
-        return {
-          'border-r': this.inline,
-          'border-r-slate-300': this.inline,
         };
       },
     },
