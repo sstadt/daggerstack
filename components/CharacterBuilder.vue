@@ -1,29 +1,30 @@
 <template lang="pug">
   .character-builder
     BasicModal(title="New Character" :is-open="isOpen" :close="close")
-      BuilderProgress.mb-8(:page="currentIndex" :steps="8" @set="setStep")
-      Swiper(
-        :slides-per-view="1"
-        :autoheight="true"
-        @swiper="onSwiper"
-        @slide-change="onSlideChange"
-      )
-        SwiperSlide
-          BuilderStep1(@next="swiper.slideNext()")
-        SwiperSlide
-          BuilderStep2(@next="swiper.slideNext()")
-        SwiperSlide
-          BuilderStep3(@next="swiper.slideNext()")
-        SwiperSlide
-          BuilderStep4(@next="swiper.slideNext()")
-        SwiperSlide
-          BuilderStep5(@next="swiper.slideNext()")
-        SwiperSlide
-          BuilderStep6(@next="swiper.slideNext()")
-        SwiperSlide
-          BuilderStep7(@next="swiper.slideNext()")
-        SwiperSlide
-          BuilderStep8
+      .flex.flex-col.flex-grow
+        BuilderProgress(:page="currentIndex" :steps="8" @set="setStep")
+        .flex.flex-grow
+          Swiper.builder__slider(
+            :slides-per-view="1"
+            @swiper="onSwiper"
+            @slide-change="onSlideChange"
+          )
+            SwiperSlide.min-h-full
+              BuilderStep1(@next="swiper.slideNext()")
+            SwiperSlide.min-h-full
+              BuilderStep2(@next="swiper.slideNext()")
+            SwiperSlide.min-h-full
+              BuilderStep3(@next="swiper.slideNext()")
+            SwiperSlide.min-h-full
+              BuilderStep4(@next="swiper.slideNext()")
+            SwiperSlide.min-h-full
+              BuilderStep5(@next="swiper.slideNext()")
+            SwiperSlide.min-h-full
+              BuilderStep6(@next="swiper.slideNext()")
+            SwiperSlide.min-h-full
+              BuilderStep7(@next="swiper.slideNext()")
+            SwiperSlide.min-h-full.flex-grow-1
+              BuilderStep8
 </template>
 
 <script>
@@ -65,3 +66,9 @@
     },
   };
 </script>
+
+<style lang="scss">
+  .builder__slider {
+    display: flex;
+  }
+</style>

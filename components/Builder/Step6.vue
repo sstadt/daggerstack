@@ -1,5 +1,5 @@
 <template lang="pug">
-  .container.px-8.pb-4
+  .container.p-8
     .space-y-8
       h2.text-center.text-2xl.font-black.uppercase Background
       .space-y-2(v-for="(question, index) in backgroundQuestions")
@@ -42,7 +42,6 @@
         });
       },
       saveQuestion(question) {
-        console.log('>>> saving', question);
         this.backgroundQuestions[this.editingQuestion].question = question;
       },
     },

@@ -1,7 +1,7 @@
 <template lang="pug">
   .modal.fixed.top-0.left-0.w-full.h-full.z-30(:class="modalClasses")
     transition(name="off-canvas-top" appear)
-      .modal__content.relative.bg-white.h-full.w-full.ml-auto.overflow-y-auto.shadow(
+      .flex.flex-col.h-full.relative.bg-white.h-full.w-full.ml-auto.overflow-y-auto.shadow(
         v-if="isOpen"
       )
         button.p-3.absolute.top-3.right-3(v-if="close" @click="close()")

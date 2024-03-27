@@ -5,6 +5,8 @@
       type="text"
       class="focus:bg-slate-200"
       :class="inputClasses"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
     )
 </template>
 
@@ -12,6 +14,7 @@
   export default {
     name: 'InputText',
     props: {
+      modelValue: {},
       label: {
         type: String,
         default: null,

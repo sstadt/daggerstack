@@ -1,5 +1,5 @@
 <template lang="pug">
-  .flex.justify-center.align-center.space-x-1
+  .flex.justify-center.align-center.space-x-1.pb-4
     .flex.items-center(v-for="n in steps")
       button.w-8.transition-colors.shadow-md(
         class="h-1.5"
