@@ -4,7 +4,7 @@
     .flex.flex-wrap
       label.px-1.border.mr-1.mb-1.transition-colors.rounded(
         v-for="option in options"
-        :class="{ 'border-black': selected.includes(option) }"
+        :class="{ 'bg-slate-600 text-white': selected.includes(option) }"
       )
         input.hidden(type="checkbox" :value="option" v-model="selected")
         span.text-sm {{ option }}

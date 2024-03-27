@@ -19,7 +19,7 @@
           @slide-change="onSlideChange"
         )
           SwiperSlide
-            .space-y-2
+            .space-y-4
               InputPicker(label="clothes" :options="descriptions.clothes" v-model="selectedClothes")
               InputPicker(label="eyes" :options="descriptions.eyes" v-model="selectedEyes")
               InputPicker(label="body" :options="descriptions.body" v-model="selectedBody")
