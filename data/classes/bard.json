@@ -21,10 +21,9 @@
     "damage": "d8 (phy)",
     "feature": "paired"
   },
-  "suggestedPrimaryArmor": {
+  "suggestedActiveArmor": {
     "name": "Breastplate Armor",
-    "score": 5,
-    "feature": ""
+    "score": 5
   },
   "startingGear": {
     "choose": [
@@ -45,7 +44,7 @@
   "backgroundQuestions": [
     "Who from your community taught you to have such confidence in yourself?",
     "You were in love once. Who was it with, and how did they hurt you?",
-    "You’ve always looked up to another Bard. Who are they and why do you idolize them?"
+    "You've always looked up to another Bard. Who are they and why do you idolize them?"
   ],
   "connectionQuestions": [
     "What made you realize we were going to be such good friends?",
@@ -162,7 +161,7 @@
         "max": 1
       },
       {
-        "type": "single",
+        "type": "choice",
         "increase": ["minorDamageThreshold", "majorDamageThreshold"],
         "amount": 1,
         "max": 1

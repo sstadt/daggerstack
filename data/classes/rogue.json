@@ -1,0 +1,274 @@
+{
+  "startingThreshold": {
+    "minor": 4,
+    "major": 9,
+    "severe": 14
+  },
+  "startingEvasion": 12,
+  "suggestedTraits": {
+    "agility": 1, "strength": -1, "finesse": 2,
+    "instinct": 0, "presence": 1, "knowledge": 0
+  },
+  "suggestedPrimaryWeapon": {
+    "name": "Dagger",
+    "trait": "Finesse Melee",
+    "damage": "d8 (phy)",
+    "feature": "quick"
+  },
+  "suggestedSecondaryWeapon": {
+    "name": "Dagger",
+    "trait": "Finesse Melee",
+    "damage": "d8 (phy)",
+    "feature": "paired"
+  },
+  "suggestedActiveArmor": {
+    "name": "Breastplate Armor",
+    "score": 5
+  },
+  "startingGear": {
+    "choose": [
+      "forgery tools",
+      "a grappling hook"
+    ]
+  },
+  "classFeatures": [
+    {
+      "name": "Hide",
+      "description": "When you move into a location where no enemies can see you, you are Hidden (you are unable to be directly targeted by attacks and any rolls against you at disadvantage). As a Rogue, when you are Hidden, targets also can't see you, even if they move into line of sight. You are no longer Hidden after you move or attack. When you leave Hidden to make an attack, the roll has advantage."
+    },
+    {
+      "name": "Sneak Attack",
+      "description": "If you have advantage on an attack roll, or an ally is in melee with your target, always add a d8 to your damage roll. When you use Sneak Attack, you may also spend any number of Hope before the attack roll, and if it is successful, also add a number of d8 equal to the Hope spent."
+    }
+  ],
+  "backgroundQuestions": [
+    "What did you get caught doing that had you exiled from your home community?",
+    "You used to have a different life from this one that you've tried to leave behind you. Who from that life is still chasing you?",
+    "Who from that other life you were most sad to say goodbye to?"
+  ],
+  "connectionQuestions": [
+    "What did I recently convince you to do that got us both in trouble?",
+    "What have I discover about your past that I hold secret from the others?",
+    "Who from that other life you were most sad to say goodbye to?"
+  ],
+  "tier1": {
+    "upgrades": [
+      {
+        "type": "single",
+        "increase": "trait",
+        "quantity": 2,
+        "amount": 1,
+        "max": 3
+      },
+      {
+        "type": "single",
+        "increase": "hitPoint",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "stress",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "experience",
+        "quantity": 2,
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "proficiency",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "choice",
+        "increase": ["armorSlot", "evasion"],
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 2,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "minorDamageThreshold",
+        "amount": 1,
+        "max": 1
+      }
+    ],
+    "always": [
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 2
+      }
+    ]
+  },
+  "tier2": {
+    "upgrades": [
+      {
+        "type": "single",
+        "increase": "trait",
+        "quantity": 2,
+        "amount": 1,
+        "max": 3
+      },
+      {
+        "type": "single",
+        "increase": "hitPoint",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "stress",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "experience",
+        "quantity": 2,
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "proficiency",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "choice",
+        "increase": ["armorSlot", "evasion"],
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "choice",
+        "increase": {
+          "majorDamageThreshold": 2,
+          "severeDamageThreshold": 4
+        },
+        "max": 1
+      },
+      {
+        "type": "choice",
+        "increase": ["minorDamageThreshold", "majorDamageThreshold"],
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "subclass",
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "multiclass",
+        "max": 2
+      }
+    ],
+    "always": [
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 1
+      },
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 3
+      }
+    ]
+  },
+  "tier3": {
+    "upgrades": [
+      {
+        "type": "single",
+        "increase": "trait",
+        "quantity": 2,
+        "amount": 1,
+        "max": 3
+      },
+      {
+        "type": "single",
+        "increase": "hitPoint",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "stress",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "experience",
+        "quantity": 2,
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "proficiency",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "choice",
+        "increase": ["armorSlot", "evasion"],
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 4,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "subclass",
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "multiclass",
+        "max": 2
+      }
+    ],
+    "always": [
+      {
+        "type": "single",
+        "increase": "minorDamageThreshold",
+        "amount": 1
+      },
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 2
+      },
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 4
+      }
+    ]
+  }
+}

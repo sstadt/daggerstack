@@ -1,0 +1,269 @@
+{
+  "startingThreshold": {
+    "minor": 5,
+    "major": 10,
+    "severe": 15
+  },
+  "startingEvasion": 7,
+  "suggestedTraits": {
+    "agility": 0, "strength": 2, "finesse": 0,
+    "instinct": 1, "presence": 1, "knowledge": -1
+  },
+  "suggestedPrimaryWeapon": {
+    "name": "Hallowed Axe",
+    "trait": "Strength Melee",
+    "damage": "d10 (mag)"
+  },
+  "suggestedSecondaryWeapon": {
+    "name": "Round Shield",
+    "trait": "Strength Melee",
+    "damage": "d4 (phy)",
+    "feature": "protective"
+  },
+  "suggestedActiveArmor": {
+    "name": "Breastplate Armor",
+    "score": 5
+  },
+  "startingGear": {
+    "choose": [
+      "a bundle of offerings",
+      "a sigil of your god"
+    ]
+  },
+  "classFeatures": [
+    {
+      "name": "Prayer Dice",
+      "description": "At the beginning of a session, roll a number of d4 dice equal to your Spellcast trait and store them to the right. You can exhaust them at any time to use their value in reducing incoming damage, adding to a roll result, or exchanging for that many Hope you may give to any player. Clear these dice at the end of a session."
+    }
+  ],
+  "backgroundQuestions": [
+    "Who is the God you have devoted yourself to, and what incredible feat did they perform for you in a moment of desperation that made you indebted to them?",
+    "How did your own appearance change after taking your oath?",
+    "In what strange or unique way do you communicate with your God?"
+  ],
+  "connectionQuestions": [
+    "What promise did you make me agree to, should you die on the battlefield?",
+    "Why do you ask me so many questions about my god?",
+    "Who have you told me is more important to save here than yourself?"
+  ],
+  "tier1": {
+    "upgrades": [
+      {
+        "type": "single",
+        "increase": "trait",
+        "quantity": 2,
+        "amount": 1,
+        "max": 3
+      },
+      {
+        "type": "single",
+        "increase": "hitPoint",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "stress",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "experience",
+        "quantity": 2,
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "proficiency",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "choice",
+        "increase": ["armorSlot", "evasion"],
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 2,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "minorDamageThreshold",
+        "amount": 1,
+        "max": 1
+      }
+    ],
+    "always": [
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 2
+      }
+    ]
+  },
+  "tier2": {
+    "upgrades": [
+      {
+        "type": "single",
+        "increase": "trait",
+        "quantity": 2,
+        "amount": 1,
+        "max": 3
+      },
+      {
+        "type": "single",
+        "increase": "hitPoint",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "stress",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "experience",
+        "quantity": 2,
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "proficiency",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "choice",
+        "increase": ["armorSlot", "evasion"],
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "choice",
+        "increase": {
+          "majorDamageThreshold": 2,
+          "severeDamageThreshold": 4
+        },
+        "max": 1
+      },
+      {
+        "type": "choice",
+        "increase": ["minorDamageThreshold", "majorDamageThreshold"],
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "subclass",
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "multiclass",
+        "max": 2
+      }
+    ],
+    "always": [
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 1
+      },
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 3
+      }
+    ]
+  },
+  "tier3": {
+    "upgrades": [
+      {
+        "type": "single",
+        "increase": "trait",
+        "quantity": 2,
+        "amount": 1,
+        "max": 3
+      },
+      {
+        "type": "single",
+        "increase": "hitPoint",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "stress",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "experience",
+        "quantity": 2,
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "proficiency",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "choice",
+        "increase": ["armorSlot", "evasion"],
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 4,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "subclass",
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "multiclass",
+        "max": 2
+      }
+    ],
+    "always": [
+      {
+        "type": "single",
+        "increase": "minorDamageThreshold",
+        "amount": 1
+      },
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 2
+      },
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 4
+      }
+    ]
+  }
+}

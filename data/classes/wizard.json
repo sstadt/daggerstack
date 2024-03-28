@@ -1,0 +1,265 @@
+{
+  "startingThreshold": {
+    "minor": 2,
+    "major": 7,
+    "severe": 12
+  },
+  "startingEvasion": 8,
+  "suggestedTraits": {
+    "agility": -1, "strength": 0, "finesse": 0,
+    "instinct": 1, "presence": 1, "knowledge": 2
+  },
+  "suggestedPrimaryWeapon": {
+    "name": "Greatstaff",
+    "trait": "Knowledge Very Far",
+    "damage": "d6+2 (phy)",
+    "feature": "powerful"
+  },
+  "suggestedActiveArmor": {
+    "name": "Breastplate Armor",
+    "score": 5
+  },
+  "startingGear": {
+    "choose": [
+      "a book you're trying to translate",
+      "a tiny & harmless elemental pet"
+    ],
+    "spellbook": [
+      "large tomes",
+      "tarot card"
+    ]
+  },
+  "classFeatures": [
+    {
+      "name": "Prestidigitation",
+      "description": "You can perform harmless, subtle magical effects at will. Examples might include changing an object's color, creating a smell, lighting a candle, floating something small, illuminating a room, repairing a small object, etc."
+    },
+    {
+      "name": "Strange Patterns",
+      "description": "Choose a number between 1-12. Anytime you roll that number on a Duality Die, gain a Hope or clear a stress. You may change this number on any long rest."
+    }
+  ],
+  "backgroundQuestions": [
+    "What did your community used to count on you for? How did you let them down?",
+    "You've spent your life searching for an object or book of great significance. What is it and why is it so important to you?",
+    "You have a powerful rival. Who are they, and why are you so determined to be their end?"
+  ],
+  "connectionQuestions": [
+    "What favor have I asked of you that you're not sure you can fulfill?",
+    "What weird hobby or strange fascination do we both share?",
+    "What secret about yourself have you trusted only me with?"
+  ],
+  "tier1": {
+    "upgrades": [
+      {
+        "type": "single",
+        "increase": "trait",
+        "quantity": 2,
+        "amount": 1,
+        "max": 3
+      },
+      {
+        "type": "single",
+        "increase": "hitPoint",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "stress",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "experience",
+        "quantity": 2,
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "proficiency",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "choice",
+        "increase": ["armorSlot", "evasion"],
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 2,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "minorDamageThreshold",
+        "amount": 1,
+        "max": 1
+      }
+    ],
+    "always": [
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 2
+      }
+    ]
+  },
+  "tier2": {
+    "upgrades": [
+      {
+        "type": "single",
+        "increase": "trait",
+        "quantity": 2,
+        "amount": 1,
+        "max": 3
+      },
+      {
+        "type": "single",
+        "increase": "hitPoint",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "stress",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "experience",
+        "quantity": 2,
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "proficiency",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "choice",
+        "increase": ["armorSlot", "evasion"],
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "choice",
+        "increase": ["majorDamageThreshold", "severeDamageThreshold"],
+        "amount": 2,
+        "max": 1
+      },
+      {
+        "type": "choice",
+        "increase": ["minorDamageThreshold", "majorDamageThreshold"],
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "subclass",
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "multiclass",
+        "max": 2
+      }
+    ],
+    "always": [
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 1
+      },
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 3
+      }
+    ]
+  },
+  "tier3": {
+    "upgrades": [
+      {
+        "type": "single",
+        "increase": "trait",
+        "quantity": 2,
+        "amount": 1,
+        "max": 3
+      },
+      {
+        "type": "single",
+        "increase": "hitPoint",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "stress",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "experience",
+        "quantity": 2,
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "proficiency",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "choice",
+        "increase": ["armorSlot", "evasion"],
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 4,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 2,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "subclass",
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "multiclass",
+        "max": 2
+      }
+    ],
+    "always": [
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 1
+      },
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 3
+      }
+    ]
+  }
+}

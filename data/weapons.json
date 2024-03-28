@@ -1,0 +1,26 @@
+{
+  "features": [
+    {
+      "name": "paired",
+      "increase": "primaryWeaponDamage",
+      "amount": 2
+    },
+    {
+      "name": "protective",
+      "increase": "armor",
+      "amount": 2
+    },
+    {
+      "name": "quick",
+      "description": "Mark stress to attack an additional target in range"
+    },
+    {
+      "name": "reliable",
+      "description": "+1 to attack rolls with this weapon"
+    },
+    {
+      "name": "powerful",
+      "description": "Roll one extra damage die and drop the lowest"
+    }
+  ]
+}

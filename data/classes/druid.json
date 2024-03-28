@@ -1,0 +1,278 @@
+{
+  "startingThreshold": {
+    "minor": 3,
+    "major": 8,
+    "severe": 13
+  },
+  "startingEvasion": 9,
+  "suggestedTraits": {
+    "agility": 1, "strength": 0, "finesse": 1,
+    "instinct": 2, "presence": -1, "knowledge": 0
+  },
+  "suggestedPrimaryWeapon": {
+    "name": "Shortstaff",
+    "trait": "Instinct Close",
+    "damage": "d10 (mag)"
+  },
+  "suggestedSecondaryWeapon": {
+    "name": "Round Shield",
+    "trait": "Strength Melee",
+    "damage": "d4 (phy)",
+    "feature": "protective"
+  },
+  "suggestedActiveArmor": {
+    "name": "Leather Armor",
+    "score": 3,
+    "feature": "light"
+  },
+  "startingGear": {
+    "choose": [
+      "a small bag of rocks & bones",
+      "a strange pendant found in the dirt"
+    ],
+    "spellbook": [
+      "songbook",
+      "journal"
+    ]
+  },
+  "classFeatures": [
+    {
+      "name": "Wildtouch",
+      "description": "You can perform harmless, subtle effects that involve nature at will. (Ex: causing a flower to rapidly grow, summon a slight gust of wind, start a campfire, etc)"
+    },
+    {
+      "name": "Beastform",
+      "description": "Mark a Stress to transform into a magical creature (in the Beastform list) equal to your level or lower. You lose the use of your features, equipment, and domain cards but gain the features, attack trait, and armor score of the creature. You can drop out of this form at any time."
+    }
+  ],
+  "backgroundQuestions": [
+    "Why was the community you grew up in so reliant on nature and its creatures?",
+    "What was the first bond you made with a wild animal? Why did it end?",
+    "Who has been trying to hunt you down? What do you think they want from you?"
+  ],
+  "connectionQuestions": [
+    "What did you confess to me that makes me leap out into danger for you every time?",
+    "What animal do I tell you that you remind me of?",
+    "What affectionate nickname have you given me?"
+  ],
+  "tier1": {
+    "upgrades": [
+      {
+        "type": "single",
+        "increase": "trait",
+        "quantity": 2,
+        "amount": 1,
+        "max": 3
+      },
+      {
+        "type": "single",
+        "increase": "hitPoint",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "stress",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "experience",
+        "quantity": 2,
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "proficiency",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "choice",
+        "increase": ["armorSlot", "evasion"],
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 2,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "minorDamageThreshold",
+        "amount": 1,
+        "max": 1
+      }
+    ],
+    "always": [
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 2
+      }
+    ]
+  },
+  "tier2": {
+    "upgrades": [
+      {
+        "type": "single",
+        "increase": "trait",
+        "quantity": 2,
+        "amount": 1,
+        "max": 3
+      },
+      {
+        "type": "single",
+        "increase": "hitPoint",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "stress",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "experience",
+        "quantity": 2,
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "proficiency",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "choice",
+        "increase": ["armorSlot", "evasion"],
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "choice",
+        "increase": {
+          "majorDamageThreshold": 2,
+          "severeDamageThreshold": 4
+        },
+        "max": 1
+      },
+      {
+        "type": "choice",
+        "increase": ["minorDamageThreshold", "majorDamageThreshold"],
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "subclass",
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "multiclass",
+        "max": 2
+      }
+    ],
+    "always": [
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 1
+      },
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 3
+      }
+    ]
+  },
+  "tier3": {
+    "upgrades": [
+      {
+        "type": "single",
+        "increase": "trait",
+        "quantity": 2,
+        "amount": 1,
+        "max": 3
+      },
+      {
+        "type": "single",
+        "increase": "hitPoint",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "stress",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "experience",
+        "quantity": 2,
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "proficiency",
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "choice",
+        "increase": ["armorSlot", "evasion"],
+        "amount": 1,
+        "max": 2
+      },
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 4,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 1,
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "subclass",
+        "max": 1
+      },
+      {
+        "type": "single",
+        "increase": "multiclass",
+        "max": 2
+      }
+    ],
+    "always": [
+      {
+        "type": "single",
+        "increase": "minorDamageThreshold",
+        "amount": 1
+      },
+      {
+        "type": "single",
+        "increase": "majorDamageThreshold",
+        "amount": 2
+      },
+      {
+        "type": "single",
+        "increase": "severeDamageThreshold",
+        "amount": 4
+      }
+    ]
+  }
+}
