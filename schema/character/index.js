@@ -12,7 +12,7 @@ const { group } = schema;
 export default characterSchema = schema({
   name: String,
   pronouns: String,
-  class: String,
+  baseClass: String,
   subclass: String,
   heritage: String,
   level: Number,
@@ -43,18 +43,18 @@ export default characterSchema = schema({
   evasion: Number,
   armor: group({
     current: Number,
-    score: Number,
     slots: {
       type: Number,
       max: 9,
     },
   }),
-  minorThreshold: Number,
-  majorThreshold: Number,
-  severeThreshold: Number,
+  threshold: group({
+    minor: Number,
+    major: Number,
+    severe: Number,
+  }),
   health: group({
     current: Number,
-    score: Number,
     slots: {
       type: Number,
       max: 12,
@@ -62,10 +62,9 @@ export default characterSchema = schema({
   }),
   stress: group({
     current: Number,
-    score: Number,
     slots: {
       type: Number,
-      max: 12,
+      max: 9,
     },
   }),
   hope: {
@@ -76,8 +75,10 @@ export default characterSchema = schema({
     type: Number,
     max: 6,
   },
-  weapon: weaponSchema,
-  armor: armorSchema,
+  equipment: {
+    weapon: weaponSchema,
+    armor: armorSchema,
+  },
   inventory: inventorySchema,
   experience: [ experienceSchema ],
   background: [ backgroundSchema ],

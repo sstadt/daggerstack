@@ -1,9 +1,11 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
+import { newCharacter } from '~/helpers/character';
 
 export const useBuilderStore = defineStore('builder', {
   state: () => {
     return {
       isOpen: false,
+      character: {},
     };
   },
   actions: {
@@ -12,6 +14,9 @@ export const useBuilderStore = defineStore('builder', {
     },
     close() {
       this.isOpen = false;
+    },
+    createCharacter(options) {
+      this.character = newCharacter(options);
     },
   },
 });

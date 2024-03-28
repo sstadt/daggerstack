@@ -1,40 +1,56 @@
 {
   "startingThreshold": {
-    "minor": 6,
-    "major": 11,
-    "severe": 16
+    "minor": 3,
+    "major": 8,
+    "severe": 13
   },
-  "startingEvasion": 6,
+  "startingEvasion": 9,
   "suggestedTraits": {
-    "agility": 1, "strength": 2, "finesse": -1,
-    "instinct": 0, "presence": 1, "knowledge": 0
+    "agility": 0, "strength": -1, "finesse": 1,
+    "instinct": 0, "presence": 2, "knowledge": 1
   },
   "suggestedPrimaryWeapon": {
     "name": "Battleaxe",
     "trait": "Strength Melee",
-    "damage": "d10 (mag)"
+    "damage": "d10 (mag)",
+    "feature": "small"
+  },
+  "suggestedSecondaryWeapon": {
+    "name": "Dagger",
+    "trait": "Finesse Melee",
+    "damage": "d8 (phy)",
+    "feature": "paired"
+  },
+  "suggestedPrimaryArmor": {
+    "name": "Breastplate Armor",
+    "score": 5,
+    "feature": ""
   },
   "startingGear": {
     "choose": [
-      "a stone totem from your mentor",
-      "a secret key"
+      "a romance novel",
+      "a letter never opened"
+    ],
+    "spellbook": [
+      "songbook",
+      "journal"
     ]
   },
   "classFeatures": [
     {
       "name": "Unstoppable",
-      "description": "Once per Long Rest, you can become Unstoppable. Your Unstoppable die begins as a *d4*. Place it on the spot to the right, starting with the die's highest value facing up. While Unstoppable, you:\n- Gain resistance to physical damage.\n- Add an additional d6 to any damage rolls you make.\n- Can spend stress to reroll any single die you've rolled.\nAnytime you roll your damage dice, reduce the Unstoppable die value by one. When you would reduce the value below 1 or the scene ends, remove it and drop out of Unstoppable. At Level 3, upgrade your Unstoppable die to a *d6*. At Level 7, upgrade it to a *d8*."
+      "description": "At the beginning of a session, place a *d6* on the spot to the right with the lowest value side (1) facing up. When anyone in your party rolls with Fear, increase the Rally die's value by one.\nWhen you would increase the value above 6, remove the die, describe how you rally the party, and give every character who listens a *1d6* Rally die. They can spend this die to roll it and add the result to any action roll, reaction roll, or damage roll.\nIf your Rally die hasn't finished this countdown by the end of a session, distribute the current value shown on the die as Hope amongst your party, splitting it any way you choose, and remove the die.\nThe Rally die you distribute increases to 1d8 at Level 5."
     }
   ],
   "backgroundQuestions": [
-    "Who from your community did you fail to protect, and why do you still think of them?",
-    "You've recently been tasked with protecting something important, with the goal of delivering it somewhere dangerous. What is it and where does it need to go?",
-    "You've always felt uncomfortable in your skin. What are you self-conscious of?"
+    "Who from your community taught you to have such confidence in yourself?",
+    "You were in love once. Who was it with, and how did they hurt you?",
+    "You’ve always looked up to another Bard. Who are they and why do you idolize them?"
   ],
   "connectionQuestions": [
-    "What lie have you told me about yourself that I absolutely believe?",
-    "What small gift did you give me that you notice I still carry with me?",
-    "How did I save your life the first time we met?"
+    "What made you realize we were going to be such good friends?",
+    "What do I do that annoys you?",
+    "Why do you grab my hand at night?"
   ],
   "tier1": {
     "upgrades": [
@@ -79,7 +95,7 @@
       {
         "type": "single",
         "increase": "majorDamageThreshold",
-        "amount": 3,
+        "amount": 2,
         "max": 1
       },
       {
@@ -138,14 +154,16 @@
         "max": 2
       },
       {
-        "type": "single",
-        "increase": "majorDamageThreshold",
-        "amount": 3,
+        "type": "choice",
+        "increase": {
+          "majorDamageThreshold": 2,
+          "severeDamageThreshold": 4
+        },
         "max": 1
       },
       {
         "type": "single",
-        "increase": "minorDamageThreshold",
+        "increase": ["minorDamageThreshold", "majorDamageThreshold"],
         "amount": 1,
         "max": 1
       },
@@ -164,12 +182,12 @@
       {
         "type": "single",
         "increase": "majorDamageThreshold",
-        "amount": 2
+        "amount": 1
       },
       {
         "type": "single",
         "increase": "severeDamageThreshold",
-        "amount": 4
+        "amount": 3
       }
     ]
   },
@@ -215,13 +233,13 @@
       },
       {
         "type": "single",
-        "increase": "majorDamageThreshold",
-        "amount": 3,
+        "increase": "severeDamageThreshold",
+        "amount": 4,
         "max": 1
       },
       {
         "type": "single",
-        "increase": "minorDamageThreshold",
+        "increase": "majorDamageThreshold",
         "amount": 1,
         "max": 1
       },
@@ -245,12 +263,12 @@
       {
         "type": "single",
         "increase": "majorDamageThreshold",
-        "amount": 2
+        "amount": 1
       },
       {
         "type": "single",
         "increase": "severeDamageThreshold",
-        "amount": 5
+        "amount": 4
       }
     ]
   }
