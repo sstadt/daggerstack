@@ -3,6 +3,8 @@
     label.uppercase.font-bold.text-slate-500(v-if="label && !hideLabel") {{ label }}
     select.w-full.px-4.py-2.text-xl.bg-slate-100.outline-0(
       class="focus:bg-slate-200"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
     )
       option(v-if="!required")
       option(v-for="option in options" :value="option.value") {{ option.label }}

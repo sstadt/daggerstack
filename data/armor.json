@@ -2,13 +2,22 @@
   "features": [
     {
       "name": "light",
-      "increase": "evasion",
-      "amount": 1
+      "modify": {
+        "evasion": 1
+      }
     },
     {
       "name": "heavy",
-      "increase": "evasion",
-      "amount": -1
+      "modify": {
+        "evasion": -1
+      }
+    },
+    {
+      "name": "veryHeavy",
+      "modify": {
+        "evasion": -2,
+        "agility": -1
+      }
     }
   ]
 }

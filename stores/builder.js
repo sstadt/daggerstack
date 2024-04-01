@@ -18,5 +18,12 @@ export const useBuilderStore = defineStore('builder', {
     createCharacter(options) {
       this.character = newCharacter(options);
     },
+    updateCharacter(updates) {
+      for (let key in updates) {
+        if (this.character.hasOwnProperty(key) && updates.hasOwnProperty(key)) {
+          this.character[key] = updates[key];
+        }
+      }
+    },
   },
 });

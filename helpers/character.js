@@ -1,10 +1,18 @@
 // TODO: import class data and fill in starting values
 
-export const newCharacter = (options) => {
+export const newCharacter = (overrides) => {
+  const defaults = {
+    name: '',
+    baseClass: '',
+    subclass: '',
+  };
+
+  const options = Object.assign({}, defaults, overrides)
+
   return {
-    name: options.name || '',
-    baseClass: options.baseClass || '',
-    subclass: options.subclass || '',
+    name: options.name,
+    baseClass: options.baseClass,
+    subclass: options.subclass,
     heritage: '',
     agility: {
       score: null,

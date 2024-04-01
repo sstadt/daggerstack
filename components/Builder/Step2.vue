@@ -2,8 +2,7 @@
   .container.p-8.space-y-8
     .space-2-y
       h2.text-center.text-2xl.font-black.uppercase Basic Traits
-      p.text-center.mb-2.text-sm.text-slate-500
-        | Distribute the following scores: +2, +1, +1, 0, 0, -1
+      p.text-center.mb-2.text-sm.text-slate-500 {{ suggestedTraits }}
     .grid.grid-cols-3.gap-4
       TraitSelect(
         label="agility"
@@ -45,18 +44,24 @@
       h2.text-center.text-2xl.font-black.uppercase Additional Traits
       .flex.space-x-2.justify-between.text-xl.py-4.border-b
         p Evasion
-        p 6
+        p {{ evasion }}
       .flex.space-x-2.justify-between.text-xl.py-4.border-b
         p Damage Threshold
-        p 3 / 7 / 15
+        p {{ threshold.minor }} / {{ threshold.major }} / {{ threshold.severe }}
       .flex.space-x-2.justify-between.text-xl.pt-4
         p Hope
         p 2
-    BasicButton.block.ml-auto(@click="$emit('next')") Next
+    BasicButton.block.ml-auto(@click="next") Next
 </template>
 
 <script>
+  import classes from '~/data/classes';
+  import { mapState } from 'pinia';
+
   import { excludeArrayItems } from '~/helpers/array';
+  import { traitLabel } from '~/helpers/string';
+
+  import { useBuilderStore } from '~/stores/builder';
 
   export default {
     name: 'BuilderStep2',
@@ -71,7 +76,18 @@
         knowledge: null,
       };
     },
+    setup() {
+      const builderStore = useBuilderStore();
+
+      return { builderStore };
+    },
     computed: {
+      ...mapState(useBuilderStore, ['character']),
+      classData() {
+        const className = this.character.baseClass;
+
+        return classes[className] || null;
+      },
       agilityOptions() {
         const selectedOptions = excludeArrayItems(
           this.getSelectedOptions('agility'),
@@ -120,6 +136,33 @@
 
         return this.generateTraitOptions(selectedOptions);
       },
+      suggestedTraits() {
+        if (!this.classData) return 'Distribute the following scores: +2, +1, +1, 0, 0, -1';
+
+        const suggested = [];
+
+        for (let [key, value] of Object.entries(this.classData?.suggestedTraits)) {
+          suggested.push(`${traitLabel(value)} ${key}`);
+        };
+
+        return this.classData
+          ? `Suggested traits (${this.character.baseClass}): ${suggested.join(', ')}`
+          : 'Distribute the following scores: +2, +1, +1, 0, 0, -1';
+      },
+      evasion() {
+        return this.classData
+          ? this.classData.startingEvasion
+          : 0;
+      },
+      threshold() {
+        return this.classData
+          ? {
+              minor: this.classData.startingThreshold.minor,
+              major: this.classData.startingThreshold.major,
+              severe: this.classData.startingThreshold.severe,
+            }
+          : { minor: 0, major: 0, severe: 0 };
+      },
     },
     methods: {
       getSelectedOptions(exclude) {
@@ -145,6 +188,20 @@
             value: option,
           };
         });
+      },
+      next() {
+        this.builderStore.updateCharacter({
+          agility: { score: this.agility, upgraded: false },
+          strength: { score: this.strength, upgraded: false },
+          finesse: { score: this.finesse, upgraded: false },
+          instinct: { score: this.instinct, upgraded: false },
+          presence: { score: this.presence, upgraded: false },
+          knowledge: { score: this.knowledge, upgraded: false },
+          evasion: this.evasion,
+          threshold: { ...this.threshold },
+        });
+
+        this.$emit('next');
       },
     },
   };
