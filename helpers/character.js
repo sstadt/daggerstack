@@ -1,13 +1,13 @@
 // TODO: import class data and fill in starting values
 
-export const newCharacter = (overrides) => {
+export const newCharacter = (character) => {
   const defaults = {
     name: '',
     baseClass: '',
     subclass: '',
   };
 
-  const options = Object.assign({}, defaults, overrides)
+  const options = Object.assign({}, defaults, character);
 
   return {
     name: options.name,
@@ -99,5 +99,39 @@ export const newCharacter = (overrides) => {
     connection: [
       // todo: add connection questions
     ],
+  };
+};
+
+export const newWeapon = (weapon) => {
+  const defaults = {
+    name: '',
+    trait: '',
+    damage: '',
+    feature: '',
+  };
+
+  const options = Object.assign({}, defaults, weapon);
+
+  return {
+    name: options.name,
+    trait: options.trait,
+    damage: options.damage,
+    feature: options.feature,
+  };
+};
+
+export const newArmor = (armor) => {
+  const defaults = {
+    name: '',
+    score: '',
+    feature: '',
+  };
+
+  const options = Object.assign({}, defaults, armor);
+
+  return {
+    name: options.name,
+    score: options.score,
+    feature: options.feature,
   };
 };

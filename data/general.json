@@ -1,33 +1,4 @@
 {
-  "classes": {
-    "bard": {
-      "domains": []
-    },
-    "druid": {
-      "domains": []
-    },
-    "guardian": {
-      "domains": []
-    },
-    "ranger": {
-      "domains": []
-    },
-    "rogue": {
-      "domains": []
-    },
-    "seraph": {
-      "domains": []
-    },
-    "sorcerer": {
-      "domains": []
-    },
-    "warrior": {
-      "domains": []
-    },
-    "wizard": {
-      "domains": []
-    }
-  },
   "startingGear": {
     "gold": {
       "handful": 1

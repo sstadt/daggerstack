@@ -5,6 +5,7 @@
       type="text"
       class="focus:bg-slate-200"
       :value="modelValue"
+      :placeholder="placeholder"
       @input="$emit('update:modelValue', $event.target.value)"
     )
 </template>
@@ -25,6 +26,10 @@
       name: {
         type: String,
         default: null,
+      },
+      placeholder: {
+        type: String,
+        default: '',
       },
       disabled: {
         type: Boolean,

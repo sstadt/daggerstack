@@ -8,6 +8,11 @@ export const useBuilderStore = defineStore('builder', {
       character: {},
     };
   },
+  getters: {
+    baseClass(state) {
+      return state.character.baseClass;
+    },
+  },
   actions: {
     open() {
       this.isOpen = true;
@@ -24,6 +29,17 @@ export const useBuilderStore = defineStore('builder', {
           this.character[key] = updates[key];
         }
       }
+    },
+    updateInventory(updates) {
+      for (let key in updates) {
+        if (this.character.inventory.hasOwnProperty(key) && updates.hasOwnProperty(key)) {
+          this.character.inventory[key] = updates[key];
+        }
+      }
+    },
+    updateEquipment({ weapon, armor }) {
+      if (weapon) this.character.equipment.weapon = weapon;
+      if (armor) this.character.equipment.armor = armor;
     },
   },
 });
