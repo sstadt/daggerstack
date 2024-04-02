@@ -14,6 +14,8 @@
 <script>
   import classes from '~/data/classes';
 
+  import { useBuilderStore } from '~/stores/builder';
+
   const CLASS = 'guardian';
 
   export default {
@@ -24,6 +26,16 @@
         editingQuestion: null,
         connectionQuestions: [],
       };
+    },
+    setup() {
+      const builderStore = useBuilderStore();
+
+      return { builderStore };
+    },
+    computed: {
+      baseClass() {
+        return this.builderStore.baseClass;
+      },
     },
     mounted() {
       this.classes[CLASS]?.connectionQuestions.forEach((question) => {
@@ -43,6 +55,26 @@
       },
       saveQuestion(question) {
         this.connectionQuestions[this.editingQuestion].question = question;
+      },
+      next() {
+        this.builderStore.updateCharacter({
+          connection: [...this.connectionQuestions],
+        });
+
+        this.$emit('next');
+      },
+    },
+    watch: {
+      baseClass(newClass) {
+        if (newClass && this.connectionQuestions.length === 0) {
+          this.classes[newClass].connectionQuestions
+            .forEach((question) => {
+              this.connectionQuestions.push({
+                question,
+                answer: '',
+              });
+            });
+        }
       },
     },
   };

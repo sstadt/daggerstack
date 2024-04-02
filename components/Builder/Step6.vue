@@ -7,14 +7,14 @@
           | {{ question.question }}
           NuxtIcon.ml-1.align-middle(name="edit")
         InputTextarea(v-model="question.answer")
-      BasicButton.block.ml-auto(@click="$emit('next')") Next
+      BasicButton.block.ml-auto(@click="next") Next
     BasicPrompt(ref="prompt" @confirm="saveQuestion")
 </template>
 
 <script>
   import classes from '~/data/classes';
 
-  const CLASS = 'guardian';
+  import { useBuilderStore } from '~/stores/builder';
 
   export default {
     name: 'BuilderStep6',
@@ -25,13 +25,15 @@
         backgroundQuestions: [],
       };
     },
-    mounted() {
-      this.classes[CLASS]?.backgroundQuestions.forEach((question) => {
-        this.backgroundQuestions.push({
-          question,
-          answer: '',
-        });
-      });
+    setup() {
+      const builderStore = useBuilderStore();
+
+      return { builderStore };
+    },
+    computed: {
+      baseClass() {
+        return this.builderStore.baseClass;
+      },
     },
     methods: {
       editQuestion(index) {
@@ -43,6 +45,26 @@
       },
       saveQuestion(question) {
         this.backgroundQuestions[this.editingQuestion].question = question;
+      },
+      next() {
+        this.builderStore.updateCharacter({
+          background: [...this.backgroundQuestions],
+        });
+
+        this.$emit('next');
+      },
+    },
+    watch: {
+      baseClass(newClass) {
+        if (newClass && this.backgroundQuestions.length === 0) {
+          this.classes[newClass].backgroundQuestions
+            .forEach((question) => {
+              this.backgroundQuestions.push({
+                question,
+                answer: '',
+              });
+            });
+        }
       },
     },
   };

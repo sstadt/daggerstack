@@ -94,12 +94,8 @@ export const newCharacter = (character) => {
       },
     },
     experience: [],
-    background: [
-      // todo: add background questions
-    ],
-    connection: [
-      // todo: add connection questions
-    ],
+    background: [],
+    connection: [],
   };
 };
 
