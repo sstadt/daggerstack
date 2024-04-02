@@ -1,6 +1,6 @@
 import schema from 'schm';
 
-export default experienceSchema = schema({
+export default schema({
   name: String,
   score: Number,
 });

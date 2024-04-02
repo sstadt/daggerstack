@@ -1,7 +1,7 @@
 import schema from 'schm';
 
 import armorSchema from '~/schema/character/armor';
-import weaponSchema from '~/schema/character/weapom';
+import weaponSchema from '~/schema/character/weapon';
 import inventorySchema from '~/schema/character/inventory';
 import experienceSchema from '~/schema/character/experience';
 import backgroundSchema from '~/schema/character/background';
@@ -9,7 +9,7 @@ import connectionSchema from '~/schema/character/connection';
 
 const { group } = schema;
 
-export default characterSchema = schema({
+export default schema({
   name: String,
   pronouns: String,
   baseClass: String,

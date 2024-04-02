@@ -1,6 +1,6 @@
 import schema from 'schm';
 
-export default backgroundSchema = schema({
+export default schema({
   question: String,
   answer: String,
 });

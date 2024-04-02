@@ -6,7 +6,7 @@
         v-for="option in options"
         :class="{ 'bg-slate-600 text-white': selected.includes(option) }"
       )
-        input.hidden(type="checkbox" :value="option" v-model="selected")
+        input.hidden(type="checkbox" :value="option" v-model="selected" @change="update")
         span.text-sm {{ option }}
 </template>
 
@@ -14,6 +14,7 @@
   export default {
     name: 'InputPicker',
     props: {
+      modelValue: {},
       options: {
         type: Array,
         required: true,
@@ -25,8 +26,13 @@
     },
     data() {
       return {
-        selected: [],
+        selected: this.modelValue,
       };
+    },
+    methods: {
+      update() {
+        this.$emit('update:modelValue', this.selected);
+      },
     },
   };
 </script>

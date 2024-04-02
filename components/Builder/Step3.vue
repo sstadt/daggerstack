@@ -71,7 +71,7 @@
         if (!items.includes(this.selectedGeneralItem)) items = `${items}, ${this.selectedGeneralItem}`;
         if (!items.includes(spellbook)) items = `${items}, ${this.selectedClassItem}`;
 
-        this.builderStore.updateInventory({ items });
+        this.builderStore.updateCharacter({ inventory: { items } });
 
         this.$emit('next');
       },

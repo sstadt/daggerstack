@@ -1,6 +1,6 @@
 import schema from 'schm';
 
-export default armorSchema = schema({
+export default schema({
   name: String,
   score: String,
   feature: String,

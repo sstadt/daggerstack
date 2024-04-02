@@ -1,6 +1,6 @@
 <template lang="pug">
   .container.p-8.space-y-8
-    h2.text-center.text-2xl.font-black.uppercase.mb-2 StartingEquipment
+    h2.text-center.text-2xl.font-black.uppercase.mb-2 Starting Equipment
     InventoryWeapon(v-model="weapon" title="weapon")
     InventoryArmor(v-model="armor" title="armor")
     BasicButton.block.ml-auto(@click="next") Next
@@ -26,9 +26,11 @@
     },
     methods: {
       next() {
-        this.builderStore.updateEquipment({
-          weapon: this.weapon,
-          armor: this.armor,
+        this.builderStore.updateCharacter({
+          equipment: {
+            weapon: this.weapon,
+            armor: this.armor,
+          },
         });
 
         this.$emit('next');

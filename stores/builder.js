@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { newCharacter } from '~/helpers/character';
+import { deepMerge } from '~/helpers/object';
 
 export const useBuilderStore = defineStore('builder', {
   state: () => {
@@ -24,22 +25,7 @@ export const useBuilderStore = defineStore('builder', {
       this.character = newCharacter(options);
     },
     updateCharacter(updates) {
-      for (let key in updates) {
-        if (this.character.hasOwnProperty(key) && updates.hasOwnProperty(key)) {
-          this.character[key] = updates[key];
-        }
-      }
-    },
-    updateInventory(updates) {
-      for (let key in updates) {
-        if (this.character.inventory.hasOwnProperty(key) && updates.hasOwnProperty(key)) {
-          this.character.inventory[key] = updates[key];
-        }
-      }
-    },
-    updateEquipment({ weapon, armor }) {
-      if (weapon) this.character.equipment.weapon = weapon;
-      if (armor) this.character.equipment.armor = armor;
+      this.character = deepMerge(this.character, updates);
     },
   },
 });

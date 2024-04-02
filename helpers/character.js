@@ -11,6 +11,7 @@ export const newCharacter = (character) => {
 
   return {
     name: options.name,
+    description: '',
     baseClass: options.baseClass,
     subclass: options.subclass,
     heritage: '',

@@ -1,6 +1,6 @@
 import schema from 'schm';
 
-export default goldSchema = schema({
+export default schema({
   handful: {
     type: Number,
     max: 5,
