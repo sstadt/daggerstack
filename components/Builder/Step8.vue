@@ -16,8 +16,6 @@
 
   import { useBuilderStore } from '~/stores/builder';
 
-  const CLASS = 'guardian';
-
   export default {
     name: 'BuilderStep8',
     data() {
@@ -36,14 +34,6 @@
       baseClass() {
         return this.builderStore.baseClass;
       },
-    },
-    mounted() {
-      this.classes[CLASS]?.connectionQuestions.forEach((question) => {
-        this.connectionQuestions.push({
-          question,
-          answer: '',
-        });
-      });
     },
     methods: {
       editQuestion(index) {
