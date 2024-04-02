@@ -25,6 +25,8 @@
   import names from '~/data/names.json';
   import { getRandomNumber } from '~/helpers/dice';
 
+  import { useBuilderStore } from '~/stores/builder';
+
   export default {
     name: 'BuilderStep7',
     data() {
@@ -37,12 +39,28 @@
         familyNames: names.family,
       };
     },
+    setup() {
+      const builderStore = useBuilderStore();
+
+      return { builderStore };
+    },
     methods: {
       generateName() {
         const firstIndex = getRandomNumber(0, names.first.length - 1);
         const familyIndex = getRandomNumber(0, names.family.length - 1);
 
         this.name = `${names.first[firstIndex]} ${names.family[familyIndex]}`;
+      },
+      next() {
+        this.builderStore.updateCharacter({
+          name: this.name,
+          experience: [
+            { name: this.experience1, score: 2 },
+            { name: this.experience2, score: 1 },
+          ],
+        });
+
+        this.$emit('next');
       },
     },
   };
