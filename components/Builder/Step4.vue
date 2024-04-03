@@ -1,12 +1,16 @@
 <template lang="pug">
-  .container.p-8.space-y-8
-    h2.text-center.text-2xl.font-black.uppercase.mb-2 Starting Equipment
-    InventoryWeapon(v-model="weapon" title="weapon")
-    InventoryArmor(v-model="armor" title="armor")
-    BasicButton.block.ml-auto(@click="next") Next
+  .container.p-8
+    form(@submit.prevent="next").space-y-8
+      h2.text-center.text-2xl.font-black.uppercase.mb-2 Starting Equipment
+      InventoryWeapon(v-model="weapon" title="weapon" :validation="v$.weapon")
+      InventoryArmor(v-model="armor" title="armor" :validation="v$.armor")
+      BasicButton.block.ml-auto(type="submit") Next
 </template>
 
 <script>
+  import { useVuelidate } from '@vuelidate/core';
+  import { required } from '@vuelidate/validators';
+
   import { newWeapon, newArmor } from '~/helpers/character';
 
   import { useBuilderStore } from '~/stores/builder';
@@ -19,21 +23,43 @@
         armor: newArmor(),
       };
     },
+    validations() {
+      return {
+        weapon: {
+          name: { required },
+          trait: { required },
+          damage: { required },
+          feature: { required },
+        },
+        armor: {
+          name: { required },
+          score: { required },
+          feature: { required },
+        },
+      };
+    },
     setup() {
       const builderStore = useBuilderStore();
 
-      return { builderStore };
+      return {
+        builderStore,
+        v$: useVuelidate(),
+      };
     },
     methods: {
-      next() {
-        this.builderStore.updateCharacter({
-          equipment: {
-            weapon: this.weapon,
-            armor: this.armor,
-          },
-        });
+      async next() {
+        const formValid = await this.v$.$validate();
 
-        this.$emit('next');
+        if (formValid) {
+          this.builderStore.updateCharacter({
+            equipment: {
+              weapon: this.weapon,
+              armor: this.armor,
+            },
+          });
+
+          this.$emit('next');
+        }
       },
     },
   };

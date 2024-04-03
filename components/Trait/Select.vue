@@ -6,7 +6,8 @@
       select.text-3xl.my-auto.py-4.px-2.w-full.rounded.text-center.outline-0(
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
-        class="w-5/6 focus:bg-slate-300"
+        class="w-5/6"
+        :class="inputClass"
       )
         option
         option(v-for="option in options" :value="option.value") {{ option.label }}
@@ -23,6 +24,14 @@
       helperText: {
         type: String,
         defaul: null,
+      },
+    },
+    computed: {
+      inputClass() {
+        return {
+          'focus:bg-slate-200': this.errors.length === 0,
+          'bg-red-100 focus:bg-red-200': this.errors.length > 0
+        };
       },
     },
   };

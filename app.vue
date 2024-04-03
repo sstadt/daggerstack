@@ -79,4 +79,26 @@
     opacity: 0;
     transform: translateY(-50%);
   }
+
+  .slide-fade-left-enter-active,
+  .slide-fade-left-leave-active {
+    transition: all 0.3s ease;
+  }
+
+  .slide-fade-left-enter-from,
+  .slide-fade-left-leave-active {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+
+  .slide-fade-top-enter-active,
+  .slide-fade-top-leave-active {
+    transition: all 0.3s ease;
+  }
+
+  .slide-fade-top-enter-from,
+  .slide-fade-top-leave-active {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
 </style>

@@ -1,13 +1,15 @@
 <template lang="pug">
-  .input--select.flex.flex-col-reverse(:class="wrapperClasses")
+  .input--select.flex.flex-col(:class="wrapperClasses")
     label.uppercase.font-bold.text-slate-500(v-if="label && !hideLabel") {{ label }}
-    select.w-full.px-4.py-2.text-xl.bg-slate-100.outline-0(
-      class="focus:bg-slate-200"
+    select.w-full.px-4.py-2.text-xl.outline-0(
+      :class="inputClass"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
     )
       option(v-if="!required")
       option(v-for="option in options" :value="option.value") {{ option.label }}
+    transition(name="slide-fade-left")
+      p.text-red-400.font-bold(v-if="firstError") {{ firstError.$message }}
 </template>
 
 <script>

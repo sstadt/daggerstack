@@ -1,11 +1,33 @@
 <template lang="pug">
   .w-full.space-y-2
     h3.text-xl.font-black.uppercase.mt-6(v-if="title") {{ title }}
-    InputText(v-model="name" label="name" @input="update")
+    InputText(
+      v-model="name"
+      label="name"
+      :errors="validation ? validation.name.$errors : []"
+      @input="update"
+    )
     .flex.space-x-1
-      InputText(v-model="trait" class="w-1/2" label="trait & range" @input="update")
-      InputText(v-model="damage" class="w-1/2" label="damage dice" @input="update")
-    InputText(v-model="feature" label="feature" @input="update")
+      InputText(
+        v-model="trait"
+        class="w-1/2"
+        label="trait & range"
+        :errors="validation ? validation.trait.$errors : []"
+        @input="update"
+      )
+      InputText(
+        v-model="damage"
+        class="w-1/2"
+        label="damage dice"
+        :errors="validation ? validation.damage.$errors : []"
+        @input="update"
+      )
+    InputText(
+      v-model="feature"
+      label="feature"
+      :errors="validation ? validation.feature.$errors : []"
+      @input="update"
+    )
 </template>
 
 <script>
@@ -15,6 +37,10 @@
       modelValue: { type: Object },
       title: {
         type: String,
+        default: null,
+      },
+      validation: {
+        type: Object,
         default: null,
       },
     },

@@ -1,30 +1,39 @@
 <template lang="pug">
-  .container.p-8.space-y-8
-    .space-y-4
-      h2.text-center.text-2xl.font-black.uppercase.mb-2 Take
-      InputTextarea(v-model="items" label="items")
-      InputText(
-        v-if="spellBookPlaceholder"
-        v-model="spellbook"
-        label="spellbook"
-        :placeholder="spellBookPlaceholder"
-      )
-    .space-y-4
-      h2.text-center.text-2xl.font-black.uppercase.mb-4.mt-8 Choose
-      InputSelect.mb-4(
-        v-model="selectedGeneralItem"
-        :options="generalChoice"
-        label="potion"
-      )
-      InputSelect.mb-8(
-        v-model="selectedClassItem"
-        :options="classChoice"
-        label="class item"
-      )
-    BasicButton.block.ml-auto(@click="next") Next
+  .container.p-8
+    form(@submit.prevent="next").space-y-8
+      .space-y-4
+        h2.text-center.text-2xl.font-black.uppercase.mb-2 Take
+        InputTextarea(
+          v-model="items"
+          label="items"
+        )
+        InputText(
+          v-if="spellBookPlaceholder"
+          v-model="spellbook"
+          label="spellbook"
+          :placeholder="spellBookPlaceholder"
+        )
+      .space-y-4
+        h2.text-center.text-2xl.font-black.uppercase.mb-4.mt-8 Choose
+        InputSelect.mb-4(
+          v-model="selectedGeneralItem"
+          :options="generalChoice"
+          :errors="v$.selectedGeneralItem.$errors"
+          label="potion"
+        )
+        InputSelect.mb-8(
+          v-model="selectedClassItem"
+          :options="classChoice"
+          :errors="v$.selectedClassItem.$errors"
+          label="class item"
+        )
+      BasicButton.block.ml-auto(type="submit") Next
 </template>
 
 <script>
+  import { useVuelidate } from '@vuelidate/core';
+  import { required } from '@vuelidate/validators';
+
   import general from '~/data/general';
   import classes from '~/data/classes';
 
@@ -42,10 +51,19 @@
         selectedClassItem: '',
       };
     },
+    validations() {
+      return {
+        selectedGeneralItem: { required },
+        selectedClassItem: { required },
+      };
+    },
     setup() {
       const builderStore = useBuilderStore();
 
-      return { builderStore };
+      return {
+        builderStore,
+        v$: useVuelidate(),
+      };
     },
     computed: {
       generalChoice() {
@@ -63,17 +81,29 @@
       },
     },
     methods: {
-      next() {
-        let items = this.items;
-        const spellbook = `${this.spellbook} (spellbook)`;
+      async next() {
+        const formValid = await this.v$.$validate();
 
-        if (!items.includes(spellbook)) items = `${items}, ${spellbook}`;
-        if (!items.includes(this.selectedGeneralItem)) items = `${items}, ${this.selectedGeneralItem}`;
-        if (!items.includes(spellbook)) items = `${items}, ${this.selectedClassItem}`;
+        if (formValid) {
+          let items = this.items;
+          const spellbook = `${this.spellbook} (spellbook)`;
 
-        this.builderStore.updateCharacter({ inventory: { items } });
+          if (!items.includes(spellbook) && this.spellbook !== '') {
+            items = `${items}, ${spellbook}`;
+          }
 
-        this.$emit('next');
+          if (!items.includes(this.selectedGeneralItem)) {
+            items = `${items}, ${this.selectedGeneralItem}`;
+          }
+
+          if (!items.includes(spellbook)) {
+            items = `${items}, ${this.selectedClassItem}`;
+          }
+
+          this.builderStore.updateCharacter({ inventory: { items } });
+
+          this.$emit('next');
+        }
       },
     },
   };

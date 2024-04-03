@@ -1,60 +1,70 @@
 <template lang="pug">
-  .container.p-8.space-y-8
-    .space-2-y
-      h2.text-center.text-2xl.font-black.uppercase Basic Traits
-      p.text-center.mb-2.text-sm.text-slate-500 {{ suggestedTraits }}
-    .grid.grid-cols-3.gap-4
-      TraitSelect(
-        label="agility"
-        :options="agilityOptions"
-        v-model="agility"
-        helper-text="Sprint, Leap, Maneuver"
-      )
-      TraitSelect(
-        label="strength"
-        :options="strengthOptions"
-        helper-text="Lift, Smash, Grapple"
-        v-model="strength"
-      )
-      TraitSelect(
-        label="finesse"
-        :options="finesseOptions"
-        helper-text="Control, Hide, Tinker"
-        v-model="finesse"
-      )
-      TraitSelect(
-        label="instinct"
-        :options="instinctOptions"
-        helper-text="Perceive, Sense, Navigate"
-        v-model="instinct"
-      )
-      TraitSelect(
-        label="presence"
-        :options="presenceOptions"
-        helper-text="Charm, Perform, Deceive"
-        v-model="presence"
-      )
-      TraitSelect(
-        label="knowledge"
-        :options="knowledgeOptions"
-        helper-text="Recall, Analyze, Comprehend"
-        v-model="knowledge"
-      )
-    .space-2-y
-      h2.text-center.text-2xl.font-black.uppercase Additional Traits
-      .flex.space-x-2.justify-between.text-xl.py-4.border-b
-        p Evasion
-        p {{ evasion }}
-      .flex.space-x-2.justify-between.text-xl.py-4.border-b
-        p Damage Threshold
-        p {{ threshold.minor }} / {{ threshold.major }} / {{ threshold.severe }}
-      .flex.space-x-2.justify-between.text-xl.pt-4
-        p Hope
-        p 2
-    BasicButton.block.ml-auto(@click="next") Next
+  .container.p-8
+    form(@submit.prevent="next").space-y-8
+      .space-2-y
+        h2.text-center.text-2xl.font-black.uppercase Basic Traits
+        p.text-center.mb-2.text-sm.text-slate-500 {{ suggestedTraits }}
+      .grid.grid-cols-3.gap-4
+        TraitSelect(
+          label="agility"
+          :options="agilityOptions"
+          v-model="agility"
+          :errors="v$.agility.$errors"
+          helper-text="Sprint, Leap, Maneuver"
+        )
+        TraitSelect(
+          label="strength"
+          :options="strengthOptions"
+          v-model="strength"
+          :errors="v$.strength.$errors"
+          helper-text="Lift, Smash, Grapple"
+        )
+        TraitSelect(
+          label="finesse"
+          :options="finesseOptions"
+          v-model="finesse"
+          :errors="v$.finesse.$errors"
+          helper-text="Control, Hide, Tinker"
+        )
+        TraitSelect(
+          label="instinct"
+          :options="instinctOptions"
+          v-model="instinct"
+          :errors="v$.instinct.$errors"
+          helper-text="Perceive, Sense, Navigate"
+        )
+        TraitSelect(
+          label="presence"
+          :options="presenceOptions"
+          v-model="presence"
+          :errors="v$.presence.$errors"
+          helper-text="Charm, Perform, Deceive"
+        )
+        TraitSelect(
+          label="knowledge"
+          :options="knowledgeOptions"
+          v-model="knowledge"
+          :errors="v$.knowledge.$errors"
+          helper-text="Recall, Analyze, Comprehend"
+        )
+      .space-2-y
+        h2.text-center.text-2xl.font-black.uppercase Additional Traits
+        .flex.space-x-2.justify-between.text-xl.py-4.border-b
+          p Evasion
+          p {{ evasion }}
+        .flex.space-x-2.justify-between.text-xl.py-4.border-b
+          p Damage Threshold
+          p {{ threshold.minor }} / {{ threshold.major }} / {{ threshold.severe }}
+        .flex.space-x-2.justify-between.text-xl.pt-4
+          p Hope
+          p 2
+      BasicButton.block.ml-auto(type="submit") Next
 </template>
 
 <script>
+  import { useVuelidate } from '@vuelidate/core';
+  import { required } from '@vuelidate/validators';
+
   import classes from '~/data/classes';
   import { mapState } from 'pinia';
 
@@ -76,10 +86,23 @@
         knowledge: null,
       };
     },
+    validations() {
+      return {
+        agility: { required },
+        strength: { required },
+        finesse: { required },
+        instinct: { required },
+        presence: { required },
+        knowledge: { required },
+      };
+    },
     setup() {
       const builderStore = useBuilderStore();
 
-      return { builderStore };
+      return {
+        builderStore,
+        v$: useVuelidate(),
+      };
     },
     computed: {
       ...mapState(useBuilderStore, ['character']),
@@ -189,19 +212,23 @@
           };
         });
       },
-      next() {
-        this.builderStore.updateCharacter({
-          agility: { score: this.agility, upgraded: false },
-          strength: { score: this.strength, upgraded: false },
-          finesse: { score: this.finesse, upgraded: false },
-          instinct: { score: this.instinct, upgraded: false },
-          presence: { score: this.presence, upgraded: false },
-          knowledge: { score: this.knowledge, upgraded: false },
-          evasion: this.evasion,
-          threshold: { ...this.threshold },
-        });
+      async next() {
+        const formValid = await this.v$.$validate();
 
-        this.$emit('next');
+        if (formValid) {
+          this.builderStore.updateCharacter({
+            agility: { score: this.agility, upgraded: false },
+            strength: { score: this.strength, upgraded: false },
+            finesse: { score: this.finesse, upgraded: false },
+            instinct: { score: this.instinct, upgraded: false },
+            presence: { score: this.presence, upgraded: false },
+            knowledge: { score: this.knowledge, upgraded: false },
+            evasion: this.evasion,
+            threshold: { ...this.threshold },
+          });
+
+          this.$emit('next');
+        }
       },
     },
   };
