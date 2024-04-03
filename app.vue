@@ -44,6 +44,7 @@
 
   .u-inline-button {
     height: 44px;
+    margin-top: 24px;
   }
 
   // transitions

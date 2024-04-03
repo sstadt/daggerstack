@@ -5,6 +5,7 @@
       v-model="name"
       label="name"
       :errors="validation ? validation.name.$errors : []"
+      :required="validation !== null"
       @input="update"
     )
     .flex.space-x-1
@@ -13,6 +14,7 @@
         class="w-1/2"
         label="trait & range"
         :errors="validation ? validation.trait.$errors : []"
+        :required="validation !== null"
         @input="update"
       )
       InputText(
@@ -20,14 +22,10 @@
         class="w-1/2"
         label="damage dice"
         :errors="validation ? validation.damage.$errors : []"
+        :required="validation !== null"
         @input="update"
       )
-    InputText(
-      v-model="feature"
-      label="feature"
-      :errors="validation ? validation.feature.$errors : []"
-      @input="update"
-    )
+    InputText(v-model="feature" label="feature" @input="update")
 </template>
 
 <script>

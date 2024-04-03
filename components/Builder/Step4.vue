@@ -29,12 +29,10 @@
           name: { required },
           trait: { required },
           damage: { required },
-          feature: { required },
         },
         armor: {
           name: { required },
           score: { required },
-          feature: { required },
         },
       };
     },

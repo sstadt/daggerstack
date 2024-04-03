@@ -4,24 +4,21 @@
     .flex.space-x-1
       InputText(
         v-model="name"
-        class="w-2/3"
+        class="w-7/12"
         label="name"
         :errors="validation ? validation.name.$errors : []"
+        :required="validation !== null"
         @input="update"
       )
       InputText(
         v-model="score"
-        class="w-1/3"
+        class="w-5/12"
         label="base score"
         :errors="validation ? validation.score.$errors : []"
+        :required="validation !== null"
         @input="update"
       )
-    InputText(
-      v-model="feature"
-      label="feature"
-      :errors="validation ? validation.feature.$errors : []"
-      @input="update"
-    )
+    InputText(v-model="feature" label="feature" @input="update")
 </template>
 
 <script>

@@ -1,13 +1,16 @@
 <template lang="pug">
   .container.p-8
-    .space-y-8
+    form(@submit.prevent="next").space-y-8
       h2.text-center.text-2xl.font-black.uppercase Background
       .space-y-2(v-for="(question, index) in backgroundQuestions")
         h3.text-sm.font-bold(@click="editQuestion(index)")
           | {{ question.question }}
           NuxtIcon.ml-1.align-middle(name="edit")
-        InputTextarea(v-model="question.answer")
-      BasicButton.block.ml-auto(@click="next") Next
+        InputTextarea(
+          v-model="question.answer"
+          required
+        )
+      BasicButton.block.ml-auto(type="submit") Next
     BasicPrompt(ref="prompt" @confirm="saveQuestion")
 </template>
 
@@ -46,7 +49,7 @@
       saveQuestion(question) {
         this.backgroundQuestions[this.editingQuestion].question = question;
       },
-      next() {
+      async next() {
         this.builderStore.updateCharacter({
           background: [...this.backgroundQuestions],
         });
