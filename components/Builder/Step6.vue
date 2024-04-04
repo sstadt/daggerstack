@@ -22,10 +22,19 @@
   export default {
     name: 'BuilderStep6',
     data() {
+      const backgroundQuestions = []
+
+      this.builderStore.character.background.forEach(({ question, answer }) => {
+        backgroundQuestions.push({
+          question,
+          answer,
+        });
+      });
+
       return {
         classes,
         editingQuestion: null,
-        backgroundQuestions: [],
+        backgroundQuestions,
       };
     },
     setup() {
@@ -37,6 +46,17 @@
       baseClass() {
         return this.builderStore.baseClass;
       },
+      answersProvided() {
+        const questionAnswered = this.backgroundQuestions.reduce((answered, question) => {
+          return question.answer !== '' ? true : answered;
+        }, false);
+
+        return this.backgroundQuestions.length === 0 ? false : questionAnswered;
+      },
+    },
+    mounted() {
+      const newClass = this.baseClass || 'bard';
+      if (!this.answersProvided) this.updateQuestions(newClass);
     },
     methods: {
       editQuestion(index) {
@@ -49,6 +69,17 @@
       saveQuestion(question) {
         this.backgroundQuestions[this.editingQuestion].question = question;
       },
+      updateQuestions(newClass) {
+        this.backgroundQuestions = [];
+
+        this.classes[newClass].backgroundQuestions
+          .forEach((question) => {
+            this.backgroundQuestions.push({
+              question,
+              answer: '',
+            });
+          });
+      },
       async next() {
         this.builderStore.updateCharacter({
           background: [...this.backgroundQuestions],
@@ -58,15 +89,9 @@
       },
     },
     watch: {
-      baseClass(newClass) {
-        if (newClass && this.backgroundQuestions.length === 0) {
-          this.classes[newClass].backgroundQuestions
-            .forEach((question) => {
-              this.backgroundQuestions.push({
-                question,
-                answer: '',
-              });
-            });
+      baseClass(newClass, oldClass) {
+        if (newClass !== oldClass && !this.answersProvided) {
+          this.updateQuestions(newClass);
         }
       },
     },

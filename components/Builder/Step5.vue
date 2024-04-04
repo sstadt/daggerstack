@@ -15,6 +15,7 @@
         Swiper(
           :slides-per-view="1"
           :autoheight="true"
+          :initial-slide="customDescription === '' ? 0 : 1"
           @swiper="onSwiper"
           @slide-change="onSlideChange"
         )
@@ -42,6 +43,8 @@
   export default {
     name: 'BuilderStep5',
     data() {
+      const isNewCharacter = !this.builderStore.character.id;
+
       return {
         descriptions: generalData.description,
         selectedClothes: [],
@@ -50,7 +53,7 @@
         selectedSkin: [],
         selectedAttitude: [],
         currentIndex: 0,
-        customDescription: '',
+        customDescription: isNewCharacter ? '' : this.builderStore.character.description,
       };
     },
     setup() {

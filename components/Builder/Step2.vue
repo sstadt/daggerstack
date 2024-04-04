@@ -76,14 +76,23 @@
   export default {
     name: 'BuilderStep2',
     data() {
+      const {
+        agility,
+        strength,
+        finesse,
+        instinct,
+        presence,
+        knowledge,
+      } = this.builderStore.character;
+
       return {
         initialOptions: [2, 1, 1, 0, 0, -1],
-        agility: null,
-        strength: null,
-        finesse: null,
-        instinct: null,
-        presence: null,
-        knowledge: null,
+        agility: agility.score,
+        strength: strength.score,
+        finesse: finesse.score,
+        instinct: instinct.score,
+        presence: presence.score,
+        knowledge: knowledge.score,
       };
     },
     validations() {

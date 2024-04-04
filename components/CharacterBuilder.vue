@@ -24,7 +24,7 @@
             SwiperSlide.min-h-full
               BuilderStep7(@next="swiper.slideNext()")
             SwiperSlide.min-h-full.flex-grow-1
-              BuilderStep8
+              BuilderStep8(@next="saveCharacter")
 </template>
 
 <script>
@@ -40,7 +40,7 @@
       };
     },
     computed: {
-      ...mapState(useBuilderStore, ['isOpen']),
+      ...mapState(useBuilderStore, ['isOpen', 'character']),
     },
     setup() {
       const builderStore = useBuilderStore();
@@ -62,6 +62,9 @@
       },
       close() {
         this.builderStore.close();
+      },
+      saveCharacter() {
+        this.builderStore.saveCharacter();
       },
     },
   };

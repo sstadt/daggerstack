@@ -9,6 +9,7 @@ export const useBuilderStore = defineStore('builder', {
       character: {},
     };
   },
+  persist: true,
   getters: {
     baseClass(state) {
       return state.character.baseClass;
@@ -26,6 +27,9 @@ export const useBuilderStore = defineStore('builder', {
     },
     updateCharacter(updates) {
       this.character = deepMerge(this.character, updates);
+    },
+    saveCharacter() {
+      console.log('save to characters store');
     },
   },
 });

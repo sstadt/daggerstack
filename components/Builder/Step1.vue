@@ -38,12 +38,13 @@
         value: className,
       }));
       const [firstOption] = classOptions;
+      const { baseClass, subclass, heritage } = this.builderStore.character;
 
       return {
         classOptions: classOptions,
-        selectedClass: firstOption.value,
-        selectedSubclass: '',
-        selectedHeritage: ''
+        selectedClass: baseClass || firstOption.value,
+        selectedSubclass: subclass,
+        selectedHeritage: heritage,
       };
     },
     validations() {
@@ -61,7 +62,9 @@
       };
     },
     mounted() {
-      this.builderStore.createCharacter();
+      if (!this.builderStore.character.id) {
+        this.builderStore.createCharacter();
+      }
     },
     methods: {
       async next() {

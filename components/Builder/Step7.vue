@@ -52,11 +52,21 @@
   export default {
     name: 'BuilderStep7',
     data() {
+      const { name, pronouns, experience } = this.builderStore.character;
+
+      let experience1 = '';
+      let experience2 = '';
+
+      experience.forEach((exp) => {
+        if (exp.score === 2) experience1 = exp.name;
+        if (exp.score === 1) experience2 = exp.name;
+      });
+
       return {
-        experience1: '',
-        experience2: '',
-        name: '',
-        pronouns: '',
+        experience1,
+        experience2,
+        name,
+        pronouns,
         firstNames: names.first,
         familyNames: names.family,
       };
@@ -88,9 +98,9 @@
         const formValid = await this.v$.$validate();
 
         if (formValid) {
-          console.log('form valid');
           this.builderStore.updateCharacter({
             name: this.name,
+            pronouns: this.pronouns,
             experience: [
               { name: this.experience1, score: 2 },
               { name: this.experience2, score: 1 },

@@ -18,9 +18,11 @@
   export default {
     name: 'BuilderStep4',
     data() {
+      const isNewCharacter = !this.builderStore.character.id;
+
       return {
-        weapon: newWeapon(),
-        armor: newArmor(),
+        weapon: isNewCharacter ? newWeapon() : { ...this.builderStore.character.equipment.weapon },
+        armor: isNewCharacter ? newArmor() : { ...this.builderStore.character.equipment.armor },
       };
     },
     validations() {

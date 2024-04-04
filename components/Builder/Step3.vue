@@ -18,13 +18,11 @@
         InputSelect.mb-4(
           v-model="selectedGeneralItem"
           :options="generalChoice"
-          :errors="v$.selectedGeneralItem.$errors"
           label="potion"
         )
         InputSelect.mb-8(
           v-model="selectedClassItem"
           :options="classChoice"
-          :errors="v$.selectedClassItem.$errors"
           label="class item"
         )
       BasicButton.block.ml-auto(type="submit") Next
@@ -32,29 +30,31 @@
 
 <script>
   import { useVuelidate } from '@vuelidate/core';
-  import { required } from '@vuelidate/validators';
 
   import general from '~/data/general';
   import classes from '~/data/classes';
 
   import { createSelectOptions } from '~/helpers/array';
+  import { separateItemsForBuilder } from '~/helpers/character';
 
   import { useBuilderStore } from '~/stores/builder';
 
   export default {
     name: 'BuilderStep3',
     data() {
+      const existingItems = this.builderStore.character.inventory.items;
+      const {
+        items,
+        spellbook,
+        generalItem,
+        classItem,
+      } = separateItemsForBuilder(existingItems, this.builderStore.baseClass);
+
       return {
-        items: general.startingGear.take.join(', '),
-        spellbook: '',
-        selectedGeneralItem: '',
-        selectedClassItem: '',
-      };
-    },
-    validations() {
-      return {
-        selectedGeneralItem: { required },
-        selectedClassItem: { required },
+        items,
+        spellbook,
+        selectedGeneralItem: generalItem,
+        selectedClassItem: classItem,
       };
     },
     setup() {
@@ -96,7 +96,7 @@
             items = `${items}, ${this.selectedGeneralItem}`;
           }
 
-          if (!items.includes(spellbook)) {
+          if (!items.includes(this.selectedClassItem)) {
             items = `${items}, ${this.selectedClassItem}`;
           }
 

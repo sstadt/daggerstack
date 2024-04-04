@@ -1,3 +1,7 @@
+import { uuidv4 } from '~/helpers/utility';
+
+import general from '~/data/general';
+import classes from '~/data/classes';
 // TODO: import class data and fill in starting values
 
 export const newCharacter = (character) => {
@@ -10,33 +14,35 @@ export const newCharacter = (character) => {
   const options = Object.assign({}, defaults, character);
 
   return {
+    id: uuidv4(),
     name: options.name,
+    pronouns: '',
     description: '',
     baseClass: options.baseClass,
     subclass: options.subclass,
     heritage: '',
     agility: {
-      score: null,
+      score: '',
       upgraded: false,
     },
     strength: {
-      score: null,
+      score: '',
       upgraded: false,
     },
     finesse: {
-      score: null,
+      score: '',
       upgraded: false,
     },
     instinct: {
-      score: null,
+      score: '',
       upgraded: false,
     },
-    presense: {
-      score: null,
+    presence: {
+      score: '',
       upgraded: false,
     },
     knowledge: {
-      score: null,
+      score: '',
       upgraded: false,
     },
     evasion: null,
@@ -130,5 +136,45 @@ export const newArmor = (armor) => {
     name: options.name,
     score: options.score,
     feature: options.feature,
+  };
+};
+
+export const separateItemsForBuilder = (items, baseClass) => {
+  const itemArr = items !== '' ? items.split(',').map((item) => item.trim()) : [];
+  const spellbookIndex = itemArr.findIndex((item) => item.includes('spellbook'));
+  const [existingSpellbook] = spellbookIndex > -1
+    ? itemArr.splice(spellbookIndex, 1)
+    : [''];
+  const spellbook = existingSpellbook.replace('(spellbook)', '').trim();
+
+  let generalItem = '';
+  let classItem = '';
+
+  general.startingGear.choose.forEach((choice) => {
+    const itemIndex = itemArr.findIndex((item) => item === choice);
+
+    if (itemIndex > -1) {
+      generalItem = itemArr.splice(itemIndex, 1);
+    }
+  });
+
+  if (baseClass) {
+    classes[baseClass].startingGear.choose
+      .forEach((choice) => {
+        const itemIndex = itemArr.findIndex((item) => item === choice);
+
+        if (itemIndex > -1) {
+          classItem = itemArr.splice(itemIndex, 1);
+        }
+      });
+  }
+
+  return {
+    items: itemArr.length > 0
+      ? itemArr.join(', ')
+      : general.startingGear.take.join(', '),
+    spellbook,
+    generalItem,
+    classItem,
   };
 };

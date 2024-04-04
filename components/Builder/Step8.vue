@@ -19,10 +19,19 @@
   export default {
     name: 'BuilderStep8',
     data() {
+      const connectionQuestions = []
+
+      this.builderStore.character.connection.forEach(({ question, answer }) => {
+        connectionQuestions.push({
+          question,
+          answer,
+        });
+      });
+
       return {
         classes,
         editingQuestion: null,
-        connectionQuestions: [],
+        connectionQuestions,
       };
     },
     setup() {
@@ -34,6 +43,17 @@
       baseClass() {
         return this.builderStore.baseClass;
       },
+      answersProvided() {
+        const questionAnswered = this.connectionQuestions.reduce((answered, question) => {
+          return question.answer !== '' ? true : answered;
+        }, false);
+
+        return this.connectionQuestions.length === 0 ? false : questionAnswered;
+      },
+    },
+    mounted() {
+      const newClass = this.baseClass || 'bard';
+      if (!this.answersProvided) this.updateQuestions(newClass);
     },
     methods: {
       editQuestion(index) {
@@ -46,6 +66,17 @@
       saveQuestion(question) {
         this.connectionQuestions[this.editingQuestion].question = question;
       },
+      updateQuestions(newClass) {
+        this.connectionQuestions = [];
+
+        this.classes[newClass].connectionQuestions
+          .forEach((question) => {
+            this.connectionQuestions.push({
+              question,
+              answer: '',
+            });
+          });
+      },
       next() {
         this.builderStore.updateCharacter({
           connection: [...this.connectionQuestions],
@@ -56,14 +87,8 @@
     },
     watch: {
       baseClass(newClass) {
-        if (newClass && this.connectionQuestions.length === 0) {
-          this.classes[newClass].connectionQuestions
-            .forEach((question) => {
-              this.connectionQuestions.push({
-                question,
-                answer: '',
-              });
-            });
+        if (newClass !== oldClass && !this.answersProvided) {
+          this.updateQuestions(newClass);
         }
       },
     },
