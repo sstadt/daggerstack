@@ -28,7 +28,10 @@
             :errors="v$.name.$errors"
             required
           )
-          button.u-inline-button.bg-slate-100.px-4.ml-1.flex.items-center.justify-center.border-l-white(@click="generateName")
+          button.u-inline-button.bg-slate-100.px-4.ml-1.flex.items-center.justify-center.border-l-white(
+            type="button"
+            @click="generateName"
+          )
             NuxtIcon.text-2xl(name="d20")
             .sr-only Generate random name
         InputText.flex-grow(

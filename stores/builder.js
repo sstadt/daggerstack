@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia';
+
 import { newCharacter } from '~/helpers/character';
 import { deepMerge } from '~/helpers/object';
+
+import { useCharactersStore } from '~/stores/characters';
 
 export const useBuilderStore = defineStore('builder', {
   state: () => {
@@ -29,7 +32,11 @@ export const useBuilderStore = defineStore('builder', {
       this.character = deepMerge(this.character, updates);
     },
     saveCharacter() {
-      console.log('save to characters store');
+      const characterStore = useCharactersStore();
+
+      characterStore.saveCharacter({ ...this.character });
+      this.close();
+      this.character = {};
     },
   },
 });

@@ -1,30 +1,29 @@
 <template lang="pug">
-  .character-builder
-    BasicModal(title="New Character" :is-open="isOpen" :close="close")
-      .flex.flex-col.flex-grow
-        BuilderProgress(:page="currentIndex" :steps="8" @set="setStep")
-        .flex.flex-grow
-          Swiper.builder__slider(
-            :slides-per-view="1"
-            @swiper="onSwiper"
-            @slide-change="onSlideChange"
-          )
-            SwiperSlide.min-h-full
-              BuilderStep1(@next="swiper.slideNext()")
-            SwiperSlide.min-h-full
-              BuilderStep2(@next="swiper.slideNext()")
-            SwiperSlide.min-h-full
-              BuilderStep3(@next="swiper.slideNext()")
-            SwiperSlide.min-h-full
-              BuilderStep4(@next="swiper.slideNext()")
-            SwiperSlide.min-h-full
-              BuilderStep5(@next="swiper.slideNext()")
-            SwiperSlide.min-h-full
-              BuilderStep6(@next="swiper.slideNext()")
-            SwiperSlide.min-h-full
-              BuilderStep7(@next="swiper.slideNext()")
-            SwiperSlide.min-h-full.flex-grow-1
-              BuilderStep8(@next="saveCharacter")
+  BasicModal(title="New Character" :is-open="isOpen" :close="close")
+    .flex.flex-col.flex-grow
+      BuilderProgress(:page="currentIndex" :steps="8" @set="setStep")
+      .flex.flex-grow
+        Swiper.builder__slider(
+          :slides-per-view="1"
+          @swiper="onSwiper"
+          @slide-change="onSlideChange"
+        )
+          SwiperSlide.min-h-full
+            BuilderStep1(@next="swiper.slideNext()")
+          SwiperSlide.min-h-full
+            BuilderStep2(@next="swiper.slideNext()")
+          SwiperSlide.min-h-full
+            BuilderStep3(@next="swiper.slideNext()")
+          SwiperSlide.min-h-full
+            BuilderStep4(@next="swiper.slideNext()")
+          SwiperSlide.min-h-full
+            BuilderStep5(@next="swiper.slideNext()")
+          SwiperSlide.min-h-full
+            BuilderStep6(@next="swiper.slideNext()")
+          SwiperSlide.min-h-full
+            BuilderStep7(@next="swiper.slideNext()")
+          SwiperSlide.min-h-full.flex-grow-1
+            BuilderStep8(@next="saveCharacter")
 </template>
 
 <script>

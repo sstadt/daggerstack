@@ -1,5 +1,5 @@
 <template lang="pug">
-  .app.pb-10
+  .app
     NuxtPage
     CharacterBuilder
 </template>
