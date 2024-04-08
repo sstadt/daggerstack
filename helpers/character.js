@@ -21,6 +21,7 @@ export const newCharacter = (character) => {
     baseClass: options.baseClass,
     subclass: options.subclass,
     heritage: '',
+    level: 1,
     agility: {
       score: '',
       upgraded: false,

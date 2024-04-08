@@ -1,8 +1,5 @@
 <template lang="pug">
-  .index
-    transition(name="fade" mode="out-in" appear)
-      CharacterSheet(v-if="false")
-      CharacterSelect.character-select(v-else)
+  CharacterSelect.character-select
 </template>
 
 <script>

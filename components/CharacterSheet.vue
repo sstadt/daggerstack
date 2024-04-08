@@ -1,6 +1,6 @@
 <template lang="pug">
   .character-sheet
-    SheetHeader
+    SheetHeader(:character="character")
       .flex.bg-black.relative
         NavButton(
           v-for="(button, index) in navButtons"
@@ -20,26 +20,32 @@
     )
       SwiperSlide
         .container.space-y-4
-          SheetStatistics
-          SheetExperience
-          SheetClassFeature
+          SheetStatistics(:character="character")
+          SheetExperience(:character="character")
+          SheetClassFeature(:character="character")
       SwiperSlide
         .container.space-y-4
-          SheetWeapons
-          SheetArmor
+          SheetWeapons(:character="character")
+          SheetArmor(:character="character")
       SwiperSlide
         .container.space-y-4
-          SheetGold
-          SheetInventory
+          SheetGold(:character="character")
+          SheetInventory(:character="character")
       SwiperSlide
         .container.space-y-4
-          SheetBackground
-          SheetConnections
+          SheetBackground(:character="character")
+          SheetConnections(:character="character")
 </template>
 
 <script>
   export default {
     name: 'CharacterSheet',
+    props: {
+      character: {
+        type: Object,
+        required: true,
+      },
+    },
     data() {
       return {
         swiper: null,

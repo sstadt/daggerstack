@@ -7,6 +7,7 @@ export const useCharactersStore = defineStore('characters', {
     return {
       characterList: [],
       currentCharacter: null,
+      charactersLoaded: false,
     };
   },
   actions: {
@@ -14,6 +15,7 @@ export const useCharactersStore = defineStore('characters', {
       if (process.client) {
         const list = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY))
         this.characterList = list || [];
+        this.charactersLoaded = true;
       }
     },
     saveCharacter(character) {

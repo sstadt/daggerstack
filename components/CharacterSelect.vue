@@ -3,8 +3,10 @@
     .flex.flex-col.flex-grow.overflow-y-auto
       ul.flex-shrink-0(v-if="characterList.length > 0")
         li(v-for="(character, index) in characterList")
-          a.block.text-3xl.p-6(
+          NuxtLink.block.text-3xl.p-6.w-full.text-left(
             :class="{ 'border-t': index !== 0 }"
+            class="hover:bg-slate-200 focus:slate-200"
+            :to="`/character/${character.id}`"
           ) {{ character.name }}
       .flex.items-center.justify-center.flex-grow(v-else)
         p.text-4xl.text-center You don't have any characters.... yet!
