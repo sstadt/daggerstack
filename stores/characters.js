@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 
+const LOCALSTORAGE_KEY = 'ds_character_list';
+
 export const useCharactersStore = defineStore('characters', {
   state: () => {
     return {
@@ -7,8 +9,13 @@ export const useCharactersStore = defineStore('characters', {
       currentCharacter: null,
     };
   },
-  persist: true,
   actions: {
+    loadSavedCharacters() {
+      if (process.client) {
+        const list = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY))
+        this.characterList = list || [];
+      }
+    },
     saveCharacter(character) {
       const index = this.characterList.find((c) => c.id === character.id);
 
@@ -16,6 +23,10 @@ export const useCharactersStore = defineStore('characters', {
         this.characterList.splice(index, 1, character);
       } else {
         this.characterList.push(character);
+      }
+
+      if (process.client) {
+        localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(this.characterList));
       }
     },
   },

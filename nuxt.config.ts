@@ -5,7 +5,6 @@ export default defineNuxtConfig({
     'nuxt-icons',
     'nuxt-swiper',
     '@pinia/nuxt',
-    '@pinia-plugin-persistedstate/nuxt',
     '@nuxtjs/tailwindcss',
     [
       '@nuxtjs/google-fonts',

@@ -1,8 +1,36 @@
 <template lang="pug">
   .app
     NuxtPage
-    CharacterBuilder
+    CharacterBuilder(v-if="storageLoaded")
 </template>
+
+<script>
+  import { useBuilderStore } from '~/stores/builder';
+  import { useCharactersStore } from '~/stores/characters';
+
+  export default {
+    name: 'App',
+    data() {
+      return {
+        storageLoaded: false,
+      };
+    },
+    setup() {
+      const builderStore = useBuilderStore();
+      const charactersStore = useCharactersStore();
+
+      return {
+        builderStore,
+        charactersStore,
+      };
+    },
+    mounted() {
+      this.builderStore.loadSavedCharacter();
+      this.charactersStore.loadSavedCharacters();
+      this.storageLoaded = true;
+    },
+  };
+</script>
 
 <style lang="scss">
   .app {

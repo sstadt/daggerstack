@@ -86,7 +86,7 @@
       },
     },
     watch: {
-      baseClass(newClass) {
+      baseClass(newClass, oldClass) {
         if (newClass !== oldClass && !this.answersProvided) {
           this.updateQuestions(newClass);
         }

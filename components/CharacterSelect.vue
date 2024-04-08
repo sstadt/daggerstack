@@ -11,7 +11,7 @@
     .flex.flex-col
       BasicButton.rounded-none(
         v-if="character.id"
-        @click="createNewCharacter"
+        @click="builderStore.open"
       ) {{ characterLabel }}
       BasicButton.rounded-none(@click="createNewCharacter(true)") New Character
 </template>
