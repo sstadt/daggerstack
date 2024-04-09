@@ -1,26 +1,360 @@
 {
+  "items": [
+    {
+      "name": "Battleaxe",
+      "primary": true,
+      "secondary": false,
+      "trait": "strength",
+      "range": "melee",
+      "damage": "1d10+2",
+      "damageType": "phy",
+      "burden": 2
+    },
+    {
+      "name": "Warhammer",
+      "primary": true,
+      "secondary": false,
+      "trait": "strength",
+      "range": "melee",
+      "feature": "large",
+      "damage": "1d12+2",
+      "damageType": "phy",
+      "burden": 2
+    },
+    {
+      "name": "Greatsword",
+      "primary": true,
+      "secondary": false,
+      "trait": "strength",
+      "range": "melee",
+      "feature": "massive",
+      "damage": "1d10+2",
+      "damageType": "phy",
+      "burden": 2
+    },
+    {
+      "name": "Mace",
+      "primary": true,
+      "secondary": false,
+      "trait": "strength",
+      "range": "melee",
+      "damage": "1d8",
+      "damageType": "phy",
+      "burden": 1
+    },
+    {
+      "name": "Saber",
+      "primary": true,
+      "secondary": false,
+      "trait": "agility",
+      "range": "melee",
+      "damage": "1d8",
+      "damageType": "phy",
+      "burden": 1
+    },
+    {
+      "name": "Longsword",
+      "primary": true,
+      "secondary": false,
+      "trait": "agility",
+      "range": "melee",
+      "feature": "reliable",
+      "damage": "1d8",
+      "damageType": "phy",
+      "burden": 2
+    },
+    {
+      "name": "Shortsword",
+      "primary": true,
+      "secondary": true,
+      "trait": "agility",
+      "range": "melee",
+      "secondaryFeature": "paired",
+      "damage": "1d10",
+      "damageType": "phy",
+      "burden": 1
+    },
+    {
+      "name": "Dagger",
+      "primary": true,
+      "secondary": true,
+      "trait": "finesse",
+      "range": "melee",
+      "feature": "quick",
+      "secondaryFeature": "paired",
+      "damage": "1d8",
+      "damageType": "phy",
+      "burden": 1
+    },
+    {
+      "name": "Quarterstaff",
+      "primary": true,
+      "secondary": false,
+      "trait": "instinct",
+      "range": "melee",
+      "damage": "1d10+2",
+      "damageType": "phy",
+      "burden": 2
+    },
+    {
+      "name": "Halberd",
+      "primary": true,
+      "secondary": false,
+      "trait": "strength",
+      "range": "very close",
+      "damage": "1d10",
+      "damageType": "phy",
+      "burden": 2
+    },
+    {
+      "name": "Shortbow",
+      "trait": "agility",
+      "range": "far",
+      "damage": "1d8+2",
+      "damageType": "phy",
+      "burden": 2
+    },
+    {
+      "name": "Crossbow",
+      "primary": true,
+      "secondary": true,
+      "trait": "finesse",
+      "range": "far",
+      "damage": "1d8",
+      "damageType": "phy",
+      "burden": 1
+    },
+    {
+      "name": "Longbow",
+      "primary": true,
+      "secondary": false,
+      "trait": "agility",
+      "range": "very far",
+      "feature": "cumbersome",
+      "damage": "1d10+2",
+      "damageType": "phy",
+      "burden": 2
+    },
+    {
+      "name": "Arcane Gauntlets",
+      "primary": true,
+      "secondary": false,
+      "trait": "strength",
+      "range": "melee",
+      "damage": "1d10+2",
+      "damageType": "mag",
+      "burden": 2
+    },
+    {
+      "name": "Hallowed Axe",
+      "primary": true,
+      "secondary": false,
+      "trait": "strength",
+      "range": "melee",
+      "damage": "1d10",
+      "damageType": "mag",
+      "burden": 1
+    },
+    {
+      "name": "Hand Runes",
+      "primary": true,
+      "secondary": false,
+      "trait": "instinct",
+      "range": "melee",
+      "damage": "1d10",
+      "damageType": "mag",
+      "burden": 1
+    },
+    {
+      "name": "Glowing Rings",
+      "primary": true,
+      "secondary": false,
+      "trait": "agility",
+      "range": "very close",
+      "damage": "1d10+2",
+      "damageType": "mag",
+      "burden": 2
+    },
+    {
+      "name": "Shortstaff",
+      "primary": true,
+      "secondary": false,
+      "trait": "instinct",
+      "range": "close",
+      "damage": "1d10",
+      "damageType": "mag",
+      "burden": 1
+    },
+    {
+      "name": "Returning Blade",
+      "primary": true,
+      "secondary": false,
+      "trait": "finesse",
+      "range": "close",
+      "damage": "1d8+2",
+      "damageType": "mag",
+      "burden": 1
+    },
+    {
+      "name": "Wand",
+      "primary": true,
+      "secondary": false,
+      "trait": "knowledge",
+      "range": "far",
+      "damage": "1d8",
+      "damageType": "mag",
+      "burden": 1
+    },
+    {
+      "name": "Dualstaff",
+      "primary": true,
+      "secondary": false,
+      "trait": "instinct",
+      "range": "far",
+      "damage": "1d8+2",
+      "damageType": "mag",
+      "burden": 2
+    },
+    {
+      "name": "Scepter",
+      "primary": true,
+      "secondary": false,
+      "trait": "presence",
+      "range": "far",
+      "feature": "versatile",
+      "damage": "1d8+2",
+      "damageType": "mag",
+      "burden": 1
+    },
+    {
+      "name": "Greatstaff",
+      "primary": true,
+      "secondary": false,
+      "trait": "knowledge",
+      "range": "far",
+      "feature": "powerful",
+      "damage": "1d6+2",
+      "damageType": "mag",
+      "burden": 2
+    },
+    {
+      "name": "Round Shield",
+      "primary": false,
+      "secondary": true,
+      "trait": "strength",
+      "range": "melee",
+      "feature": "protective",
+      "damage": "1d4",
+      "damageType": "phy",
+      "burden": 1
+    },
+    {
+      "name": "Round Shield",
+      "primary": false,
+      "secondary": true,
+      "trait": "strength",
+      "range": "melee",
+      "feature": "protective",
+      "damage": "1d4",
+      "damageType": "phy",
+      "burden": 1
+    },
+    {
+      "name": "Tower Shield",
+      "primary": false,
+      "secondary": true,
+      "trait": "strength",
+      "range": "melee",
+      "feature": "barrier",
+      "damage": "1d6",
+      "damageType": "phy",
+      "burden": 1
+    },
+    {
+      "name": "Whip",
+      "primary": false,
+      "secondary": true,
+      "trait": "agility",
+      "range": "very close",
+      "feature": "whipcrack",
+      "damage": "1d6",
+      "damageType": "phy",
+      "burden": 1
+    },
+    {
+      "name": "Grappler",
+      "primary": false,
+      "secondary": true,
+      "trait": "agility",
+      "range": "close",
+      "feature": "hook",
+      "damage": "1d6",
+      "damageType": "phy",
+      "burden": 1
+    }
+  ],
   "features": [
     {
-      "name": "paired",
-      "increase": "primaryWeaponDamage",
-      "amount": 2
+      "name": "large",
+      "modify": {
+        "agility": -1
+      }
     },
     {
-      "name": "protective",
-      "increase": "armor",
-      "amount": 2
-    },
-    {
-      "name": "quick",
-      "description": "Mark stress to attack an additional target in range"
+      "name": "massive",
+      "modify": {
+        "agility": -1
+      },
+      "description": "Roll one extra damage die and drop the lowest"
     },
     {
       "name": "reliable",
       "description": "+1 to attack rolls with this weapon"
     },
     {
+      "name": "quick",
+      "description": "Mark stress to attack an additional target in range"
+    },
+    {
+      "name": "cumbersome",
+      "modify": {
+        "evasion": -1
+      }
+    },
+    {
+      "name": "versatile",
+      "description": "Presence Melee - d10"
+    },
+    {
       "name": "powerful",
       "description": "Roll one extra damage die and drop the lowest"
+    },
+    {
+      "name": "paired",
+      "modify": {
+        "primaryWeaponDamage": 2
+      }
+    },
+    {
+      "name": "protective",
+      "modify": {
+        "armorScore": 2
+      }
+    },
+    {
+      "name": "barrier",
+      "modify": {
+        "armorScore": 2,
+        "evasion": -2
+      }
+    },
+    {
+      "name": "whipcrack",
+      "description": "Mark Stress to scatter enemies in melee back to close range."
+    },
+    {
+      "name": "hook",
+      "description": "On a successful attack, you may also pull the target into melee with you."
     }
   ]
 }
