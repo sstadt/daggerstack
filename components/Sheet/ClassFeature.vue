@@ -1,14 +1,27 @@
 <template lang="pug">
   BasicCard(title="Class Feature")
-    .py-4
-      h3.font-bold.mb-2 Do or do not
-      p.mb-6 We're going in. We're going in full throttle. Right with you, boss. Luke, at that speed will you be able to pull out in time? It'll be just like Beggar's Canyon back home.
-      h3.font-bold.mb-2 There is no try
-      p But sir, nobody worries about upsetting a droid. That's 'cause droids don't pull people's arms out of their socket when they lose. Wookiees are known to do that. I see your point, sir. I suggest a new strategy, Artoo.
+    .py-4(v-for="feature in features")
+      h3.font-bold.mb-2.text-xl {{ feature.name }}
+      BasicMarkdown(:source="feature.description")
 </template>
 
 <script>
+  import classes from '~/data/classes';
+
   export default {
     name: 'SheetClassFeature',
+    props: {
+      character: {
+        type: Object,
+        required: true,
+      },
+    },
+    computed: {
+      features() {
+        const characterClass = classes[this.character.baseClass];
+
+        return characterClass.classFeatures;
+      },
+    },
   };
 </script>

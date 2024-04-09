@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia';
 
-import { deepMerge } from '~/helpers/object';
-
 const LOCALSTORAGE_KEY = 'ds_character_list';
 
 export const useCharactersStore = defineStore('characters', {

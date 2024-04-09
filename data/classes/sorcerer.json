@@ -35,7 +35,7 @@
     },
     {
       "name": "Channel Raw Power",
-      "description": "Once per Long Rest, you can place a Domain card from your Loadout into your Vault and choose to either:\n- Gain Hope equal to the level of the card.\n- Add magic damage equal to twice the level of the card to a spell attack you've successfully cast."
+      "description": "Once per Long Rest, you can place a Domain card from your Loadout into your Vault and choose to either:\n\n- Gain Hope equal to the level of the card.\n\n- Add magic damage equal to twice the level of the card to a spell attack you've successfully cast."
     }
   ],
   "backgroundQuestions": [

@@ -23,7 +23,7 @@
   "classFeatures": [
     {
       "name": "Unstoppable",
-      "description": "Once per Long Rest, you can become Unstoppable. Your Unstoppable die begins as a *d4*. Place it on the spot to the right, starting with the die's highest value facing up. While Unstoppable, you:\n- Gain resistance to physical damage.\n- Add an additional d6 to any damage rolls you make.\n- Can spend stress to reroll any single die you've rolled.\nAnytime you roll your damage dice, reduce the Unstoppable die value by one. When you would reduce the value below 1 or the scene ends, remove it and drop out of Unstoppable. At Level 3, upgrade your Unstoppable die to a *d6*. At Level 7, upgrade it to a *d8*."
+      "description": "Once per Long Rest, you can become Unstoppable. Your Unstoppable die begins as a **d4**. Place it on the spot to the right, starting with the die's highest value facing up. While Unstoppable, you:\n\n- Gain resistance to physical damage.\n\n- Add an additional d6 to any damage rolls you make.\n\n- Can spend stress to reroll any single die you've rolled.\n\nAnytime you roll your damage dice, reduce the Unstoppable die value by one. When you would reduce the value below 1 or the scene ends, remove it and drop out of Unstoppable. At Level 3, upgrade your Unstoppable die to a **d6**. At Level 7, upgrade it to a **d8**."
     }
   ],
   "backgroundQuestions": [

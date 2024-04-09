@@ -19,20 +19,20 @@
       @slide-change="onSlideChange"
     )
       SwiperSlide
-        .container.space-y-4
+        .container.space-y-4.pb-4
           SheetStatistics(:character="character")
           SheetExperience(:character="character")
           SheetClassFeature(:character="character")
       SwiperSlide
-        .container.space-y-4
+        .container.space-y-4.pb-4
           SheetWeapons(:character="character")
           SheetArmor(:character="character")
       SwiperSlide
-        .container.space-y-4
+        .container.space-y-4.pb-4
           SheetGold(:character="character")
           SheetInventory(:character="character")
       SwiperSlide
-        .container.space-y-4
+        .container.space-y-4.pb-4
           SheetBackground(:character="character")
           SheetConnections(:character="character")
 </template>
