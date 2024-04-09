@@ -13,7 +13,6 @@ export const deepMerge = (target, source) => {
       if (source[key] instanceof Array && target[key] instanceof Array) {
         target[key] = [...source[key]];
       } else if (target[key] instanceof Object) {
-        console.log(key);
         deepMerge(target[key], source[key]);
       }
     } else if (target.hasOwnProperty(key)) {
