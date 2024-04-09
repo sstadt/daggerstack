@@ -6,6 +6,8 @@
       "secondary": false,
       "trait": "strength",
       "range": "melee",
+      "feature": null,
+      "secondaryFeature": null,
       "damage": "1d10+2",
       "damageType": "phy",
       "burden": 2
@@ -17,6 +19,7 @@
       "trait": "strength",
       "range": "melee",
       "feature": "large",
+      "secondaryFeature": null,
       "damage": "1d12+2",
       "damageType": "phy",
       "burden": 2
@@ -28,6 +31,7 @@
       "trait": "strength",
       "range": "melee",
       "feature": "massive",
+      "secondaryFeature": null,
       "damage": "1d10+2",
       "damageType": "phy",
       "burden": 2
@@ -38,6 +42,8 @@
       "secondary": false,
       "trait": "strength",
       "range": "melee",
+      "feature": null,
+      "secondaryFeature": null,
       "damage": "1d8",
       "damageType": "phy",
       "burden": 1
@@ -48,6 +54,8 @@
       "secondary": false,
       "trait": "agility",
       "range": "melee",
+      "feature": null,
+      "secondaryFeature": null,
       "damage": "1d8",
       "damageType": "phy",
       "burden": 1
@@ -59,6 +67,7 @@
       "trait": "agility",
       "range": "melee",
       "feature": "reliable",
+      "secondaryFeature": null,
       "damage": "1d8",
       "damageType": "phy",
       "burden": 2
@@ -69,6 +78,7 @@
       "secondary": true,
       "trait": "agility",
       "range": "melee",
+      "feature": null,
       "secondaryFeature": "paired",
       "damage": "1d10",
       "damageType": "phy",
@@ -92,6 +102,8 @@
       "secondary": false,
       "trait": "instinct",
       "range": "melee",
+      "feature": null,
+      "secondaryFeature": null,
       "damage": "1d10+2",
       "damageType": "phy",
       "burden": 2
@@ -102,6 +114,8 @@
       "secondary": false,
       "trait": "strength",
       "range": "very close",
+      "feature": null,
+      "secondaryFeature": null,
       "damage": "1d10",
       "damageType": "phy",
       "burden": 2
@@ -110,6 +124,8 @@
       "name": "Shortbow",
       "trait": "agility",
       "range": "far",
+      "feature": null,
+      "secondaryFeature": null,
       "damage": "1d8+2",
       "damageType": "phy",
       "burden": 2
@@ -120,6 +136,8 @@
       "secondary": true,
       "trait": "finesse",
       "range": "far",
+      "feature": null,
+      "secondaryFeature": null,
       "damage": "1d8",
       "damageType": "phy",
       "burden": 1
@@ -131,6 +149,7 @@
       "trait": "agility",
       "range": "very far",
       "feature": "cumbersome",
+      "secondaryFeature": null,
       "damage": "1d10+2",
       "damageType": "phy",
       "burden": 2
@@ -141,6 +160,8 @@
       "secondary": false,
       "trait": "strength",
       "range": "melee",
+      "feature": null,
+      "secondaryFeature": null,
       "damage": "1d10+2",
       "damageType": "mag",
       "burden": 2
@@ -151,6 +172,8 @@
       "secondary": false,
       "trait": "strength",
       "range": "melee",
+      "feature": null,
+      "secondaryFeature": null,
       "damage": "1d10",
       "damageType": "mag",
       "burden": 1
@@ -161,6 +184,8 @@
       "secondary": false,
       "trait": "instinct",
       "range": "melee",
+      "feature": null,
+      "secondaryFeature": null,
       "damage": "1d10",
       "damageType": "mag",
       "burden": 1
@@ -171,6 +196,8 @@
       "secondary": false,
       "trait": "agility",
       "range": "very close",
+      "feature": null,
+      "secondaryFeature": null,
       "damage": "1d10+2",
       "damageType": "mag",
       "burden": 2
@@ -181,6 +208,8 @@
       "secondary": false,
       "trait": "instinct",
       "range": "close",
+      "feature": null,
+      "secondaryFeature": null,
       "damage": "1d10",
       "damageType": "mag",
       "burden": 1
@@ -191,6 +220,8 @@
       "secondary": false,
       "trait": "finesse",
       "range": "close",
+      "feature": null,
+      "secondaryFeature": null,
       "damage": "1d8+2",
       "damageType": "mag",
       "burden": 1
@@ -201,6 +232,8 @@
       "secondary": false,
       "trait": "knowledge",
       "range": "far",
+      "feature": null,
+      "secondaryFeature": null,
       "damage": "1d8",
       "damageType": "mag",
       "burden": 1
@@ -211,6 +244,7 @@
       "secondary": false,
       "trait": "instinct",
       "range": "far",
+      "feature": null,
       "damage": "1d8+2",
       "damageType": "mag",
       "burden": 2
@@ -222,6 +256,7 @@
       "trait": "presence",
       "range": "far",
       "feature": "versatile",
+      "secondaryFeature": null,
       "damage": "1d8+2",
       "damageType": "mag",
       "burden": 1
@@ -233,6 +268,7 @@
       "trait": "knowledge",
       "range": "far",
       "feature": "powerful",
+      "secondaryFeature": null,
       "damage": "1d6+2",
       "damageType": "mag",
       "burden": 2
@@ -244,6 +280,7 @@
       "trait": "strength",
       "range": "melee",
       "feature": "protective",
+      "secondaryFeature": null,
       "damage": "1d4",
       "damageType": "phy",
       "burden": 1
@@ -255,6 +292,7 @@
       "trait": "strength",
       "range": "melee",
       "feature": "protective",
+      "secondaryFeature": null,
       "damage": "1d4",
       "damageType": "phy",
       "burden": 1
@@ -266,6 +304,7 @@
       "trait": "strength",
       "range": "melee",
       "feature": "barrier",
+      "secondaryFeature": null,
       "damage": "1d6",
       "damageType": "phy",
       "burden": 1
@@ -277,6 +316,7 @@
       "trait": "agility",
       "range": "very close",
       "feature": "whipcrack",
+      "secondaryFeature": null,
       "damage": "1d6",
       "damageType": "phy",
       "burden": 1
@@ -288,6 +328,7 @@
       "trait": "agility",
       "range": "close",
       "feature": "hook",
+      "secondaryFeature": null,
       "damage": "1d6",
       "damageType": "phy",
       "burden": 1
