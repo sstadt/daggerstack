@@ -226,13 +226,31 @@
 
         if (formValid) {
           this.builderStore.updateCharacter({
-            agility: { score: this.agility, upgraded: false },
-            strength: { score: this.strength, upgraded: false },
-            finesse: { score: this.finesse, upgraded: false },
-            instinct: { score: this.instinct, upgraded: false },
-            presence: { score: this.presence, upgraded: false },
-            knowledge: { score: this.knowledge, upgraded: false },
-            evasion: this.evasion,
+            agility: {
+              score: parseInt(this.agility, 10),
+              upgraded: false,
+            },
+            strength: {
+              score: parseInt(this.strength, 10),
+              upgraded: false,
+            },
+            finesse: {
+              score: parseInt(this.finesse, 10),
+              upgraded: false,
+            },
+            instinct: {
+              score: parseInt(this.instinct, 10),
+              upgraded: false,
+            },
+            presence: {
+              score: parseInt(this.presence, 10),
+              upgraded: false,
+            },
+            knowledge: {
+              score: parseInt(this.knowledge, 10),
+              upgraded: false,
+            },
+            evasion: parseInt(this.evasion, 10),
             threshold: { ...this.threshold },
           });
 

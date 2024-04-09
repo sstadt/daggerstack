@@ -12,7 +12,7 @@
         p.text-4xl.text-center You don't have any characters.... yet!
     .flex.flex-col
       BasicButton.rounded-none(
-        v-if="character.id"
+        v-if="character && character.id"
         @click="builderStore.open"
       ) {{ characterLabel }}
       BasicButton.rounded-none(@click="createNewCharacter(true)") New Character
@@ -46,7 +46,7 @@
     },
     methods: {
       createNewCharacter(clearBuilder) {
-        if (clearBuilder) this.builderStore.createCharacter();
+        if (clearBuilder) this.builderStore.newCharacter();
         this.builderStore.open();
       },
     },

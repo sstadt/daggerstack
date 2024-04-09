@@ -63,7 +63,7 @@
     },
     mounted() {
       if (!this.builderStore.character.id) {
-        this.builderStore.createCharacter();
+        this.builderStore.newCharacter();
       }
     },
     methods: {

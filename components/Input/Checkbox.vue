@@ -1,6 +1,11 @@
 <template lang="pug">
   label.input--checkbox(:class="{ 'disabled': disabled }")
-    input(type="checkbox" :name="name" :disabled="disabled")
+    input(
+      type="checkbox"
+      :name="name"
+      :disabled="disabled"
+      :checked="checked"
+    )
     span(v-if="label") {{ label }}
 </template>
 
@@ -19,6 +24,10 @@
       disabled: {
         type: Boolean,
         default: false,
+      },
+      checked: {
+        type: Boolean,
+        default: null,
       },
     },
   };

@@ -31,7 +31,7 @@ export const useBuilderStore = defineStore('builder', {
     close() {
       this.isOpen = false;
     },
-    createCharacter(options) {
+    newCharacter(options) {
       this.character = newCharacter(options);
 
       if (process.client) {
@@ -45,10 +45,10 @@ export const useBuilderStore = defineStore('builder', {
         localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(this.character));
       }
     },
-    saveCharacter() {
+    createCharacter() {
       const characterStore = useCharactersStore();
 
-      characterStore.saveCharacter({ ...this.character });
+      characterStore.createCharacter({ ...this.character });
       this.close();
       this.character = {};
 

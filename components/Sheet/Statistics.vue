@@ -15,7 +15,7 @@
             v-for="n in 9"
             :checked="n <= currentArmor"
             :disabled="n > this.character.armor.slots"
-            @change="toggleArmor(n)"
+            @change="changeArmor"
           )
       TraitDisplay(
         title="agility"
@@ -62,6 +62,8 @@
 </template>
 
 <script>
+  import { useCharactersStore } from '~/stores/characters';
+
   export default {
     name: 'SheetAttributes',
     props: {
@@ -72,8 +74,13 @@
     },
     data() {
       return {
-        currentArmor: this.character.current,
+        currentArmor: this.character.armor.current,
       };
+    },
+    setup() {
+      const charactersStore = useCharactersStore();
+
+      return { charactersStore };
     },
     computed: {
       characterEvasion() {
@@ -86,9 +93,23 @@
       },
     },
     methods: {
-      toggleArmor(n) {
-        // TODO: update current armor value
-        console.log('>>> toggle armor', n);
+      changeArmor($event) {
+        const updates = {
+          id: this.character.id,
+          armor: {
+            current: null,
+          },
+        };
+
+        if ($event.target.checked && this.currentArmor < this.character.armor.slots) {
+          updates.armor.current = this.currentArmor + 1;
+        } else if(!$event.target.checked && this.currentArmor > 0) {
+          updates.armor.current = this.currentArmor - 1;
+        }
+
+        if (updates.armor.current !== null) {
+          this.charactersStore.updateCharacter(updates);
+        }
       },
     },
   };
