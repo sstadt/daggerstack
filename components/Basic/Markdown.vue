@@ -23,9 +23,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .md {
-    &:deep > *:not(:first-child) {
-      margin-top: 10px;
-    }
+  .md :deep(> *:not(:first-child)) {
+    margin-top: 10px;
   }
 </style>

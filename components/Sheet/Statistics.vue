@@ -1,6 +1,6 @@
 <template lang="pug">
   .sheet-statistics
-    .p-6.grid.gap-8.grid-cols-3
+    .p-6.pb-0.grid.gap-8.grid-cols-3
       TraitDisplay(
         title="evasion"
         :score="character.evasion"
