@@ -48,7 +48,7 @@ export const useBuilderStore = defineStore('builder', {
     createCharacter() {
       const characterStore = useCharactersStore();
 
-      characterStore.createCharacter({ ...this.character });
+      characterStore.saveCharacter({ ...this.character });
       this.close();
       this.character = {};
 

@@ -4,7 +4,8 @@
       type="checkbox"
       :name="name"
       :disabled="disabled"
-      :checked="checked"
+      :value="value"
+      v-model="model"
     )
     span(v-if="label") {{ label }}
 </template>
@@ -12,7 +13,14 @@
 <script>
   export default {
     name: 'InputCheckbox',
-    props: {
+    props:{
+      modelValue: {
+        type: [Array, Boolean],
+      },
+      value: {
+        type: [String, Number, Boolean, Object],
+      },
+      checked: Boolean,
       label: {
         type: String,
         default: null,
@@ -25,11 +33,32 @@
         type: Boolean,
         default: false,
       },
-      checked: {
-        type: Boolean,
-        default: null,
+    },
+    data() {
+      return {
+        currentValue: this.value,
+      };
+    },
+    mounted() {
+      if (this.checked) {
+        this.currentValue = true;
+      }
+    },
+    computed:{
+      model:{
+        get() {
+          return this.modelValue;
+        },
+        set(value) {
+          this.$emit("update:modelValue", value);
+        },
       },
     },
+    // watch: {
+    //   currentValue() {
+    //     this.$emit('input', this.currentValue);
+    //   },
+    // },
   };
 </script>
 

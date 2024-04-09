@@ -32,8 +32,8 @@ export const useCharactersStore = defineStore('characters', {
         }
       }
     },
-    createCharacter(character) {
-      const index = this.characterList.find((c) => c.id === character.id);
+    saveCharacter(character) {
+      const index = this.characterList.findIndex((c) => c.id === character.id);
 
       if (index > -1) {
         this.characterList.splice(index, 1, character);

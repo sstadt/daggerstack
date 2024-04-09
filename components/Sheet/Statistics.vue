@@ -12,10 +12,10 @@
       .flex.items-start.justify-center
         .sheet-durability.grid.grid-cols-3.grid-rows-3.gap-1.mt-4
           InputCheckbox(
-            v-for="n in 9"
-            :checked="n <= currentArmor"
+            v-for="n in maxArmor"
+            v-model="currentArmor"
+            :value="n"
             :disabled="n > this.character.armor.slots"
-            @change="changeArmor"
           )
       TraitDisplay(
         title="agility"
@@ -66,16 +66,26 @@
 
   export default {
     name: 'SheetAttributes',
+    data() {
+      const maxArmor = 9;
+      const currentArmor = [];
+
+      for(let i = 0; i < 5; i++) {
+        if (i < this.character.armor.current) {
+          currentArmor.push(i + 1);
+        }
+      }
+
+      return {
+        currentArmor,
+        maxArmor,
+      };
+    },
     props: {
       character: {
         type: Object,
         required: true,
       },
-    },
-    data() {
-      return {
-        currentArmor: this.character.armor.current,
-      };
     },
     setup() {
       const charactersStore = useCharactersStore();
@@ -92,23 +102,11 @@
         return 0;
       },
     },
-    methods: {
-      changeArmor($event) {
-        const updates = {
-          id: this.character.id,
-          armor: {
-            current: null,
-          },
-        };
-
-        if ($event.target.checked && this.currentArmor < this.character.armor.slots) {
-          updates.armor.current = this.currentArmor + 1;
-        } else if(!$event.target.checked && this.currentArmor > 0) {
-          updates.armor.current = this.currentArmor - 1;
-        }
-
-        if (updates.armor.current !== null) {
-          this.charactersStore.updateCharacter(updates);
+    watch: {
+      currentArmor(newVal, oldVal) {
+        if (newVal.length !== oldVal.length) {
+          this.character.armor.current = newVal.length;
+          this.charactersStore.saveCharacter(this.character);
         }
       },
     },
