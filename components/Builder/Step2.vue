@@ -58,7 +58,9 @@
         .flex.space-x-2.justify-between.text-xl.pt-4
           p Hope
           p 2
-      BasicButton.block.ml-auto(type="submit") Next
+      .flex.justify-between.items-center
+        NuxtLink(to="/") Finish Later
+        BasicButton.block.ml-auto(type="submit") Next
 </template>
 
 <script>

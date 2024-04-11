@@ -10,7 +10,8 @@
       "secondaryFeature": null,
       "damage": "1d10+2",
       "damageType": "phy",
-      "burden": 2
+      "burden": 2,
+      "starting": true
     },
     {
       "name": "Warhammer",
@@ -22,7 +23,8 @@
       "secondaryFeature": null,
       "damage": "1d12+2",
       "damageType": "phy",
-      "burden": 2
+      "burden": 2,
+      "starting": true
     },
     {
       "name": "Greatsword",
@@ -34,7 +36,8 @@
       "secondaryFeature": null,
       "damage": "1d10+2",
       "damageType": "phy",
-      "burden": 2
+      "burden": 2,
+      "starting": true
     },
     {
       "name": "Mace",
@@ -46,7 +49,8 @@
       "secondaryFeature": null,
       "damage": "1d8",
       "damageType": "phy",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     },
     {
       "name": "Saber",
@@ -58,7 +62,8 @@
       "secondaryFeature": null,
       "damage": "1d8",
       "damageType": "phy",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     },
     {
       "name": "Longsword",
@@ -70,7 +75,8 @@
       "secondaryFeature": null,
       "damage": "1d8",
       "damageType": "phy",
-      "burden": 2
+      "burden": 2,
+      "starting": true
     },
     {
       "name": "Shortsword",
@@ -82,7 +88,8 @@
       "secondaryFeature": "paired",
       "damage": "1d10",
       "damageType": "phy",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     },
     {
       "name": "Dagger",
@@ -94,7 +101,8 @@
       "secondaryFeature": "paired",
       "damage": "1d8",
       "damageType": "phy",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     },
     {
       "name": "Quarterstaff",
@@ -106,7 +114,8 @@
       "secondaryFeature": null,
       "damage": "1d10+2",
       "damageType": "phy",
-      "burden": 2
+      "burden": 2,
+      "starting": true
     },
     {
       "name": "Halberd",
@@ -118,7 +127,8 @@
       "secondaryFeature": null,
       "damage": "1d10",
       "damageType": "phy",
-      "burden": 2
+      "burden": 2,
+      "starting": true
     },
     {
       "name": "Shortbow",
@@ -128,7 +138,8 @@
       "secondaryFeature": null,
       "damage": "1d8+2",
       "damageType": "phy",
-      "burden": 2
+      "burden": 2,
+      "starting": true
     },
     {
       "name": "Crossbow",
@@ -140,7 +151,8 @@
       "secondaryFeature": null,
       "damage": "1d8",
       "damageType": "phy",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     },
     {
       "name": "Longbow",
@@ -152,7 +164,8 @@
       "secondaryFeature": null,
       "damage": "1d10+2",
       "damageType": "phy",
-      "burden": 2
+      "burden": 2,
+      "starting": true
     },
     {
       "name": "Arcane Gauntlets",
@@ -164,7 +177,8 @@
       "secondaryFeature": null,
       "damage": "1d10+2",
       "damageType": "mag",
-      "burden": 2
+      "burden": 2,
+      "starting": true
     },
     {
       "name": "Hallowed Axe",
@@ -176,7 +190,8 @@
       "secondaryFeature": null,
       "damage": "1d10",
       "damageType": "mag",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     },
     {
       "name": "Hand Runes",
@@ -188,7 +203,8 @@
       "secondaryFeature": null,
       "damage": "1d10",
       "damageType": "mag",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     },
     {
       "name": "Glowing Rings",
@@ -200,7 +216,8 @@
       "secondaryFeature": null,
       "damage": "1d10+2",
       "damageType": "mag",
-      "burden": 2
+      "burden": 2,
+      "starting": true
     },
     {
       "name": "Shortstaff",
@@ -212,7 +229,8 @@
       "secondaryFeature": null,
       "damage": "1d10",
       "damageType": "mag",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     },
     {
       "name": "Returning Blade",
@@ -224,7 +242,8 @@
       "secondaryFeature": null,
       "damage": "1d8+2",
       "damageType": "mag",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     },
     {
       "name": "Wand",
@@ -236,7 +255,8 @@
       "secondaryFeature": null,
       "damage": "1d8",
       "damageType": "mag",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     },
     {
       "name": "Dualstaff",
@@ -247,7 +267,8 @@
       "feature": null,
       "damage": "1d8+2",
       "damageType": "mag",
-      "burden": 2
+      "burden": 2,
+      "starting": true
     },
     {
       "name": "Scepter",
@@ -259,7 +280,8 @@
       "secondaryFeature": null,
       "damage": "1d8+2",
       "damageType": "mag",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     },
     {
       "name": "Greatstaff",
@@ -271,7 +293,8 @@
       "secondaryFeature": null,
       "damage": "1d6+2",
       "damageType": "mag",
-      "burden": 2
+      "burden": 2,
+      "starting": true
     },
     {
       "name": "Round Shield",
@@ -283,7 +306,8 @@
       "secondaryFeature": null,
       "damage": "1d4",
       "damageType": "phy",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     },
     {
       "name": "Round Shield",
@@ -295,7 +319,8 @@
       "secondaryFeature": null,
       "damage": "1d4",
       "damageType": "phy",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     },
     {
       "name": "Tower Shield",
@@ -307,7 +332,8 @@
       "secondaryFeature": null,
       "damage": "1d6",
       "damageType": "phy",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     },
     {
       "name": "Whip",
@@ -319,7 +345,8 @@
       "secondaryFeature": null,
       "damage": "1d6",
       "damageType": "phy",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     },
     {
       "name": "Grappler",
@@ -331,7 +358,8 @@
       "secondaryFeature": null,
       "damage": "1d6",
       "damageType": "phy",
-      "burden": 1
+      "burden": 1,
+      "starting": true
     }
   ],
   "features": [

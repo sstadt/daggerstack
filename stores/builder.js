@@ -5,13 +5,14 @@ import { deepMerge } from '~/helpers/object';
 
 import { useCharactersStore } from '~/stores/characters';
 
-const LOCALSTORAGE_KEY = 'ds_builder_character';
+const LS_KEY_CHARACTER = 'ds_builder_character';
+const LS_KEY_PAGE = 'ds_builder_page';
 
 export const useBuilderStore = defineStore('builder', {
   state: () => {
     return {
-      isOpen: false,
-      character: {},
+      character: newCharacter(),
+      currentPage: 0,
     };
   },
   getters: {
@@ -22,7 +23,11 @@ export const useBuilderStore = defineStore('builder', {
   actions: {
     loadSavedCharacter() {
       if (process.client) {
-        this.character = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
+        const page = parseInt(localStorage.getItem(LS_KEY_PAGE));
+        console.log('>>> page', page);
+
+        this.character = JSON.parse(localStorage.getItem(LS_KEY_CHARACTER));
+        this.currentPage = Number.isInteger(page) ? page : 0;
       }
     },
     open() {
@@ -31,18 +36,23 @@ export const useBuilderStore = defineStore('builder', {
     close() {
       this.isOpen = false;
     },
+    savePage() {
+      if (process.client) {
+        localStorage.setItem(LS_KEY_PAGE, this.currentPage);
+      }
+    },
     newCharacter(options) {
       this.character = newCharacter(options);
 
       if (process.client) {
-        localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(this.character));
+        localStorage.setItem(LS_KEY_CHARACTER, JSON.stringify(this.character));
       }
     },
     updateCharacter(updates) {
       this.character = deepMerge(this.character, updates);
 
       if (process.client) {
-        localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(this.character));
+        localStorage.setItem(LS_KEY_CHARACTER, JSON.stringify(this.character));
       }
     },
     createCharacter() {
@@ -53,7 +63,7 @@ export const useBuilderStore = defineStore('builder', {
       this.character = {};
 
       if (process.client) {
-        localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(this.character));
+        localStorage.setItem(LS_KEY_CHARACTER, JSON.stringify(this.character));
       }
     },
   },

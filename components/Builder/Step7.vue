@@ -40,7 +40,9 @@
           :errors="v$.pronouns.$errors"
           required
         )
-      BasicButton.block.ml-auto(type="submit") Next
+      .flex.justify-between.items-center
+        NuxtLink(to="/") Finish Later
+        BasicButton.block(type="submit") Next
 </template>
 
 <script>

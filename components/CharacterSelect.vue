@@ -11,11 +11,12 @@
       .flex.items-center.justify-center.flex-grow(v-else)
         p.text-4xl.text-center You don't have any characters.... yet!
     .flex.flex-col
-      BasicButton.rounded-none(
-        v-if="character && character.id"
-        @click="builderStore.open"
-      ) {{ characterLabel }}
-      BasicButton.rounded-none(@click="createNewCharacter(true)") New Character
+      NuxtLink(to="/builder")
+        BasicButton.rounded-none.w-full(v-if="character && character.id")
+          | {{ characterLabel }}
+      NuxtLink(:to="{ name: 'builder', query: { new: true } }")
+        BasicButton.rounded-none.w-full
+          | New Character
 </template>
 
 <script>

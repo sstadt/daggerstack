@@ -7,7 +7,9 @@
           | {{ question.question }}
           NuxtIcon.ml-1.align-middle(name="edit")
         InputTextarea(v-model="question.answer")
-      BasicButton.block.ml-auto(@click="next") Save
+      .flex.justify-between.items-center
+        NuxtLink(to="/") Finish Later
+        BasicButton.block(@click="next") Next
     BasicPrompt(ref="prompt" @confirm="saveQuestion")
 </template>
 

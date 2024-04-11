@@ -1,7 +1,6 @@
 <template lang="pug">
   .app
-    NuxtPage
-    CharacterBuilder(v-if="storageLoaded")
+    NuxtPage(v-if="storageLoaded")
 </template>
 
 <script>

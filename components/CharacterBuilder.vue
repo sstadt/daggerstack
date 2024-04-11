@@ -1,29 +1,32 @@
 <template lang="pug">
-  BasicModal(title="New Character" :is-open="isOpen" :close="close")
-    .flex.flex-col.flex-grow
-      BuilderProgress(:page="currentIndex" :steps="8" @set="setStep")
-      .flex.flex-grow
-        Swiper.builder__slider(
-          :slides-per-view="1"
-          @swiper="onSwiper"
-          @slide-change="onSlideChange"
-        )
-          SwiperSlide.min-h-full
-            BuilderStep1(@next="swiper.slideNext()")
-          SwiperSlide.min-h-full
-            BuilderStep2(@next="swiper.slideNext()")
-          SwiperSlide.min-h-full
-            BuilderStep3(@next="swiper.slideNext()")
-          SwiperSlide.min-h-full
-            BuilderStep4(@next="swiper.slideNext()")
-          SwiperSlide.min-h-full
-            BuilderStep5(@next="swiper.slideNext()")
-          SwiperSlide.min-h-full
-            BuilderStep6(@next="swiper.slideNext()")
-          SwiperSlide.min-h-full
-            BuilderStep7(@next="swiper.slideNext()")
-          SwiperSlide.min-h-full.flex-grow-1
-            BuilderStep8(@next="createCharacter")
+  transition(name="fade")
+    .character-builder(v-if="saveLoaded")
+      h2.text-center.text-2xl.font-black.uppercase.p-4 Create Character
+      .flex.flex-col.flex-grow
+        BuilderProgress(:page="currentPage" :steps="8" @set="setStep")
+        .flex.flex-grow
+          Swiper.builder__slider(
+            :slides-per-view="1"
+            :initial-slide="currentPage"
+            @swiper="onSwiper"
+            @slide-change="onSlideChange"
+          )
+            SwiperSlide.min-h-full
+              BuilderStep1(@next="swiper.slideNext()")
+            SwiperSlide.min-h-full
+              BuilderStep2(@next="swiper.slideNext()")
+            SwiperSlide.min-h-full
+              BuilderStep3(@next="swiper.slideNext()")
+            SwiperSlide.min-h-full
+              BuilderStep4(@next="swiper.slideNext()")
+            SwiperSlide.min-h-full
+              BuilderStep5(@next="swiper.slideNext()")
+            SwiperSlide.min-h-full
+              BuilderStep6(@next="swiper.slideNext()")
+            SwiperSlide.min-h-full
+              BuilderStep7(@next="swiper.slideNext()")
+            SwiperSlide.min-h-full.flex-grow-1
+              BuilderStep8(@next="createCharacter")
 </template>
 
 <script>
@@ -35,16 +38,23 @@
     data() {
       return {
         swiper: null,
-        currentIndex: 0,
+        saveLoaded: false,
       };
     },
     computed: {
-      ...mapState(useBuilderStore, ['isOpen', 'character']),
+      ...mapState(useBuilderStore, ['currentPage', 'character']),
     },
     setup() {
       const builderStore = useBuilderStore();
 
       return { builderStore };
+    },
+    mounted() {
+      if (!this.$route.query.new) {
+        this.builderStore.loadSavedCharacter();
+      }
+
+      this.saveLoaded = true;
     },
     methods: {
       slideTo(slideIndex) {
@@ -54,13 +64,11 @@
         this.swiper = swiper;
       },
       onSlideChange(swiper) {
-        this.currentIndex = swiper.activeIndex;
+        this.builderStore.currentPage = swiper.activeIndex;
+        this.builderStore.savePage();
       },
       setStep(step) {
         this.swiper.slideTo(step);
-      },
-      close() {
-        this.builderStore.close();
       },
       createCharacter() {
         this.builderStore.createCharacter();

@@ -31,7 +31,9 @@
     .space-y-4
       h2.text-center.text-2xl.font-black.uppercase Domain Cards
       p.text-center.mb-2.text-sm.text-slate-500 Choose two cards from the level one -domain1- and -domain2- domain decks.
-    BasicButton.block.ml-auto(@click="next") Next
+    .flex.justify-between.items-center
+      NuxtLink(to="/") Finish Later
+      BasicButton.block(type="submit") Next
 </template>
 
 <script>

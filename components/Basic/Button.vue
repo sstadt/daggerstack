@@ -1,5 +1,5 @@
 <template lang="pug">
-  button.text-lg.rounded-md.uppercase.font-bold.border.transition-colors(
+  button.button.text-lg.rounded-md.uppercase.font-bold.border.transition-colors(
     class="hover:shadow-md active:shadow-md"
     :class="buttonClass"
     :type="type"
