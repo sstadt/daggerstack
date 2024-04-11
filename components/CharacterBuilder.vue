@@ -18,7 +18,11 @@
             SwiperSlide.min-h-full
               BuilderStep3(@next="swiper.slideNext()")
             SwiperSlide.min-h-full
-              BuilderStep4(@next="swiper.slideNext()")
+              BuilderStep4(
+                ref="equipmentStep"
+                @pick-equipment="openEquipmentPicker"
+                @next="swiper.slideNext()"
+              )
             SwiperSlide.min-h-full
               BuilderStep5(@next="swiper.slideNext()")
             SwiperSlide.min-h-full
@@ -27,11 +31,22 @@
               BuilderStep7(@next="swiper.slideNext()")
             SwiperSlide.min-h-full.flex-grow-1
               BuilderStep8(@next="createCharacter")
+      BasicDrawer(ref="equipmentPicker" :title="pickerTitle")
+        p {{ pickerType }}
 </template>
 
 <script>
   import { mapState } from 'pinia';
   import { useBuilderStore } from '~/stores/builder';
+
+  import WEAPONS from '~/data/weapons';
+  import ARMOR from '~/data/armor';
+
+  import {
+    PRIMARY_WEAPON_TYPE,
+    SECONDARY_WEAPON_TYPE,
+    ARMOR_TYPE,
+  } from '~/config/equipmentPicker';
 
   export default {
     name: 'CharacterBuilder',
@@ -39,10 +54,29 @@
       return {
         swiper: null,
         saveLoaded: false,
+        pickerType: PRIMARY_WEAPON_TYPE,
       };
     },
     computed: {
       ...mapState(useBuilderStore, ['currentPage', 'character']),
+      itemList() {
+        if (this.pickerType === PRIMARY_WEAPON_TYPE) {
+          return [ ...WEAPONS.items.filter((item) => item.primary === true) ];
+        }
+
+        if (this.pickerType === SECONDARY_WEAPON_TYPE) {
+          return [ ...WEAPONS.items.filter((item) => item.secondary === true) ];
+        }
+
+        if (this.pickerType === ARMOR_TYPE) {
+          return [ ...ARMOR.items ];
+        }
+
+        return [];
+      },
+      pickerTitle() {
+        return this.pickerType === ARMOR_TYPE ? 'Armor' : 'Weapons';
+      },
     },
     setup() {
       const builderStore = useBuilderStore();
@@ -69,6 +103,14 @@
       },
       setStep(step) {
         this.swiper.slideTo(step);
+      },
+      openEquipmentPicker(type) {
+        if ([PRIMARY_WEAPON_TYPE, SECONDARY_WEAPON_TYPE, ARMOR_TYPE].includes(type)) {
+          this.pickerType = type;
+          this.$refs.equipmentPicker.open();
+        } else {
+          throw new Error('Invalid type passed to equipment picker');
+        }
       },
       createCharacter() {
         this.builderStore.createCharacter();

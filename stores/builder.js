@@ -24,7 +24,6 @@ export const useBuilderStore = defineStore('builder', {
     loadSavedCharacter() {
       if (process.client) {
         const page = parseInt(localStorage.getItem(LS_KEY_PAGE));
-        console.log('>>> page', page);
 
         this.character = JSON.parse(localStorage.getItem(LS_KEY_CHARACTER));
         this.currentPage = Number.isInteger(page) ? page : 0;

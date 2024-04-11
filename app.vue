@@ -1,6 +1,6 @@
 <template lang="pug">
   .app
-    NuxtPage(v-if="storageLoaded")
+    NuxtPage
 </template>
 
 <script>
