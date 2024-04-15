@@ -2,6 +2,7 @@
   "items": [
     {
       "name": "Battleaxe",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "strength",
@@ -15,6 +16,7 @@
     },
     {
       "name": "Warhammer",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "strength",
@@ -28,6 +30,7 @@
     },
     {
       "name": "Greatsword",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "strength",
@@ -41,6 +44,7 @@
     },
     {
       "name": "Mace",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "strength",
@@ -54,6 +58,7 @@
     },
     {
       "name": "Saber",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "agility",
@@ -67,6 +72,7 @@
     },
     {
       "name": "Longsword",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "agility",
@@ -80,6 +86,7 @@
     },
     {
       "name": "Shortsword",
+      "type": "weapon",
       "primary": true,
       "secondary": true,
       "trait": "agility",
@@ -93,6 +100,7 @@
     },
     {
       "name": "Dagger",
+      "type": "weapon",
       "primary": true,
       "secondary": true,
       "trait": "finesse",
@@ -106,6 +114,7 @@
     },
     {
       "name": "Quarterstaff",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "instinct",
@@ -119,6 +128,7 @@
     },
     {
       "name": "Halberd",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "strength",
@@ -132,6 +142,7 @@
     },
     {
       "name": "Shortbow",
+      "type": "weapon",
       "trait": "agility",
       "range": "far",
       "feature": null,
@@ -143,6 +154,7 @@
     },
     {
       "name": "Crossbow",
+      "type": "weapon",
       "primary": true,
       "secondary": true,
       "trait": "finesse",
@@ -156,6 +168,7 @@
     },
     {
       "name": "Longbow",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "agility",
@@ -169,6 +182,7 @@
     },
     {
       "name": "Arcane Gauntlets",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "strength",
@@ -182,6 +196,7 @@
     },
     {
       "name": "Hallowed Axe",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "strength",
@@ -195,6 +210,7 @@
     },
     {
       "name": "Hand Runes",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "instinct",
@@ -208,6 +224,7 @@
     },
     {
       "name": "Glowing Rings",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "agility",
@@ -221,6 +238,7 @@
     },
     {
       "name": "Shortstaff",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "instinct",
@@ -234,6 +252,7 @@
     },
     {
       "name": "Returning Blade",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "finesse",
@@ -247,6 +266,7 @@
     },
     {
       "name": "Wand",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "knowledge",
@@ -260,6 +280,7 @@
     },
     {
       "name": "Dualstaff",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "instinct",
@@ -272,6 +293,7 @@
     },
     {
       "name": "Scepter",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "presence",
@@ -285,6 +307,7 @@
     },
     {
       "name": "Greatstaff",
+      "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "knowledge",
@@ -298,6 +321,7 @@
     },
     {
       "name": "Round Shield",
+      "type": "weapon",
       "primary": false,
       "secondary": true,
       "trait": "strength",
@@ -311,6 +335,7 @@
     },
     {
       "name": "Round Shield",
+      "type": "weapon",
       "primary": false,
       "secondary": true,
       "trait": "strength",
@@ -324,6 +349,7 @@
     },
     {
       "name": "Tower Shield",
+      "type": "weapon",
       "primary": false,
       "secondary": true,
       "trait": "strength",
@@ -337,6 +363,7 @@
     },
     {
       "name": "Whip",
+      "type": "weapon",
       "primary": false,
       "secondary": true,
       "trait": "agility",
@@ -350,6 +377,7 @@
     },
     {
       "name": "Grappler",
+      "type": "weapon",
       "primary": false,
       "secondary": true,
       "trait": "agility",

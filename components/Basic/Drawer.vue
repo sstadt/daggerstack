@@ -3,7 +3,7 @@
     transition(name="fade" appear)
       .drawer__overlay.absolute.w-full.h-full.bg-black.opacity-30(v-if="isOpen")
     transition(name="off-canvas-right" appear)
-      .drawer__content.relative.bg-white.h-full.p-4.ml-auto.overflow-y-auto.shadow(
+      .drawer__content.relative.bg-white.h-full.py-4.ml-auto.overflow-y-auto.shadow(
         v-if="isOpen"
         class="w-11/12"
       )

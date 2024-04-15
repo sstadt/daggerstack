@@ -2,24 +2,28 @@
   "items": [
     {
       "name": "Leather Armor",
+      "type": "armor",
       "feature": "light",
       "score": 3,
       "starting": true
     },
     {
       "name": "Breastplate Armor",
+      "type": "armor",
       "feature": null,
       "score": 5,
       "starting": true
     },
     {
       "name": "Chainmail Armor",
+      "type": "armor",
       "feature": "heavy",
       "score": 7,
       "starting": true
     },
     {
       "name": "Full Plate Armor",
+      "type": "armor",
       "feature": "veryHeavy",
       "score": 9,
       "starting": true

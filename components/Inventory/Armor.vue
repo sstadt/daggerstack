@@ -1,55 +1,46 @@
 <template lang="pug">
   .w-full.space-y-2
-    h3.text-xl.font-black.uppercase(v-if="title") {{ title }}
-    .flex.space-x-1
-      InputText(
-        v-model="name"
-        class="w-7/12"
-        label="name"
-        :errors="validation ? validation.name.$errors : []"
-        :required="validation !== null"
-        @input="update"
-      )
-      InputText(
-        v-model="score"
-        class="w-5/12"
-        label="base score"
-        :errors="validation ? validation.score.$errors : []"
-        :required="validation !== null"
-        @input="update"
-      )
-    InputText(v-model="feature" label="feature" @input="update")
+    .flex.space-x-2.justify-between
+      h3.text-lg.font-bold.truncate {{ armor.name }}
+      p.text-lg {{ armor.score }}
+    p.text-slate-700.text-sm(v-if="armor.feature")
+      span.font-bold.mr-1 {{ titleCase(armor.feature) }}
+      span.italic(v-if="featureDescription") {{ featureDescription }}
 </template>
 
 <script>
+  import { titleCase, modifierString } from '~/helpers/string';
+
+  import ARMOR from '~/data/armor';
+
   export default {
     name: 'InventoryArmor',
     props: {
-      modelValue: { type: Object },
-      title: {
-        type: String,
-        default: null,
-      },
-      validation: {
+      armor: {
         type: Object,
-        default: null,
+        required: true,
       },
     },
-    data() {
-      return {
-        name: this.modelValue.name,
-        score: this.modelValue.score,
-        feature: this.modelValue.feature,
-      };
+    computed: {
+      featureDescription() {
+        if (!this.armor.feature) return null;
+
+        const feature = ARMOR.features.find(
+          (feature) => feature.name === this.armor.feature,
+        );
+        const modifiers = feature && feature.modify
+          ? modifierString(feature.modify)
+          : null;
+
+        if (feature.description && modifiers) return `${modifiers}. ${feature.description}`;
+        if (!modifiers) return feature.description;
+        if (!feature.description) return modifiers;
+
+        return null;
+      },
     },
     methods: {
-      update() {
-        this.$emit('update:modelValue', {
-          name: this.name,
-          score: this.score,
-          feature: this.feature,
-        });
-      },
+      titleCase,
     },
   };
 </script>

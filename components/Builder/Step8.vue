@@ -9,7 +9,7 @@
         InputTextarea(v-model="question.answer")
       .flex.justify-between.items-center
         NuxtLink(to="/") Finish Later
-        BasicButton.block(@click="next") Next
+        BasicButton.block(@click="next") Finish
     BasicPrompt(ref="prompt" @confirm="saveQuestion")
 </template>
 
@@ -21,7 +21,7 @@
   export default {
     name: 'BuilderStep8',
     data() {
-      const connectionQuestions = []
+      const connectionQuestions = [];
 
       this.builderStore.character.connection.forEach(({ question, answer }) => {
         connectionQuestions.push({

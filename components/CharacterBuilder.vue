@@ -32,15 +32,12 @@
             SwiperSlide.min-h-full.flex-grow-1
               BuilderStep8(@next="createCharacter")
       BasicDrawer(ref="equipmentPicker" :title="pickerTitle")
-        p {{ pickerType }}
+        InventoryPicker(:type="pickerType" @select="selectItem")
 </template>
 
 <script>
   import { mapState } from 'pinia';
   import { useBuilderStore } from '~/stores/builder';
-
-  import WEAPONS from '~/data/weapons';
-  import ARMOR from '~/data/armor';
 
   import {
     PRIMARY_WEAPON_TYPE,
@@ -59,21 +56,6 @@
     },
     computed: {
       ...mapState(useBuilderStore, ['currentPage', 'character']),
-      itemList() {
-        if (this.pickerType === PRIMARY_WEAPON_TYPE) {
-          return [ ...WEAPONS.items.filter((item) => item.primary === true) ];
-        }
-
-        if (this.pickerType === SECONDARY_WEAPON_TYPE) {
-          return [ ...WEAPONS.items.filter((item) => item.secondary === true) ];
-        }
-
-        if (this.pickerType === ARMOR_TYPE) {
-          return [ ...ARMOR.items ];
-        }
-
-        return [];
-      },
       pickerTitle() {
         return this.pickerType === ARMOR_TYPE ? 'Armor' : 'Weapons';
       },
@@ -86,6 +68,9 @@
     mounted() {
       if (!this.$route.query.new) {
         this.builderStore.loadSavedCharacter();
+      } else {
+        this.builderStore.currentPage = 0;
+        this.builderStore.savePage();
       }
 
       this.saveLoaded = true;
@@ -112,8 +97,15 @@
           throw new Error('Invalid type passed to equipment picker');
         }
       },
+      selectItem(item) {
+        this.$refs.equipmentPicker.close();
+        this.$refs.equipmentStep.selectItem(item);
+      },
       createCharacter() {
+        const characterId = this.character.id;
+
         this.builderStore.createCharacter();
+        this.$router.push({ path: `/character/${characterId}` });
       },
     },
   };

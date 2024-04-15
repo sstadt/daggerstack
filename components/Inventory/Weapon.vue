@@ -1,64 +1,51 @@
 <template lang="pug">
-  .w-full.space-y-2
-    h3.text-xl.font-black.uppercase.mt-6(v-if="title") {{ title }}
-    InputText(
-      v-model="name"
-      label="name"
-      :errors="validation ? validation.name.$errors : []"
-      :required="validation !== null"
-      @input="update"
-    )
-    .flex.space-x-1
-      InputText(
-        v-model="trait"
-        class="w-1/2"
-        label="trait & range"
-        :errors="validation ? validation.trait.$errors : []"
-        :required="validation !== null"
-        @input="update"
-      )
-      InputText(
-        v-model="damage"
-        class="w-1/2"
-        label="damage dice"
-        :errors="validation ? validation.damage.$errors : []"
-        :required="validation !== null"
-        @input="update"
-      )
-    InputText(v-model="feature" label="feature" @input="update")
+  .w-full
+    .flex.justify-between.items-center
+      h3.text-lg.font-bold.truncate {{ weapon.name }}
+      .flex
+        NuxtIcon(name="left-hand")
+        NuxtIcon(v-if="weapon.burden > 1" name="right-hand")
+    .flex.justify-between
+      p {{ ucFirst(weapon.trait) }} {{ weapon.range }}
+      p {{ weapon.damage }} ({{ weapon.damageType }})
+    p.text-slate-600.text-sm.space-x-1(v-if="weapon.feature")
+      span.font-bold {{ ucFirst(weapon.feature) }}
+      span.italic(v-if="featureDescription") {{ featureDescription }}
 </template>
 
 <script>
+  import { ucFirst, modifierString } from '~/helpers/string';
+
+  import WEAPONS from '~/data/weapons';
+
   export default {
     name: 'InventoryWeapon',
     props: {
-      modelValue: { type: Object },
-      title: {
-        type: String,
-        default: null,
-      },
-      validation: {
+      weapon: {
         type: Object,
-        default: null,
+        required: true,
       },
     },
-    data() {
-      return {
-        name: this.modelValue.name,
-        trait: this.modelValue.trait,
-        damage: this.modelValue.damage,
-        feature: this.modelValue.feature,
-      };
+    computed: {
+      featureDescription() {
+        if (!this.weapon.feature) return null;
+
+        const feature = WEAPONS.features.find(
+          (feature) => feature.name === this.weapon.feature,
+        );
+        const modifiers = feature && feature.modify
+          ? modifierString(feature.modify)
+          : null;
+
+        if (feature.description && modifiers) return `${modifiers}. ${feature.description}`;
+        if (!modifiers) return feature.description;
+        if (!feature.description) return modifiers;
+
+        return null;
+      },
     },
     methods: {
-      update() {
-        this.$emit('update:modelValue', {
-          name: this.name,
-          trait: this.trait,
-          damage: this.damage,
-          feature: this.feature,
-        });
-      },
+      ucFirst,
     },
   };
 </script>

@@ -2,15 +2,39 @@
   .container.p-8
     form(@submit.prevent="next").space-y-8
       h2.text-center.text-2xl.font-black.uppercase.mb-2 Starting Equipment
-      h3.text-lg.font-bold.uppercase primary weapon
-      div(v-if="primaryWeapon.name") {{ primaryWeapon.name }}
-      BasicButton.block.mx-auto(v-else @click="openPicker(primaryWeaponType)") Select Weapon
-      h3.text-lg.font-bold.uppercase secondary weapon
-      div(v-if="secondaryWeapon.name") {{ secondaryWeapon.name }}
-      BasicButton.block.mx-auto(v-else @click="openPicker(secondaryWeaponType)") Select Weapon
-      h3.text-lg.font-bold.uppercase armor
-      div(v-if="armor.name") {{ armor.name }}
-      BasicButton.block.mx-auto(v-else @click="openPicker(armorType)") Select Armor
+      div
+        h3.text-lg.font-bold.uppercase.mb-2 primary weapon
+        InventoryWeapon(
+          v-if="primaryWeapon.name"
+          :weapon="primaryWeapon"
+          @click="openPicker(primaryWeaponType)"
+        )
+        BasicButton.block.mx-auto(
+          v-else
+          @click="openPicker(primaryWeaponType)"
+        ) Select Weapon
+      div
+        h3.text-lg.font-bold.uppercase.mb-2 secondary weapon
+        InventoryWeapon(
+          v-if="secondaryWeapon.name"
+          :weapon="secondaryWeapon"
+          @click="openPicker(secondaryWeaponType)"
+        )
+        BasicButton.block.mx-auto(
+          v-else
+          @click="openPicker(secondaryWeaponType)"
+        ) Select Weapon
+      div
+        h3.text-lg.font-bold.uppercase.mb-2 armor
+        InventoryArmor(
+          v-if="armor.name"
+          :armor="armor"
+          @click="openPicker(armorType)"
+        )
+        BasicButton.block.mx-auto(
+          v-else
+          @click="openPicker(armorType)"
+        ) Select Armor
       .flex.justify-between.items-center
         NuxtLink(to="/") Finish Later
         BasicButton.block(type="submit") Next
@@ -31,6 +55,7 @@
       const isNewCharacter = !this.builderStore.character.id;
 
       return {
+        activeType: null,
         primaryWeaponType: PRIMARY_WEAPON_TYPE,
         secondaryWeaponType: SECONDARY_WEAPON_TYPE,
         armorType: ARMOR_TYPE,
@@ -52,17 +77,18 @@
     },
     methods: {
       openPicker(type) {
+        this.activeType = type;
         this.$emit('pick-equipment', type);
       },
-      selectItem(type, item) {
-        console.log(type, item);
+      selectItem(item) {
+        this[this.activeType] = { ...item };
       },
       async next() {
         if (this.primaryWeapon.name && this.armor.name) {
           this.builderStore.updateCharacter({
             equipment: {
-              primaryWeapon: this.weapon,
-              secondaryWeapon: this.weapon,
+              primaryWeapon: this.primaryWeapon,
+              secondaryWeapon: this.secondaryWeapon,
               armor: this.armor,
             },
           });

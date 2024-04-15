@@ -106,7 +106,19 @@ export const newCharacter = (character) => {
         hoard: 0,
         fortune: 0,
       },
-      weapon: {
+      primaryWeapon: {
+        name: '',
+        primary: false,
+        secondary: false,
+        trait: '',
+        range: '',
+        damage: '',
+        damageType: '',
+        feature: null,
+        secondaryFeature: null,
+        burden: 0,
+      },
+      secondaryWeapon: {
         name: '',
         primary: false,
         secondary: false,

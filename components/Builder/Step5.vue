@@ -1,5 +1,5 @@
 <template lang="pug">
-  .container.p-8.space-y-8
+  form.container.p-8.space-y-8(@submit.prevent="next")
     .space-y-4
       h2.text-center.text-2xl.font-black.uppercase Description
       div
