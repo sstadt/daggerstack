@@ -10,22 +10,26 @@
       InputCheckbox
     .pb-8.border-b.mb-8.space-y-4
       h3.text-xl.font-black.uppercase.mt-6 Primary
-      InputText(label="name")
-      .flex
-        InputText(class="w-1/2" label="trait & range" inline)
-        InputText(class="w-1/2" label="damage dice")
-      InputText(label="feature")
+      InventoryWeapon(
+        v-if="character.equipment.primaryWeapon.name"
+        :weapon="character.equipment.primaryWeapon"
+      )
     .space-y-4
       h3.text-xl.font-black.uppercase Secondary
-      InputText(label="name")
-      .flex
-        InputText(class="w-1/2" label="trait & range" inline)
-        InputText(class="w-1/2" label="damage dice")
-      InputText(label="feature")
+      InventoryWeapon(
+        v-if="character.equipment.secondaryWeapon.name"
+        :weapon="character.equipment.secondaryWeapon"
+      )
 </template>
 
 <script>
   export default {
     name: 'SheetWeapons',
+    props: {
+      character: {
+        type: Object,
+        requried: true,
+      },
+    },
   };
 </script>

@@ -98,8 +98,13 @@
         return this.character.evasion;
       },
       characterArmor() {
-        // TODO: calculate this with inventory
-        return 0;
+        let score = 0;
+
+        if (this.character.equipment.armor) {
+          score += this.character.equipment.armor.score;
+        }
+
+        return score;
       },
     },
     watch: {
