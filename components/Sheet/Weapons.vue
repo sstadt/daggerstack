@@ -2,12 +2,11 @@
   BasicCard(title="Active Weapons")
     .flex.justify-center.mt-2.mb-4
       h3.uppercase.text-sm.font-bold.mr-4 Proficiency
-      InputCheckbox
-      InputCheckbox
-      InputCheckbox
-      InputCheckbox
-      InputCheckbox
-      InputCheckbox
+      InputCheckbox(
+        v-for="n in 6"
+        :checked="proficiency >= n"
+        read-only
+      )
     .pb-8.border-b.mb-8.space-y-4
       h3.text-xl.font-black.uppercase.mt-6 Primary
       InventoryWeapon(
@@ -29,6 +28,11 @@
       character: {
         type: Object,
         requried: true,
+      },
+    },
+    computed: {
+      proficiency() {
+        return this.character.proficiency;
       },
     },
   };

@@ -1,9 +1,9 @@
 <template lang="pug">
-  .w-full.space-y-2
+  .w-full
     .flex.space-x-2.justify-between
       h3.text-lg.font-bold.truncate {{ armor.name }}
       p.text-lg {{ armor.score }}
-    p.text-slate-700.text-sm(v-if="armor.feature")
+    p.text-sm.text-slate-600(v-if="armor.feature")
       span.font-bold.mr-1 {{ titleCase(armor.feature) }}
       span.italic(v-if="featureDescription") {{ featureDescription }}
 </template>

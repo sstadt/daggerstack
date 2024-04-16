@@ -6,6 +6,7 @@
       :disabled="disabled"
       :value="value"
       v-model="model"
+      @click="checkReadOnly"
     )
     span(v-if="label") {{ label }}
 </template>
@@ -29,6 +30,10 @@
         type: String,
         default: null,
       },
+      readOnly: {
+        type: Boolean,
+        default: false,
+      },
       disabled: {
         type: Boolean,
         default: false,
@@ -47,18 +52,29 @@
     computed:{
       model:{
         get() {
-          return this.modelValue;
+          return this.readOnly
+            ? this.currentValue
+            : this.modelValue;
         },
         set(value) {
           this.$emit("update:modelValue", value);
         },
       },
     },
-    // watch: {
-    //   currentValue() {
-    //     this.$emit('input', this.currentValue);
-    //   },
-    // },
+    methods: {
+      checkReadOnly($event) {
+        if (this.readOnly) {
+          $event.preventDefault();
+        }
+      },
+    },
+    watch: {
+      checked(newVal) {
+        if (this.readOnly) {
+          this.currentValue = newVal;
+        }
+      },
+    },
   };
 </script>
 

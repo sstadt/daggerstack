@@ -1,7 +1,7 @@
 <template lang="pug">
   .w-full
     .flex.justify-between.items-center
-      h3.text-lg.font-bold.truncate {{ weapon.name }}
+      h3.text-xl.font-bold.truncate {{ weapon.name }}
       .flex
         NuxtIcon(name="left-hand")
         NuxtIcon(v-if="weapon.burden > 1" name="right-hand")
