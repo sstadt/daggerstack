@@ -8,7 +8,7 @@
           class="w-1/4"
           @click="slideTo(index)"
         )
-        .absolute.bottom-0.h-2.bg-white.pointer-events-none.transition-all(
+        .nav-indicator.absolute.bottom-0.h-2.bg-white.pointer-events-none.transition-all(
           class="w-1/4"
           :style="indicatorStyle"
         )
@@ -86,5 +86,9 @@
     & > *:not(:last-child) {
       margin-bottom: 20px;
     }
+  }
+
+  .nav-indicator {
+    transform: translateY(1px);
   }
 </style>

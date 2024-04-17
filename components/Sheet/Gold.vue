@@ -1,6 +1,6 @@
 <template lang="pug">
   BasicCard(title="Gold")
-    .grid.grid-cols-2.gap-2.items-center
+    .grid.grid-cols-2.gap-2.items-center.mt-4
       h3.uppercase.text-sm.text-center.font-bold.text-right handfuls
       .flex
         .flex.bg-slate-300.p-1.pr-0

@@ -5,14 +5,12 @@
     )
       p {{ experience.name }}
       p +{{ experience.score }}
-    .hit-points.flex.items-center.pt-4.flex-wrap
-      h3.text-lg.font-bold.uppercase.w-20 hope
-      InputCheckbox(
-        v-for="n in maxHope"
-        v-model="hope"
-        :value="n"
-      )
-      p.text-xs.text-slate-500.ml-auto.w-full Spend hope to use experience or help an ally
+    InputCheckboxCounter.pt-4(
+      label="hope"
+      helper-text="Spend hope to use experience or help an ally"
+      v-model="hope"
+      :max="maxHope"
+    )
 </template>
 
 <script>
@@ -21,16 +19,8 @@
   export default {
     name: 'SheetExperience',
     data() {
-      const hope = [];
-
-      for(let i = 0; i < 5; i++) {
-        if (i < this.character.hope) {
-          hope.push(i + 1);
-        }
-      }
-
       return {
-        hope,
+        hope: this.character.hope,
         maxHope: 5,
       };
     },
@@ -47,8 +37,8 @@
     },
     watch: {
       hope(newVal, oldVal) {
-        if (newVal.length !== oldVal.length) {
-          this.character.hope = newVal.length;
+        if (newVal !== oldVal) {
+          this.character.hope = newVal;
           this.charactersStore.saveCharacter(this.character);
         }
       },
