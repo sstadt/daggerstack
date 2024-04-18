@@ -53,11 +53,6 @@
       currentValue(newVal) {
         this.$emit('update:modelValue', newVal.length);
       },
-      modelValue(newVal) {
-        if (newVal !== this.currentVal.length) {
-          this.currentValue = [...Array(newVal).keys()];
-        }
-      },
       enabled(newVal, oldVal) {
         if (newVal !== null && newVal !== oldVal) {
           this.maxSelectable = newVal;

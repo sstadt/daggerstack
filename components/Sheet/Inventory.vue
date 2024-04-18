@@ -1,22 +1,52 @@
 <template lang="pug">
   BasicCard(title="inventory")
-    InputTextarea.pb-8.border-b.mb-8.mt-6(label="Items")
-    .pb-8.border-b.mb-8
-      h3.text-xl.font-black.uppercase.mb-4 Inventory Weapon
-      InputText(label="name")
-      .flex
-        InputText(class="w-1/2" label="trait & range" inline)
-        InputText(class="w-1/2" label="damage dice")
-      InputText(label="feature")
-    h3.text-xl.font-black.uppercase.mb-4 Inventory Armor
-    .flex.mb-4
-      InputText(class="w-2/3" label="name" inline)
-      InputText(class="w-1/3" label="base score" inline)
-    InputText(label="feature")
+    InputTextarea.pb-8.border-b.mb-8.mt-6(label="Items" v-model="items")
+    InventoryWeapon(
+      v-if="character.inventory.weapon.name"
+      :weapon="character.inventory.weapon"
+      @click="openPicker"
+    )
+    BasicButton.mx-auto.block(v-else @click="openPicker") Select Weapon
 </template>
 
 <script>
+  import { useCharactersStore } from '~/stores/characters';
+
+  import { OPEN_EQUIPMENT_PICKER } from '~/config/events';
+  import {
+    ALL_WEAPON_TYPE,
+    SLOT_INVENTORY_WEAPON,
+  } from '~/config/equipmentPicker';
+
   export default {
     name: 'SheetInventory',
+    props: {
+      character: {
+        type: Object,
+        required: true,
+      },
+    },
+    data() {
+      return {
+        items: this.character.inventory.items,
+      };
+    },
+    setup() {
+      const charactersStore = useCharactersStore();
+
+      return { charactersStore };
+    },
+    methods: {
+      openPicker() {
+        this.$emit(OPEN_EQUIPMENT_PICKER, {
+          type: ALL_WEAPON_TYPE,
+          slot: SLOT_INVENTORY_WEAPON,
+        });
+      },
+      selectItem(weapon) {
+        this.character.inventory.weapon = { ...weapon };
+        this.charactersStore.saveCharacter(this.character);
+      },
+    },
   };
 </script>

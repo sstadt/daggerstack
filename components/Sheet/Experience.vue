@@ -18,6 +18,12 @@
 
   export default {
     name: 'SheetExperience',
+    props: {
+      character: {
+        type: Object,
+        required: true,
+      },
+    },
     data() {
       return {
         hope: this.character.hope,
@@ -28,12 +34,6 @@
       const charactersStore = useCharactersStore();
 
       return { charactersStore };
-    },
-    props: {
-      character: {
-        type: Object,
-        required: true,
-      },
     },
     watch: {
       hope(newVal, oldVal) {

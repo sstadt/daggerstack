@@ -45,6 +45,12 @@
     ARMOR_TYPE,
   } from '~/config/equipmentPicker';
 
+  const validTypes = [
+    PRIMARY_WEAPON_TYPE,
+    SECONDARY_WEAPON_TYPE,
+    ARMOR_TYPE,
+  ];
+
   export default {
     name: 'CharacterBuilder',
     data() {
@@ -90,7 +96,7 @@
         this.swiper.slideTo(step);
       },
       openEquipmentPicker(type) {
-        if ([PRIMARY_WEAPON_TYPE, SECONDARY_WEAPON_TYPE, ARMOR_TYPE].includes(type)) {
+        if (validTypes.includes(type)) {
           this.pickerType = type;
           this.$refs.equipmentPicker.open();
         } else {

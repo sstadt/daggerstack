@@ -3,8 +3,8 @@
     .flex.justify-between.items-center
       h3.text-xl.font-bold.truncate {{ weapon.name }}
       .flex
-        NuxtIcon(name="left-hand")
-        NuxtIcon(v-if="weapon.burden > 1" name="right-hand")
+        NuxtIcon(v-if="showMainHand" name="left-hand")
+        NuxtIcon(v-if="showOffhand" name="right-hand")
     .flex.justify-between
       p {{ ucFirst(weapon.trait) }} {{ weapon.range }}
       p {{ weapon.damage }} ({{ weapon.damageType }})
@@ -27,6 +27,12 @@
       },
     },
     computed: {
+      showMainHand() {
+        return this.weapon.primary === true;
+      },
+      showOffhand() {
+        return this.weapon.burden > 1 || (!this.weapon.primary && this.weapon.secondary);
+      },
       featureDescription() {
         if (!this.weapon.feature) return null;
 

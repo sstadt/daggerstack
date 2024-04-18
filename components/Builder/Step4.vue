@@ -43,6 +43,7 @@
 <script>
   import { useBuilderStore } from '~/stores/builder';
 
+  import { OPEN_EQUIPMENT_PICKER } from '~/config/events';
   import {
     PRIMARY_WEAPON_TYPE,
     SECONDARY_WEAPON_TYPE,
@@ -78,9 +79,9 @@
     methods: {
       openPicker(type) {
         this.activeType = type;
-        this.$emit('pick-equipment', type);
+        this.$emit(OPEN_EQUIPMENT_PICKER, type);
       },
-      selectItem(item) {
+      selectItem({ item }) {
         this[this.activeType] = { ...item };
       },
       async next() {

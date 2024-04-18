@@ -49,8 +49,8 @@
         this.currentValue = true;
       }
     },
-    computed:{
-      model:{
+    computed: {
+      model: {
         get() {
           return this.readOnly
             ? this.currentValue

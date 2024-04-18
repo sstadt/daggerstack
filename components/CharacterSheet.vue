@@ -25,19 +25,56 @@
           SheetClassFeature(:character="character")
       SwiperSlide
         .space-y-8.pb-4
-          SheetWeapons(:character="character")
-          SheetArmor(:character="character")
+          SheetWeapons(
+            ref="sheetWeapons"
+            :character="character"
+            @pick-equipment="openEquipmentPicker"
+          )
+          SheetArmor(
+            ref="sheetArmor"
+            :character="character"
+            @pick-equipment="openEquipmentPicker"
+          )
       SwiperSlide
         .space-y-8.pb-4
           SheetGold(:character="character")
-          SheetInventory(:character="character")
+          SheetInventory(
+            ref="sheetInventory"
+            :character="character"
+            @pick-equipment="openEquipmentPicker"
+          )
       SwiperSlide
         .space-y-8.pb-4
           SheetBackground(:character="character")
           SheetConnections(:character="character")
+    BasicDrawer(ref="equipmentPicker" :title="pickerTitle")
+      InventoryPicker(
+        :type="pickerType"
+        :character="character"
+        :include-inventory="includeInventory"
+        @select="selectItem"
+      )
 </template>
 
 <script>
+  import {
+    ALL_WEAPON_TYPE,
+    PRIMARY_WEAPON_TYPE,
+    SECONDARY_WEAPON_TYPE,
+    ARMOR_TYPE,
+    SLOT_INVENTORY_WEAPON,
+    SLOT_PRIMARY_WEAPON,
+    SLOT_SECONDARY_WEAPON,
+    SLOT_ARMOR,
+  } from '~/config/equipmentPicker';
+
+  const validTypes = [
+    ALL_WEAPON_TYPE,
+    PRIMARY_WEAPON_TYPE,
+    SECONDARY_WEAPON_TYPE,
+    ARMOR_TYPE,
+  ];
+
   export default {
     name: 'CharacterSheet',
     props: {
@@ -56,6 +93,8 @@
           { icon: 'inventory' },
           { icon: 'background' },
         ],
+        activeSlot: null,
+        pickerType: PRIMARY_WEAPON_TYPE,
       };
     },
     computed: {
@@ -65,6 +104,12 @@
         return {
           left: `${left}%`,
         };
+      },
+      pickerTitle() {
+        return this.pickerType === ARMOR_TYPE ? 'Armor' : 'Weapons';
+      },
+      includeInventory() {
+        return this.activeSlot !== SLOT_INVENTORY_WEAPON;
       },
     },
     methods: {
@@ -76,6 +121,35 @@
       },
       onSlideChange(swiper) {
         this.currentIndex = swiper.activeIndex;
+      },
+      openEquipmentPicker({ type, slot }) {
+        if (validTypes.includes(type)) {
+          this.activeSlot = slot;
+          this.pickerType = type;
+          this.$refs.equipmentPicker.open();
+        } else {
+          throw new Error('Invalid type passed to equipment picker');
+        }
+      },
+      selectItem({ item, fromInventory }) {
+        if (this.activeSlot === SLOT_INVENTORY_WEAPON) {
+          this.$refs.sheetInventory.selectItem(item);
+        }
+
+        if (this.activeSlot === SLOT_PRIMARY_WEAPON) {
+          this.$refs.sheetWeapons.selectItem(item, SLOT_PRIMARY_WEAPON, fromInventory);
+        }
+
+        if (this.activeSlot === SLOT_SECONDARY_WEAPON) {
+          this.$refs.sheetWeapons.selectItem(item, SLOT_SECONDARY_WEAPON, fromInventory);
+        }
+
+        if (this.activeSlot === SLOT_ARMOR) {
+          this.$refs.sheetArmor.selectItem(item);
+        }
+
+        this.activeSlot = null;
+        this.$refs.equipmentPicker.close();
       },
     },
   };
