@@ -14,7 +14,7 @@
         )
     Swiper(
       :slides-per-view="1"
-      :autoheight="true"
+      :auto-height="true"
       @swiper="onSwiper"
       @slide-change="onSlideChange"
     )
@@ -52,11 +52,17 @@
         :type="pickerType"
         :character="character"
         :include-inventory="includeInventory"
+        :active-slot="activeSlot"
         @select="selectItem"
+        @remove-equipped-item="removeEquippedItem(activeSlot)"
       )
 </template>
 
 <script>
+  import { useCharactersStore } from '~/stores/characters';
+
+  import { newWeapon, newArmor } from '~/helpers/character';
+
   import {
     ALL_WEAPON_TYPE,
     PRIMARY_WEAPON_TYPE,
@@ -97,6 +103,11 @@
         pickerType: PRIMARY_WEAPON_TYPE,
       };
     },
+    setup() {
+      const charactersStore = useCharactersStore();
+
+      return { charactersStore };
+    },
     computed: {
       indicatorStyle() {
         const left = this.currentIndex * 25;
@@ -132,24 +143,50 @@
         }
       },
       selectItem({ item, fromInventory }) {
-        if (this.activeSlot === SLOT_INVENTORY_WEAPON) {
-          this.$refs.sheetInventory.selectItem(item);
-        }
-
-        if (this.activeSlot === SLOT_PRIMARY_WEAPON) {
-          this.$refs.sheetWeapons.selectItem(item, SLOT_PRIMARY_WEAPON, fromInventory);
-        }
-
-        if (this.activeSlot === SLOT_SECONDARY_WEAPON) {
-          this.$refs.sheetWeapons.selectItem(item, SLOT_SECONDARY_WEAPON, fromInventory);
-        }
-
-        if (this.activeSlot === SLOT_ARMOR) {
-          this.$refs.sheetArmor.selectItem(item);
+        switch (this.activeSlot) {
+          case SLOT_INVENTORY_WEAPON:
+            this.$refs.sheetInventory.selectItem(item);
+            break;
+          case SLOT_PRIMARY_WEAPON:
+            this.$refs.sheetWeapons.selectItem(item, SLOT_PRIMARY_WEAPON, fromInventory);
+            break;
+          case SLOT_SECONDARY_WEAPON:
+            this.$refs.sheetWeapons.selectItem(item, SLOT_SECONDARY_WEAPON, fromInventory);
+            break;
+          case SLOT_ARMOR:
+            this.$refs.sheetArmor.selectItem(item);
+            break;
         }
 
         this.activeSlot = null;
         this.$refs.equipmentPicker.close();
+      },
+      removeEquippedItem(slot) {
+        let itemRemoved = false;
+
+        switch (slot) {
+          case SLOT_INVENTORY_WEAPON:
+            this.character.inventory.weapon = newWeapon();
+            itemRemoved = true;
+            break;
+          case SLOT_PRIMARY_WEAPON:
+            this.character.equipment.primaryWeapon = newWeapon();
+            itemRemoved = true;
+            break;
+          case SLOT_SECONDARY_WEAPON:
+            this.character.equipment.secondaryWeapon = newWeapon();
+            itemRemoved = true;
+            break;
+          case SLOT_ARMOR:
+            this.character.equipment.armor = newArmor();
+            itemRemoved = true;
+            break;
+        }
+
+        if (itemRemoved) {
+          this.charactersStore.saveCharacter(this.character);
+          this.$refs.equipmentPicker.close();
+        }
       },
     },
   };

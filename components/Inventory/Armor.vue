@@ -32,7 +32,7 @@
           ? modifierString(feature.modify)
           : null;
 
-        if (feature.description && modifiers) return `${modifiers}. ${feature.description}`;
+        if (feature && feature.description && modifiers) return `${modifiers}. ${feature.description}`;
         if (!modifiers) return feature.description;
         if (!feature.description) return modifiers;
 

@@ -67,35 +67,9 @@ export const newCharacter = (character) => {
     hope: 2,
     proficiency: 1,
     equipment: {
-      primaryWeapon: {
-        name: null,
-        primary: false,
-        secondary: false,
-        trait: null,
-        range: null,
-        damage: null,
-        damageType: null,
-        feature: null,
-        secondaryFeature: null,
-        burden: 0,
-      },
-      secondaryWeapon: {
-        name: null,
-        primary: false,
-        secondary: false,
-        trait: null,
-        range: null,
-        damage: null,
-        damageType: null,
-        feature: null,
-        secondaryFeature: null,
-        burden: 0,
-      },
-      armor: {
-        name: '',
-        score: '',
-        feature: '',
-      },
+      primaryWeapon: newWeapon(),
+      secondaryWeapon: newWeapon(),
+      armor: newArmor(),
     },
     inventory: {
       items: '',
@@ -125,37 +99,30 @@ export const newCharacter = (character) => {
   };
 };
 
-export const newWeapon = (weapon) => {
-  const defaults = {
-    name: '',
-    trait: '',
-    damage: '',
-    feature: '',
-  };
-
-  const options = Object.assign({}, defaults, weapon);
-
+export const newWeapon = () => {
   return {
-    name: options.name,
-    trait: options.trait,
-    damage: options.damage,
-    feature: options.feature,
+    name: null,
+    type: 'weapon',
+    trait: null,
+    primary: false,
+    secondary: false,
+    range: null,
+    feature: null,
+    secondaryFeature: null,
+    damage: null,
+    damageType: null,
+    burden: 0,
+    starting: false,
   };
 };
 
-export const newArmor = (armor) => {
-  const defaults = {
-    name: '',
-    score: '',
-    feature: '',
-  };
-
-  const options = Object.assign({}, defaults, armor);
-
+export const newArmor = () => {
   return {
-    name: options.name,
-    score: options.score,
-    feature: options.feature,
+    name: null,
+    type: 'armor',
+    feature: null,
+    score: 0,
+    starting: false,
   };
 };
 

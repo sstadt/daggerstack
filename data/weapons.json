@@ -143,6 +143,8 @@
     {
       "name": "Shortbow",
       "type": "weapon",
+      "primary": true,
+      "secondary": false,
       "trait": "agility",
       "range": "far",
       "feature": null,
