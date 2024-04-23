@@ -7,7 +7,7 @@
         span {{ character.pronouns }}
     slot
     BasicDrawer(ref="health" title="Character")
-      SheetHealth
+      SheetHealth(:character="character")
 </template>
 
 <script>
