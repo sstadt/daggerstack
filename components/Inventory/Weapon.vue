@@ -8,13 +8,13 @@
     .flex.justify-between
       p {{ ucFirst(weapon.trait) }} {{ weapon.range }}
       p {{ weapon.damage }} ({{ weapon.damageType }})
-    p.text-slate-600.text-sm.space-x-1(v-if="weapon.feature")
-      span.font-bold {{ ucFirst(weapon.feature) }}
+    p.text-slate-600.text-sm.space-x-1(v-if="feature")
+      span.font-bold {{ ucFirst(feature.name) }}
       span.italic(v-if="featureDescription") {{ featureDescription }}
 </template>
 
 <script>
-  import { ucFirst, modifierString } from '~/helpers/string';
+  import { ucFirst, featureDescription } from '~/helpers/string';
 
   import WEAPONS from '~/data/weapons';
 
@@ -25,6 +25,10 @@
         type: Object,
         required: true,
       },
+      secondary: {
+        type: Boolean,
+        default: false,
+      },
     },
     computed: {
       showMainHand() {
@@ -33,21 +37,17 @@
       showOffhand() {
         return this.weapon.burden > 1 || (!this.weapon.primary && this.weapon.secondary);
       },
+      feature() {
+        const featureName = this.secondary || this.weapon.primary === false
+          ? this.weapon.secondaryFeature
+          : this.weapon.feature;
+
+        if (!featureName) return null;
+
+        return WEAPONS.features.find((feature) => feature.name === featureName);
+      },
       featureDescription() {
-        if (!this.weapon.feature) return null;
-
-        const feature = WEAPONS.features.find(
-          (feature) => feature.name === this.weapon.feature,
-        );
-        const modifiers = feature && feature.modify
-          ? modifierString(feature.modify)
-          : null;
-
-        if (feature.description && modifiers) return `${modifiers}. ${feature.description}`;
-        if (!modifiers) return feature.description;
-        if (!feature.description) return modifiers;
-
-        return null;
+        return this.feature ? featureDescription(this.feature) : null;
       },
     },
     methods: {

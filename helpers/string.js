@@ -23,3 +23,15 @@ export const modifierString = (modifiers) => {
 
   return bonuses.length > 0 ? joinWithAnd(bonuses) : [];
 };
+
+export const featureDescription = (feature) => {
+  const modifiers = feature && feature.modify
+    ? modifierString(feature.modify)
+    : null;
+
+  if (feature.description && modifiers) return `${modifiers}. ${feature.description}`;
+  if (!modifiers) return feature.description;
+  if (!feature.description) return modifiers;
+
+  return null;
+};

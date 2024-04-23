@@ -165,3 +165,19 @@ export const separateItemsForBuilder = (items, baseClass) => {
     classItem,
   };
 };
+
+export const calculateModifiers = (upgrades, attribute) => {
+  let score = 0;
+
+  if (upgrades.length > 0) {
+    score += upgrades.reduce((bonus, feature) => {
+      if (feature.modify && feature.modify[attribute] !== undefined) {
+        bonus += feature.modify[attribute];
+      }
+
+      return bonus;
+    }, 0);
+  }
+
+  return score;
+};

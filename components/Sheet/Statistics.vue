@@ -17,53 +17,57 @@
         )
       TraitDisplay(
         title="agility"
-        :score="character.agility.score"
+        :score="characterAgility"
         helper-text="Sprint, Leap, Maneuver"
+        :upgradeable="!character.agility.upgraded"
         modifier
-        upgradeable
       )
       TraitDisplay(
         title="strength"
-        :score="character.strength.score"
+        :score="characterStrength"
         helper-text="Lift, Smash, Grapple"
+        :upgradeable="!character.strength.upgraded"
         modifier
-        upgradeable
       )
       TraitDisplay(
         title="finesse"
-        :score="character.finesse.score"
+        :score="characterFinesse"
         helper-text="Control, Hide, Tinker"
+        :upgradeable="!character.finesse.upgraded"
         modifier
-        upgradeable
       )
       TraitDisplay(
         title="instinct"
-        :score="character.instinct.score"
+        :score="characterInstinct"
         helper-text="Perceive, Sense, Navigate"
+        :upgradeable="!character.instinct.upgraded"
         modifier
-        upgradeable
       )
       TraitDisplay(
         title="presence"
-        :score="character.presence.score"
+        :score="characterPresence"
         helper-text="Charm, Perform, Deceive"
+        :upgradeable="!character.presence.upgraded"
         modifier
-        upgradeable
       )
       TraitDisplay(
         title="knowledge"
-        :score="character.knowledge.score"
+        :score="characterKnowledge"
         helper-text="Recall, Analyze, Comprehend"
+        :upgradeable="!character.knowledge.upgraded"
         modifier
-        upgradeable
       )
 </template>
 
 <script>
   import { useCharactersStore } from '~/stores/characters';
+  import { calculateModifiers } from '~/helpers/character';
+
+  import ARMOR from '~/data/armor';
+  import WEAPONS from '~/data/weapons';
 
   export default {
-    name: 'SheetAttributes',
+    name: 'SheetStatistics',
     props: {
       character: {
         type: Object,
@@ -82,15 +86,125 @@
       return { charactersStore };
     },
     computed: {
+      primaryWeapon() {
+        return this.character.equipment.primaryWeapon;
+      },
+      secondaryWeapon() {
+        return this.character.equipment.secondaryWeapon;
+      },
+      armor() {
+        return this.character.equipment.armor;
+      },
+      equipmentFeatures() {
+        const features = [];
+
+        if (this.primaryWeapon.feature) {
+          const primaryFeature = WEAPONS.features.find(
+            (feature) => feature.name === this.primaryWeapon.feature,
+          );
+
+          if (primaryFeature) features.push({ ...primaryFeature });
+        }
+
+        if (this.secondaryWeapon.secondaryFeature && this.primaryWeapon.burden < 2) {
+          const secondaryFeature = WEAPONS.features.find(
+            (feature) => feature.name === this.secondaryWeapon.secondaryFeature,
+          );
+
+          if (secondaryFeature) features.push({ ...secondaryFeature });
+        }
+
+        if (this.armor.feature) {
+          const armorFeature = ARMOR.features.find(
+            (feature) => feature.name === this.armor.feature,
+          );
+
+          if (armorFeature) features.push({ ...armorFeature });
+        }
+
+        return features;
+      },
       characterEvasion() {
-        // TODO: calculate this with inventory
-        return this.character.evasion;
+        let score = this.character.evasion;
+
+        // add equipment modifiers
+        if (this.equipmentFeatures.length > 0) {
+          score += calculateModifiers(this.equipmentFeatures, 'evasion');
+        }
+
+        return score;
       },
       characterArmor() {
         let score = 0;
 
+        // add base armor
         if (this.character.equipment.armor) {
           score += this.character.equipment.armor.score;
+        }
+
+        // add equipment modifiers
+        if (this.equipmentFeatures.length > 0) {
+          score += calculateModifiers(this.equipmentFeatures, 'armorScore');
+        }
+
+        return score;
+      },
+      characterAgility() {
+        let score = this.character.agility.score;
+
+        // add equipment modifiers
+        if (this.equipmentFeatures.length > 0) {
+          score += calculateModifiers(this.equipmentFeatures, 'agility');
+        }
+
+        return score;
+      },
+      characterStrength() {
+        let score = this.character.strength.score;
+
+        // add equipment modifiers
+        if (this.equipmentFeatures.length > 0) {
+          score += calculateModifiers(this.equipmentFeatures, 'strength');
+        }
+
+        return score;
+      },
+      characterFinesse() {
+        let score = this.character.finesse.score;
+
+        // add equipment modifiers
+        if (this.equipmentFeatures.length > 0) {
+          score += calculateModifiers(this.equipmentFeatures, 'finesse');
+        }
+
+        return score;
+      },
+      characterInstinct() {
+        let score = this.character.instinct.score;
+
+        // add equipment modifiers
+        if (this.equipmentFeatures.length > 0) {
+          score += calculateModifiers(this.equipmentFeatures, 'instinct');
+        }
+
+        return score;
+      },
+      characterPresence() {
+        let score = this.character.presence.score;
+
+        // add equipment modifiers
+        if (this.equipmentFeatures.length > 0) {
+          score += calculateModifiers(this.equipmentFeatures, 'presence');
+        }
+
+        return score;
+      },
+      characterKnowledge() {
+        let score = this.character.knowledge.score;
+
+        // add equipment modifiers
+        if (this.equipmentFeatures.length > 0) {
+          score += calculateModifiers(this.equipmentFeatures, 'knowledge');
         }
 
         return score;
