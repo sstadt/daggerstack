@@ -10,6 +10,8 @@
 </template>
 
 <script>
+  import { debounce } from '~/helpers/utility';
+
   import { useCharactersStore } from '~/stores/characters';
 
   import { OPEN_EQUIPMENT_PICKER } from '~/config/events';
@@ -46,6 +48,17 @@
       selectItem(weapon) {
         this.character.inventory.weapon = { ...weapon };
         this.charactersStore.saveCharacter(this.character);
+      },
+      saveItems: debounce(function () {
+        this.character.inventory.items = this.items;
+        this.charactersStore.saveCharacter(this.character);
+      }, 500),
+    },
+    watch: {
+      items(newVal, oldVal) {
+        if (newVal !== oldVal) {
+          this.saveItems();
+        }
       },
     },
   };

@@ -1,15 +1,39 @@
 <template lang="pug">
   BasicCard(title="Background Questions")
-    p.font-bold.mt-4 Who from your community did you fail to protect, and why do you still think of them?
-    InputTextarea
-    p.font-bold.mt-4 You've recently been tasked with protecting something important, with the goal of delivering it somewhere dangerous. What is it and where does it need to go?
-    InputTextarea
-    p.font-bold.mt-4 You've always felt uncomfortable in your skin. What are you self-conscious of?
-    InputTextarea
+    .space-y-4
+      .space-y-1(v-for="item in background")
+        p.font-bold {{ item.question }}
+        InputTextarea(v-model="item.answer" @input="saveQuestions")
 </template>
 
 <script>
+  import { debounce, clone } from '~/helpers/utility';
+
+  import { useCharactersStore } from '~/stores/characters';
+
   export default {
     name: 'SheetBackground',
+    props: {
+      character: {
+        type: Object,
+        required: true,
+      },
+    },
+    data() {
+      return {
+        background: clone(this.character.background),
+      };
+    },
+    setup() {
+      const charactersStore = useCharactersStore();
+
+      return { charactersStore };
+    },
+    methods: {
+      saveQuestions: debounce(function () {
+        this.character.background = clone(this.background);
+        this.charactersStore.saveCharacter(this.character);
+      }),
+    },
   };
 </script>

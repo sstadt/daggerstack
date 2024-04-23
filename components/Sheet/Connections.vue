@@ -1,15 +1,39 @@
 <template lang="pug">
   BasicCard(title="Connections")
-    p.font-bold.mt-4 How did I save your life the first time we met?
-    InputTextarea
-    p.font-bold.mt-4 What small gift did you give me that you notice I still carry with me?
-    InputTextarea
-    p.font-bold.mt-4 What lie have you told me about yourself that I absolutely believe?
-    InputTextarea
+    .space-y-4
+      .space-y-1(v-for="item in connection")
+        p.font-bold.mt-4 {{ item.question }}
+        InputTextarea(v-model="item.answer" @input="saveQuestions")
 </template>
 
 <script>
+  import { debounce, clone } from '~/helpers/utility';
+
+  import { useCharactersStore } from '~/stores/characters';
+
   export default {
     name: 'SheetBackground',
+    props: {
+      character: {
+        type: Object,
+        required: true,
+      },
+    },
+    data() {
+      return {
+        connection: clone(this.character.connection),
+      };
+    },
+    setup() {
+      const charactersStore = useCharactersStore();
+
+      return { charactersStore };
+    },
+    methods: {
+      saveQuestions: debounce(function () {
+        this.character.connection = clone(this.connection);
+        this.charactersStore.saveCharacter(this.character);
+      }),
+    },
   };
 </script>
