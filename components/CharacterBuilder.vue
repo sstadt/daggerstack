@@ -6,19 +6,19 @@
         BuilderProgress(:page="currentPage" :steps="8" @set="setPage")
         .flex.flex-grow
           transition(:name="transition" mode="out-in")
-              BuilderStep1(v-if="currentPage === 0" @next="nextPage")
-              BuilderStep2(v-else-if="currentPage === 1" @next="nextPage")
-              BuilderStep3(v-else-if="currentPage === 2" @next="nextPage")
-              BuilderStep4(
-                v-else-if="currentPage === 3"
-                ref="equipmentStep"
-                @pick-equipment="openEquipmentPicker"
-                @next="nextPage"
-              )
-              BuilderStep5(v-else-if="currentPage === 4" @next="nextPage")
-              BuilderStep6(v-else-if="currentPage === 5" @next="nextPage")
-              BuilderStep7(v-else-if="currentPage === 6" @next="nextPage")
-              BuilderStep8(v-else-if="currentPage === 7" @next="createCharacter")
+            BuilderStep1(v-if="currentPage === 0" @next="nextPage")
+            BuilderStep2(v-else-if="currentPage === 1" @next="nextPage")
+            BuilderStep3(v-else-if="currentPage === 2" @next="nextPage")
+            BuilderStep4(
+              v-else-if="currentPage === 3"
+              ref="equipmentStep"
+              @pick-equipment="openEquipmentPicker"
+              @next="nextPage"
+            )
+            BuilderStep5(v-else-if="currentPage === 4" @next="nextPage")
+            BuilderStep6(v-else-if="currentPage === 5" @next="nextPage")
+            BuilderStep7(v-else-if="currentPage === 6" @next="nextPage")
+            BuilderStep8(v-else-if="currentPage === 7" @next="createCharacter")
       BasicDrawer(ref="equipmentPicker" :title="pickerTitle")
         InventoryPicker(:type="pickerType" @select="selectItem")
 </template>
@@ -102,9 +102,3 @@
     },
   };
 </script>
-
-<style lang="scss">
-  .builder__slider {
-    display: flex;
-  }
-</style>
