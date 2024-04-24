@@ -1,0 +1,221 @@
+[
+  {
+    "name": "Clank",
+    "description": "Clanks are sentient mechanical beings built from such materials as metal, wood, stone, and clay, to resemble humanoids, animals, or even inanimate objects.",
+    "creation": [
+      {
+        "name": "Purposeful Design",
+        "description": "Decide who you were created by and for what purpose. When you generate your Experience at character creation, choose one that reflects this purpose and add **+1** to it.",
+        "modify": {
+          "experience": 1
+        }
+      }
+    ]
+  },
+  {
+    "name": "Ribbet",
+    "description": "Those of ribbet ancestry resemble anthropomorphic frogs with protruding eyes and webbed hands and feet.",
+    "features": [
+      {
+        "name": "Amphibious",
+        "description": "You can breathe and move underwater just as easily as on land."
+      },
+      {
+        "name": "Long Tongue",
+        "description": "You can use your long, powerful tongue to grab onto things close to you. You may also mark **Stress** to unleash it as a Finesse Close weapon that does **d12** physical damage."
+      }
+    ]
+  },
+  {
+    "name": "Daemon",
+    "description": "Those of the Daemon ancestry are the humanoid descendants of the Fallen Gods, who possess sharp canines, pointed ears, and horns that come in a variety of styles",
+    "features": [
+      {
+        "name": "Fearless",
+        "description": "When you roll with **Fear**, you may choose to mark a **stress** instead of the GM gaining **fear**"
+      },
+      {
+        "name": "Dread Visage",
+        "description": "You have advantage on rolls to intimidate other non-Daemon creatures."
+      }
+    ]
+  },
+  {
+    "name": "Dwarf",
+    "description": "Dwarves are most easily recognized as short humanoids with square features, dense musculature, and thick hair.",
+    "features": [
+      {
+        "name": "Increased Fortitude",
+        "description": "When you should take physical damage, you may spend three **Hope** to only take half the damage instead."
+      }
+    ]
+  },
+  {
+    "name": "Giant",
+    "description": "Giants are very tall humanoids with long arms, broad stature, and one to three eyes.",
+    "creation": [
+      {
+        "name": "Endurance",
+        "description": "Gain an additional Hit Point Slot at character creation.",
+        "modify": {
+          "hitPoint": 1
+        }
+      }
+    ],
+    "features": [
+      {
+        "name": "Reach",
+        "description": "Any melee weapon you wield has its range increased to very close."
+      }
+    ]
+  },
+  {
+    "name": "Elf",
+    "description": "Elves are typically tall humanoids with pointed ears and acutely attuned senses.",
+    "features": [
+      {
+        "name": "Celestial Trance",
+        "description": "During a long rest, as one of your actions, you may choose to drop into an elven trance. When you do, roll a number of **d8** equal to the **Stress** you have marked, and clear all Stredd. If any of those dice have a matching value, also clear all Hit Points."
+      }
+    ]
+  },
+  {
+    "name": "Human",
+    "description": "Those of human ancestry are most easily recognized by their dextrous hands, rounded ears, and bodies built for endurance.",
+    "features": [
+      {
+        "name": "Perseverance",
+        "description": "Then you fail a roll that utilized one of your Experiences, you may spend a **Hope** to reroll. You must take the new result."
+      }
+    ]
+  },
+  {
+    "name": "Orc",
+    "description": "Orcs are most easily recognized as humanoids with square features and boar-like tusks.",
+    "features": [
+      {
+        "name": "Sturdy",
+        "description": "When you should mark an armor slot, roll a **d6**. On a **5+**, you don't mark the armor slot but still reduce the incoming damage by your armor score."
+      }
+    ]
+  },
+  {
+    "name": "Halfling",
+    "description": "Halflings are typically smallet humanoids, with large hairy feet and prominent, rounded ears.",
+    "features": [
+      {
+        "name": "Little Lucky",
+        "description": "At the beginning of each session, give everyone in your party a **Hope**. You may always reroll a **1** on your Hope Die. If you do, take the new result instead."
+      }
+    ]
+  },
+  {
+    "name": "Drakona",
+    "description": "Drakona resemble wingless dragons in humanoid form and possess a powerful elemental breath",
+    "choose": [
+      {
+        "label": "Element",
+        "options": ["Fire", "Ice", "Lightning", "Poison", "Acid"],
+      }
+    ],
+    "features": [
+      {
+        "name": "Elemental Breath",
+        "description": "Spend a **Hope** to make an Instinct Roll using your breath against an enemy or group of enemies within close range. Deal **d8** magic damage to all enemies you succeed against."
+      }
+    ]
+  },
+  {
+    "name": "Katari",
+    "description": "Those of katari ancestry are feline humanoids with soft fur and high, triangular ears.",
+    "features": [
+      {
+        "name": "Feline Instinct",
+        "description": "On any Agility Rolls, you may mark a **Stress** to reroll your Hope Die. If you do, take the new result instead."
+      }
+    ]
+  },
+  {
+    "name": "Faerie",
+    "description": "Those of faerie ancestry are winged humanoid creatures with insect-like features.",
+    "features": [
+      {
+        "name": "Wings",
+        "description": "Mark **Stress** to take flight until you next roll with **Fear**. While flying, your Evasion score is increased by **+2**."
+      },
+      {
+        "name": "Luckbender",
+        "description": "Once per session, after you or an ally in close range makes an Action Roll, you can mark **Stress** to allow a reroll of the duality Dice. If you do, take the new result."
+      }
+    ]
+  },
+  {
+    "name": "Faun",
+    "description": "Those of faun ancestry resemble goats in humanoid form, with curving horns, square pupils, and cloven hooves.",
+    "features": [
+      {
+        "name": "Headbutt",
+        "description": "Give the GM one **Fear** to headbutt an enemy you move into melee with. The target immediately takes **d8** direct phycial damage and can't be targeted again by this attack during the fight."
+      }
+    ]
+  },
+  {
+    "name": "Galapa",
+    "description": "Those of galapa ancestry resemble anthropomorphic turtles, with a large, domed shell into which the head and limbs can retract inside for defense.",
+    "features": [
+      {
+        "name": "Shell of Protection",
+        "description": "The shell on your back always protects you. Add your Proficiency to your armor score."
+      }
+    ]
+  },
+  {
+    "name": "Goblin",
+    "description": "Those of goblin ancestry are small humanoids typically recognized by their large eyes and massive, membranous ears.",
+    "features": [
+      {
+        "name": "Danger Sense",
+        "description": "Once per short rest, you may mark a **Stress** to make the GM reroll an attack roll. If it still hits you, reduce the incoming value by your proficiency."
+      }
+    ]
+  },
+  {
+    "name": "Fungril",
+    "description": "Fungrils resemble a muchroom in humanoid form, bearing the features of the fungus from which they descend.",
+    "features": [
+      {
+        "name": "Always Connected",
+        "description": "To speak with other Fungril across distance to access their hivemind of information, make an Instinct roll. At character creation, describe what ritual you must perform to tap into this connection."
+      }
+    ]
+  },
+  {
+    "name": "Firbolg",
+    "description": "Firbolgs resemble cows in a humanoid form, typically recognized by their broad noses and long ears.",
+    "features": [
+      {
+        "name": "Natural Calm",
+        "description": "Whenever you should mark a **Stress**, roll **1d6**. On a **6**, you take no **Stress**"
+      }
+    ]
+  },
+  {
+    "name": "Simiah",
+    "description": "Simiah resemble anthropomorphic monkeys and apes, with long legs and prehensile feet.",
+    "creation": [
+      {
+        "name": "Nimble",
+        "description": "Add **+1** to evasion at character creation.",
+        "modify": {
+          "evasion": 1
+        }
+      }
+    ],
+    "features": [
+      {
+        "name": "Nimble",
+        "description": "Take advantage of Agility Rolls that involve balancing and climbing."
+      }
+    ]
+  }
+]
