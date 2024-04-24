@@ -1,52 +1,43 @@
 <template lang="pug">
   .character-sheet
-    SheetHeader(:character="character")
+    SheetHeader.mb-8(:character="character")
       .flex.bg-black.relative
         NavButton(
           v-for="(button, index) in navButtons"
           :icon="button.icon"
           class="w-1/4"
-          @click="slideTo(index)"
+          @click="open(index)"
         )
         .nav-indicator.absolute.bottom-0.h-2.bg-white.pointer-events-none.transition-all(
           class="w-1/4"
           :style="indicatorStyle"
         )
-    Swiper(
-      :slides-per-view="1"
-      :auto-height="true"
-      @swiper="onSwiper"
-      @slide-change="onSlideChange"
-    )
-      SwiperSlide
-        .space-y-16.pb-4
-          SheetStatistics(:character="character")
-          SheetExperience(:character="character")
-          SheetClassFeature(:character="character")
-      SwiperSlide
-        .space-y-8.pb-4
-          SheetWeapons(
-            ref="sheetWeapons"
-            :character="character"
-            @pick-equipment="openEquipmentPicker"
-          )
-          SheetArmor(
-            ref="sheetArmor"
-            :character="character"
-            @pick-equipment="openEquipmentPicker"
-          )
-      SwiperSlide
-        .space-y-8.pb-4
-          SheetGold(:character="character")
-          SheetInventory(
-            ref="sheetInventory"
-            :character="character"
-            @pick-equipment="openEquipmentPicker"
-          )
-      SwiperSlide
-        .space-y-8.pb-4
-          SheetBackground(:character="character")
-          SheetConnections(:character="character")
+    transition(:name="transition" mode="out-in")
+      .space-y-16.pb-4(v-if="currentIndex === 0")
+        SheetStatistics(:character="character")
+        SheetExperience(:character="character")
+        SheetClassFeature(:character="character")
+      .space-y-8.pb-4(v-else-if="currentIndex === 1")
+        SheetWeapons(
+          ref="sheetWeapons"
+          :character="character"
+          @pick-equipment="openEquipmentPicker"
+        )
+        SheetArmor(
+          ref="sheetArmor"
+          :character="character"
+          @pick-equipment="openEquipmentPicker"
+        )
+      .space-y-8.pb-4(v-else-if="currentIndex === 2")
+        SheetGold(:character="character")
+        SheetInventory(
+          ref="sheetInventory"
+          :character="character"
+          @pick-equipment="openEquipmentPicker"
+        )
+      .space-y-8.pb-4(v-else-if="currentIndex === 3")
+        SheetBackground(:character="character")
+        SheetConnections(:character="character")
     BasicDrawer(ref="equipmentPicker" :title="pickerTitle")
       InventoryPicker(
         :type="pickerType"
@@ -91,7 +82,7 @@
     },
     data() {
       return {
-        swiper: null,
+        transition: 'paginate-right',
         currentIndex: 0,
         navButtons: [
           { icon: 'attributes' },
@@ -124,14 +115,12 @@
       },
     },
     methods: {
-      slideTo(slideIndex) {
-        this.swiper.slideTo(slideIndex);
-      },
-      onSwiper(swiper) {
-        this.swiper = swiper;
-      },
-      onSlideChange(swiper) {
-        this.currentIndex = swiper.activeIndex;
+      open(index) {
+        this.transition = index > this.currentIndex
+          ? 'paginate-right'
+          : 'paginate-left';
+
+        this.currentIndex = index;
       },
       openEquipmentPicker({ type, slot }) {
         if (validTypes.includes(type)) {
@@ -193,12 +182,6 @@
 </script>
 
 <style lang="scss">
-  .character-sheet {
-    & > *:not(:last-child) {
-      margin-bottom: 20px;
-    }
-  }
-
   .nav-indicator {
     transform: translateY(1px);
   }

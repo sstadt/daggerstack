@@ -5,29 +5,23 @@
       div
         .flex.justify-center.space-x-8.mb-4
           button.py-2.border-b.transition-colors(
-            :class="{ 'border-b-black': currentIndex === 0 }"
+            type="button"
+            :class="{ 'border-b-black': currentTab === 0 }"
             @click="setTab(0)"
           ) Generate
           button.py-2.border-b.transition-colors(
-            :class="{ 'border-b-black': currentIndex === 1 }"
+            type="button"
+            :class="{ 'border-b-black': currentTab === 1 }"
             @click="setTab(1)"
           ) Custom
-        Swiper(
-          :slides-per-view="1"
-          :autoheight="true"
-          :initial-slide="customDescription === '' ? 0 : 1"
-          @swiper="onSwiper"
-          @slide-change="onSlideChange"
-        )
-          SwiperSlide
-            .space-y-4
-              InputPicker(label="clothes" :options="descriptions.clothes" v-model="selectedClothes")
-              InputPicker(label="eyes" :options="descriptions.eyes" v-model="selectedEyes")
-              InputPicker(label="body" :options="descriptions.body" v-model="selectedBody")
-              InputPicker(label="skin" :options="descriptions.skin" v-model="selectedSkin")
-              InputPicker(label="attitude" :options="descriptions.attitude" v-model="selectedAttitude")
-          SwiperSlide
-            InputTextarea(v-model="customDescription")
+        transition(name="fade" mode="out-in")
+          .space-y-4(v-if="currentTab === 0")
+            InputPicker(label="clothes" :options="descriptions.clothes" v-model="selectedClothes")
+            InputPicker(label="eyes" :options="descriptions.eyes" v-model="selectedEyes")
+            InputPicker(label="body" :options="descriptions.body" v-model="selectedBody")
+            InputPicker(label="skin" :options="descriptions.skin" v-model="selectedSkin")
+            InputPicker(label="attitude" :options="descriptions.attitude" v-model="selectedAttitude")
+          InputTextarea(v-else v-model="customDescription")
     .space-y-4
       h2.text-center.text-2xl.font-black.uppercase Domain Cards
       p.text-center.mb-2.text-sm.text-slate-500 Choose two cards from the level one -domain1- and -domain2- domain decks.
@@ -45,7 +39,7 @@
   export default {
     name: 'BuilderStep5',
     data() {
-      const isNewCharacter = !this.builderStore.character.id;
+      const savedDescription = this.builderStore.character.description;
 
       return {
         descriptions: generalData.description,
@@ -54,8 +48,8 @@
         selectedBody: [],
         selectedSkin: [],
         selectedAttitude: [],
-        currentIndex: 0,
-        customDescription: isNewCharacter ? '' : this.builderStore.character.description,
+        currentTab: savedDescription === '' ? 0 : 1,
+        customDescription: savedDescription,
       };
     },
     setup() {
@@ -64,17 +58,8 @@
       return { builderStore };
     },
     methods: {
-      slideTo(slideIndex) {
-        this.swiper.slideTo(slideIndex);
-      },
-      onSwiper(swiper) {
-        this.swiper = swiper;
-      },
-      onSlideChange(swiper) {
-        this.currentIndex = swiper.activeIndex;
-      },
       setTab(tab) {
-        this.swiper.slideTo(tab);
+        this.currentTab = tab;
       },
       buildDescription() {
         const clothes = `Clothes that are ${joinWithAnd(this.selectedClothes)}.`;
@@ -86,7 +71,7 @@
         return `${clothes} ${eyes} ${body} ${skin} ${attitude}`;
       },
       next() {
-        const description = this.currentIndex === 0
+        const description = this.currentTab === 0
           ? this.buildDescription()
           : this.customDescription;
 

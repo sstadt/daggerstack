@@ -9,7 +9,6 @@ export default defineNuxtConfig({
   },
   modules: [
     'nuxt-icons',
-    'nuxt-swiper',
     '@pinia/nuxt',
     '@nuxtjs/tailwindcss',
     [

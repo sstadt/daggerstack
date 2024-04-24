@@ -3,34 +3,22 @@
     .character-builder(v-if="saveLoaded")
       h2.text-center.text-2xl.font-black.uppercase.p-4 Create Character
       .flex.flex-col.flex-grow
-        BuilderProgress(:page="currentPage" :steps="8" @set="setStep")
+        BuilderProgress(:page="currentPage" :steps="8" @set="setPage")
         .flex.flex-grow
-          Swiper.builder__slider(
-            :slides-per-view="1"
-            :initial-slide="currentPage"
-            @swiper="onSwiper"
-            @slide-change="onSlideChange"
-          )
-            SwiperSlide.min-h-full
-              BuilderStep1(@next="swiper.slideNext()")
-            SwiperSlide.min-h-full
-              BuilderStep2(@next="swiper.slideNext()")
-            SwiperSlide.min-h-full
-              BuilderStep3(@next="swiper.slideNext()")
-            SwiperSlide.min-h-full
+          transition(:name="transition" mode="out-in")
+              BuilderStep1(v-if="currentPage === 0" @next="nextPage")
+              BuilderStep2(v-else-if="currentPage === 1" @next="nextPage")
+              BuilderStep3(v-else-if="currentPage === 2" @next="nextPage")
               BuilderStep4(
+                v-else-if="currentPage === 3"
                 ref="equipmentStep"
                 @pick-equipment="openEquipmentPicker"
-                @next="swiper.slideNext()"
+                @next="nextPage"
               )
-            SwiperSlide.min-h-full
-              BuilderStep5(@next="swiper.slideNext()")
-            SwiperSlide.min-h-full
-              BuilderStep6(@next="swiper.slideNext()")
-            SwiperSlide.min-h-full
-              BuilderStep7(@next="swiper.slideNext()")
-            SwiperSlide.min-h-full.flex-grow-1
-              BuilderStep8(@next="createCharacter")
+              BuilderStep5(v-else-if="currentPage === 4" @next="nextPage")
+              BuilderStep6(v-else-if="currentPage === 5" @next="nextPage")
+              BuilderStep7(v-else-if="currentPage === 6" @next="nextPage")
+              BuilderStep8(v-else-if="currentPage === 7" @next="createCharacter")
       BasicDrawer(ref="equipmentPicker" :title="pickerTitle")
         InventoryPicker(:type="pickerType" @select="selectItem")
 </template>
@@ -55,9 +43,9 @@
     name: 'CharacterBuilder',
     data() {
       return {
-        swiper: null,
         saveLoaded: false,
         pickerType: PRIMARY_WEAPON_TYPE,
+        transition: 'paginate-left',
       };
     },
     computed: {
@@ -82,18 +70,16 @@
       this.saveLoaded = true;
     },
     methods: {
-      slideTo(slideIndex) {
-        this.swiper.slideTo(slideIndex);
+      nextPage() {
+        this.setPage(this.currentPage + 1);
       },
-      onSwiper(swiper) {
-        this.swiper = swiper;
-      },
-      onSlideChange(swiper) {
-        this.builderStore.currentPage = swiper.activeIndex;
+      setPage(page) {
+        this.transition = page > this.currentPage
+          ? 'paginate-right'
+          : 'paginate-left';
+
+        this.builderStore.currentPage = page;
         this.builderStore.savePage();
-      },
-      setStep(step) {
-        this.swiper.slideTo(step);
       },
       openEquipmentPicker(type) {
         if (validTypes.includes(type)) {

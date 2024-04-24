@@ -21,7 +21,6 @@
     "markdown-it-attrs": "^4.1.6",
     "nuxt": "^3.11.0",
     "nuxt-icons": "^3.2.1",
-    "nuxt-swiper": "^1.2.2",
     "pinia": "^2.1.7",
     "pug": "^3.0.2",
     "sass": "^1.72.0",
