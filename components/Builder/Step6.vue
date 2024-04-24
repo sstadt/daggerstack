@@ -13,6 +13,7 @@
       .flex.justify-between.items-center
         NuxtLink(to="/") Finish Later
         BasicButton.block(type="submit") Next
+    BasicPrompt(ref="prompt" @confirm="saveQuestion")
 </template>
 
 <script>
