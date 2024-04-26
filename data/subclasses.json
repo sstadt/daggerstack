@@ -1,0 +1,158 @@
+{
+  "bard": [
+    {
+      "name": "Wordsmith",
+      "foundation": {},
+      "specialization": {},
+      "mastery": {}
+    },
+    {
+      "name": "Troubadour",
+      "foundation": {},
+      "specialization": {},
+      "mastery": {}
+    }
+  ],
+  "druid": [
+    {
+      "name": "Warden of the Elements",
+      "foundation": {},
+      "specialization": {},
+      "mastery": {}
+    },
+    {
+      "name": "Warden of Renewal",
+      "foundation": {},
+      "specialization": {},
+      "mastery": {}
+    }
+  ],
+  "guardian": [
+    {
+      "name": "Stalwart",
+      "foundation": {
+        "minorDamageThreshold": 2,
+        "majorDamageThreshold": 2,
+        "severeDamageThreshold": 2
+      },
+      "specialization": {
+        "minorDamageThreshold": 1,
+        "majorDamageThreshold": 1,
+        "severeDamageThreshold": 1
+      },
+      "mastery": {
+        "minorDamageThreshold": 2,
+        "majorDamageThreshold": 2,
+        "severeDamageThreshold": 2
+      }
+    },
+    {
+      "name": "Vengeance",
+      "foundation": {
+        "armorSlot": 1
+      },
+      "specialization": {},
+      "mastery": {
+        "armorSlot": 1
+      }
+    }
+  ],
+  "ranger": [
+    {
+      "name": "Wayfinder",
+      "foundation": {},
+      "specialization": {},
+      "mastery": {}
+    },
+    {
+      "name": "Beastbound",
+      "foundation": {},
+      "specialization": {
+        "companionTraining": 1
+      },
+      "mastery": {
+        "companionTraining": 2
+      }
+    }
+  ],
+  "rogue": [
+    {
+      "name": "Syndicate",
+      "foundation": {},
+      "specialization": {},
+      "mastery": {}
+    },
+    {
+      "name": "Nightwalker",
+      "foundation": {},
+      "specialization": {},
+      "mastery": {
+        "evasion": 1
+      }
+    }
+  ],
+  "seraph": [
+    {
+      "name": "Winged Sentinel",
+      "foundation": {},
+      "specialization": {},
+      "mastery": {
+        "severeDamageThreshold": 4
+      }
+    },
+    {
+      "name": "Divine Wielder",
+      "foundation": {},
+      "specialization": {
+        "armorSlot": 1
+      },
+      "mastery": {}
+    }
+  ],
+  "sorcerer": [
+    {
+      "name": "Primal Origin",
+      "foundation": {},
+      "specialization": {},
+      "mastery": {}
+    },
+    {
+      "name": "Elemental Origin",
+      "foundation": {},
+      "specialization": {},
+      "mastery": {}
+    }
+  ],
+  "warrior": [
+    {
+      "name": "Call of the Slayer",
+      "foundation": {},
+      "specialization": {},
+      "mastery": {}
+    },
+    {
+      "name": "Call of the Brave",
+      "foundation": {},
+      "specialization": {},
+      "mastery": {}
+    }
+  ],
+  "wizard": [
+    {
+      "name": "School of Knowledge",
+      "foundation": {},
+      "specialization": {
+        "experience": 1
+      },
+      "mastery": {}
+    },
+    {
+      "name": "School of War",
+      "foundation": {
+        "armorSlot": 1
+      },
+      "specialization": {},
+      "mastery": {}
+    }
+  ]
+}
