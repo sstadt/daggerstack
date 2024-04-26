@@ -9,50 +9,27 @@
             BuilderStep1(v-if="currentPage === 0" @next="nextPage")
             BuilderStep2(v-else-if="currentPage === 1" @next="nextPage")
             BuilderStep3(v-else-if="currentPage === 2" @next="nextPage")
-            BuilderStep4(
-              v-else-if="currentPage === 3"
-              ref="equipmentStep"
-              @pick-equipment="openEquipmentPicker"
-              @next="nextPage"
-            )
+            BuilderStep4(v-else-if="currentPage === 3" @next="nextPage")
             BuilderStep5(v-else-if="currentPage === 4" @next="nextPage")
             BuilderStep6(v-else-if="currentPage === 5" @next="nextPage")
             BuilderStep7(v-else-if="currentPage === 6" @next="nextPage")
             BuilderStep8(v-else-if="currentPage === 7" @next="createCharacter")
-      BasicDrawer(ref="equipmentPicker" :title="pickerTitle")
-        InventoryPicker(:type="pickerType" @select="selectItem")
 </template>
 
 <script>
   import { mapState } from 'pinia';
   import { useBuilderStore } from '~/stores/builder';
 
-  import {
-    PRIMARY_WEAPON_TYPE,
-    SECONDARY_WEAPON_TYPE,
-    ARMOR_TYPE,
-  } from '~/config/equipmentPicker';
-
-  const validTypes = [
-    PRIMARY_WEAPON_TYPE,
-    SECONDARY_WEAPON_TYPE,
-    ARMOR_TYPE,
-  ];
-
   export default {
     name: 'CharacterBuilder',
     data() {
       return {
         saveLoaded: false,
-        pickerType: PRIMARY_WEAPON_TYPE,
         transition: 'paginate-left',
       };
     },
     computed: {
       ...mapState(useBuilderStore, ['currentPage', 'character']),
-      pickerTitle() {
-        return this.pickerType === ARMOR_TYPE ? 'Armor' : 'Weapons';
-      },
     },
     setup() {
       const builderStore = useBuilderStore();
@@ -80,18 +57,6 @@
 
         this.builderStore.currentPage = page;
         this.builderStore.savePage();
-      },
-      openEquipmentPicker(type) {
-        if (validTypes.includes(type)) {
-          this.pickerType = type;
-          this.$refs.equipmentPicker.open();
-        } else {
-          throw new Error('Invalid type passed to equipment picker');
-        }
-      },
-      selectItem(item) {
-        this.$refs.equipmentPicker.close();
-        this.$refs.equipmentStep.selectItem(item);
       },
       createCharacter() {
         const characterId = this.character.id;

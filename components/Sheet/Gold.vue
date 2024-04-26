@@ -3,31 +3,31 @@
     .grid.grid-cols-2.gap-2.items-center.mt-4
       h3.uppercase.text-sm.text-center.font-bold.text-right handfuls
       .flex
-        InputCheckboxCounter.bg-slate-300.p-1.pr-0(
+        InputCheckboxCounter.bg-amber-300.p-1.pr-0(
           v-model="handful"
           :max="maxHandfuls"
         )
       h3.uppercase.text-sm.text-center.font-bold.text-right bag
       .flex
-        InputCheckboxCounter.bg-slate-400.p-1.pr-0(
+        InputCheckboxCounter.bg-amber-400.p-1.pr-0(
           v-model="bag"
           :max="maxBags"
         )
       h3.uppercase.text-sm.text-center.font-bold.text-right chests
       .flex
-        InputCheckboxCounter.bg-slate-500.p-1.pr-0(
+        InputCheckboxCounter.bg-amber-500.p-1.pr-0(
           v-model="chest"
           :max="maxChests"
         )
       h3.uppercase.text-sm.text-center.font-bold.text-right hoards
       .flex
-        InputCheckboxCounter.bg-slate-600.p-1.pr-0(
+        InputCheckboxCounter.bg-amber-600.p-1.pr-0(
           v-model="hoard"
           :max="maxHoards"
         )
       h3.uppercase.text-sm.text-center.font-bold.text-right fortune
       .flex
-        InputCheckboxCounter.bg-slate-700.p-1.pr-0(
+        InputCheckboxCounter.bg-amber-700.p-1.pr-0(
           v-model="fortune"
           :max="maxFortunes"
         )

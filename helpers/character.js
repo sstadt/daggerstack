@@ -15,6 +15,7 @@ export const newCharacter = (character) => {
 
   return {
     id: uuidv4(),
+    version: '1.2',
     name: options.name,
     pronouns: '',
     description: '',

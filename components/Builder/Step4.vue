@@ -38,12 +38,13 @@
       .flex.justify-between.items-center
         NuxtLink(to="/") Finish Later
         BasicButton.block(type="submit") Next
+    BasicDrawer(ref="equipmentPicker" :title="pickerTitle")
+      InventoryPicker(:type="activeType" @select="selectItem")
 </template>
 
 <script>
   import { useBuilderStore } from '~/stores/builder';
 
-  import { OPEN_EQUIPMENT_PICKER } from '~/config/events';
   import {
     PRIMARY_WEAPON_TYPE,
     SECONDARY_WEAPON_TYPE,
@@ -71,6 +72,11 @@
           : { ...this.builderStore.character.equipment.armor },
       };
     },
+    computed: {
+      pickerTitle() {
+        return this.activeType === ARMOR_TYPE ? 'Armor' : 'Weapons';
+      },
+    },
     setup() {
       const builderStore = useBuilderStore();
 
@@ -79,10 +85,11 @@
     methods: {
       openPicker(type) {
         this.activeType = type;
-        this.$emit(OPEN_EQUIPMENT_PICKER, type);
+        this.$refs.equipmentPicker.open();
       },
       selectItem({ item }) {
         this[this.activeType] = { ...item };
+        this.$refs.equipmentPicker.close();
       },
       async next() {
         if (this.primaryWeapon.name && this.armor.name) {

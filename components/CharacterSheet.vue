@@ -8,7 +8,7 @@
           class="w-1/4"
           @click="open(index)"
         )
-        .nav-indicator.absolute.bottom-0.h-2.bg-white.pointer-events-none.transition-all(
+        .nav-indicator.absolute.bottom-0.h-2.bg-white.pointer-events-none.transition-all.translate-y-px(
           class="w-1/4"
           :style="indicatorStyle"
         )
@@ -18,23 +18,11 @@
         SheetExperience(:character="character")
         SheetClassFeature(:character="character")
       .space-y-8.pb-4(v-else-if="currentIndex === 1")
-        SheetWeapons(
-          ref="sheetWeapons"
-          :character="character"
-          @pick-equipment="openEquipmentPicker"
-        )
-        SheetArmor(
-          ref="sheetArmor"
-          :character="character"
-          @pick-equipment="openEquipmentPicker"
-        )
+        SheetWeapons(:character="character")
+        SheetArmor(:character="character")
       .space-y-8.pb-4(v-else-if="currentIndex === 2")
         SheetGold(:character="character")
-        SheetInventory(
-          ref="sheetInventory"
-          :character="character"
-          @pick-equipment="openEquipmentPicker"
-        )
+        SheetInventory(:character="character")
       .space-y-8.pb-4(v-else-if="currentIndex === 3")
         SheetBackground(:character="character")
         SheetConnections(:character="character")
@@ -81,9 +69,3 @@
     },
   };
 </script>
-
-<style lang="scss">
-  .nav-indicator {
-    transform: translateY(1px);
-  }
-</style>
