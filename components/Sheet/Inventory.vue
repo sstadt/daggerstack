@@ -7,14 +7,22 @@
       @click="openPicker"
     )
     BasicButton.mx-auto.block(v-else @click="openPicker") Select Weapon
+    BasicDrawer(ref="equipmentPicker" title="Weapons")
+      InventoryPicker(
+        :type="type"
+        :character="character"
+        :active-slot="slot"
+        @select="selectWeapon"
+        @remove-equipped-item="removeEquippedWeapon"
+      )
 </template>
 
 <script>
+  import { newWeapon } from '~/helpers/character';
   import { debounce } from '~/helpers/utility';
 
   import { useCharactersStore } from '~/stores/characters';
 
-  import { OPEN_EQUIPMENT_PICKER } from '~/config/events';
   import {
     ALL_WEAPON_TYPE,
     SLOT_INVENTORY_WEAPON,
@@ -31,6 +39,8 @@
     data() {
       return {
         items: this.character.inventory.items,
+        type: ALL_WEAPON_TYPE,
+        slot: SLOT_INVENTORY_WEAPON,
       };
     },
     setup() {
@@ -40,14 +50,17 @@
     },
     methods: {
       openPicker() {
-        this.$emit(OPEN_EQUIPMENT_PICKER, {
-          type: ALL_WEAPON_TYPE,
-          slot: SLOT_INVENTORY_WEAPON,
-        });
+        this.$refs.equipmentPicker.open();
       },
-      selectItem(weapon) {
-        this.character.inventory.weapon = { ...weapon };
+      selectWeapon({ item }) {
+        this.character.inventory.weapon = { ...item };
         this.charactersStore.saveCharacter(this.character);
+        this.$refs.equipmentPicker.close();
+      },
+      removeEquippedWeapon() {
+        this.character.inventory.weapon = newWeapon();
+        this.charactersStore.saveCharacter(this.character);
+        this.$refs.equipmentPicker.close();
       },
       saveItems: debounce(function () {
         this.character.inventory.items = this.items;

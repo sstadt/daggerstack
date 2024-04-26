@@ -30,12 +30,21 @@
         ) No free hands
       BasicButton.mx-auto.block(v-else @click="openPicker(secondaryWeaponType)")
         | Select Weapon
+    BasicDrawer(ref="equipmentPicker" title="Weapons")
+      InventoryPicker(
+        :type="pickerType"
+        :character="character"
+        :active-slot="activeSlot"
+        include-inventory
+        @select="selectItem"
+        @remove-equipped-item="removeEquippedItem"
+      )
 </template>
 
 <script>
   import { useCharactersStore } from '~/stores/characters';
+  import { newWeapon } from '~/helpers/character';
 
-  import { OPEN_EQUIPMENT_PICKER } from '~/config/events';
   import {
     PRIMARY_WEAPON_TYPE,
     SECONDARY_WEAPON_TYPE,
@@ -57,6 +66,8 @@
         secondaryWeapon: this.character.equipment.secondaryWeapon,
         primaryWeaponType: PRIMARY_WEAPON_TYPE,
         secondaryWeaponType: SECONDARY_WEAPON_TYPE,
+        activeSlot: null,
+        pickerType: PRIMARY_WEAPON_TYPE,
       };
     },
     setup() {
@@ -74,20 +85,20 @@
     },
     methods: {
       openPicker(weaponType) {
-        const type = weaponType === PRIMARY_WEAPON_TYPE
+        this.pickerType = weaponType === PRIMARY_WEAPON_TYPE
           ? PRIMARY_WEAPON_TYPE
           : SECONDARY_WEAPON_TYPE;
-        const slot = weaponType === PRIMARY_WEAPON_TYPE
+        this.activeSlot = weaponType === PRIMARY_WEAPON_TYPE
           ? SLOT_PRIMARY_WEAPON
           : SLOT_SECONDARY_WEAPON;
 
-        this.$emit(OPEN_EQUIPMENT_PICKER, { type, slot });
+        this.$refs.equipmentPicker.open();
       },
-      selectItem(weapon, slot, fromInventory = false) {
+      selectItem({ item, fromInventory = false }) {
         let weaponUpdated = false;
 
-        if (fromInventory) {
-          const currentWeapon = slot === SLOT_PRIMARY_WEAPON
+        if (fromInventory === true) {
+          const currentWeapon = this.activeSlot === SLOT_PRIMARY_WEAPON
             ? { ...this.primaryWeapon }
             : { ...this.secondaryWeapon };
 
@@ -95,20 +106,40 @@
           weaponUpdated = true;
         }
 
-        if (slot === SLOT_PRIMARY_WEAPON) {
-          this.primaryWeapon = { ...weapon };
-          this.character.equipment.primaryWeapon = { ...weapon };
+        if (this.activeSlot === SLOT_PRIMARY_WEAPON) {
+          this.primaryWeapon = { ...item };
+          this.character.equipment.primaryWeapon = { ...item };
           weaponUpdated = true;
         }
 
-        if (slot === SLOT_SECONDARY_WEAPON) {
-          this.secondaryWeapon = { ...weapon };
-          this.character.equipment.secondaryWeapon = { ...weapon };
+        if (this.activeSlot === SLOT_SECONDARY_WEAPON) {
+          this.secondaryWeapon = { ...item };
+          this.character.equipment.secondaryWeapon = { ...item };
           weaponUpdated = true;
         }
 
         if (weaponUpdated) {
           this.charactersStore.saveCharacter(this.character);
+        }
+
+        this.$refs.equipmentPicker.close();
+      },
+      removeEquippedItem() {
+        let itemRemoved = false;
+
+        if (this.activeSlot === SLOT_PRIMARY_WEAPON) {
+          this.character.equipment.primaryWeapon = newWeapon();
+          itemRemoved = true;
+        }
+
+        if (this.activeSlot === SLOT_SECONDARY_WEAPON) {
+          this.character.equipment.secondaryWeapon = newWeapon();
+          itemRemoved = true;
+        }
+
+        if (itemRemoved) {
+          this.charactersStore.saveCharacter(this.character);
+          this.$refs.equipmentPicker.close();
         }
       },
     },

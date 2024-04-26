@@ -6,12 +6,22 @@
         :armor="character.equipment.armor"
         @click="openPicker"
       )
+      BasicButton.mx-auto.block(v-else @click="openPicker")
+        | Select Armor
+      BasicDrawer(ref="equipmentPicker" title="Weapons")
+        InventoryPicker(
+          :type="type"
+          :character="character"
+          :active-slot="slot"
+          @select="selectItem"
+          @remove-equipped-item="removeEquippedArmor"
+        )
 </template>
 
 <script>
   import { useCharactersStore } from '~/stores/characters';
+  import { newArmor } from '~/helpers/character';
 
-  import { OPEN_EQUIPMENT_PICKER } from '~/config/events';
   import {
     ARMOR_TYPE,
     SLOT_ARMOR,
@@ -25,6 +35,12 @@
         requried: true,
       },
     },
+    data() {
+      return {
+        slot: SLOT_ARMOR,
+        type: ARMOR_TYPE,
+      };
+    },
     setup() {
       const charactersStore = useCharactersStore();
 
@@ -32,14 +48,17 @@
     },
     methods: {
       openPicker() {
-        this.$emit(OPEN_EQUIPMENT_PICKER, {
-          type: ARMOR_TYPE,
-          slot: SLOT_ARMOR,
-        });
+        this.$refs.equipmentPicker.open();
       },
-      selectItem(armor) {
-        this.character.equipment.armor = { ...armor };
+      selectItem({ item }) {
+        this.character.equipment.armor = { ...item };
         this.charactersStore.saveCharacter(this.character);
+        this.$refs.equipmentPicker.close();
+      },
+      removeEquippedArmor() {
+        this.character.equipment.armor = newArmor();
+        this.charactersStore.saveCharacter(this.character);
+        this.$refs.equipmentPicker.close();
       },
     },
   };
