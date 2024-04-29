@@ -2,26 +2,19 @@ import { uuidv4 } from '~/helpers/utility';
 
 import general from '~/data/general';
 import classes from '~/data/classes';
-// TODO: import class data and fill in starting values
 
-export const newCharacter = (character) => {
-  const defaults = {
-    name: '',
-    baseClass: '',
-    subclass: '',
-  };
-
-  const options = Object.assign({}, defaults, character);
-
+export const newCharacter = () => {
   return {
     id: uuidv4(),
     version: '1.2',
-    name: options.name,
+    name: '',
     pronouns: '',
     description: '',
-    baseClass: options.baseClass,
-    subclass: options.subclass,
-    heritage: '',
+    baseClass: '',
+    subclass: [],
+    multiClass: [],
+    community: '',
+    ancestry: '',
     level: 1,
     agility: {
       score: '',

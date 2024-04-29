@@ -2,7 +2,7 @@
   {
     "name": "Clank",
     "description": "Clanks are sentient mechanical beings built from such materials as metal, wood, stone, and clay, to resemble humanoids, animals, or even inanimate objects.",
-    "creation": [
+    "features": [
       {
         "name": "Purposeful Design",
         "description": "Decide who you were created by and for what purpose. When you generate your Experience at character creation, choose one that reflects this purpose and add **+1** to it.",
@@ -53,19 +53,17 @@
   {
     "name": "Giant",
     "description": "Giants are very tall humanoids with long arms, broad stature, and one to three eyes.",
-    "creation": [
+    "features": [
+      {
+        "name": "Reach",
+        "description": "Any melee weapon you wield has its range increased to very close."
+      },
       {
         "name": "Endurance",
         "description": "Gain an additional Hit Point Slot at character creation.",
         "modify": {
           "hitPoint": 1
         }
-      }
-    ],
-    "features": [
-      {
-        "name": "Reach",
-        "description": "Any melee weapon you wield has its range increased to very close."
       }
     ]
   },
@@ -115,7 +113,7 @@
     "choose": [
       {
         "label": "Element",
-        "options": ["Fire", "Ice", "Lightning", "Poison", "Acid"],
+        "options": ["Fire", "Ice", "Lightning", "Poison", "Acid"]
       }
     ],
     "features": [
@@ -202,19 +200,13 @@
   {
     "name": "Simiah",
     "description": "Simiah resemble anthropomorphic monkeys and apes, with long legs and prehensile feet.",
-    "creation": [
-      {
-        "name": "Nimble",
-        "description": "Add **+1** to evasion at character creation.",
-        "modify": {
-          "evasion": 1
-        }
-      }
-    ],
     "features": [
       {
         "name": "Nimble",
-        "description": "Take advantage of Agility Rolls that involve balancing and climbing."
+        "description": "Take advantage of Agility Rolls that involve balancing and climbing. Add **+1** to evasion at character creation.",
+        "modify": {
+          "evasion": 1
+        }
       }
     ]
   }

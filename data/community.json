@@ -2,37 +2,25 @@
   {
     "name": "Highborne",
     "description": "Being part of a Highborne community means you were born into a life of elegance, opulence, and prestige within the upper echelons of society.",
-    "creation": [
-      {
-        "name": "Inheritance",
-        "description": "Take an extra handful of gold at character creation.",
-        "modify": {
-          "goldHandful": 1
-        }
-      }
-    ],
     "features": [
       {
         "name": "Inheritance",
-        "description": "You have advantage on any rolls you make when consorting with nobles, negotiating prices, or leveraging your reputation to get what you want."
+        "description": "You have advantage on any rolls you make when consorting with nobles, negotiating prices, or leveraging your reputation to get what you want. Take an extra handful of gold at character creation.",
+        "modify": {
+          "goldHandful": 1
+        }
       }
     ]
   },
   {
     "name": "Ridgeborne",
-    "creation": [
-      {
-        "name": "Steady",
-        "description": "Gain **+1** to your Armor Score.",
-        "modify": {
-          "armorScore": 1
-        }
-      }
-    ],
     "features": [
       {
         "name": "Steady",
-        "description": "You have advantage on traversing dangerous cliffs and ledges, navigating harsh environments, and survival knowledge."
+        "description": "You have advantage on traversing dangerous cliffs and ledges, navigating harsh environments, and survival knowledge. Gain **+1** to your Armor Score.",
+        "modify": {
+          "armorScore": 1
+        }
       }
     ]
   },
