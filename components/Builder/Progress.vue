@@ -4,7 +4,7 @@
       button.w-8.transition-colors.shadow-md(
         class="h-1.5"
         :class="{ 'bg-black': n === page + 1, 'bg-slate-400': n !== page + 1 }"
-        @click="$emit('set', n - 1)"
+        @click="setPage($event, n - 1)"
       )
 </template>
 
@@ -19,6 +19,15 @@
       steps: {
         type: Number,
         default: 5,
+      },
+    },
+    methods: {
+      setPage($event, page) {
+        if (page > this.page) {
+          $event.preventDefault();
+        } else if (page !== this.page) {
+          this.$emit('set', page);
+        }
       },
     },
   };

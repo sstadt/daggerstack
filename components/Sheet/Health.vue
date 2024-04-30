@@ -23,6 +23,7 @@
 
 <script>
   import { useCharactersStore } from '~/stores/characters';
+  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
 
   import classes from '~/data/classes';
 
@@ -54,37 +55,22 @@
           : null;
       },
       minorThreshold() {
-        let threshold = 0;
+        const base = this.baseClass.startingThreshold.minor;
+        const modifiers = getFeaturesByAttribute(this.character, 'minorDamageThreshold');
 
-        if (this.baseClass) {
-          threshold += this.baseClass.startingThreshold.minor;
-        }
-
-        // TODO: include leveling/subclass bonuses
-
-        return threshold;
+        return base + calculateModifiers(modifiers, 'minorDamageThreshold');
       },
       majorThreshold() {
-        let threshold = 0;
+        const base = this.baseClass.startingThreshold.major;
+        const modifiers = getFeaturesByAttribute(this.character, 'majorDamageThreshold');
 
-        if (this.baseClass) {
-          threshold += this.baseClass.startingThreshold.major;
-        }
-
-        // TODO: include leveling/subclass bonuses
-
-        return threshold;
+        return base + calculateModifiers(modifiers, 'majorDamageThreshold');
       },
       severeThreshold() {
-        let threshold = 0;
+        const base = this.baseClass.startingThreshold.severe;
+        const modifiers = getFeaturesByAttribute(this.character, 'severeDamageThreshold');
 
-        if (this.baseClass) {
-          threshold += this.baseClass.startingThreshold.severe;
-        }
-
-        // TODO: include leveling/subclass bonuses
-
-        return threshold;
+        return base + calculateModifiers(modifiers, 'severeDamageThreshold');
       },
     },
     watch: {

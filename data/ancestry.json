@@ -62,7 +62,7 @@
         "name": "Endurance",
         "description": "Gain an additional Hit Point Slot at character creation.",
         "modify": {
-          "hitPoint": 1
+          "healthSlot": 1
         }
       }
     ]
