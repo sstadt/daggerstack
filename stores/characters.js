@@ -31,5 +31,16 @@ export const useCharactersStore = defineStore('characters', {
         localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(this.characterList));
       }
     },
+    deleteCharacter(characterId) {
+      const index = this.characterList.findIndex((c) => c.id === characterId);
+
+      if (index > -1) {
+        this.characterList.splice(index, 1);
+
+        if (process.client) {
+          localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(this.characterList));
+        }
+      }
+    },
   },
 });
