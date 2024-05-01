@@ -23,10 +23,4 @@ export default defineNuxtConfig({
       },
     ]
   ],
-  ssr: true,
-  nitro: {
-    prerender: {
-      failOnError: false,
-    },
-  },
 });
