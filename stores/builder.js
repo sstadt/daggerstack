@@ -54,10 +54,13 @@ export const useBuilderStore = defineStore('builder', {
         localStorage.setItem(LS_KEY_CHARACTER, JSON.stringify(this.character));
       }
     },
-    createCharacter() {
+    createCharacter(updates = null) {
       const characterStore = useCharactersStore();
+      const character = updates
+        ? deepMerge(this.character, updates)
+        : { ...this.character };
 
-      characterStore.saveCharacter({ ...this.character });
+      characterStore.saveCharacter(character);
       this.close();
       this.character = {};
 

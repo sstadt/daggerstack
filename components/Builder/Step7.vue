@@ -3,17 +3,28 @@
     form(@submit.prevent="next").space-y-8
       .space-y-4
         div
-          h2.text-center.text-2xl.font-black.uppercase Experience
+          h2.mb-2.text-center.text-2xl.font-black.uppercase Experience
           p.text-center.mb-2.px-6.text-sm.text-slate-500 Describe two experiences, that make sense for your background, in a word or phrase
+          p.text-center.mb-2.px-6.text-sm.text-slate-500(v-if="bonusExperience > 0") Your character also has {{ bonusExperience }} extra experience to allocate as you choose!
         .flex
-          p.experience__label.px-4.text-lg.font-bold +2
+          InputCounter.mr-2(
+            v-model="experience1Score"
+            :min="2"
+            :max="2 + remainingExperience"
+            modifier
+          )
           InputText.flex-grow(
             v-model="experience1"
             :errors="v$.experience1.$errors"
             required
           )
         .flex
-          p.experience__label.px-4.text-lg.font-bold +1
+          InputCounter.mr-2(
+            v-model="experience2Score"
+            :min="1"
+            :max="1 + remainingExperience"
+            modifier
+          )
           InputText.flex-grow(
             v-model="experience2"
             :errors="v$.experience2.$errors"
@@ -46,11 +57,13 @@
 </template>
 
 <script>
+  import { mapState } from 'pinia';
   import { useVuelidate } from '@vuelidate/core';
   import { required } from '@vuelidate/validators';
 
   import names from '~/data/names.json';
   import { getRandomNumber } from '~/helpers/dice';
+  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
 
   import { useBuilderStore } from '~/stores/builder';
 
@@ -58,18 +71,13 @@
     name: 'BuilderStep7',
     data() {
       const { name, pronouns, experience } = this.builderStore.character;
-
-      let experience1 = '';
-      let experience2 = '';
-
-      experience.forEach((exp) => {
-        if (exp.score === 2) experience1 = exp.name;
-        if (exp.score === 1) experience2 = exp.name;
-      });
+      const [ existingExperience1, existingExperience2 ] = experience;
 
       return {
-        experience1,
-        experience2,
+        experience1: existingExperience1 ? existingExperience1.name : '',
+        experience1Score: existingExperience1 ? existingExperience1.score : 2,
+        experience2: existingExperience2 ? existingExperience2.name : '',
+        experience2Score: existingExperience1 ? existingExperience1.score : 1,
         name,
         pronouns,
         firstNames: names.first,
@@ -92,6 +100,19 @@
         v$: useVuelidate(),
       };
     },
+    computed: {
+      ...mapState(useBuilderStore, ['character']),
+      bonusExperience() {
+        const modifiers = getFeaturesByAttribute(this.character, 'experience');
+        return calculateModifiers(modifiers, 'experience');
+      },
+      remainingExperience() {
+        const totalExperience = this.experience1Score + this.experience2Score;
+
+        // 3 total is base for all characters, so we need to zero that out
+        return 3 - totalExperience + this.bonusExperience;
+      },
+    },
     methods: {
       generateName() {
         const firstIndex = getRandomNumber(0, names.first.length - 1);
@@ -107,8 +128,8 @@
             name: this.name,
             pronouns: this.pronouns,
             experience: [
-              { name: this.experience1, score: 2 },
-              { name: this.experience2, score: 1 },
+              { name: this.experience1, score: this.experience1Score },
+              { name: this.experience2, score: this.experience2Score },
             ],
           });
 

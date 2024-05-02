@@ -1,12 +1,12 @@
 <template lang="pug">
   .statistics
-    .px-4.flex.items-center
+    .px-3.flex.items-center
       TraitDisplay.px-2(
         title="evasion"
         class="w-1/3"
         :score="character.evasion"
       )
-      .w-px.h-20.mx-3.bg-slate-300
+      .w-px.h-20.mx-2.bg-slate-300
       TraitDisplay.px-2(
         title="armor"
         class="w-1/3"
@@ -18,7 +18,7 @@
           :max="maxArmor"
           :enabled="armorSlots"
         )
-    .h-px.bg-slate-400.mx-auto.mt-5.mb-8(class="w-4/5")
+    .h-px.bg-slate-300.mx-auto.mt-5.mb-8(class="w-4/5")
     .px-6.grid.gap-8.grid-cols-3
       TraitDisplay(
         title="agility"

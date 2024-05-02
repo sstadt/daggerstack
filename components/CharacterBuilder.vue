@@ -18,6 +18,9 @@
 
 <script>
   import { mapState } from 'pinia';
+
+  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
+
   import { useBuilderStore } from '~/stores/builder';
 
   export default {
@@ -60,8 +63,17 @@
       },
       createCharacter() {
         const characterId = this.character.id;
+        const modifiers = getFeaturesByAttribute(this.character, 'goldHandful');
+        const bonusGold = calculateModifiers(modifiers, 'goldHandful');
+        const currentGold =  this.character.inventory.gold.handful;
 
-        this.builderStore.createCharacter();
+        this.builderStore.createCharacter({
+          inventory: {
+            gold: {
+              handful: currentGold + bonusGold,
+            }
+          }
+        });
         this.$router.push({ path: `/character/${characterId}` });
       },
     },
