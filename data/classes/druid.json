@@ -1,4 +1,5 @@
 {
+  "domains": ["sage", "arcana"],
   "startingThreshold": {
     "minor": 3,
     "major": 8,

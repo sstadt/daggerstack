@@ -1,4 +1,5 @@
 {
+  "domains": ["valor", "blade"],
   "startingThreshold": {
     "minor": 6,
     "major": 11,
