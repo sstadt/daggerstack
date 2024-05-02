@@ -2,8 +2,7 @@
   BasicCard(title="Connections")
     .space-y-4
       .space-y-1(v-for="item in connection")
-        p.font-bold.mt-4 {{ item.question }}
-        InputTextarea(v-model="item.answer" @input="saveQuestions")
+        InputTextarea(v-model="item.answer" :label="item.question" @input="saveQuestions")
 </template>
 
 <script>

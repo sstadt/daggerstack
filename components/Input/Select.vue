@@ -1,6 +1,9 @@
 <template lang="pug">
   .input--select.flex.flex-col(:class="wrapperClasses")
-    label.uppercase.font-bold.text-slate-500(v-if="label && !hideLabel") {{ label }}
+    label.uppercase.font-bold.text-slate-500(
+      v-if="label"
+      :class="{ 'sr-only': hideLabel }"
+    ) {{ label }}
     select.w-full.px-4.py-2.text-xl.outline-0(
       :class="inputClass"
       :value="modelValue"

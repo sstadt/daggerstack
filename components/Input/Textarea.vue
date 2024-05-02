@@ -1,6 +1,9 @@
 <template lang="pug">
   .input--text.flex.flex-col(:class="wrapperClasses")
-    label.uppercase.font-bold.text-slate-500(v-if="label && !hideLabel") {{ label }}
+    label.uppercase.font-bold.text-slate-500(
+      v-if="label"
+      :class="{ 'sr-only': hideLabel }"
+    ) {{ label }}
     textarea.px-4.py-2.text-xl.resize-none.overflow-hidden.outline-0(
       ref="textarea"
       type="text"

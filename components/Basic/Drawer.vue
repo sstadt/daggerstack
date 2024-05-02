@@ -3,14 +3,14 @@
     transition(name="fade" appear)
       .drawer__overlay.absolute.w-full.h-full.bg-black.opacity-30(v-if="isOpen")
     transition(name="off-canvas-right" appear)
-      .drawer__content.relative.bg-white.h-full.py-4.ml-auto.overflow-y-auto.shadow(
+      .drawer__content.pb-8.relative.flex.flex-col.bg-white.h-full.ml-auto.overflow-y-auto.shadow(
         v-if="isOpen"
         class="w-11/12"
       )
         button.p-3.absolute.top-3.right-3(@click="close")
           span.sr-only Close
           NuxtIcon(name="times")
-        .min-h-12.pb-4
+        .min-h-16.py-4
           h2.text-center.text-2xl.font-black.uppercase(v-if="title") {{ title }}
         slot
 </template>
