@@ -1,6 +1,9 @@
 <template lang="pug">
   .input--text.flex.flex-col(:class="wrapperClasses")
-    label.uppercase.font-bold.text-slate-500(v-if="label && !hideLabel")
+    label.uppercase.font-bold.text-slate-500(
+      v-if="label && !hideLabel"
+      :class="{ 'sr-only': hideLabel }"
+    )
       | {{ label }}
       span(v-if="required") *
     input.px-4.py-2.text-xl.outline-0(

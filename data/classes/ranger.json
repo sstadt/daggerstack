@@ -1,4 +1,5 @@
 {
+  "domains": ["bone", "sage"],
   "startingThreshold": {
     "minor": 4,
     "major": 9,

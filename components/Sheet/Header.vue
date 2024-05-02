@@ -7,7 +7,13 @@
         span {{ character.pronouns }}
     slot
     BasicDrawer(ref="health" title="Character")
-      SheetHealth(:character="character")
+      .flex.flex-col.flex-grow
+        .space-y-12
+          SheetHealth(:character="character")
+          SheetDescription(:character="character")
+        BasicCard.mt-auto
+          NuxtLink(to="/")
+            BasicButton.w-full Character List
 </template>
 
 <script>

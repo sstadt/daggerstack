@@ -59,7 +59,6 @@
         this.activeDeleteId = null;
       },
       deleteCharacter(character) {
-        console.log(character);
         this.activeDeleteId = character.id;
         this.$refs.confirm
           .ask(`Are you sure you want to delete ${character.name}? This cannot be undone`);

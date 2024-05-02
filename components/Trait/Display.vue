@@ -50,7 +50,7 @@
       scoreClass() {
         return {
           'pt-3 pb-8': this.isStatistic,
-          'pt-9 pb-10': !this.isStatistic,
+          'pt-8 pb-11': !this.isStatistic,
         };
       },
     },

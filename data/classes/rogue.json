@@ -1,4 +1,5 @@
 {
+  "domains": ["midnight", "grace"],
   "startingThreshold": {
     "minor": 4,
     "major": 9,

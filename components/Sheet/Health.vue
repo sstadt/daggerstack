@@ -1,9 +1,13 @@
 <template lang="pug">
   BasicCard.sheet-health(title="Hit Points & Stress")
-    .grid.grid-cols-3.gap-4.p-5
-      TraitDisplay(title="minor" :score="minorThreshold")
-      TraitDisplay(title="major" :score="majorThreshold")
-      TraitDisplay(title="severe" :score="severeThreshold")
+    .flex.items-center.justify-center.pt-8.pb-10
+      template(v-for="(threshold, index) in thresholds")
+        p.relative.border.border-black.rounded.text-lg.py-1.pr-1.w-12.text-center
+          | {{ threshold.score }}
+          span.threshold__helper-text.absolute.text-slate-500.text-xs.whitespace-nowrap
+            | {{ index + 1 }} HP
+        p.threshold-name.relative.py-1.text-xs.text-white.bg-black.uppercase.font-bold(class="pr-1.5")
+          | {{ threshold.name }}
     .space-y-6
       .hit-points
         h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0 HP
@@ -72,6 +76,13 @@
 
         return base + calculateModifiers(modifiers, 'severeDamageThreshold');
       },
+      thresholds() {
+        return [
+          { name: 'minor', score: this.minorThreshold },
+          { name: 'major', score: this.majorThreshold },
+          { name: 'severe', score: this.severeThreshold },
+        ];
+      },
     },
     watch: {
       currentHealth(newVal, oldVal) {
@@ -91,12 +102,24 @@
 </script>
 
 <style lang="scss" scoped>
-  .threshold-icon {
-    transform: translateY(1px);
+  .threshold-name::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-100%, -50%);
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 12px solid black;
+  }
 
-    &:deep(svg) {
-      height: 12px;
-      width: 12px;
-    }
+  .threshold__helper-text {
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 </style>

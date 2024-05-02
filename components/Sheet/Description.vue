@@ -1,17 +1,20 @@
 <template lang="pug">
-  BasicCard(title="Background Questions")
-    .space-y-4
-      .space-y-1(v-for="item in background")
-        InputTextarea(v-model="item.answer" :label="item.question" @input="saveQuestions")
+  BasicCard(title="Description")
+    InputTextarea.mt-8(
+      v-model="description"
+      label="Description"
+      @input="saveDescription"
+      hide-label
+    )
 </template>
 
 <script>
-  import { debounce, clone } from '~/helpers/utility';
+  import { debounce } from '~/helpers/utility';
 
   import { useCharactersStore } from '~/stores/characters';
 
   export default {
-    name: 'SheetBackground',
+    name: 'SheetAppearance',
     props: {
       character: {
         type: Object,
@@ -20,7 +23,7 @@
     },
     data() {
       return {
-        background: clone(this.character.background),
+        description: this.character.description,
       };
     },
     setup() {
@@ -29,8 +32,8 @@
       return { charactersStore };
     },
     methods: {
-      saveQuestions: debounce(function () {
-        this.character.background = clone(this.background);
+      saveDescription: debounce(function () {
+        this.character.description = this.description;
         this.charactersStore.saveCharacter(this.character);
       }),
     },

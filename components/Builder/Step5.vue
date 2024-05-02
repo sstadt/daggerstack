@@ -24,15 +24,17 @@
           InputTextarea(v-else v-model="customDescription")
     .space-y-4
       h2.text-center.text-2xl.font-black.uppercase Domain Cards
-      p.text-center.mb-2.text-sm.text-slate-500 Choose two cards from the level one -domain1- and -domain2- domain decks.
+      p.text-center.mb-2.text-sm.text-slate-500 Choose two cards from the level one {{ ucFirst(domain1) }} and {{ ucFirst(domain2) }} domain decks.
     .flex.justify-between.items-center
       NuxtLink(to="/") Finish Later
       BasicButton.block(type="submit") Next
 </template>
 
 <script>
-  import generalData from '~/data/general.json';
+  import CLASSES from '~/data/classes';
+  import GENERAL from '~/data/general.json';
   import { joinWithAnd } from '~/helpers/array';
+  import { ucFirst } from '~/helpers/string';
 
   import { useBuilderStore } from '~/stores/builder';
 
@@ -40,9 +42,11 @@
     name: 'BuilderStep5',
     data() {
       const savedDescription = this.builderStore.character.description;
+      const classData = CLASSES[this.builderStore.character.baseClass];
+      const [ domain1, domain2 ] = classData.domains;
 
       return {
-        descriptions: generalData.description,
+        descriptions: GENERAL.description,
         selectedClothes: [],
         selectedEyes: [],
         selectedBody: [],
@@ -50,6 +54,8 @@
         selectedAttitude: [],
         currentTab: savedDescription === '' ? 0 : 1,
         customDescription: savedDescription,
+        domain1,
+        domain2,
       };
     },
     setup() {
@@ -58,6 +64,7 @@
       return { builderStore };
     },
     methods: {
+      ucFirst,
       setTab(tab) {
         this.currentTab = tab;
       },

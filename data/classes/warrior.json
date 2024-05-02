@@ -1,4 +1,5 @@
 {
+  "domains": ["blade", "bone"],
   "startingThreshold": {
     "minor": 5,
     "major": 10,
