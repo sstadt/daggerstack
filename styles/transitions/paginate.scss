@@ -1,0 +1,32 @@
+
+// paginate-right
+.paginate-right-enter-active,
+.paginate-right-leave-active {
+  transition: all 0.3s ease;
+}
+
+.paginate-right-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.paginate-right-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+// paginate-left
+.paginate-left-enter-active,
+.paginate-left-leave-active {
+  transition: all 0.3s ease;
+}
+
+.paginate-left-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.paginate-left-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}

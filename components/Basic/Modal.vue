@@ -5,7 +5,7 @@
         v-if="isOpen"
       )
         button.p-3.absolute.top-3.right-3(v-if="close" @click="close()")
-          span.u-sr-only Close
+          span.sr-only Close
           NuxtIcon(name="times")
         .min-h-12.p-4
           h2.text-center.text-2xl.font-black.uppercase(v-if="title") {{ title }}

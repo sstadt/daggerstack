@@ -1,61 +1,67 @@
 <template lang="pug">
-  .p-6.pb-0.grid.gap-8.grid-cols-3
-    TraitDisplay(
-      title="evasion"
-      :score="character.evasion"
-    )
-    TraitDisplay(
-      title="armor"
-      :score="characterArmor"
-    )
-    .flex.items-start.justify-center
-      InputCheckboxCounter.grid.grid-cols-3.grid-rows-3.gap-1.mt-4(
-        v-model="currentArmor"
-        :max="maxArmor"
-        :enabled="armorSlots"
+  .statistics
+    .px-4.flex.items-center
+      TraitDisplay.px-2(
+        title="evasion"
+        class="w-1/3"
+        :score="character.evasion"
       )
-    TraitDisplay(
-      title="agility"
-      :score="characterAgility"
-      helper-text="Sprint, Leap, Maneuver"
-      :upgradeable="!character.agility.upgraded"
-      modifier
-    )
-    TraitDisplay(
-      title="strength"
-      :score="characterStrength"
-      helper-text="Lift, Smash, Grapple"
-      :upgradeable="!character.strength.upgraded"
-      modifier
-    )
-    TraitDisplay(
-      title="finesse"
-      :score="characterFinesse"
-      helper-text="Control, Hide, Tinker"
-      :upgradeable="!character.finesse.upgraded"
-      modifier
-    )
-    TraitDisplay(
-      title="instinct"
-      :score="characterInstinct"
-      helper-text="Perceive, Sense, Navigate"
-      :upgradeable="!character.instinct.upgraded"
-      modifier
-    )
-    TraitDisplay(
-      title="presence"
-      :score="characterPresence"
-      helper-text="Charm, Perform, Deceive"
-      :upgradeable="!character.presence.upgraded"
-      modifier
-    )
-    TraitDisplay(
-      title="knowledge"
-      :score="characterKnowledge"
-      helper-text="Recall, Analyze, Comprehend"
-      :upgradeable="!character.knowledge.upgraded"
-      modifier
-    )
+      .w-px.h-20.mx-3.bg-slate-300
+      TraitDisplay.px-2(
+        title="armor"
+        class="w-1/3"
+        :score="characterArmor"
+      )
+      .flex.items-start.justify-center.flex-grow
+        InputCheckboxCounter.grid.grid-cols-3.grid-rows-3.gap-1(
+          v-model="currentArmor"
+          :max="maxArmor"
+          :enabled="armorSlots"
+        )
+    .h-px.bg-slate-400.mx-auto.mt-5.mb-8(class="w-4/5")
+    .px-6.grid.gap-8.grid-cols-3
+      TraitDisplay(
+        title="agility"
+        :score="characterAgility"
+        helper-text="Sprint, Leap, Maneuver"
+        :upgradeable="!character.agility.upgraded"
+        modifier
+      )
+      TraitDisplay(
+        title="strength"
+        :score="characterStrength"
+        helper-text="Lift, Smash, Grapple"
+        :upgradeable="!character.strength.upgraded"
+        modifier
+      )
+      TraitDisplay(
+        title="finesse"
+        :score="characterFinesse"
+        helper-text="Control, Hide, Tinker"
+        :upgradeable="!character.finesse.upgraded"
+        modifier
+      )
+      TraitDisplay(
+        title="instinct"
+        :score="characterInstinct"
+        helper-text="Perceive, Sense, Navigate"
+        :upgradeable="!character.instinct.upgraded"
+        modifier
+      )
+      TraitDisplay(
+        title="presence"
+        :score="characterPresence"
+        helper-text="Charm, Perform, Deceive"
+        :upgradeable="!character.presence.upgraded"
+        modifier
+      )
+      TraitDisplay(
+        title="knowledge"
+        :score="characterKnowledge"
+        helper-text="Recall, Analyze, Comprehend"
+        :upgradeable="!character.knowledge.upgraded"
+        modifier
+      )
 </template>
 
 <script>

@@ -1,12 +1,12 @@
 <template lang="pug">
   .text-center
-    .shadow.border.border-slate-400.border-solid.rounded-md.flex.flex-col.items-center
-      .bg-black.px-2.rounded-t.flex.justify-center.items-center.space-x-1.w-full(class="py-0.5")
+    .flex.items-center(:class="displayClass")
+      .u-angled-corners.bg-black.px-2.w-full(class="py-0.5" :class="titleClass")
         p.text-xs.uppercase.font-bold.text-white.truncate {{ title }}
-      p.text-3xl.my-auto.py-4.px-2
+      p.text-3xl.my-auto(:class="scoreClass")
         span(v-if="modifier && score > 0") +
         | {{ score }}
-    p.text-xs.text-slate-500.mt-1 {{ helperText }}
+    p.text-xs.text-slate-500(v-if="helperText" class="-translate-y-1") {{ helperText }}
 </template>
 
 <script>
@@ -30,11 +30,29 @@
         default: null,
       },
     },
+    computed: {
+      isStatistic() {
+        return !['evasion', 'armor'].includes(this.title);
+      },
+      displayClass() {
+        return {
+          'flex-col-reverse relative': !this.isStatistic,
+          'flex-col u-bg-statistic': this.isStatistic,
+          'u-bg-evasion': this.title === 'evasion',
+          'u-bg-armor': this.title === 'armor',
+        };
+      },
+      titleClass() {
+        return {
+          'absolute bottom-5 left-0 w-full': !this.isStatistic,
+        };
+      },
+      scoreClass() {
+        return {
+          'pt-3 pb-8': this.isStatistic,
+          'pt-9 pb-10': !this.isStatistic,
+        };
+      },
+    },
   };
 </script>
-
-<style lang="scss" scoped>
-  .upgrade-indicator {
-    gap: 0;
-  }
-</style>
