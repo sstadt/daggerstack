@@ -21,6 +21,7 @@
         transition.my-12(:name="transition" mode="out-in")
           SheetHealth.mt-2(v-if="currentIndex === 0" :character="character")
           SheetDescription.mt-2(v-else-if="currentIndex === 1" :character="character")
+          SheetSettings.mt-2(v-else-if="currentIndex === 2" :character="character")
         BasicCard.mt-auto
           NuxtLink(to="/")
             BasicButton.w-full Character List
@@ -46,6 +47,7 @@
         tabs: [
           { title: 'Hit Points & Stress', icon: 'health' },
           { title: 'Persona', icon: 'persona' },
+          { title: 'Settings', icon: 'cog' },
         ]
       };
     },

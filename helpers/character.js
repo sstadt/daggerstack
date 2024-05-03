@@ -1,3 +1,4 @@
+
 import { uuidv4 } from '~/helpers/utility';
 
 import GENERAL from '~/data/general';
@@ -9,8 +10,8 @@ import COMMUNITY from '~/data/community';
 import ANCESTRY from '~/data/ancestry';
 
 const equipmentFeatures = [ ...WEAPONS.features ].concat([ ...ARMOR.features ]);
-let allSubclasses = [];
 
+let allSubclasses = [];
 for (const [key] of Object.entries(SUBCLASSES)) {
   allSubclasses = allSubclasses.concat(SUBCLASSES[key]);
 }
