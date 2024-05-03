@@ -1,14 +1,14 @@
 <template lang="pug">
   .character-sheet
     SheetHeader.mb-8(:character="character")
-      .flex.bg-black.relative
+      .flex.relative
         NavButton(
           v-for="(button, index) in navButtons"
           :icon="button.icon"
           class="w-1/4"
           @click="open(index)"
         )
-        .nav-indicator.absolute.bottom-0.h-2.bg-white.pointer-events-none.transition-all.translate-y-px(
+        .nav-indicator.absolute.bottom-0.h-2.bg-white.pointer-events-none.transition-all(
           class="w-1/4"
           :style="indicatorStyle"
         )
@@ -69,3 +69,4 @@
     },
   };
 </script>
+
