@@ -1,6 +1,6 @@
 <template lang="pug">
-  BasicCard.sheet-health(title="Hit Points & Stress")
-    .flex.items-center.justify-center.pt-8.pb-10
+  BasicCard.sheet-health
+    .flex.items-center.justify-center.pb-10
       template(v-for="(threshold, index) in thresholds")
         p.relative.border.border-black.rounded.text-lg.py-1.pr-1.w-12.text-center
           | {{ threshold.score }}

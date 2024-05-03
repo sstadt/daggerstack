@@ -8,11 +8,19 @@
         span.text-lg Level {{ character.level }} {{ character.heritage }} {{ ucFirst(character.baseClass) }}
         span.ml-auto {{ character.pronouns }}
     slot
-    BasicDrawer(ref="health" title="Character")
+    BasicDrawer(ref="health" :title="tabs[currentIndex].title")
       .flex.flex-col.flex-grow
-        .space-y-12
-          SheetHealth(:character="character")
-          SheetDescription(:character="character")
+        .flex.justify-center.items-center
+          button.px-3.text-4xl(
+            v-for="(tab, index) in tabs"
+            :class="{ 'opacity-40': currentIndex !== index }"
+            @click="setTab(index)"
+          )
+            span.sr-only {{ tab.title }}
+            NuxtIcon.tab-icon(:name="tab.icon")
+        transition.my-12(:name="transition" mode="out-in")
+          SheetHealth.mt-2(v-if="currentIndex === 0" :character="character")
+          SheetDescription.mt-2(v-else-if="currentIndex === 1" :character="character")
         BasicCard.mt-auto
           NuxtLink(to="/")
             BasicButton.w-full Character List
@@ -31,6 +39,16 @@
         required: true,
       },
     },
+    data() {
+      return {
+        transition: 'paginate-left',
+        currentIndex: 0,
+        tabs: [
+          { title: 'Hit Points & Stress', icon: 'health' },
+          { title: 'Persona', icon: 'persona' },
+        ]
+      };
+    },
     computed: {
       classData() {
         return CLASSES[this.character.baseClass];
@@ -43,6 +61,13 @@
       ucFirst,
       openHealth() {
         this.$refs.health.open();
+      },
+      setTab(index) {
+        this.transition = index < this.currentIndex
+          ? 'paginate-left'
+          : 'paginate-right';
+
+        this.currentIndex = index;
       },
     },
   };

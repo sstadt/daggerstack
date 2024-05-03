@@ -1,6 +1,6 @@
 <template lang="pug">
-  BasicCard(title="Description")
-    .space-y-6.mt-6
+  BasicCard
+    .space-y-6
       p.text-2xl {{ character.community }} {{ character.ancestry }}
       .flex.space-x-4
         .w-10.flex.flex-col.items-center(v-for="domain in domains")
@@ -10,7 +10,6 @@
         v-model="description"
         label="Description"
         @input="saveDescription"
-        hide-label
       )
 </template>
 
