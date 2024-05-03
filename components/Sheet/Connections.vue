@@ -1,7 +1,7 @@
 <template lang="pug">
   BasicCard(title="Connections")
-    .space-y-4
-      .space-y-1(v-for="item in connection")
+    .space-y-4.pt-4
+      .space-y-2(v-for="item in connection")
         InputTextarea(v-model="item.answer" :label="item.question" @input="saveQuestions")
 </template>
 
