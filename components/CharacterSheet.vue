@@ -8,7 +8,7 @@
           class="w-1/4"
           @click="open(index)"
         )
-        .nav-indicator.absolute.bottom-0.h-2.bg-white.pointer-events-none.transition-all(
+        .nav-indicator.absolute.bottom-0.h-2.bg-white.pointer-events-none.transition-all.translate-y-px(
           class="w-1/4"
           :style="indicatorStyle"
         )

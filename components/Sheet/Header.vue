@@ -1,5 +1,5 @@
 <template lang="pug">
-  .sheet-header.sticky.top-0.z-10.overflow-hidden.bg-black.relative
+  .sheet-header.sticky.top-0.z-10.bg-black.relative
     .sheet-header__title.flex-none.py-4.px-6.text-white(@click="openHealth")
       .sheet-header__domain-icons.flex.absolute.opacity-20.-bottom-8(class="left-1/2")
         NuxtIcon(v-for="domain in domains" :name="domain")
