@@ -30,6 +30,10 @@
           return ['primary', 'secondary'].includes(value);
         },
       },
+      icon: {
+        type: Boolean,
+        default: false,
+      },
       disabled: {
         type: Boolean,
         defaut: false,
@@ -38,8 +42,11 @@
     computed: {
       buttonClass() {
         return {
-          'text-xs py-1 px-1.5': this.size === 'xs',
-          'text-sm py-1 px-4': this.size === 'sm',
+          // TODO: finish setting up icon button styles for md and lg buttons
+          'text-xs py-1 px-1.5': this.size === 'xs' && !this.icon,
+          'text-sm p-1': this.size === 'xs' && this.icon,
+          'text-sm py-1 px-4': this.size === 'sm' && !this.icon,
+          'px-2 py-1.5': this.size === 'sm' && this.icon,
           'py-4 px-6 text-lg': this.size === 'md',
           'py-5 px-7 text-xl': this.size === 'lg',
           'text-white bg-violet-800 border-violet-900 hover:bg-violet-950 focus:bg-violet-950': this.priority === 'primary',

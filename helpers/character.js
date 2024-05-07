@@ -224,9 +224,11 @@ export const calculateModifiers = (features, attribute) => {
  *
  * @param {Object} character The character to compile modifiers for
  * @param {attribute} attribute The attribute to compile modifiers for
+ * @param {Object} options Additional options for filtering
+ *  exclude: Array of modifier types to exclude
  * @returns An array of features
  */
-export const getFeaturesByAttribute = (character, attribute) => {
+export const getFeaturesByAttribute = (character, attribute, options = {}) => {
   const burden =
     character.equipment.primaryWeapon.burden + character.equipment.secondaryWeapon.burden;
   const subclasses = character.subclass.map((characterSubclass) => {
@@ -263,11 +265,14 @@ export const getFeaturesByAttribute = (character, attribute) => {
     const armorFeature = equipmentFeatures.find(
       (feature) => feature.name === character.equipment.armor.feature,
     );
+    const armorScore = options.exclude && options.exclude.includes('armorScore')
+      ? 0
+      : character.equipment.armor.score;
 
     features.push({
       name: character.equipment.armor.name,
       modify: {
-        armorScore: character.equipment.armor.score,
+        armorScore,
       },
     });
 

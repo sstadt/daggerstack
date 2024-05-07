@@ -32,6 +32,8 @@
 <script>
   import CLASSES from '~/data/classes';
 
+  import { useSheetStore } from '~/stores/sheet';
+
   export default {
     name: 'CharacterSheet',
     props: {
@@ -60,6 +62,11 @@
         navButtons,
       };
     },
+    setup() {
+      const sheetStore = useSheetStore();
+
+      return { sheetStore };
+    },
     computed: {
       baseClass() {
         return CLASSES[this.character.baseClass];
@@ -73,6 +80,9 @@
           left: `${left}%`,
         };
       },
+    },
+    mounted() {
+      this.sheetStore.loadSheetSettings();
     },
     methods: {
       open(icon) {
