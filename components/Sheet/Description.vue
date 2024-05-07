@@ -1,6 +1,7 @@
 <template lang="pug">
   BasicCard
     .space-y-6
+      p.text-3xl.font-bold {{ character.name }}
       p.text-2xl {{ character.community }} {{ character.ancestry }}
       .flex.space-x-4
         .w-10.flex.flex-col.items-center(v-for="domain in domains")
