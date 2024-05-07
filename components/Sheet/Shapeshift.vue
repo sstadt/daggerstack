@@ -1,17 +1,19 @@
 <template lang="pug">
   transition(name="fade" mode="out-in")
     .space-y-6(v-if="settingsLoaded && selectedForm")
-      h2.text-center.text-2xl.font-black.uppercase.relative
-        | {{ selectedForm.name }}
-        BasicButton.absolute.left-6.flex.items-center.justify-center(
-          size="sm"
-          priority="secondary"
-          class="top-1/2 -translate-y-1/2"
-          icon
-          @click="shapeshift(null)"
-        )
-          .sr-only Choose Form
-          NuxtIcon(name="back")
+      div
+        h2.text-center.text-2xl.font-black.uppercase.relative
+          | {{ selectedForm.name }}
+          BasicButton.absolute.left-6.flex.items-center.justify-center(
+            size="sm"
+            priority="secondary"
+            class="top-1/2 -translate-y-1/2"
+            icon
+            @click="shapeshift(null)"
+          )
+            .sr-only Choose Form
+            NuxtIcon(name="back")
+        p.text-center.text-slate-500 {{ selectedForm.examples.join(', ') }}, etc.
       .px-3.flex.items-center
         TraitDisplay.px-2(
           title="evasion"

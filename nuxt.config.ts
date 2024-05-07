@@ -12,6 +12,12 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/tailwindcss',
     [
+      'nuxt-gtag',
+      {
+        id: 'G-ZMR94R58WX',
+      }
+    ],
+    [
       '@nuxtjs/google-fonts',
       {
         families: {

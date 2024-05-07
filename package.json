@@ -20,6 +20,7 @@
     "markdown-it": "^14.1.0",
     "markdown-it-attrs": "^4.1.6",
     "nuxt": "^3.11.0",
+    "nuxt-gtag": "^2.0.5",
     "nuxt-icons": "^3.2.1",
     "pinia": "^2.1.7",
     "pug": "^3.0.2",
