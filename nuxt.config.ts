@@ -15,7 +15,17 @@ export default defineNuxtConfig({
       'nuxt-gtag',
       {
         id: 'G-ZMR94R58WX',
-      }
+        initCommands: [
+          // Setup up consent mode
+          ['consent', 'default', {
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            ad_storage: 'denied',
+            analytics_storage: 'denied',
+            wait_for_update: 500,
+          }]
+        ],
+      },
     ],
     [
       '@nuxtjs/google-fonts',
@@ -24,9 +34,9 @@ export default defineNuxtConfig({
           Ubuntu: {
             wght: [300, 400, 500, 700],
             ital: [300, 400, 500, 700],
-          }
+          },
         },
       },
-    ]
+    ],
   ],
 });
