@@ -25,8 +25,9 @@
           )
           .flex.flex-col.justify-center.flex-grow.space-y-2.pl-4
             p.text-xl <strong>Traits:</strong> {{ character.companion.traits.join(', ') }}
-            p.text-xl <strong>Damage Dice:</strong> {{ character.companion.damage }}
-            .stress.border-t.flex.space-x-2.pt-2
+            p.text-xl <strong>Damage:</strong> {{ character.companion.damage }}
+            .h-px.border-b(class="w-2/3")
+            .stress.flex
               h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0 stress
               InputCheckboxCounter(
                 v-model="currentStress"

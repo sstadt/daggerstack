@@ -1,5 +1,5 @@
 <template lang="pug">
-  transition(name="fade" mode="out-in")
+  transition(:name="pageTransition" mode="out-in")
     .space-y-6(v-if="settingsLoaded && selectedForm")
       div
         h2.text-center.text-2xl.font-black.uppercase.relative
@@ -96,6 +96,9 @@
       return { charactersStore, sheetStore };
     },
     computed: {
+      pageTransition() {
+        return this.selectedForm ? 'paginate-right' : 'paginate-left';
+      },
       baseClass() {
         return CLASSES[this.character.baseClass];
       },
