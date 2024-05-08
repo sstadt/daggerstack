@@ -1,6 +1,6 @@
 <template lang="pug">
   .character-sheet
-    SheetHeader.mb-8(:character="character")
+    SheetHeader(:character="character")
       .flex.relative
         NavButton(
           v-for="(button, index) in navButtons"
@@ -12,22 +12,22 @@
           :style="indicatorStyle"
         )
     transition(:name="transition" mode="out-in")
-      .space-y-16.pb-4(v-if="currentTab === 'attributes'")
+      .space-y-16.pb-4.py-8(v-if="currentTab === 'attributes'")
         SheetStatistics(:character="character")
         SheetExperience(:character="character")
         SheetClassFeature(:character="character")
-      .space-y-8.pb-4(v-else-if="currentTab === 'equipment'")
+      .space-y-8.pb-4.py-8(v-else-if="currentTab === 'equipment'")
         SheetWeapons(:character="character")
         SheetArmor(:character="character")
-      .space-y-8.pb-4(v-else-if="currentTab === 'inventory'")
+      .space-y-8.pb-4.py-8(v-else-if="currentTab === 'inventory'")
         SheetGold(:character="character")
         SheetInventory(:character="character")
-      .space-y-8.pb-4(v-else-if="currentTab === 'background'")
+      .space-y-8.pb-4.py-8(v-else-if="currentTab === 'background'")
         SheetBackground(:character="character")
         SheetConnections(:character="character")
-      .space-y-8.pb-4(v-else-if="currentTab === 'shapeshift'")
+      .space-y-8.pb-4.py-8(v-else-if="currentTab === 'shapeshift'")
         SheetShapeshift(:character="character")
-      .space-y-8.pb-4(v-else-if="currentTab === 'companion'")
+      .space-y-8.pb-4.py-8(v-else-if="currentTab === 'companion'")
         SheetCompanion(:character="character")
 </template>
 

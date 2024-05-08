@@ -3,7 +3,49 @@
     transition(name="fade")
       .flex.justify-center(v-if="character.companion.name === null")
         BasicButton(@click="openEditor") Create Companion
-      p(v-else) {{ character.companion.name }}
+      .space-y-6(v-else)
+        div
+          h2.text-center.text-2xl.font-black.uppercase.relative
+            | {{ character.companion.name }}
+            BasicButton.absolute.right-6.flex.items-center.justify-center(
+              size="sm"
+              priority="secondary"
+              class="top-1/2 -translate-y-1/2"
+              icon
+              @click="openEditor"
+            )
+              .sr-only Edit Companion
+              NuxtIcon(name="cog")
+          p.text-center.text-slate-500 {{ character.companion.species }}
+        .px-3.flex.items-center
+          TraitDisplay.px-2.shrink-0(
+            title="evasion"
+            class="w-1/3"
+            :score="character.companion.evasion"
+          )
+          .flex.flex-col.justify-center.flex-grow.space-y-2.pl-4
+            p.text-xl <strong>Traits:</strong> {{ character.companion.traits.join(', ') }}
+            p.text-xl <strong>Damage Dice:</strong> {{ character.companion.damage }}
+            .stress.border-t.flex.space-x-2.pt-2
+              h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0 stress
+              InputCheckboxCounter(
+                v-model="currentStress"
+                :max="maxStress"
+                :enabled="character.companion.stress.slots"
+              )
+        BasicCard(title="features")
+          .space-y-2.py-4
+            p.text-xl
+              strong(class="mr-1.5") Actions:
+              | You can make an action roll to command your companion using Instinct, and take advantage if they are using one of their companion traits.
+            p.text-xl
+              strong(class="mr-1.5") Attack:
+              | If you command them to attack a target, on a success, their damage roll uses your proficiency and their damage dice.
+            .space-y-2
+              p.text-xl
+                strong(class="mr-1.5") Stress:
+                | Anytime your companion would take damage, they mark stress. When their stress slots are full, they drop out of the scene (hide, flee, etc). They are unavailable to you, and will return at your next long rest with one stress cleared.
+              p.text-xl Whenever you use the Clear Stress downtime action on yourself, it automatically clears that much stress on your companion as well.
     BasicDrawer(ref="companionEditor" title="Companion")
       form.space-y-8.px-8.pb-8(@submit.prevent="saveCompanion")
         InputText(label="name" v-model="companionName")
@@ -16,7 +58,7 @@
             v-model="companionTraits"
             :disabled="maxTraitsSelected && !companionTraits.includes(trait)"
           )
-        BasicButton.w-full(type="submit") Save
+        BasicButton.w-full(type="submit" :disabled="!maxTraitsSelected") Save
 </template>
 
 <script>
@@ -40,6 +82,7 @@
         companionName: this.character.companion.name,
         companionSpecies: this.character.companion.species,
         companionTraits: this.character.companion.traits,
+        currentStress: this.character.companion.stress.current,
       };
     },
     validations() {
@@ -60,6 +103,10 @@
       maxTraitsSelected() {
         return this.companionTraits.length >= 2;
       },
+      maxStress() {
+        // TODO: calculate with leveling bonuses
+        return 4;
+      },
     },
     methods: {
       ucFirst,
@@ -79,6 +126,14 @@
           this.character.companion = { ...companion };
           this.charactersStore.saveCharacter(this.character);
           this.$refs.companionEditor.close();
+        }
+      },
+    },
+    watch: {
+      currentStress(newVal, oldVal) {
+        if (newVal !== oldVal) {
+          this.character.companion.stress.current = newVal;
+          this.charactersStore.saveCharacter(this.character);
         }
       },
     },
