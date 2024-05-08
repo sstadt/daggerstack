@@ -103,6 +103,19 @@ export const newCharacter = () => {
     experience: [],
     background: [],
     connection: [],
+    levelSelections: [],
+    companion: {
+      name: null,
+      species: null,
+      traits: [],
+      evasion: 10,
+      damage: 'd4',
+      stress: {
+        current: 0,
+        slots: 1,
+      },
+      levelSelections: []
+    },
   };
 };
 
@@ -217,6 +230,21 @@ export const calculateModifiers = (features, attribute) => {
   }
 
   return score;
+};
+
+export const hasCompanion = (character) => {
+  let hasCompanion = false;
+
+  character.subclass.forEach((subclass) => {
+    const data = SUBCLASSES[character.baseClass].find((sc) => sc.name === subclass.name);
+
+    if (data.foundation.companion === true) {
+      hasCompanion = true;
+      return;
+    }
+  });
+
+  return hasCompanion;
 };
 
 /**

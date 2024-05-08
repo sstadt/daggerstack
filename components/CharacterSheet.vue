@@ -27,12 +27,15 @@
         SheetConnections(:character="character")
       .space-y-8.pb-4(v-else-if="currentTab === 'shapeshift'")
         SheetShapeshift(:character="character")
+      .space-y-8.pb-4(v-else-if="currentTab === 'companion'")
+        SheetCompanion(:character="character")
 </template>
 
 <script>
   import CLASSES from '~/data/classes';
 
   import { useSheetStore } from '~/stores/sheet';
+  import { hasCompanion } from '~/helpers/character';
 
   export default {
     name: 'CharacterSheet',
@@ -53,6 +56,10 @@
 
       if (baseClass.alternateForms) {
         navButtons.push({ icon: 'shapeshift' });
+      }
+
+      if (hasCompanion(this.character)) {
+        navButtons.push({ icon: 'companion' });
       }
 
       return {

@@ -1,5 +1,5 @@
 <template lang="pug">
-  label.input--checkbox(:class="{ 'disabled': disabled }")
+  label.input--checkbox(:class="{ 'pointer-events-none opacity-30': disabled }")
     input(
       type="checkbox"
       :name="name"

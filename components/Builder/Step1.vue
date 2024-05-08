@@ -19,8 +19,8 @@
         transition(name="slide-fade-left")
           ul.text-right(v-if="subclassDetails")
             li(v-for="(bonus, trait) in subclassDetails")
-              | {{ trait }}:
-              span.mr-1
+              span {{ trait }}
+              span(v-if="Number.isInteger(bonus)")
                 span(v-if="bonus > 0") +
                 | {{ bonus }}
       .space-y-2

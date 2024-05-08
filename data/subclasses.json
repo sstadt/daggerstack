@@ -66,7 +66,9 @@
     },
     {
       "name": "Beastbound",
-      "foundation": {},
+      "foundation": {
+        "companion": true
+      },
       "specialization": {
         "companionTraining": 1
       },
