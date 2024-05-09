@@ -9,7 +9,7 @@
         InputTextarea(v-model="question.answer" :limit="2000")
       .flex.justify-between.items-center
         NuxtLink(to="/") Finish Later
-        BasicButton.block(@click="next") Finish
+        BasicButton.block(@click="next" :disabled="completedQuestions.length < 1") Finish
     DialogPrompt(ref="prompt" @confirm="saveQuestion")
 </template>
 
@@ -52,6 +52,9 @@
 
         return this.connectionQuestions.length === 0 ? false : questionAnswered;
       },
+      completedQuestions() {
+        return this.connectionQuestions.filter((question) => question.answer !== '');
+      },
     },
     mounted() {
       const newClass = this.baseClass || 'bard';
@@ -81,7 +84,7 @@
       },
       next() {
         this.builderStore.updateCharacter({
-          connection: [...this.connectionQuestions],
+          connection: [ ...this.completedQuestions ],
         });
 
         this.$emit('next');
