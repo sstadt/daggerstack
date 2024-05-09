@@ -22,6 +22,7 @@
         InventoryWeapon(
           :weapon="character.equipment.secondaryWeapon"
           :class="{ 'opacity-20 pointer-events-none': isPrimaryTwoHanded }"
+          :type="secondaryWeaponType"
           @click="openPicker(secondaryWeaponType)"
         )
         .absolute.transform.text-2xl.text-red-600.uppercase.w-full.text-center.font-black(

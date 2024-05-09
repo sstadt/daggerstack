@@ -14,6 +14,8 @@
 </template>
 
 <script>
+  import { SECONDARY_WEAPON_TYPE } from '~/config/equipmentPicker';
+
   import { ucFirst, featureDescription } from '~/helpers/string';
 
   import WEAPONS from '~/data/weapons';
@@ -25,12 +27,15 @@
         type: Object,
         required: true,
       },
-      secondary: {
-        type: Boolean,
-        default: false,
+      type: {
+        type: String,
+        default: null,
       },
     },
     computed: {
+      secondary() {
+        return this.type === SECONDARY_WEAPON_TYPE;
+      },
       showMainHand() {
         return this.weapon.primary === true;
       },

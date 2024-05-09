@@ -4,8 +4,15 @@
       .flex.justify-between.items-center.mb-4
         h3.text-xl.font-black.uppercase Currently Equipped
         BasicButton.ml-auto(size="sm" @click="removeItem") Remove
-      InventoryWeapon(v-if="equippedItem.type === weaponType" :weapon="equippedItem")
-      InventoryArmor(v-else-if="equippedItem.type === armorType" :armor="equippedItem")
+      InventoryWeapon(
+        v-if="equippedItem.type === weaponType"
+        :weapon="equippedItem"
+        :type="type"
+      )
+      InventoryArmor(
+        v-else-if="equippedItem.type === armorType"
+        :armor="equippedItem"
+      )
     div(v-if="isWeaponType && includeInventory && inventoryWeapon")
       h3.text-xl.font-black.uppercase.p-4 From Inventory
       button.w-full.text-left.p-4(
@@ -13,7 +20,7 @@
         :class="{ 'border-b': index + 1 < itemList.length }"
         @click="$emit('select', { item: inventoryWeapon, fromInventory: true })"
       )
-        InventoryWeapon(:weapon="inventoryWeapon")
+        InventoryWeapon(:weapon="inventoryWeapon" :type="type")
     h3.text-xl.font-black.uppercase.p-4 Available Items
     button.w-full.text-left.p-4(
       v-for="(item, index) in itemList"
@@ -21,7 +28,7 @@
       :class="{ 'border-b': index + 1 < itemList.length }"
       @click="$emit('select', { item: { ...item } })"
     )
-      InventoryWeapon(v-if="item.type === weaponType" :weapon="item")
+      InventoryWeapon(v-if="item.type === weaponType" :weapon="item" :type="type")
       InventoryArmor(v-else-if="item.type === armorType" :armor="item")
 </template>
 
