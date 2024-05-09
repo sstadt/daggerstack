@@ -1,5 +1,5 @@
 <template lang="pug">
-  .sheet-header.sticky.top-0.z-10.bg-black.relative
+  .sheet-header.sticky.top-0.z-10.relative.transition-colors(:class="headerClass")
     .sheet-header__title.flex-none.py-4.px-6.text-white(@click="openHealth")
       .sheet-header__domain-icons.flex.absolute.opacity-20.-bottom-8(class="left-1/2")
         NuxtIcon(v-for="domain in domains" :name="domain")
@@ -24,7 +24,7 @@
           SheetSettings.mt-2(v-else-if="currentIndex === 2" :character="character")
         BasicCard.mt-auto
           NuxtLink(to="/")
-            BasicButton.w-full Character List
+            BasicButton.w-full(priority="secondary") Character List
 </template>
 
 <script>
@@ -56,7 +56,18 @@
         return CLASSES[this.character.baseClass];
       },
       domains() {
-        return this.classData.domains;
+        return this.healthPercent > 0 ? this.classData.domains : ['skull'];
+      },
+      healthPercent() {
+        return (1 - (this.character.health.current / this.character.health.slots)).toFixed(2);
+      },
+      headerClass() {
+        return {
+          'bg-black': this.healthPercent > 0.9,
+          'bg-emerald-950': this.healthPercent > 0.7 && this.healthPercent <= 0.9,
+          'bg-orange-950': this.healthPercent > 0.3 && this.healthPercent <= 0.7,
+          'bg-red-950': this.healthPercent <= 0.3,
+        };
       },
     },
     methods: {
