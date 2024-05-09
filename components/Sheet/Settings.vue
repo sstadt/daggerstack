@@ -3,7 +3,7 @@
     .flex.flex-col.items-center.space-y-4
       //- h3.text-xl.text-center.font-black.uppercase Character Export
       //- BasicButton(size="sm") Copy Link
-      //- QRCodeVue3(:value="importUrl")
+      //- QRCodeVue3(v-if="importUrl" :value="importUrl")
 </template>
 
 <script>
@@ -38,14 +38,10 @@
     //     const compressedResponse = await new Response(compressedReadableStream);
     //     const blob = await compressedResponse.blob();
     //     const buffer = await blob.arrayBuffer();
-    //     const compressedBase64 = btoa(
-    //       String.fromCharCode(
-    //         ...new Uint8Array(buffer)
-    //       )
-    //     );
-    //     console.log('>>> mounted', compressedBase64);
-    //     this.encodedCharacer = String(compressedBase64);
-    //     this.importUrl = `http://localhost:3000/import?data=${encodeURIComponent(compressedBase64)}`;
+    //     const compressedBase64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+
+    //     this.encodedCharacter = compressedBase64;
+    //     this.importUrl = `http://localhost:3000/import?data=${compressedBase64}`;
     //   },
     // },
   };
