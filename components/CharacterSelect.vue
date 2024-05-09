@@ -1,5 +1,5 @@
 <template lang="pug">
-  .flex.flex-col.h-full.max-h-screen
+  .flex.flex-col.max-h-screen
     .flex.flex-col.flex-grow.overflow-y-auto
       ul.flex-shrink-0.overflow-hidden(v-if="characterList.length > 0")
         li(

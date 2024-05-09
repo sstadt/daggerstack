@@ -232,21 +232,6 @@ export const calculateModifiers = (features, attribute) => {
   return score;
 };
 
-export const hasCompanion = (character) => {
-  let hasCompanion = false;
-
-  character.subclass.forEach((subclass) => {
-    const data = SUBCLASSES[character.baseClass].find((sc) => sc.name === subclass.name);
-
-    if (data.foundation.companion === true) {
-      hasCompanion = true;
-      return;
-    }
-  });
-
-  return hasCompanion;
-};
-
 /**
  * Get all character sheet features that modify a given attribute
  *
@@ -365,4 +350,25 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
   }
 
   return features;
+};
+
+/**
+ * Determine if a character can have a companion
+ *
+ * @param {Object} character The character to check
+ * @returns Boolean True is the character can have a companion
+ */
+export const hasCompanion = (character) => {
+  let hasCompanion = false;
+
+  character.subclass.forEach((subclass) => {
+    const data = SUBCLASSES[character.baseClass].find((sc) => sc.name === subclass.name);
+
+    if (data.foundation.companion === true) {
+      hasCompanion = true;
+      return;
+    }
+  });
+
+  return hasCompanion;
 };

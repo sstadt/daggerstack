@@ -38,12 +38,6 @@
   @import '~/styles/transitions/paginate';
   @import '~/styles/transitions/slide-fade';
 
-  .app {
-    &, & > * {
-      min-height: 100vh;
-    }
-  }
-
   .nuxt-icon {
     display: inline-block;
   }

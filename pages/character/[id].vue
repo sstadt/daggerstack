@@ -1,5 +1,7 @@
 <template lang="pug">
   .character
+    Head
+      Title Daggerstack.com - {{ characterName }}
     .flex.flex-col.items-center.justify-center.w-screen.h-screen.space-y-6(
       v-if="characterLoaded && !character.id"
     )
@@ -28,6 +30,9 @@
     },
     computed: {
       ...mapState(useCharactersStore, ['charactersLoaded']),
+      characterName() {
+        return this.character ? this.character.name : 'Loading Character...';
+      },
     },
     mounted() {
       if (this.charactersLoaded === true) {

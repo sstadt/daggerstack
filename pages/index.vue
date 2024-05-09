@@ -1,5 +1,8 @@
 <template lang="pug">
-  CharacterSelect.character-select
+  div
+    Head
+      Title Daggerstack.com - Character Select
+    CharacterSelect.character-select
 </template>
 
 <script>

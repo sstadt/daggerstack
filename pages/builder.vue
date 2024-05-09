@@ -1,5 +1,7 @@
 <template lang="pug">
   .builder-page
+    Head
+      Title Daggerstack.com - Character Builder
     CharacterBuilder(v-if="dataLoaded")
 </template>
 
