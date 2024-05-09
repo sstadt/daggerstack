@@ -26,7 +26,6 @@
     "pug": "^3.0.2",
     "qrcode-vue3": "^1.6.8",
     "sass": "^1.72.0",
-    "schm": "^0.4.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
     "vue3-touch-events": "^4.1.8"

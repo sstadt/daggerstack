@@ -6,7 +6,7 @@
         h3.text-sm.font-bold(@click="editQuestion(index)")
           | {{ question.question }}
           NuxtIcon.ml-1.align-middle(name="edit")
-        InputTextarea(v-model="question.answer")
+        InputTextarea(v-model="question.answer" :limit="2000")
       .flex.justify-between.items-center
         NuxtLink(to="/") Finish Later
         BasicButton.block(@click="next") Finish

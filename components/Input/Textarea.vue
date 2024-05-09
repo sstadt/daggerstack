@@ -1,5 +1,5 @@
 <template lang="pug">
-  .input--text.flex.flex-col(:class="wrapperClasses")
+  .input--textarea.flex.flex-col(:class="wrapperClasses")
     label.uppercase.font-bold.text-slate-500(
       v-if="label"
       :class="{ 'sr-only': hideLabel }"
@@ -9,11 +9,14 @@
       type="text"
       :class="inputClass"
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="inputHandler"
+      @keypress="keyPress"
       @keyup="resize"
     )
-    transition(name="slide-fade-left")
-      p.text-red-400.font-bold(v-if="firstError") {{ firstError.$message }}
+    .flex.justify-between.font-bold
+      transition(name="slide-fade-left")
+        p.text-red-400(v-if="firstError") {{ firstError.$message }}
+      p.text-slate-500.ml-auto(v-if="limit") {{ characterCount }}/{{ limit }}
 </template>
 
 <script>
@@ -22,16 +25,39 @@
   export default {
     name: 'InputTextarea',
     extends: Text,
+    props: {
+      limit: {
+        type: Number,
+        default: null,
+      },
+    },
     mounted() {
       this.resize();
     },
+    computed: {
+      characterCount() {
+        return this.modelValue.length;
+      },
+    },
     methods: {
       resize() {
-        const $el = this.$refs.textarea;
-
-        $el.style.height = "auto";
-        $el.style.height = `${$el.scrollHeight}px`;
+        this.$refs.textarea.style.height = `${this.$refs.textarea.scrollHeight}px`;
       },
-    }
+      keyPress($event) {
+        if (this.limit !== null && this.characterCount >= this.limit) {
+          $event.preventDefault();
+
+          if (this.characterCount >= this.limit) {
+            this.$emit(
+              'update:modelValue',
+              $event.target.value.substring(0, this.limit),
+            );
+          }
+        }
+      },
+      inputHandler($event) {
+        this.$emit('update:modelValue', $event.target.value);
+      },
+    },
   };
 </script>
