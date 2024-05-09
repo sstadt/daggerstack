@@ -2,10 +2,12 @@
   BasicCard(title="Background Questions")
     .space-y-4.pt-4
       .space-y-1(v-for="item in background")
+        p {{ item.question }}
         InputTextarea(
           v-model="item.answer"
-          :label="item.question"
+          label="answer"
           :limit="2000"
+          hide-label
           @input="saveQuestions"
         )
 </template>
