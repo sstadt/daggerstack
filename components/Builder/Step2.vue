@@ -3,7 +3,10 @@
     form(@submit.prevent="next").space-y-8
       .space-2-y
         h2.text-center.text-2xl.font-black.uppercase Basic Traits
-        p.text-center.mb-2.text-sm.text-slate-500 {{ suggestedTraits }}
+        button.text-center.mb-2.text-sm.text-slate-500(
+          type="button"
+          @click="setSuggestedTraits"
+        ) {{ suggestedTraitsLabel }}
       .grid.grid-cols-3.gap-4
         TraitSelect(
           label="agility"
@@ -171,17 +174,17 @@
         return this.generateTraitOptions(selectedOptions);
       },
       suggestedTraits() {
+        return this.classData ? this.classData.suggestedTraits : [];
+      },
+      suggestedTraitsLabel() {
         if (!this.classData) return 'Distribute the following scores: +2, +1, +1, 0, 0, -1';
 
         const suggested = [];
 
-        for (let [key, value] of Object.entries(this.classData?.suggestedTraits)) {
+        for (let [key, value] of Object.entries(this.classData.suggestedTraits)) {
           suggested.push(`${traitLabel(value)} ${key}`);
         };
-
-        return this.classData
-          ? `Suggested traits (${this.character.baseClass}): ${suggested.join(', ')}`
-          : 'Distribute the following scores: +2, +1, +1, 0, 0, -1';
+        return `Suggested traits (${this.character.baseClass}): ${suggested.join(', ')}`;
       },
       evasion() {
         return this.classData
@@ -199,6 +202,14 @@
       },
     },
     methods: {
+      setSuggestedTraits() {
+        this.agility = this.suggestedTraits.agility;
+        this.strength = this.suggestedTraits.strength;
+        this.finesse = this.suggestedTraits.finesse;
+        this.instinct = this.suggestedTraits.instinct;
+        this.presence = this.suggestedTraits.presence;
+        this.knowledge = this.suggestedTraits.knowledge;
+      },
       getSelectedOptions(exclude) {
         const selected = [];
 
