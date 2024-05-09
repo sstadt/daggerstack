@@ -20,5 +20,33 @@
         required: true,
       },
     },
+    // data() {
+    //   return {
+    //     encodedCharacter: null,
+    //     importUrl: null,
+    //   };
+    // },
+    // mounted() {
+    //   this.encodeCharacter();
+    // },
+    // methods: {
+    //   async encodeCharacter() {
+    //     const stream = new Blob([JSON.stringify(this.character)], {
+    //       type: 'application/json',
+    //     }).stream();
+    //     const compressedReadableStream = stream.pipeThrough(new CompressionStream("gzip"));
+    //     const compressedResponse = await new Response(compressedReadableStream);
+    //     const blob = await compressedResponse.blob();
+    //     const buffer = await blob.arrayBuffer();
+    //     const compressedBase64 = btoa(
+    //       String.fromCharCode(
+    //         ...new Uint8Array(buffer)
+    //       )
+    //     );
+    //     console.log('>>> mounted', compressedBase64);
+    //     this.encodedCharacer = String(compressedBase64);
+    //     this.importUrl = `http://localhost:3000/import?data=${encodeURIComponent(compressedBase64)}`;
+    //   },
+    // },
   };
 </script>

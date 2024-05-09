@@ -7,7 +7,7 @@
   import MarkdownItAttrs from "markdown-it-attrs";
 
   export default {
-    name: 'ComponentName',
+    name: 'BasicMarkdown',
     props: {
       source: {
         type: String,
