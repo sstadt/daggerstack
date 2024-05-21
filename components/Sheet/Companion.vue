@@ -32,7 +32,7 @@
               InputCheckboxCounter(
                 v-model="currentStress"
                 :max="maxStress"
-                :enabled="character.companion.stress.slots"
+                :enabled="stressSlots"
               )
         BasicCard(title="features")
           .space-y-2.py-4
@@ -69,6 +69,8 @@
   import { useCharactersStore } from '~/stores/characters';
   import { ucFirst } from '~/helpers/string';
 
+  import GENERAL from '~/data/general';
+
   export default {
     name: 'SheetCompanion',
     props: {
@@ -84,6 +86,7 @@
         companionSpecies: this.character.companion.species,
         companionTraits: this.character.companion.traits,
         currentStress: this.character.companion.stress.current,
+        maxStress: GENERAL.companionMaxStress,
       };
     },
     validations() {
@@ -104,9 +107,9 @@
       maxTraitsSelected() {
         return this.companionTraits.length >= 2;
       },
-      maxStress() {
+      stressSlots() {
         // TODO: calculate with leveling bonuses
-        return 4;
+        return this.character.companion.stress.slots;
       },
     },
     methods: {
