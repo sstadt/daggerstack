@@ -83,7 +83,7 @@
     "features": [
       {
         "name": "Perseverance",
-        "description": "Then you fail a roll that utilized one of your Experiences, you may spend a **Hope** to reroll. You must take the new result."
+        "description": "When you fail a roll that utilized one of your Experiences, you may spend a **Hope** to reroll. You must take the new result."
       }
     ]
   },
