@@ -96,7 +96,7 @@
             },
             {
               "name": "Pack Hunting",
-              "description": "When you make an attack on the same target as an ally right before you, add an additional d8 to your damage dice pool."
+              "description": "When you make an attack on the same target as an ally right before you, add an additional **d8** to your damage dice pool."
             }
           ]
         },
@@ -110,12 +110,16 @@
           "presence": 0,
           "knowledge": 0,
           "attack": "d4 (phy)",
-          "evasion": 3,
+          "evasion": 2,
           "armor": 2,
           "features": [
             {
               "name": "Take advantage on",
               "description": "Navigate, Sneak, Swim"
+            },
+            {
+              "name": "Aquatic",
+              "description": "You can breathe and move naturally underwater"
             },
             {
               "name": "Fragile",
@@ -147,7 +151,7 @@
             },
             {
               "name": "Bird's Eye View",
-              "description": "You can fly at will while in this form. When you are flying and look down at the landscape below in an attempt to understand a situation better, make an action roll. On a success, you gain new, useful information here. Take a d6 bonus die you may use or give to an ally to add to their action roll when acting on this information."
+              "description": "You can fly at will while in this form. When you are flying and look down at the landscape below in an attempt to understand a situation better, make an action roll. On a success, you gain new, useful information here. Take a **d6** bonus die you may use or give to an ally to add to their action roll when acting on this information."
             },
             {
               "name": "Hollow Bones",
@@ -169,8 +173,8 @@
           "instinct": 0,
           "presence": 0,
           "knowledge": 0,
-          "attack": "d6 (phy)",
-          "evasion": 2,
+          "attack": "d10 (phy)",
+          "evasion": 0,
           "armor": 6,
           "features": [
             {
@@ -179,7 +183,7 @@
             },
             {
               "name": "Rampage",
-              "description": "When you are rolling damage from an attack, for every 6 you roll you may roll another d6 and add it to your damage roll. Before making an Attack roll, you can take a Stress to gain +1 Proficiency to the attack (once per attack)."
+              "description": "When you are rolling damage from an attack, for every 6 you roll you may roll another **d6** and add it to your damage roll. Before making an Attack roll, you can take a Stress to gain +1 Proficiency to the attack."
             },
             {
               "name": "Hollow Bones",
@@ -216,7 +220,7 @@
             },
             {
               "name": "Bird's Eye View",
-              "description": "You can fly at will while in this form. When you are flying and look down at the landscape below in an attempt to understand a situation better, make an action roll. On a success, you gain new, useful information here. Take a d6 bonus die you may use or give to an ally to add to their action roll when acting on this information."
+              "description": "You can fly at will while in this form. When you are flying and look down at the landscape below in an attempt to understand a situation better, make an action roll. On a success, you gain new, useful information here. Take a **d6** bonus die you may use or give to an ally to add to their action roll when acting on this information."
             },
             {
               "name": "Carrier",
@@ -235,7 +239,7 @@
           "knowledge": 0,
           "attack": "d8 (phy)",
           "evasion": 4,
-          "armor": 7,
+          "armor": 6,
           "features": [
             {
               "name": "Take advantage on",
@@ -243,11 +247,11 @@
             },
             {
               "name": "Charging Speed",
-              "description": "You can move Very Far without having to roll. If you successfully attack a creature after moving Far or more, you can add 2d8 physical damage to the attack."
+              "description": "You can move Very Far without having to roll. If you successfully attack a creature after moving Far or more, you can add **2d8** physical damage to the attack."
             },
             {
               "name": "Carrier",
-              "description": "You are able to carry 1-2 people and still maintain flight."
+              "description": "You are able to carry 1-2 people and still maintain speed."
             }
           ]
         }
@@ -274,6 +278,10 @@
               "description": "Track, Attack, Swim"
             },
             {
+              "name": "Aquatic",
+              "description": "You can breathe and move naturally underwater."
+            },
+            {
               "name": "Vicious Maul",
               "description": "When you successfully attack a creature, you can spend a Hope to make them temporarily Vulnerable."
             }
@@ -289,7 +297,7 @@
           "presence": 0,
           "knowledge": 0,
           "attack": "d12 (phy)",
-          "evasion": 4,
+          "evasion": 2,
           "armor": 8,
           "features": [
             {
@@ -302,7 +310,7 @@
             },
             {
               "name": "Carrier",
-              "description": "You are able to carry 1-2 people and still maintain flight."
+              "description": "You are able to carry 1-2 people and still maintain speed."
             }
           ]
         }
@@ -321,8 +329,8 @@
           "presence": 0,
           "knowledge": 0,
           "attack": "d10 (phy)",
-          "evasion": 4,
-          "armor": 8,
+          "evasion": 1,
+          "armor": 10,
           "features": [
             {
               "name": "Take advantage on",
