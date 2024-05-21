@@ -68,6 +68,8 @@
   import { useCharactersStore } from '~/stores/characters';
   import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
 
+  import GENERAL from '~/data/general';
+
   export default {
     name: 'SheetStatistics',
     props: {
@@ -79,7 +81,7 @@
     data() {
       return {
         currentArmor: this.character.armor.current,
-        maxArmor: 9,
+        maxArmor: GENERAL.maxArmorSlots,
       };
     },
     setup() {

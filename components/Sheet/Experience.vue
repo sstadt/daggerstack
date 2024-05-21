@@ -16,6 +16,8 @@
 <script>
   import { useCharactersStore } from '~/stores/characters';
 
+  import GENERAL from '~/data/general';
+
   export default {
     name: 'SheetExperience',
     props: {
@@ -27,7 +29,7 @@
     data() {
       return {
         hope: this.character.hope,
-        maxHope: 5,
+        maxHope: GENERAL.maxHope,
       };
     },
     setup() {

@@ -56,7 +56,7 @@ export const newCharacter = () => {
     evasion: null,
     armor: {
       current: 0,
-      slots: 3,
+      slots: 6,
     },
     threshold: {
       minor: null,
@@ -69,7 +69,7 @@ export const newCharacter = () => {
     },
     stress: {
       current: 0,
-      slots: 5,
+      slots: 6,
     },
     hope: 2,
     proficiency: 1,
@@ -84,8 +84,6 @@ export const newCharacter = () => {
         handful: 1,
         bag: 0,
         chest: 0,
-        hoard: 0,
-        fortune: 0,
       },
       weapon: {
         name: null,

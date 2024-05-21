@@ -19,22 +19,12 @@
           v-model="chest"
           :max="maxChests"
         )
-      h3.uppercase.text-sm.text-center.font-bold.text-right hoards
-      .flex
-        InputCheckboxCounter.bg-amber-600.p-1.pr-0(
-          v-model="hoard"
-          :max="maxHoards"
-        )
-      h3.uppercase.text-sm.text-center.font-bold.text-right fortune
-      .flex
-        InputCheckboxCounter.bg-amber-700.p-1.pr-0(
-          v-model="fortune"
-          :max="maxFortunes"
-        )
 </template>
 
 <script>
   import { useCharactersStore } from '~/stores/characters';
+
+  import GENERAL from '~/data/general';
 
   export default {
     name: 'SheetGold',
@@ -47,15 +37,11 @@
     data() {
       return {
         handful: this.character.inventory.gold.handful,
-        maxHandfuls: 5,
+        maxHandfuls: GENERAL.gold.maxHandfuls,
         bag: this.character.inventory.gold.bag,
-        maxBags: 4,
+        maxBags: GENERAL.gold.maxBags,
         chest: this.character.inventory.gold.chest,
-        maxChests: 3,
-        hoard: this.character.inventory.gold.hoard,
-        maxHoards: 2,
-        fortune: this.character.inventory.gold.fortune,
-        maxFortunes: 1,
+        maxChests: GENERAL.gold.maxChests,
       };
     },
     setup() {
@@ -69,8 +55,6 @@
           handful: this.handful,
           bag: this.bag,
           chest: this.chest,
-          hoard: this.hoard,
-          fortune: this.fortune,
         };
 
         this.character.inventory.gold = gold;
@@ -90,16 +74,6 @@
       },
       chest(newVal, oldVal) {
         if (newVal !== oldVal && newVal <= this.maxChests) {
-          this.updateGold();
-        }
-      },
-      hoard(newVal, oldVal) {
-        if (newVal !== oldVal && newVal <= this.maxHoards) {
-          this.updateGold();
-        }
-      },
-      fortune(newVal, oldVal) {
-        if (newVal !== oldVal && newVal <= this.maxFortunes) {
           this.updateGold();
         }
       },

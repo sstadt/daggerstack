@@ -29,7 +29,8 @@
   import { useCharactersStore } from '~/stores/characters';
   import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
 
-  import classes from '~/data/classes';
+  import GENERAL from '~/data/general';
+  import CLASSES from '~/data/classes';
 
   export default {
     name: 'SheetHealth',
@@ -42,9 +43,9 @@
     data() {
       return {
         currentHealth: this.character.health.current,
-        maxHealth: 12,
+        maxHealth: GENERAL.maxHealth,
         currentStress: this.character.stress.current,
-        maxStress: 9,
+        maxStress: GENERAL.maxStress,
       };
     },
     setup() {
@@ -55,7 +56,7 @@
     computed: {
       baseClass() {
         return this.character.baseClass
-          ? classes[this.character.baseClass]
+          ? CLASSES[this.character.baseClass]
           : null;
       },
       minorThreshold() {

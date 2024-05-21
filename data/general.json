@@ -19,5 +19,14 @@
     "body": ["lanky", "tall", "curvy", "rotund", "short", "thin", "toned", "stocky", "broad", "carved", "tiny"],
     "skin": ["obsidian", "rose", "falling snow", "fine sand", "ashes", "clover", "sapphire", "wisteria"],
     "attitude": ["a general", "a caretaker", "a wrestler", "an elephant", "a captain"]
-  }
+  },
+  "gold": {
+    "maxHandfuls": 9,
+    "maxBags": 9,
+    "maxChests": 1
+  },
+  "maxHope": 6,
+  "maxHitPoints": 12,
+  "maxStress": 12,
+  "maxArmorSlots": 12
 }
