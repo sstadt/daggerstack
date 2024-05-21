@@ -29,5 +29,6 @@
   "maxHope": 6,
   "maxHitPoints": 12,
   "maxStress": 12,
-  "maxArmorSlots": 12
+  "maxArmorSlots": 12,
+  "companionMaxStress": 5
 }

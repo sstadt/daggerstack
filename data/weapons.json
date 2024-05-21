@@ -9,7 +9,7 @@
       "range": "melee",
       "feature": null,
       "secondaryFeature": null,
-      "damage": "1d10+2",
+      "damage": "1d10+3",
       "damageType": "phy",
       "burden": 2,
       "starting": true
@@ -21,9 +21,9 @@
       "secondary": false,
       "trait": "strength",
       "range": "melee",
-      "feature": "large",
+      "feature": "heavy",
       "secondaryFeature": null,
-      "damage": "1d12+2",
+      "damage": "1d12+3",
       "damageType": "phy",
       "burden": 2,
       "starting": true
@@ -37,7 +37,7 @@
       "range": "melee",
       "feature": "massive",
       "secondaryFeature": null,
-      "damage": "1d10+2",
+      "damage": "1d10+3",
       "damageType": "phy",
       "burden": 2,
       "starting": true
@@ -51,19 +51,33 @@
       "range": "melee",
       "feature": null,
       "secondaryFeature": null,
-      "damage": "1d8",
+      "damage": "1d8+1",
       "damageType": "phy",
       "burden": 1,
       "starting": true
     },
     {
-      "name": "Saber",
+      "name": "Cutlas",
+      "type": "weapon",
+      "primary": true,
+      "secondary": false,
+      "trait": "presence",
+      "range": "melee",
+      "feature": null,
+      "secondaryFeature": null,
+      "damage": "1d8+1",
+      "damageType": "phy",
+      "burden": 1,
+      "starting": true
+    },
+    {
+      "name": "Broadsword",
       "type": "weapon",
       "primary": true,
       "secondary": false,
       "trait": "agility",
       "range": "melee",
-      "feature": null,
+      "feature": "reliable",
       "secondaryFeature": null,
       "damage": "1d8",
       "damageType": "phy",
@@ -77,23 +91,23 @@
       "secondary": false,
       "trait": "agility",
       "range": "melee",
-      "feature": "reliable",
+      "feature": null,
       "secondaryFeature": null,
-      "damage": "1d8",
+      "damage": "1d8+3",
       "damageType": "phy",
       "burden": 2,
       "starting": true
     },
     {
-      "name": "Shortsword",
+      "name": "Rapier",
       "type": "weapon",
       "primary": true,
-      "secondary": true,
-      "trait": "agility",
+      "secondary": false,
+      "trait": "presence",
       "range": "melee",
-      "feature": null,
-      "secondaryFeature": "paired",
-      "damage": "1d10",
+      "feature": "quick",
+      "secondaryFeature": null,
+      "damage": "1d8",
       "damageType": "phy",
       "burden": 1,
       "starting": true
@@ -105,9 +119,9 @@
       "secondary": true,
       "trait": "finesse",
       "range": "melee",
-      "feature": "quick",
+      "feature": null,
       "secondaryFeature": "paired",
-      "damage": "1d8",
+      "damage": "1d8+1",
       "damageType": "phy",
       "burden": 1,
       "starting": true
@@ -121,7 +135,7 @@
       "range": "melee",
       "feature": null,
       "secondaryFeature": null,
-      "damage": "1d10+2",
+      "damage": "1d10+3",
       "damageType": "phy",
       "burden": 2,
       "starting": true
@@ -135,7 +149,21 @@
       "range": "very close",
       "feature": null,
       "secondaryFeature": null,
-      "damage": "1d10",
+      "damage": "1d8+2",
+      "damageType": "phy",
+      "burden": 2,
+      "starting": true
+    },
+    {
+      "name": "Spear",
+      "type": "weapon",
+      "primary": true,
+      "secondary": false,
+      "trait": "finesse",
+      "range": "very close",
+      "feature": null,
+      "secondaryFeature": null,
+      "damage": "1d8+2",
       "damageType": "phy",
       "burden": 2,
       "starting": true
@@ -149,7 +177,7 @@
       "range": "far",
       "feature": null,
       "secondaryFeature": null,
-      "damage": "1d8+2",
+      "damage": "1d6+3",
       "damageType": "phy",
       "burden": 2,
       "starting": true
@@ -163,7 +191,7 @@
       "range": "far",
       "feature": null,
       "secondaryFeature": null,
-      "damage": "1d8",
+      "damage": "1d6+1",
       "damageType": "phy",
       "burden": 1,
       "starting": true
@@ -177,7 +205,7 @@
       "range": "very far",
       "feature": "cumbersome",
       "secondaryFeature": null,
-      "damage": "1d10+2",
+      "damage": "1d6+3",
       "damageType": "phy",
       "burden": 2,
       "starting": true
@@ -191,7 +219,7 @@
       "range": "melee",
       "feature": null,
       "secondaryFeature": null,
-      "damage": "1d10+2",
+      "damage": "1d10+3",
       "damageType": "mag",
       "burden": 2,
       "starting": true
@@ -205,7 +233,7 @@
       "range": "melee",
       "feature": null,
       "secondaryFeature": null,
-      "damage": "1d10",
+      "damage": "1d10+1",
       "damageType": "mag",
       "burden": 1,
       "starting": true
@@ -216,7 +244,7 @@
       "primary": true,
       "secondary": false,
       "trait": "instinct",
-      "range": "melee",
+      "range": "very close",
       "feature": null,
       "secondaryFeature": null,
       "damage": "1d10",
@@ -247,7 +275,7 @@
       "range": "close",
       "feature": null,
       "secondaryFeature": null,
-      "damage": "1d10",
+      "damage": "1d8+1",
       "damageType": "mag",
       "burden": 1,
       "starting": true
@@ -261,7 +289,7 @@
       "range": "close",
       "feature": null,
       "secondaryFeature": null,
-      "damage": "1d8+2",
+      "damage": "1d8+1",
       "damageType": "mag",
       "burden": 1,
       "starting": true
@@ -275,7 +303,7 @@
       "range": "far",
       "feature": null,
       "secondaryFeature": null,
-      "damage": "1d8",
+      "damage": "1d6+1",
       "damageType": "mag",
       "burden": 1,
       "starting": true
@@ -288,7 +316,7 @@
       "trait": "instinct",
       "range": "far",
       "feature": null,
-      "damage": "1d8+2",
+      "damage": "1d6+3",
       "damageType": "mag",
       "burden": 2,
       "starting": true
@@ -302,9 +330,9 @@
       "range": "far",
       "feature": "versatile",
       "secondaryFeature": null,
-      "damage": "1d8+2",
+      "damage": "1d6",
       "damageType": "mag",
-      "burden": 1,
+      "burden": 2,
       "starting": true
     },
     {
@@ -313,26 +341,12 @@
       "primary": true,
       "secondary": false,
       "trait": "knowledge",
-      "range": "far",
+      "range": "very far",
       "feature": "powerful",
       "secondaryFeature": null,
-      "damage": "1d6+2",
+      "damage": "1d6",
       "damageType": "mag",
       "burden": 2,
-      "starting": true
-    },
-    {
-      "name": "Round Shield",
-      "type": "weapon",
-      "primary": false,
-      "secondary": true,
-      "trait": "strength",
-      "range": "melee",
-      "feature": null,
-      "secondaryFeature": "protective",
-      "damage": "1d4",
-      "damageType": "phy",
-      "burden": 1,
       "starting": true
     },
     {
@@ -364,12 +378,40 @@
       "starting": true
     },
     {
+      "name": "Small Dagger",
+      "type": "weapon",
+      "primary": false,
+      "secondary": true,
+      "trait": "finesse",
+      "range": "melee",
+      "feature": null,
+      "secondaryFeature": "paired",
+      "damage": "1d8",
+      "damageType": "phy",
+      "burden": 1,
+      "starting": true
+    },
+    {
+      "name": "Shortsword",
+      "type": "weapon",
+      "primary": false,
+      "secondary": true,
+      "trait": "agility",
+      "range": "melee",
+      "feature": null,
+      "secondaryFeature": "paired",
+      "damage": "1d8",
+      "damageType": "phy",
+      "burden": 1,
+      "starting": true
+    },
+    {
       "name": "Whip",
       "type": "weapon",
       "primary": false,
       "secondary": true,
       "trait": "agility",
-      "range": "very close",
+      "range": "melee",
       "feature": null,
       "secondaryFeature": "whipcrack",
       "damage": "1d6",
@@ -382,7 +424,7 @@
       "type": "weapon",
       "primary": false,
       "secondary": true,
-      "trait": "agility",
+      "trait": "finesse",
       "range": "close",
       "feature": null,
       "secondaryFeature": "hook",
@@ -394,7 +436,7 @@
   ],
   "features": [
     {
-      "name": "large",
+      "name": "heavy",
       "modify": {
         "agility": -1
       }
@@ -437,13 +479,13 @@
     {
       "name": "protective",
       "modify": {
-        "armorScore": 2
+        "armorScore": 1
       }
     },
     {
       "name": "barrier",
       "modify": {
-        "armorScore": 2,
+        "armorScore": 3,
         "evasion": -2
       }
     },
