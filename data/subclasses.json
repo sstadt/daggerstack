@@ -31,19 +31,19 @@
     {
       "name": "Stalwart",
       "foundation": {
-        "minorDamageThreshold": 2,
-        "majorDamageThreshold": 2,
-        "severeDamageThreshold": 2
-      },
-      "specialization": {
         "minorDamageThreshold": 1,
         "majorDamageThreshold": 1,
         "severeDamageThreshold": 1
       },
-      "mastery": {
+      "specialization": {
         "minorDamageThreshold": 2,
         "majorDamageThreshold": 2,
         "severeDamageThreshold": 2
+      },
+      "mastery": {
+        "minorDamageThreshold": 3,
+        "majorDamageThreshold": 3,
+        "severeDamageThreshold": 3
       }
     },
     {
@@ -52,9 +52,7 @@
         "armorSlot": 1
       },
       "specialization": {},
-      "mastery": {
-        "armorSlot": 1
-      }
+      "mastery": {}
     }
   ],
   "ranger": [
