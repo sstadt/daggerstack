@@ -34,6 +34,13 @@
                 :max="maxStress"
                 :enabled="stressSlots"
               )
+        BasicCard(title="experience")
+          .flex.space-x-2.justify-between.text-xl.py-4(
+            v-for="(experience, index) in character.companion.experience"
+            :class="{ 'border-t': index !== 0 }"
+          )
+            p {{ experience.name }}
+            p +{{ experience.score }}
         BasicCard(title="features")
           .space-y-2.py-4
             p.text-xl
@@ -59,6 +66,22 @@
             v-model="companionTraits"
             :disabled="maxTraitsSelected && !companionTraits.includes(trait)"
           )
+        .space-y-4
+          h2.text-center.text-2xl.font-black.uppercase Experience
+          .flex.items-center.space-x-4
+            p.text-2xl.font-bold +{{ experience1Score }}
+            InputText.flex-grow(
+              v-model="experience1"
+              :errors="v$.experience1.$errors"
+              required
+            )
+          .flex.items-center.space-x-4
+            p.text-2xl.font-bold +{{ experience2Score }}
+            InputText.flex-grow(
+              v-model="experience2"
+              :errors="v$.experience2.$errors"
+              required
+            )
         BasicButton.w-full(type="submit" :disabled="!maxTraitsSelected") Save
 </template>
 
@@ -80,6 +103,10 @@
       },
     },
     data() {
+      let [ existingExperience1, existingExperience2 ] = this.character.companion.experience
+        ? this.character.companion.experience
+        : [{ name: null, score: 2 }, { name: null, score: 1 }];
+
       return {
         traits: ['agility', 'strength', 'finesse', 'presence', 'instinct', 'knowledge'],
         companionName: this.character.companion.name,
@@ -87,12 +114,18 @@
         companionTraits: this.character.companion.traits,
         currentStress: this.character.companion.stress.current,
         maxStress: GENERAL.companionMaxStress,
+        experience1: existingExperience1 ? existingExperience1.name : '',
+        experience1Score: existingExperience1 ? existingExperience1.score : 2,
+        experience2: existingExperience2 ? existingExperience2.name : '',
+        experience2Score: existingExperience2 ? existingExperience2.score : 1,
       };
     },
     validations() {
       return {
         companionName: { required },
         companionSpecies: { required },
+        experience1: { required },
+        experience2: { required },
       };
     },
     setup() {
@@ -126,6 +159,10 @@
           companion.name = this.companionName;
           companion.species = this.companionSpecies;
           companion.traits = [ ...this.companionTraits ];
+          companion.experience = [
+            { name: this.experience1, score: this.experience1Score },
+            { name: this.experience2, score: this.experience2Score },
+          ];
 
           this.character.companion = { ...companion };
           this.charactersStore.saveCharacter(this.character);

@@ -77,7 +77,7 @@
         experience1: existingExperience1 ? existingExperience1.name : '',
         experience1Score: existingExperience1 ? existingExperience1.score : 2,
         experience2: existingExperience2 ? existingExperience2.name : '',
-        experience2Score: existingExperience1 ? existingExperience1.score : 1,
+        experience2Score: existingExperience2 ? existingExperience2.score : 1,
         name,
         pronouns,
         firstNames: names.first,
