@@ -1,24 +1,27 @@
 <template lang="pug">
   BasicCard(title="Gold")
-    .grid.grid-cols-2.gap-2.items-center.mt-4
-      h3.uppercase.text-sm.text-center.font-bold.text-right handfuls
-      .flex
-        InputCheckboxCounter.bg-amber-300.p-1.pr-0(
-          v-model="handful"
-          :max="maxHandfuls"
-        )
-      h3.uppercase.text-sm.text-center.font-bold.text-right bag
-      .flex
-        InputCheckboxCounter.bg-amber-400.p-1.pr-0(
-          v-model="bag"
-          :max="maxBags"
-        )
-      h3.uppercase.text-sm.text-center.font-bold.text-right chests
-      .flex
-        InputCheckboxCounter.bg-amber-500.p-1.pr-0(
-          v-model="chest"
-          :max="maxChests"
-        )
+    .space-y-2.mt-6
+      .flex.space-x-2.items-center
+        h3.uppercase.text-sm.text-center.font-bold.text-right.w-20 handfuls
+        .flex
+          InputCheckboxCounter.bg-amber-300.p-1.pr-0(
+            v-model="handful"
+            :max="maxHandfuls"
+          )
+      .flex.space-x-2.items-center
+        h3.uppercase.text-sm.text-center.font-bold.text-right.w-20 bags
+        .flex
+          InputCheckboxCounter.bg-amber-400.p-1.pr-0(
+            v-model="bag"
+            :max="maxBags"
+          )
+      .flex.space-x-2.items-center
+        h3.uppercase.text-sm.text-center.font-bold.text-right.w-20 chest
+        .flex
+          InputCheckboxCounter.bg-amber-500.p-1.pr-0(
+            v-model="chest"
+            :max="maxChests"
+          )
 </template>
 
 <script>
