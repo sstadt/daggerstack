@@ -55,220 +55,303 @@
   "tier1": {
     "upgrades": [
       {
-        "type": "single",
-        "increase": "trait",
+        "description": "Increase two unmarked Character Traits by +1",
+        "increase": {
+          "trait": 1
+        },
         "quantity": 2,
-        "amount": 1,
         "max": 3
       },
       {
-        "type": "single",
-        "increase": "healthSlot",
-        "amount": 1,
+        "description": "Permanently add one Hit Point Slot",
+        "increase": {
+          "healthSlot": 1
+        },
         "max": 1
       },
       {
-        "type": "single",
-        "increase": "stressSlot",
-        "amount": 1,
+        "description": "Permanently add one Stress Slot",
+        "increase": {
+          "stressSlot": 1
+        },
         "max": 1
       },
       {
-        "type": "single",
-        "increase": "experience",
+        "description": "Increase two Experiences by +1",
+        "increase": {
+          "experience": 1
+        },
         "quantity": 2,
-        "amount": 1,
         "max": 1
       },
       {
-        "type": "single",
-        "increase": "proficiency",
-        "amount": 1,
+        "description": "Permanently add one Armor Slot",
+        "increase": {
+          "armorSlot": 1
+        },
         "max": 1
       },
       {
-        "type": "choice",
-        "increase": ["armorSlot", "evasion"],
-        "amount": 1,
+        "description": "Add +1 to your Evasion",
+        "increase": {
+          "evasion": 1
+        },
         "max": 1
       },
       {
-        "type": "single",
-        "increase": "majorDamageThreshold",
-        "amount": 2,
+        "description": "Increase your Minor Damage Threshold by +1",
+        "increase": {
+          "minorDamageThreshold": 1
+        },
         "max": 1
       },
       {
-        "type": "single",
-        "increase": "minorDamageThreshold",
-        "amount": 1,
-        "max": 1
+        "description": "Increase your Major Damage Threshold by +1",
+        "increase": {
+          "majorDamageThreshold": 1
+        },
+        "max": 2
+      },
+      {
+        "description": "Increase your Severe Damage Threshold by +1",
+        "increase": {
+          "severeDamageThreshold": 1
+        },
+        "max": 2
+      }
+    ],
+    "entry": [
+      {
+        "description": "Take an additional Experience",
+        "increase": {
+          "newExperience": 1
+        }
+      },
+      {
+        "description": "Your Proficiency increases by +1",
+        "increase": {
+          "proficiency": 1
+        }
       }
     ],
     "always": [
       {
-        "type": "single",
-        "increase": "severeDamageThreshold",
-        "amount": 2
+        "description": "Your Severe Damage Threshold increases by +2",
+        "increase": {
+          "severeDamageThreshold": 2
+        }
       }
     ]
   },
   "tier2": {
     "upgrades": [
       {
-        "type": "single",
-        "increase": "trait",
+        "description": "Increase two unmarked Character Traits by +1",
+        "increase": {
+          "trait": 1
+        },
         "quantity": 2,
-        "amount": 1,
         "max": 3
       },
       {
-        "type": "single",
-        "increase": "healthSlot",
-        "amount": 1,
-        "max": 2
-      },
-      {
-        "type": "single",
-        "increase": "stressSlot",
-        "amount": 1,
-        "max": 1
-      },
-      {
-        "type": "single",
-        "increase": "experience",
-        "quantity": 2,
-        "amount": 1,
-        "max": 1
-      },
-      {
-        "type": "single",
-        "increase": "proficiency",
-        "amount": 1,
-        "max": 2
-      },
-      {
-        "type": "choice",
-        "increase": ["armorSlot", "evasion"],
-        "amount": 1,
-        "max": 2
-      },
-      {
-        "type": "choice",
+        "description": "Permanently add one Hit Point Slot",
         "increase": {
-          "majorDamageThreshold": 2,
-          "severeDamageThreshold": 4
+          "healthSlot": 1
+        },
+        "max": 2
+      },
+      {
+        "description": "Permanently add one Stress Slot",
+        "increase": {
+          "stressSlot": 1
+        },
+        "max": 2
+      },
+      {
+        "description": "Increase two Experiences by +1",
+        "increase": {
+          "experience": 1
+        },
+        "quantity": 2,
+        "max": 1
+      },
+      {
+        "description": "Increase your Proficiency by +1",
+        "increase": {
+          "proficiency": 1
         },
         "max": 1
       },
       {
-        "type": "choice",
-        "increase": ["minorDamageThreshold", "majorDamageThreshold"],
-        "amount": 1,
+        "description": "Permanently add two Armor Slots or add +1 to your Evasion",
+        "increase": {
+          "armorSlot": 2,
+          "evasion": 1
+        },
         "max": 1
       },
       {
-        "type": "single",
-        "increase": "subclass",
-        "max": 1
-      },
-      {
-        "type": "single",
-        "increase": "multiclass",
+        "description": "Increase your Minor or Major Damage Threshold by +1",
+        "increase": {
+          "minorDamageThreshold": 1,
+          "majorDamageThreshold": 1
+        },
         "max": 2
+      },
+      {
+        "description": "Increase your Severe Damage Threshold by +2",
+        "increase": {
+          "severeDamageThreshold": 2
+        },
+        "max": 2
+      },
+      {
+        "description": "Take an upgraded subclass card. This will disable the multiclass option for this tier.",
+        "increase": {
+          "subclass": 1
+        },
+        "max": 1
+      },
+      {
+        "description": "Multiclass: Choose an additional class for your character. This will disable the subclass option for this tier and the multiclass option for all other tiers.",
+        "increase": {
+          "multiclass": 1
+        },
+        "max": 2
+      }
+    ],
+    "entry": [
+      {
+        "description": "Take an additional Experience",
+        "increase": {
+          "newExperience": 1
+        }
+      },
+      {
+        "description": "Your Proficiency increases by +1",
+        "increase": {
+          "proficiency": 1
+        }
       }
     ],
     "always": [
       {
-        "type": "single",
-        "increase": "majorDamageThreshold",
-        "amount": 1
+        "description": "Your Major Damage Threshold increases by +1",
+        "increase": {
+          "majorDamageThreshold": 1
+        }
       },
       {
-        "type": "single",
-        "increase": "severeDamageThreshold",
-        "amount": 3
+        "description": "Your Severe Damage Threshold increases by +3",
+        "increase": {
+          "severeDamageThreshold": 3
+        }
       }
     ]
   },
   "tier3": {
     "upgrades": [
       {
-        "type": "single",
-        "increase": "trait",
+        "description": "Increase two unmarked Character Traits by +1",
+        "increase": {
+          "trait": 1
+        },
         "quantity": 2,
-        "amount": 1,
         "max": 3
       },
       {
-        "type": "single",
-        "increase": "healthSlot",
-        "amount": 1,
+        "description": "Permanently add one Hit Point Slot",
+        "increase": {
+          "healthSlot": 1
+        },
         "max": 2
       },
       {
-        "type": "single",
-        "increase": "stressSlot",
-        "amount": 1,
+        "description": "Permanently add one Stress Slot",
+        "increase": {
+          "stressSlot": 1
+        },
         "max": 2
       },
       {
-        "type": "single",
-        "increase": "experience",
+        "description": "Increase two Experiences by +1",
+        "increase": {
+          "experience": 1
+        },
         "quantity": 2,
-        "amount": 1,
         "max": 1
       },
       {
-        "type": "single",
-        "increase": "proficiency",
-        "amount": 1,
+        "description": "Increase your Proficiency by +1",
+        "increase": {
+          "proficiency": 1
+        },
+        "max": 1
+      },
+      {
+        "description": "Permanently add two Armor Slots or add +1 to your Evasion",
+        "increase": {
+          "armorSlot": 2,
+          "evasion": 1
+        },
+        "max": 1
+      },
+      {
+        "description": "Increase your Minor or Major Damage Threshold by +1",
+        "increase": {
+          "minorDamageThreshold": 1,
+          "majorDamageThreshold": 1
+        },
         "max": 2
       },
       {
-        "type": "choice",
-        "increase": ["armorSlot", "evasion"],
-        "amount": 1,
+        "description": "Increase your Severe Damage Threshold by +2",
+        "increase": {
+          "severeDamageThreshold": 2
+        },
         "max": 2
       },
       {
-        "type": "single",
-        "increase": "severeDamageThreshold",
-        "amount": 4,
+        "description": "Take an upgraded subclass card. This will disable the multiclass option for this tier.",
+        "increase": {
+          "subclass": 1
+        },
         "max": 1
       },
       {
-        "type": "single",
-        "increase": "majorDamageThreshold",
-        "amount": 1,
-        "max": 1
-      },
-      {
-        "type": "single",
-        "increase": "subclass",
-        "max": 1
-      },
-      {
-        "type": "single",
-        "increase": "multiclass",
+        "description": "Multiclass: Choose an additional class for your character. This will disable the subclass option for this tier and the multiclass option for all other tiers.",
+        "increase": {
+          "multiclass": 1
+        },
         "max": 2
+      }
+    ],
+    "entry": [
+      {
+        "description": "Take an additional Experience",
+        "increase": {
+          "newExperience": 1
+        }
+      },
+      {
+        "description": "Your Proficiency increases by +1",
+        "increase": {
+          "proficiency": 1
+        }
       }
     ],
     "always": [
       {
-        "type": "single",
-        "increase": "minorDamageThreshold",
-        "amount": 1
+        "description": "Increase your Major Damage Threshold by +2",
+        "increase": {
+          "majorDamageThreshold": 2
+        }
       },
       {
-        "type": "single",
-        "increase": "majorDamageThreshold",
-        "amount": 2
-      },
-      {
-        "type": "single",
-        "increase": "severeDamageThreshold",
-        "amount": 4
+        "description": "Increase your Severe Damage Threshold by +4",
+        "increase": {
+          "severeDamageThreshold": 4
+        }
       }
     ]
   }

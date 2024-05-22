@@ -180,7 +180,7 @@
         "increase": {
           "proficiency": 1
         },
-        "max": 2
+        "max": 1
       },
       {
         "description": "Permanently add two Armor Slots or add +1 to your Evasion",
@@ -286,7 +286,7 @@
         "increase": {
           "proficiency": 1
         },
-        "max": 2
+        "max": 1
       },
       {
         "description": "Permanently add two Armor Slots or add +1 to your Evasion",
