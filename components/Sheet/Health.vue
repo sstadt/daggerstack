@@ -43,7 +43,7 @@
     data() {
       return {
         currentHealth: this.character.health.current,
-        maxHealth: GENERAL.maxHealth,
+        maxHealth: GENERAL.maxHitPoints,
         currentStress: this.character.stress.current,
         maxStress: GENERAL.maxStress,
       };
