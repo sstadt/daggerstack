@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 
+import { uuidv4 } from '~/helpers/utility';
+
 const LS_KEY_SETTINGS = 'ds_sheet_settings';
 
 export const useSheetStore = defineStore('sheet', {
@@ -7,6 +9,7 @@ export const useSheetStore = defineStore('sheet', {
     return {
       settings: {
         selectedForm: null,
+        key: uuidv4(),
       },
     };
   },
@@ -26,6 +29,9 @@ export const useSheetStore = defineStore('sheet', {
 
         localStorage.setItem(LS_KEY_SETTINGS, JSON.stringify(settings));
       }
+    },
+    refreshCharacterSheet() {
+      this.key = uuidv4();
     },
   },
 });

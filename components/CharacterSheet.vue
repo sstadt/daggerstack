@@ -13,8 +13,8 @@
         )
     transition(:name="transition" mode="out-in")
       .space-y-16.pb-4.py-8(v-if="currentTab === 'attributes'")
-        SheetStatistics(:character="character")
-        SheetExperience(:character="character")
+        SheetStatistics(:character="character" :key="`${key}-statistics`")
+        SheetExperience(:character="character" :key="`${key}-experience`")
         SheetClassFeature(:character="character")
       .space-y-8.pb-4.py-8(v-else-if="currentTab === 'equipment'")
         SheetWeapons(:character="character")
@@ -28,14 +28,16 @@
       .space-y-8.pb-4.py-8(v-else-if="currentTab === 'shapeshift'")
         SheetShapeshift(:character="character")
       .space-y-8.pb-4.py-8(v-else-if="currentTab === 'companion'")
-        SheetCompanion(:character="character")
+        SheetCompanion(:character="character" :key="`${key}-companion`")
 </template>
 
 <script>
-  import CLASSES from '~/data/classes';
+  import { mapState } from 'pinia';
 
   import { useSheetStore } from '~/stores/sheet';
   import { hasCompanion } from '~/helpers/character';
+
+  import CLASSES from '~/data/classes';
 
   export default {
     name: 'CharacterSheet',
@@ -75,6 +77,7 @@
       return { sheetStore };
     },
     computed: {
+      ...mapState(useSheetStore, ['key']),
       baseClass() {
         return CLASSES[this.character.baseClass];
       },

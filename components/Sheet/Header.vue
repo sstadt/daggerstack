@@ -1,6 +1,6 @@
 <template lang="pug">
   .sheet-header.sticky.top-0.z-10.relative.transition-colors(:class="headerClass")
-    .sheet-header__title.flex-none.py-4.px-6.text-white(@click="openHealth")
+    .sheet-header__title.flex-none.py-4.px-6.text-white(@click="openDrawer")
       .sheet-header__domain-icons.flex.absolute.opacity-20.-bottom-8(class="left-1/2")
         NuxtIcon(v-for="domain in domains" :name="domain")
       h1.font-bold.text-4xl.uppercase.truncate {{ character.name }}
@@ -8,7 +8,7 @@
         span.text-lg Level {{ character.level }} {{ character.heritage }} {{ ucFirst(character.baseClass) }}
         span.ml-auto {{ character.pronouns }}
     slot
-    BasicDrawer(ref="health" :title="tabs[currentIndex].title")
+    BasicDrawer(ref="characterDrawer" :title="tabs[currentIndex].title")
       .flex.flex-col.flex-grow
         .flex.justify-center.items-center
           button.px-3.text-4xl(
@@ -19,15 +19,32 @@
             span.sr-only {{ tab.title }}
             NuxtIcon.tab-icon(:name="tab.icon")
         transition.my-12(:name="transition" mode="out-in")
-          SheetHealth.mt-2(v-if="currentIndex === 0" :character="character")
-          SheetDescription.mt-2(v-else-if="currentIndex === 1" :character="character")
-          SheetSettings.mt-2(v-else-if="currentIndex === 2" :character="character")
+          SheetHealth.mt-2(
+            v-if="tabs[currentIndex].icon === 'health'"
+            :character="character"
+            :key="`${key}-health`"
+          )
+          SheetRest.mt-2(
+            v-else-if="tabs[currentIndex].icon === 'campfire'"
+            :character="character"
+            @rest-complete="closeDrawer"
+          )
+          SheetDescription.mt-2(
+            v-else-if="tabs[currentIndex].icon === 'persona'"
+            :character="character"
+          )
+          SheetSettings.mt-2(
+            v-else-if="tabs[currentIndex].icon === 'cog'"
+            :character="character"
+          )
         BasicCard.mt-auto
           NuxtLink(to="/")
             BasicButton.w-full(priority="secondary") Character List
 </template>
 
 <script>
+  import { mapState } from 'pinia';
+
   import CLASSES from '~/data/classes';
 
   import { ucFirst } from '~/helpers/string';
@@ -46,12 +63,14 @@
         currentIndex: 0,
         tabs: [
           { title: 'Hit Points & Stress', icon: 'health' },
+          { title: 'Rest', icon: 'campfire' },
           { title: 'Persona', icon: 'persona' },
           { title: 'Settings', icon: 'cog' },
         ]
       };
     },
     computed: {
+      ...mapState(useSheetStore, ['key']),
       classData() {
         return CLASSES[this.character.baseClass];
       },
@@ -72,8 +91,11 @@
     },
     methods: {
       ucFirst,
-      openHealth() {
-        this.$refs.health.open();
+      openDrawer() {
+        this.$refs.characterDrawer.open();
+      },
+      closeDrawer() {
+        this.$refs.characterDrawer.close();
       },
       setTab(index) {
         this.transition = index < this.currentIndex

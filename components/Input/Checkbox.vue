@@ -8,7 +8,8 @@
       v-model="model"
       @click="checkReadOnly"
     )
-    span(v-if="label") {{ label }}
+    span.font-bold(v-if="label") {{ label }}
+
 </template>
 
 <script>
@@ -92,6 +93,10 @@
     &.disabled {
       pointer-events: none;
       opacity: 0.2;
+    }
+
+    span {
+      line-height: $height;
     }
   }
 
