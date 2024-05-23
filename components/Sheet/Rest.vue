@@ -36,8 +36,6 @@
                     required
                   )
                   InputCounter(v-model="healWounds[n - 1]" :min="0" :max="4")
-                  button.text-2xl.flex.items-center(@click="healWounds[n - 1] = rollDice('1d4').total")
-                    NuxtIcon(name="d20")
         .space-y-2
           .flex.space-x-2
             .rest__checkbox-wrapper.mt-1.rest-checkboxes
@@ -54,8 +52,6 @@
               transition-group(name="fade")
                 .flex.items-center.justify-end.space-x-2(v-for="n in shortClearStress" :key="n")
                   InputCounter(v-model="healStress[n - 1]" :min="0" :max="4")
-                  button.text-2xl.flex.items-center(@click="healStress[n - 1] = rollDice('1d4').total")
-                    NuxtIcon(name="d20")
         .space-y-2
           .flex.space-x-2
             .rest__checkbox-wrapper.mt-1
@@ -77,8 +73,6 @@
                     required
                   )
                   InputCounter(v-model="healArmor[n - 1]" :min="0" :max="4")
-                  button.text-2xl.flex.items-center(@click="healArmor[n - 1] = rollDice('1d4').total")
-                    NuxtIcon(name="d20")
         .space-y-2
           .flex.space-x-2
             .rest__checkbox-wrapper.mt-1
@@ -197,6 +191,7 @@
 <script>
   import { useCharactersStore } from '~/stores/characters';
   import { useSheetStore } from '~/stores/sheet';
+  import { useToastStore } from '~/stores/toast';
   import { rollDice } from '~/helpers/dice';
 
   import GENERAL from '~/data/general';
@@ -236,8 +231,9 @@
     setup() {
       const charactersStore = useCharactersStore();
       const sheetStore = useSheetStore();
+      const toastStore = useToastStore();
 
-      return { charactersStore, sheetStore };
+      return { charactersStore, sheetStore, toastStore };
     },
     computed: {
       shortRestOptionsSelected() {
@@ -270,7 +266,7 @@
         let restoreStress = 0;
         let restoreArmor = 0;
         let addHope = 0;
-        let characterModified = false;
+        const characterUpdates = [];
 
         // hit points
         for (let i = 0, j = this.shortTendWounds; i < j; i++) {
@@ -284,7 +280,7 @@
         if (restoreHitPoints > 0) {
           this.character.health.current =
             Math.max(this.character.health.current - restoreHitPoints, 0);
-          characterModified = true;
+          characterUpdates.push(`Cleared ${restoreHitPoints} Hit Points`);
         }
 
         // stress
@@ -296,13 +292,13 @@
         if (restoreStress > 0) {
           this.character.stress.current =
             Math.max(this.character.stress.current - restoreStress, 0);
+          characterUpdates.push(`Cleared ${restoreStress} Stress`);
 
           if (this.character.companion.name) {
             this.character.companion.stress.current =
               Math.max(this.character.companion.stress.current - restoreHitPoints, 0);
+            characterUpdates.push(`Cleared ${restoreStress} Companion Stress`);
           }
-
-          characterModified = true;
         }
 
         // armor
@@ -317,7 +313,7 @@
         if (restoreArmor > 0) {
           this.character.armor.current =
             Math.max(this.character.armor.current - restoreArmor, 0);
-          this.characterModified = true;
+          characterUpdates.push(`Repaired ${restoreArmor} Armor Slots`);
         }
 
         // hope
@@ -328,27 +324,27 @@
 
         if (addHope > 0) {
           this.character.hope = Math.min(this.character.hope + addHope, GENERAL.maxHope);
-          characterModified = true;
+          characterUpdates.push(`Added ${addHope} Hope`);
         }
 
         // save character
-        if (characterModified === true) {
+        if (characterUpdates.length > 0) {
           this.charactersStore.saveCharacter(this.character);
           this.sheetStore.refreshCharacterSheet();
-          this.characterModified = false;
+          this.toastStore.postMessage({ body: `Short rest taken!\n\n- ${characterUpdates.join('\n\n- ')}` });
         }
 
         this.$emit('rest-complete', 'short');
       },
       longRest() {
         let addHope = 0;
-        let characterModified = false;
+        const characterUpdates = [];
 
         // health
         for (let i = 0, j = this.longTendWounds; i < j; i++) {
           if (this.longTendWoundsTarget[i] === 'self') {
             this.character.health.current = 0;
-            characterModified = true;
+            characterUpdates.push('Cleared all Hit Points');
             break;
           }
         }
@@ -356,14 +352,15 @@
         // stress
         if (this.longClearStress > 0) {
           this.character.stress.current = 0;
-          characterModified = true;
+          this.character.companion.stress.current = 0;
+          characterUpdates.push('Cleared all Stress');
         }
 
         // armor
         for (let i = 0, j = this.longRepairArmor; i < j; i++) {
           if (this.longRepairArmorTarget[i] === 'self') {
             this.character.armor.current = 0;
-            characterModified = true;
+            characterUpdates.push('Fully repaired Armor');
             break;
           }
         }
@@ -376,14 +373,14 @@
 
         if (addHope > 0) {
           this.character.hope = Math.min(this.character.hope + addHope, GENERAL.maxHope);
-          characterModified = true;
+          characterUpdates.push(`Added ${addHope} Hope`);
         }
 
         // save character
-        if (characterModified === true) {
+        if (characterUpdates.length > 0) {
           this.charactersStore.saveCharacter(this.character);
           this.sheetStore.refreshCharacterSheet();
-          this.characterModified = false;
+          this.toastStore.postMessage({ body: `Long rest taken!\n\n- ${characterUpdates.join('\n\n- ')}` });
         }
 
         this.$emit('rest-complete', 'long');

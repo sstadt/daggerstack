@@ -22,3 +22,15 @@
   transform: translateY(-30px);
   opacity: 0;
 }
+
+// bottom
+.slide-fade-bottom-enter-active,
+.slide-fade-bottom-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-fade-bottom-enter-from,
+.slide-fade-bottom-leave-active {
+  transform: translateY(30px);
+  opacity: 0;
+}
