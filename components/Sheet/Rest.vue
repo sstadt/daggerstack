@@ -201,6 +201,12 @@
         if (restoreStress > 0) {
           this.character.stress.current =
             Math.max(this.character.stress.current - restoreStress, 0);
+
+          if (this.character.companion.name) {
+            this.character.companion.stress.current =
+              Math.max(this.character.companion.stress.current - restoreHitPoints, 0);
+          }
+
           this.characterModified = true;
         }
 
