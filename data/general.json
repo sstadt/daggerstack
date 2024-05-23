@@ -30,5 +30,7 @@
   "maxHitPoints": 12,
   "maxStress": 12,
   "maxArmorSlots": 12,
-  "companionMaxStress": 6
+  "companionMaxStress": 6,
+  "maxShortRestOptions": 2,
+  "maxLongRestOptions": 2
 }
