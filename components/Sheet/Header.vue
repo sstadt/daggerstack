@@ -65,7 +65,7 @@
         return {
           'bg-black': this.healthPercent > 0.9,
           'bg-emerald-950': this.healthPercent > 0.7 && this.healthPercent <= 0.9,
-          'bg-orange-950': this.healthPercent > 0.3 && this.healthPercent <= 0.7,
+          'bg-yellow-950': this.healthPercent > 0.3 && this.healthPercent <= 0.7,
           'bg-red-950': this.healthPercent <= 0.3,
         };
       },
