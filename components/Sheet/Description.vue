@@ -1,7 +1,7 @@
 <template lang="pug">
   BasicCard
     .space-y-6
-      p.text-3xl.font-bold {{ character.name }}
+      InputText(v-model="name" label="Name" @input="saveName")
       p.text-2xl {{ character.community }} {{ character.ancestry }}
       .flex.space-x-4
         .w-10.flex.flex-col.items-center(v-for="domain in domains")
@@ -31,6 +31,7 @@
     },
     data() {
       return {
+        name: this.character.name,
         description: this.character.description,
       };
     },
@@ -48,6 +49,10 @@
       },
     },
     methods: {
+      saveName: debounce(function () {
+        this.character.name = this.name;
+        this.charactersStore.saveCharacter(this.character);
+      }),
       saveDescription: debounce(function () {
         this.character.description = this.description;
         this.charactersStore.saveCharacter(this.character);
