@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     'nuxt-icons',
     '@pinia/nuxt',
     '@nuxtjs/tailwindcss',
+    'vue3-carousel-nuxt',
     [
       'nuxt-gtag',
       {

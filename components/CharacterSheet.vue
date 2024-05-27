@@ -1,6 +1,6 @@
 <template lang="pug">
   .character-sheet
-    SheetHeader(:character="character")
+    SheetHeader(:character="character" @level-up="levelUp")
       .flex.relative
         NavButton(
           v-for="(button, index) in navButtons"
@@ -29,6 +29,8 @@
         SheetShapeshift(:character="character")
       .space-y-8.pb-4.py-8(v-else-if="currentTab === 'companion'")
         SheetCompanion(:character="character" :key="`${key}-companion`")
+    BasicModal(ref="levelUpModal" :title="`Level ${character.level + 1}`")
+      SheetLeveling(:character="character")
 </template>
 
 <script>
@@ -103,6 +105,9 @@
 
         this.currentTab = icon;
         this.currentIndex = index;
+      },
+      levelUp() {
+        this.$refs.levelUpModal.open();
       },
     },
   };

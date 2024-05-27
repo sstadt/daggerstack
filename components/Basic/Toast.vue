@@ -1,6 +1,6 @@
 <template lang="pug">
   transition(name="slide-fade-bottom")
-    .toast.fixed.bottom-0.left-0.w-full.py-4.px-8.z-40.bg-black(v-if="message")
+    .toast.fixed.bottom-0.left-0.w-full.py-4.px-8.z-50.bg-black(v-if="message")
       BasicMarkdown.text-white.text-lg(:source="message.body")
 </template>
 

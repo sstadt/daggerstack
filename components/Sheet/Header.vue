@@ -19,11 +19,14 @@
             span.sr-only {{ tab.title }}
             NuxtIcon.tab-icon(:name="tab.icon")
         transition.my-12(:name="transition" mode="out-in")
-          SheetHealth.mt-2(
-            v-if="tabs[currentIndex].icon === 'health'"
-            :character="character"
-            :key="`${key}-health`"
-          )
+          .space-y-6(v-if="tabs[currentIndex].icon === 'health'")
+            SheetHealth.mt-2(
+              v-if="tabs[currentIndex].icon === 'health'"
+              :character="character"
+              :key="`${key}-health`"
+            )
+            .flex.justify-center.py-20(v-if="character.level < 10")
+              BasicButton(@click="levelUp") Level Up
           SheetRest.mt-2(
             v-else-if="tabs[currentIndex].icon === 'campfire'"
             :character="character"
@@ -103,6 +106,10 @@
           : 'paginate-right';
 
         this.currentIndex = index;
+      },
+      levelUp() {
+        this.$emit('level-up');
+        this.$refs.characterDrawer.close();
       },
     },
   };

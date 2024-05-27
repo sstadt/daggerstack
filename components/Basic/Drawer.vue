@@ -19,16 +19,16 @@
 <script>
   export default {
     name: 'BasicDrawer',
-    data() {
-      return {
-        isOpen: false,
-      };
-    },
     props: {
       title: {
         type: String,
         default: null,
       },
+    },
+    data() {
+      return {
+        isOpen: false,
+      };
     },
     computed: {
       drawerClasses() {
