@@ -7,7 +7,7 @@
         button.p-3.absolute.top-3.right-3(@click="close")
           span.sr-only Close
           NuxtIcon(name="times")
-        .min-h-12.p-4
+        .min-h-12.p-4.shrink-0
           h2.text-center.text-2xl.font-black.uppercase(v-if="title") {{ title }}
         slot
 </template>

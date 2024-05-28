@@ -1,8 +1,20 @@
 <template lang="pug">
   .flex.flex-col.flex-grow
     transition(name="fade" mode="out-in")
-      .p-3.overflow-hidden(v-if="loaded")
-        .flex.justify-center.items-center.space-x-4.mb-6
+      //- new tier selection
+      .flex.flex-col.p-6.flex-grow(v-if="showNewTierOptions")
+        .space-y-4
+          p.text-xl.font-bold Proficiency increases by +1
+          .space-y-2
+            p.text-xl.font-bold Gain a New Experience
+            .flex.items-center.space-x-4
+              p.text-2xl.font-bold +1
+              InputText.flex-grow(v-model="newExperience")
+        .pt-6.mt-auto
+          BasicButton.w-full(:disabled="newExperience === ''" @click="saveNewTierOptions") Next
+      //- tier options
+      .flex.flex-col.p-6.overflow-hidden.flex-grow(v-else-if="showTierOptions" @submit="saveTierOptions")
+        .flex.justify-center.items-center.space-x-4.shrink-0
           button.flex.text-xl(
             :disabled="currentIndex === 0"
             :class="{ 'opacity-30': currentIndex === 0 }"
@@ -18,32 +30,52 @@
           )
             span.sr-only Tier {{ Math.min(currentIndex + 2, 3) }}
             NuxtIcon(name="chevron-right")
-        Swiper.tier-carousel(
-          :items-to-show="1"
-          :centered-slides="true"
-          :auto-height="true"
-          @swiper="onSwiper"
-          @slide-change="onSlideChange"
-        )
-          SwiperSlide
-            .m-1.bg-green-500 tier 1
-          SwiperSlide
-            .m-1.bg-blue-500 tier 2
-          SwiperSlide
-            .m-1.bg-red-500 tier 3
-      .absolute(
+        .shrink-0
+          Swiper.tier-carousel(
+            :items-to-show="1"
+            :centered-slides="true"
+            :auto-height="true"
+            @swiper="onSwiper"
+            @slide-change="onSlideChange"
+          )
+            SwiperSlide
+              .m-2
+                .flex.space-x-2.py-2(v-for="upgrade in levelingData.tier1.upgrades")
+                  .option-checkboxes.pt-1.flex.justify-end.items-start.flex-shrink-0
+                    InputCheckboxCounter(:max="upgrade.max")
+                  .flex-grow
+                    p {{ upgrade.description }}
+            SwiperSlide
+              .m-2
+                .flex.space-x-2.py-2(v-for="upgrade in levelingData.tier2.upgrades")
+                  .option-checkboxes.pt-1.flex.justify-end.items-start.flex-shrink-0
+                    InputCheckboxCounter(:max="upgrade.max")
+                  .flex-grow
+                    p {{ upgrade.description }}
+            SwiperSlide
+              .m-2
+                .flex.space-x-2.py-2(v-for="upgrade in levelingData.tier3.upgrades")
+                  .option-checkboxes.pt-1.flex.justify-end.items-start.flex-shrink-0
+                    InputCheckboxCounter(:max="upgrade.max")
+                  .flex-grow
+                    p {{ upgrade.description }}
+        .pt-6.mt-auto.shrink-0
+          BasicButton.w-full(@click="saveTierOptions") Save
+      //- fanfare
+      .absolute.transform(
         v-else
-        class="top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+        class="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
       )
         h2.text-6xl.text-center.uppercase.whitespace-nowrap.leveling__title
           | Level <strong>{{ character.level + 1 }}</strong>
-    transition(name="fade")
-      .p-6.mt-auto.shadow(v-if="loaded")
-        BasicButton.w-full(@click="saveLevelUp") Save
 </template>
 
 <script>
   import confetti from 'canvas-confetti';
+
+  import { useCharactersStore } from '~/stores/characters';
+
+  import CLASSES from '~/data/classes';
 
   export default {
     name: 'SheetLeveling',
@@ -54,12 +86,42 @@
       },
     },
     data() {
+      const newLevel = this.character.level + 1;
+      const reachedNewTier = [2, 5, 8].includes(newLevel);
+      const { tier1, tier2, tier3 } = CLASSES[this.character.baseClass];
+      let currentIndex = 0;
+
+      if (newLevel > 4) {
+        currentIndex = newLevel > 7 ? 2 : 1;
+      }
+
       return {
+        currentIndex,
+        newLevel,
+        reachedNewTier,
+        levelingData: { tier1, tier2, tier3 },
         loaded: false,
         introDuration: 5200,
         swiper: null,
-        currentIndex: 0, // TODO: this should default to the highest available tier
+        newExperience: '',
+        addExperience: null,
       };
+    },
+    computed: {
+      awaitingNewTierSelection() {
+        return this.addExperience === null;
+      },
+      showNewTierOptions() {
+        return this.awaitingNewTierSelection && this.loaded;
+      },
+      showTierOptions() {
+        return !this.awaitingNewTierSelection && this.loaded;
+      },
+    },
+    setup() {
+      const charactersStore = useCharactersStore();
+
+      return { charactersStore };
     },
     mounted() {
       confetti({
@@ -85,8 +147,12 @@
       onSlideChange(swiper) {
         this.currentIndex = swiper.activeIndex;
       },
-      saveLevelUp() {
-        console.log('>>> save selections');
+      saveNewTierOptions() {
+        console.log('>>> saveNewTierOptions');
+        this.addExperience = { score: 1, name: this.newExperience };
+      },
+      saveTierOptions() {
+        console.log('>>> saveTierOptions');
       },
     },
   };
@@ -127,5 +193,9 @@
       transform: translateZ(130px);
       pointer-events: none;
     }
+  }
+
+  .option-checkboxes {
+    width: 72px;
   }
 </style>

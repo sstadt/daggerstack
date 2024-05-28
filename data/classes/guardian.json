@@ -40,6 +40,7 @@
   "tier1": {
     "upgrades": [
       {
+        "id": "tier-1-trait",
         "description": "Increase two unmarked Character Traits by +1",
         "increase": {
           "trait": 1
@@ -48,6 +49,7 @@
         "max": 3
       },
       {
+        "id": "tier-1-health",
         "description": "Permanently add one Hit Point Slot",
         "increase": {
           "healthSlot": 1
@@ -55,6 +57,7 @@
         "max": 1
       },
       {
+        "id": "tier-1-stress",
         "description": "Permanently add one Stress Slot",
         "increase": {
           "stressSlot": 1
@@ -70,6 +73,7 @@
         "max": 1
       },
       {
+        "id": "tier-1-armor",
         "description": "Permanently add one Armor Slot",
         "increase": {
           "armorSlot": 1
@@ -77,6 +81,7 @@
         "max": 1
       },
       {
+        "id": "tier-1-evasion",
         "description": "Add +1 to your Evasion",
         "increase": {
           "evasion": 1
@@ -84,6 +89,7 @@
         "max": 1
       },
       {
+        "id": "tier-1-minorThreshold",
         "description": "Increase your Minor Damage Threshold by +2",
         "increase": {
           "minorDamageThreshold": 2
@@ -91,6 +97,7 @@
         "max": 1
       },
       {
+        "id": "tier-1-majorThreshold",
         "description": "Increase your Major Damage Threshold by +2",
         "increase": {
           "majorDamageThreshold": 2
@@ -98,6 +105,7 @@
         "max": 1
       },
       {
+        "id": "tier-1-severeThreshold",
         "description": "Increase your Severe Damage Threshold by +2",
         "increase": {
           "severeDamageThreshold": 2
@@ -131,6 +139,7 @@
   "tier2": {
     "upgrades": [
       {
+        "id": "tier-2-trait",
         "description": "Increase two unmarked Character Traits by +1",
         "increase": {
           "trait": 1
@@ -139,6 +148,7 @@
         "max": 3
       },
       {
+        "id": "tier-2-health",
         "description": "Permanently add one Hit Point Slot",
         "increase": {
           "healthSlot": 1
@@ -146,6 +156,7 @@
         "max": 2
       },
       {
+        "id": "tier-2-stress",
         "description": "Permanently add one Stress Slot",
         "increase": {
           "stressSlot": 1
@@ -153,6 +164,7 @@
         "max": 1
       },
       {
+        "id": "tier-2-experience",
         "description": "Increase two Experiences by +1",
         "increase": {
           "experience": 1
@@ -161,6 +173,7 @@
         "max": 1
       },
       {
+        "id": "tier-2-proficiency",
         "description": "Increase your Proficiency by +1",
         "increase": {
           "proficiency": 1
@@ -168,6 +181,7 @@
         "max": 1
       },
       {
+        "id": "tier-2-evasion",
         "description": "Permanently add two Armor Slots or add +1 to your Evasion",
         "increase": {
           "armorSlot": 2,
@@ -176,6 +190,7 @@
         "max": 1
       },
       {
+        "id": "tier-2-majorThreshold",
         "description": "Increase your Minor or Major Damage Threshold by +2",
         "increase": {
           "minorDamageThreshold": 2,
@@ -184,6 +199,7 @@
         "max": 2
       },
       {
+        "id": "tier-2-severeThreshold",
         "description": "Increase your Severe Damage Threshold by +3",
         "increase": {
           "severeDamageThreshold": 3
@@ -191,6 +207,7 @@
         "max": 2
       },
       {
+        "id": "tier-2-subclass",
         "description": "Take an upgraded subclass card. This will disable the multiclass option for this tier.",
         "increase": {
           "subclass": 1
@@ -198,6 +215,7 @@
         "max": 1
       },
       {
+        "id": "tier-2-multiclass",
         "description": "Multiclass: Choose an additional class for your character. This will disable the subclass option for this tier and the multiclass option for all other tiers.",
         "increase": {
           "multiclass": 1
@@ -237,6 +255,7 @@
   "tier3": {
     "upgrades": [
       {
+        "id": "tier-3-trait",
         "description": "Increase two unmarked Character Traits by +1",
         "increase": {
           "trait": 1
@@ -245,6 +264,7 @@
         "max": 3
       },
       {
+        "id": "tier-3-health",
         "description": "Permanently add one Hit Point Slot",
         "increase": {
           "healthSlot": 1
@@ -252,6 +272,7 @@
         "max": 2
       },
       {
+        "id": "tier-3-stress",
         "description": "Permanently add one Stress Slot",
         "increase": {
           "stressSlot": 1
@@ -259,6 +280,7 @@
         "max": 2
       },
       {
+        "id": "tier-3-experience",
         "description": "Increase two Experiences by +1",
         "increase": {
           "experience": 1
@@ -267,6 +289,7 @@
         "max": 1
       },
       {
+        "id": "tier-3-proficiency",
         "description": "Increase your Proficiency by +1",
         "increase": {
           "proficiency": 1
@@ -274,6 +297,7 @@
         "max": 1
       },
       {
+        "id": "tier-3-evasion",
         "description": "Permanently add one Armor Slots or add +1 to your Evasion",
         "increase": {
           "armorSlot": 1,
@@ -282,6 +306,7 @@
         "max": 2
       },
       {
+        "id": "tier-3-majorThreshold",
         "description": "Increase your Major Damage Threshold by +2",
         "increase": {
           "majorDamageThreshold": 2
@@ -289,6 +314,7 @@
         "max": 1
       },
       {
+        "id": "tier-3-severeThreshold",
         "description": "Increase your Severe Damage Threshold by +3",
         "increase": {
           "severeDamageThreshold": 3
@@ -296,6 +322,7 @@
         "max": 1
       },
       {
+        "id": "tier-3-subclass",
         "description": "Take an upgraded subclass card. This will disable the multiclass option for this tier.",
         "increase": {
           "subclass": 1
@@ -303,6 +330,7 @@
         "max": 1
       },
       {
+        "id": "tier-3-multiclass",
         "description": "Multiclass: Choose an additional class for your character. This will disable the subclass option for this tier and the multiclass option for all other tiers.",
         "increase": {
           "multiclass": 1
