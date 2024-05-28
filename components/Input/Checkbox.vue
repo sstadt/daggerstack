@@ -9,7 +9,6 @@
       @click="checkReadOnly"
     )
     span.font-bold(v-if="label") {{ label }}
-
 </template>
 
 <script>

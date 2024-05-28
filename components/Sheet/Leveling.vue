@@ -1,7 +1,7 @@
 <template lang="pug">
   .flex.flex-col.flex-grow
     transition(name="fade" mode="out-in")
-      //- new tier selection
+      //- new tier selections
       .flex.flex-col.p-6.flex-grow(v-if="showNewTierOptions")
         .space-y-4
           p.text-xl.font-bold Proficiency increases by +1
@@ -13,24 +13,27 @@
         .pt-6.mt-auto
           BasicButton.w-full(:disabled="newExperience === ''" @click="saveNewTierOptions") Next
       //- tier options
-      .flex.flex-col.p-6.overflow-hidden.flex-grow(v-else-if="showTierOptions" @submit="saveTierOptions")
+      .flex.flex-col.p-6.overflow-hidden.flex-grow(
+        v-else-if="showTierOptions"
+        @submit="saveTierOptions"
+      )
         .flex.justify-center.items-center.space-x-4.shrink-0
           button.flex.text-xl(
-            :disabled="currentIndex === 0"
-            :class="{ 'opacity-30': currentIndex === 0 }"
+            :disabled="currentTab === 0"
+            :class="{ 'opacity-30': currentTab === 0 }"
             @click="prev"
           )
-            span.sr-only Tier {{ Math.max(currentIndex, 1) }}
+            span.sr-only Tier {{ Math.max(currentTab, 1) }}
             NuxtIcon(name="chevron-left")
-          h3.text-xl.font-bold.uppercase Tier {{ currentIndex + 1 }}
+          h3.text-xl.font-bold.uppercase Tier {{ currentTab + 1 }}
           button.flex.text-xl(
-            :disabled="currentIndex >= 2"
-            :class="{ 'opacity-30': currentIndex >= 2 }"
+            :disabled="currentTab >= 2"
+            :class="{ 'opacity-30': currentTab >= 2 }"
             @click="next"
           )
-            span.sr-only Tier {{ Math.min(currentIndex + 2, 3) }}
+            span.sr-only Tier {{ Math.min(currentTab + 2, 3) }}
             NuxtIcon(name="chevron-right")
-        .shrink-0
+        .shrink-0(v-if="tierChoices.length > 0")
           Swiper.tier-carousel(
             :items-to-show="1"
             :centered-slides="true"
@@ -38,25 +41,18 @@
             @swiper="onSwiper"
             @slide-change="onSlideChange"
           )
-            SwiperSlide
+            SwiperSlide(v-for="tier in 3")
               .m-2
-                .flex.space-x-2.py-2(v-for="upgrade in levelingData.tier1.upgrades")
+                .flex.space-x-2.py-2(
+                  v-for="(upgrade, index) in levelingData[`tier${tier}`].upgrades"
+                )
                   .option-checkboxes.pt-1.flex.justify-end.items-start.flex-shrink-0
-                    InputCheckboxCounter(:max="upgrade.max")
-                  .flex-grow
-                    p {{ upgrade.description }}
-            SwiperSlide
-              .m-2
-                .flex.space-x-2.py-2(v-for="upgrade in levelingData.tier2.upgrades")
-                  .option-checkboxes.pt-1.flex.justify-end.items-start.flex-shrink-0
-                    InputCheckboxCounter(:max="upgrade.max")
-                  .flex-grow
-                    p {{ upgrade.description }}
-            SwiperSlide
-              .m-2
-                .flex.space-x-2.py-2(v-for="upgrade in levelingData.tier3.upgrades")
-                  .option-checkboxes.pt-1.flex.justify-end.items-start.flex-shrink-0
-                    InputCheckboxCounter(:max="upgrade.max")
+                    InputCheckboxCounter(
+                      v-model="tierChoices[tier - 1][index]"
+                      :max="upgrade.max"
+                      :enabled="tierEnabled[tier] ? choicesRemaining + tierChoices[tier - 1][index] : 0"
+                      :increment="upgrade.increase.multiclass ? 2 : 1"
+                    )
                   .flex-grow
                     p {{ upgrade.description }}
         .pt-6.mt-auto.shrink-0
@@ -89,22 +85,26 @@
       const newLevel = this.character.level + 1;
       const reachedNewTier = [2, 5, 8].includes(newLevel);
       const { tier1, tier2, tier3 } = CLASSES[this.character.baseClass];
-      let currentIndex = 0;
+      const levelingData = { tier1, tier2, tier3 };
 
+      // current tab
+      let currentTab = 0;
       if (newLevel > 4) {
-        currentIndex = newLevel > 7 ? 2 : 1;
+        currentTab = newLevel > 7 ? 2 : 1;
       }
 
       return {
-        currentIndex,
+        currentTab,
         newLevel,
         reachedNewTier,
-        levelingData: { tier1, tier2, tier3 },
-        loaded: false,
+        levelingData,
+        loaded: true, // TODO: set to false initially
         introDuration: 5200,
         swiper: null,
         newExperience: '',
         addExperience: null,
+        existingChoices: [],
+        tierChoices: [],
       };
     },
     computed: {
@@ -116,6 +116,20 @@
       },
       showTierOptions() {
         return !this.awaitingNewTierSelection && this.loaded;
+      },
+      choicesRemaining() {
+        const selectedChoices = this.tierChoices.reduce((acc, current) => {
+          return acc + current.reduce((p, c) => (p + c));
+        }, 0);
+
+        return Math.max(0, 2 - selectedChoices);
+      },
+      tierEnabled() {
+        return {
+          1: true,
+          2: this.newLevel > 4,
+          3: this.newLevel > 7,
+        }
       },
     },
     setup() {
@@ -133,26 +147,66 @@
       setTimeout(() => {
         this.loaded = true;
       }, this.introDuration);
+
+      this.generateChoicesModel();
     },
     methods: {
       next() {
-        this.swiper.slideTo(Math.min(this.currentIndex + 1, 2));
+        this.swiper.slideTo(Math.min(this.currentTab + 1, 2));
       },
       prev() {
-        this.swiper.slideTo(Math.max(this.currentIndex - 1, 0));
+        this.swiper.slideTo(Math.max(this.currentTab - 1, 0));
       },
       onSwiper(swiper) {
         this.swiper = swiper;
       },
       onSlideChange(swiper) {
-        this.currentIndex = swiper.activeIndex;
+        this.currentTab = swiper.activeIndex;
       },
       saveNewTierOptions() {
-        console.log('>>> saveNewTierOptions');
         this.addExperience = { score: 1, name: this.newExperience };
       },
       saveTierOptions() {
         console.log('>>> saveTierOptions');
+      },
+      generateChoicesModel() {
+        const tier1Choices = [];
+        const tier2Choices = [];
+        const tier3Choices = [];
+
+        const existingTier1Choices = [];
+        const existingTier2Choices = [];
+        const existingTier3Choices = [];
+
+        this.levelingData.tier1.upgrades
+          .forEach((upgrade) => {
+            tier1Choices.push(0); // TODO: reconcile with existing choices
+            existingTier1Choices.push(0); // TODO: reconcile with existing choices
+          });
+
+        this.levelingData.tier2.upgrades
+          .forEach((upgrade) => {
+            tier2Choices.push(0); // TODO: reconcile with existing choices
+            existingTier2Choices.push(0); // TODO: reconcile with existing choices
+          });
+
+        this.levelingData.tier3.upgrades
+          .forEach((upgrade) => {
+            tier3Choices.push(0); // TODO: reconcile with existing choices
+            existingTier3Choices.push(0); // TODO: reconcile with existing choices
+          });
+
+        this.tierChoices = [
+          [ ...tier1Choices ],
+          [ ...tier2Choices ],
+          [ ...tier3Choices ],
+        ];
+
+        this.existingChoices = [
+          [ ...existingTier1Choices ],
+          [ ...existingTier2Choices ],
+          [ ...existingTier3Choices ],
+        ];
       },
     },
   };
