@@ -23,13 +23,13 @@
     "nuxt": "^3.11.0",
     "nuxt-gtag": "^2.0.5",
     "nuxt-icons": "^3.2.1",
+    "nuxt-swiper": "^1.2.2",
     "pinia": "^2.1.7",
     "pug": "^3.0.2",
     "qrcode-vue3": "^1.6.8",
     "sass": "^1.72.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
-    "vue3-carousel-nuxt": "^1.1.1",
     "vue3-touch-events": "^4.1.8"
   }
 }

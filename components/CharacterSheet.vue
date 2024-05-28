@@ -29,7 +29,7 @@
         SheetShapeshift(:character="character")
       .space-y-8.pb-4.py-8(v-else-if="currentTab === 'companion'")
         SheetCompanion(:character="character" :key="`${key}-companion`")
-    BasicModal(ref="levelUpModal" :title="`Level ${character.level + 1}`")
+    BasicModal(ref="levelUpModal" :title="`Welcome to Level ${character.level + 1}!`")
       SheetLeveling(:character="character")
 </template>
 
