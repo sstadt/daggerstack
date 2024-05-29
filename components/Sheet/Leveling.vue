@@ -55,7 +55,11 @@
                     .flex-grow.space-y-2
                       p {{ upgrade.description }}
                       .space-y-2(v-for="n in upgrade.max")
-                        Transition(name="slide-fade-left")
+                        Transition(
+                          name="slide-fade-left"
+                          @enter="refreshSwiper"
+                          @after-leave="refreshSwiper"
+                        )
                           div(
                             :key="n"
                             v-if="Array.isArray(tierOptions[tier - 1][index]) && tierChoices[tier - 1][index] >= n"
@@ -73,7 +77,7 @@
                               :options="tierOptions[tier - 1][index]"
                             )
         .pt-6.mt-auto.shrink-0
-          BasicButton.w-full(@click="saveTierOptions") Next
+          BasicButton.w-full(:disabled="choicesMade.length < 2" @click="saveTierOptions") Next
       //- fanfare
       .absolute.transform(
         v-else
@@ -153,7 +157,7 @@
         }
       },
       choicesMade() {
-        const specialUpgrades = ['trait', 'experience', 'subclass', 'multiclass'];
+        const complexUpgrades = ['trait', 'experience'];
         const selections = [];
 
         this.tierChoices.forEach((tierChoices, tierIndex) => {
@@ -169,17 +173,37 @@
               // check each choice made for this tier
               // TODO: this will have to take into account choices made from previous levels
               for (let i = 0; i < choice; i++) {
-                // if the user has not selected anything with options, add the leveling data
-                if (upgradeOptions.length === 1 && !specialUpgrades.includes(firstOption)) {
+                // TODO: handle multiclass and subclass options separately
+                // complex upgrades
+                if (complexUpgrades.includes(firstOption)) {
+                  if (this.tierOptionSelections[tierIndex][choiceIndex][choice - 1].length >= upgrade.quantity) {
+                    selections.push(newUpgrade({
+                      id: upgrade.id,
+                      level: this.newLevel,
+                      type: firstOption,
+                      value: upgrade.increase[firstOption],
+                      options: [ ...this.tierOptionSelections[tierIndex][choiceIndex][choice - 1] ],
+                    }));
+                  }
+                // single option upgrades
+                } else if (upgradeOptions.length === 1) {
                   selections.push(newUpgrade({
+                    id: upgrade.id,
                     level: this.newLevel,
                     type: firstOption,
                     value: upgrade.increase[firstOption],
                   }));
+                // choice upgrades
+                } else if (upgradeOptions.length > 1) {
+                  if (this.tierOptionSelections[tierIndex][choiceIndex][choice - 1]) {
+                    selections.push(newUpgrade({
+                      id: upgrade.id,
+                      level: this.newLevel,
+                      type: this.optionSelections[tierIndex][choiceIndex][choice - 1],
+                      value: upgrade.increase[firstOption],
+                    }));
+                  }
                 }
-
-                // if the user has selected something with options...
-                  // if the options selected length equals the upgrade quantity, add the leveling data
               }
             }
           });
@@ -221,6 +245,9 @@
       },
       onSlideChange(swiper) {
         this.currentTab = swiper.activeIndex;
+      },
+      refreshSwiper() {
+        this.swiper.updateAutoHeight(300);
       },
       saveNewTierOptions() {
         this.addExperience = { id: uuidv4(), score: 1, name: this.newExperience };

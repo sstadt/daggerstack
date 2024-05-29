@@ -135,12 +135,13 @@ export const newArmor = () => {
   };
 };
 
-export const newUpgrade = ({ level, type, value, selection }) => {
+export const newUpgrade = ({ id, level, type, value, options }) => {
   return {
+    id,
     level,
     type,
     value,
-    selection: selection || [],
+    options: options || [],
   };
 };
 
