@@ -43,7 +43,7 @@
           )
             SwiperSlide(v-for="tier in 3")
               .m-2
-                .py-2(v-for="(upgrade, index) in levelingData[`tier${tier}`].upgrades")
+                .py-1(v-for="(upgrade, index) in levelingData[`tier${tier}`].upgrades")
                   .flex.space-x-2
                     .option-checkboxes.pt-1.flex.justify-end.items-start.flex-shrink-0
                       InputCheckboxCounter(
