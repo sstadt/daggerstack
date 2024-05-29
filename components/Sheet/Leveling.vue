@@ -54,7 +54,7 @@
                       )
                     .flex-grow.space-y-2
                       p {{ upgrade.description }}
-                      div(v-for="n in upgrade.max")
+                      .space-y-2(v-for="n in upgrade.max")
                         Transition(name="slide-fade-left")
                           div(
                             :key="n"
@@ -153,20 +153,30 @@
         }
       },
       choicesMade() {
+        const specialUpgrades = ['trait', 'experience', 'subclass', 'multiclass'];
         const selections = [];
 
-        this.tier1Choices.forEach((tierChoices, tierIndex) => {
+        this.tierChoices.forEach((tierChoices, tierIndex) => {
           const tier = tierIndex + 1;
 
           tierChoices.forEach((choice, choiceIndex) => {
             if (choice > 0) {
               // user has selected this option, gather the data and push to selections[]
               const upgrade = this.levelingData[`tier${tier}`].upgrades[choiceIndex];
+              const upgradeOptions = Object.keys(upgrade.increase);
+              const [ firstOption ] = upgradeOptions;
 
               // check each choice made for this tier
               // TODO: this will have to take into account choices made from previous levels
               for (let i = 0; i < choice; i++) {
                 // if the user has not selected anything with options, add the leveling data
+                if (upgradeOptions.length === 1 && !specialUpgrades.includes(firstOption)) {
+                  selections.push(newUpgrade({
+                    level: this.newLevel,
+                    type: firstOption,
+                    value: upgrade.increase[firstOption],
+                  }));
+                }
 
                 // if the user has selected something with options...
                   // if the options selected length equals the upgrade quantity, add the leveling data
