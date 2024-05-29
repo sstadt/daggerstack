@@ -61,7 +61,8 @@
   import { useVuelidate } from '@vuelidate/core';
   import { required } from '@vuelidate/validators';
 
-  import names from '~/data/names.json';
+  import NAMES from '~/data/names.json';
+  import { uuidv4 } from '~/helpers/utility';
   import { getRandomNumber } from '~/helpers/dice';
   import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
 
@@ -80,8 +81,8 @@
         experience2Score: existingExperience2 ? existingExperience2.score : 1,
         name,
         pronouns,
-        firstNames: names.first,
-        familyNames: names.family,
+        firstNames: NAMES.first,
+        familyNames: NAMES.family,
       };
     },
     validations() {
@@ -115,10 +116,10 @@
     },
     methods: {
       generateName() {
-        const firstIndex = getRandomNumber(0, names.first.length - 1);
-        const familyIndex = getRandomNumber(0, names.family.length - 1);
+        const firstIndex = getRandomNumber(0, NAMES.first.length - 1);
+        const familyIndex = getRandomNumber(0, NAMES.family.length - 1);
 
-        this.name = `${names.first[firstIndex]} ${names.family[familyIndex]}`;
+        this.name = `${NAMES.first[firstIndex]} ${NAMES.family[familyIndex]}`;
       },
       async next() {
         const formValid = await this.v$.$validate();
@@ -128,8 +129,8 @@
             name: this.name,
             pronouns: this.pronouns,
             experience: [
-              { name: this.experience1, score: this.experience1Score },
-              { name: this.experience2, score: this.experience2Score },
+              { id: uuidv4(), name: this.experience1, score: this.experience1Score },
+              { id: uuidv4(), name: this.experience2, score: this.experience2Score },
             ],
           });
 

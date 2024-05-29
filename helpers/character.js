@@ -368,12 +368,11 @@ export const hasCompanion = (character) => {
  * @param {Object} upgrade The upgrade object to generate options for
  * @return Array of options, or text string if only a single option
  */
-export const getOptionsByUpgrade = (upgrade) => {
+export const getOptionsByUpgrade = (upgrade, character) => {
   const upgradeKeys = Object.keys(upgrade.increase);
   const [ firstUpgradeKey ] = upgradeKeys;
 
   if (upgrade.increase.trait) {
-    // TODO: need to pass character in here so we can omit already upgraded traits
     return [
       { label: 'Agility', value: 'agility' },
       { label: 'Strength', value: 'strength' },
@@ -381,7 +380,14 @@ export const getOptionsByUpgrade = (upgrade) => {
       { label: 'Instinct', value: 'instinct' },
       { label: 'Presence', value: 'presence' },
       { label: 'Knowledge', value: 'knowledge' },
-    ];
+    ]
+  }
+
+  if (upgrade.increase.experience) {
+    return character.experience.map((experience) => ({
+      label: experience.name,
+      value: experience.id,
+    }));
   }
 
   if (upgradeKeys.length > 1) {

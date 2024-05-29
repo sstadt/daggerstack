@@ -8,7 +8,7 @@
       v-model="model"
       @click="checkReadOnly"
     )
-    span.font-bold(v-if="label") {{ label }}
+    span(v-if="label") {{ label }}
 </template>
 
 <script>

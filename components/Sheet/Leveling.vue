@@ -52,17 +52,26 @@
                         :enabled="choicesAvailable(tier, index, upgrade)"
                         :increment="upgrade.increase.multiclass ? 2 : 1"
                       )
-                    .flex-grow
+                    .flex-grow.space-y-2
                       p {{ upgrade.description }}
-                  .space-y-2
-                    div(v-for="n in upgrade.max")
-                      Transition(name="slide-fade-left")
-                        InputSelect(
-                          :key="n"
-                          v-if="Array.isArray(tierOptions[tier - 1][index]) && tierChoices[tier - 1][index] >= n"
-                          v-model="tierOptionSelections[tier - 1][index][n - 1]"
-                          :options="tierOptions[tier - 1][index]"
-                        )
+                      div(v-for="n in upgrade.max")
+                        Transition(name="slide-fade-left")
+                          div(
+                            :key="n"
+                            v-if="Array.isArray(tierOptions[tier - 1][index]) && tierChoices[tier - 1][index] >= n"
+                          )
+                            InputChecklist(
+                              v-if="upgrade.quantity && upgrade.quantity > 1"
+                              v-model="tierOptionSelections[tier - 1][index][n - 1]"
+                              :cols="upgrade.increase.trait ? 2 : 1"
+                              :max="upgrade.quantity"
+                              :options="tierOptions[tier - 1][index]"
+                            )
+                            InputSelect(
+                              v-else
+                              v-model="tierOptionSelections[tier - 1][index][n - 1]"
+                              :options="tierOptions[tier - 1][index]"
+                            )
         .pt-6.mt-auto.shrink-0
           BasicButton.w-full(@click="saveTierOptions") Next
       //- fanfare
@@ -77,6 +86,7 @@
 <script>
   import confetti from 'canvas-confetti';
 
+  import { uuidv4 } from '~/helpers/utility';
   import { getOptionsByUpgrade } from '~/helpers/character';
   import { useCharactersStore } from '~/stores/characters';
 
@@ -159,7 +169,10 @@
         this.loaded = true;
       }, this.introDuration);
 
-      this.generateChoicesData();
+      // NOTE: If we generate this before adding a new experience,
+      //       player will be unable to increase that experience
+      //       during new tier level-up
+      if (!this.reachedNewTier) this.generateChoicesData();
     },
     methods: {
       next() {
@@ -175,10 +188,8 @@
         this.currentTab = swiper.activeIndex;
       },
       saveNewTierOptions() {
-        this.addExperience = { score: 1, name: this.newExperience };
-      },
-      saveTierOptions() {
-        console.log('>>> saveTierOptions');
+        this.addExperience = { id: uuidv4(), score: 1, name: this.newExperience };
+        this.$nextTick(() => this.generateChoicesData());
       },
       choicesAvailable(tier, index, upgrade) {
         // TODO: use upgrade data to restrict based on multiclass/subclass selections
@@ -206,34 +217,51 @@
 
         this.levelingData.tier1.upgrades
           .forEach((upgrade) => {
-            const options = getOptionsByUpgrade(upgrade);
+            const options = getOptionsByUpgrade(upgrade, this.character);
             const [ firstOption ] = options;
+            const optionSelections = Array.from(Array(upgrade.max)).map(() => {
+              return upgrade.quantity && upgrade.quantity > 1 ? [] : firstOption.value;
+            }); // TODO: reconcole with existing choices
+
+            // add the new experience to selection options, if applicable
+            if (upgrade.increase.experience && this.addExperience) {
+              options.push({
+                label: this.addExperience.name,
+                value: this.addExperience.id,
+              });
+            }
 
             tier1Choices.push(0); // TODO: reconcile with existing choices
             tier1Options.push(options);
-            tier1OptionSelections.push(Array.from(Array(upgrade.max)).map(() => firstOption.value)); // TODO: reconcole with existing choices
+            tier1OptionSelections.push(optionSelections);
             existingTier1Choices.push(0); // TODO: reconcile with existing choices
           });
 
         this.levelingData.tier2.upgrades
           .forEach((upgrade) => {
-            const options = getOptionsByUpgrade(upgrade);
+            const options = getOptionsByUpgrade(upgrade, this.character);
             const [ firstOption ] = options;
+            const optionSelections = Array.from(Array(upgrade.max)).map(() => {
+              return upgrade.quantity && upgrade.quantity > 1 ? [] : firstOption.value;
+            }); // TODO: reconcole with existing choices
 
             tier2Choices.push(0); // TODO: reconcile with existing choices
             tier2Options.push(options);
-            tier2OptionSelections.push(Array.from(Array(upgrade.max)).map(() => firstOption.value)); // TODO: reconcole with existing choices
+            tier2OptionSelections.push(optionSelections);
             existingTier2Choices.push(0); // TODO: reconcile with existing choices
           });
 
         this.levelingData.tier3.upgrades
           .forEach((upgrade) => {
-            const options = getOptionsByUpgrade(upgrade);
+            const options = getOptionsByUpgrade(upgrade, this.character);
             const [ firstOption ] = options;
+            const optionSelections = Array.from(Array(upgrade.max)).map(() => {
+              return upgrade.quantity && upgrade.quantity > 1 ? [] : firstOption.value;
+            }); // TODO: reconcole with existing choices
 
             tier3Choices.push(0); // TODO: reconcile with existing choices
             tier3Options.push(options);
-            tier3OptionSelections.push(Array.from(Array(upgrade.max)).map(() => firstOption.value)); // TODO: reconcole with existing choices
+            tier3OptionSelections.push(optionSelections);
             existingTier3Choices.push(0); // TODO: reconcile with existing choices
           });
 
@@ -260,6 +288,9 @@
           [ ...existingTier2Choices ],
           [ ...existingTier3Choices ],
         ];
+      },
+      saveTierOptions() {
+        console.log('>>> saveTierOptions');
       },
     },
   };
