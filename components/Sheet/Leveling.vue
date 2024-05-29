@@ -87,7 +87,7 @@
   import confetti from 'canvas-confetti';
 
   import { uuidv4 } from '~/helpers/utility';
-  import { getOptionsByUpgrade } from '~/helpers/character';
+  import { getOptionsByUpgrade, newUpgrade } from '~/helpers/character';
   import { useCharactersStore } from '~/stores/characters';
 
   import CLASSES from '~/data/classes';
@@ -151,6 +151,31 @@
           2: this.newLevel > 4,
           3: this.newLevel > 7,
         }
+      },
+      choicesMade() {
+        const selections = [];
+
+        this.tier1Choices.forEach((tierChoices, tierIndex) => {
+          const tier = tierIndex + 1;
+
+          tierChoices.forEach((choice, choiceIndex) => {
+            if (choice > 0) {
+              // user has selected this option, gather the data and push to selections[]
+              const upgrade = this.levelingData[`tier${tier}`].upgrades[choiceIndex];
+
+              // check each choice made for this tier
+              // TODO: this will have to take into account choices made from previous levels
+              for (let i = 0; i < choice; i++) {
+                // if the user has not selected anything with options, add the leveling data
+
+                // if the user has selected something with options...
+                  // if the options selected length equals the upgrade quantity, add the leveling data
+              }
+            }
+          });
+        });
+
+        return selections;
       },
     },
     setup() {
@@ -245,6 +270,14 @@
               return upgrade.quantity && upgrade.quantity > 1 ? [] : firstOption.value;
             }); // TODO: reconcole with existing choices
 
+            // add the new experience to selection options, if applicable
+            if (upgrade.increase.experience && this.addExperience) {
+              options.push({
+                label: this.addExperience.name,
+                value: this.addExperience.id,
+              });
+            }
+
             tier2Choices.push(0); // TODO: reconcile with existing choices
             tier2Options.push(options);
             tier2OptionSelections.push(optionSelections);
@@ -258,6 +291,14 @@
             const optionSelections = Array.from(Array(upgrade.max)).map(() => {
               return upgrade.quantity && upgrade.quantity > 1 ? [] : firstOption.value;
             }); // TODO: reconcole with existing choices
+
+            // add the new experience to selection options, if applicable
+            if (upgrade.increase.experience && this.addExperience) {
+              options.push({
+                label: this.addExperience.name,
+                value: this.addExperience.id,
+              });
+            }
 
             tier3Choices.push(0); // TODO: reconcile with existing choices
             tier3Options.push(options);

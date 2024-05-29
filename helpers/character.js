@@ -135,6 +135,15 @@ export const newArmor = () => {
   };
 };
 
+export const newUpgrade = ({ level, type, value, selection }) => {
+  return {
+    level,
+    type,
+    value,
+    selection: selection || [],
+  };
+};
+
 /**
  * Inventory items are stores as a single string, this function
  * breaks that master string down to be loaded into the character
