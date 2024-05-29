@@ -1,5 +1,6 @@
 
 import { uuidv4 } from '~/helpers/utility';
+import upgradeStrings from '~/config/upgradeStrings';
 
 import GENERAL from '~/data/general';
 import CLASSES from '~/data/classes';
@@ -359,4 +360,38 @@ export const hasCompanion = (character) => {
   });
 
   return hasCompanion;
+};
+
+/**
+ * Generate select options for an upgrade
+ *
+ * @param {Object} upgrade The upgrade object to generate options for
+ * @return Array of options, or text string if only a single option
+ */
+export const getOptionsByUpgrade = (upgrade) => {
+  const upgradeKeys = Object.keys(upgrade.increase);
+  const [ firstUpgradeKey ] = upgradeKeys;
+
+  if (upgrade.increase.trait) {
+    // TODO: need to pass character in here so we can omit already upgraded traits
+    return [
+      { label: 'Agility', value: 'agility' },
+      { label: 'Strength', value: 'strength' },
+      { label: 'Finesse', value: 'finesse' },
+      { label: 'Instinct', value: 'instinct' },
+      { label: 'Presence', value: 'presence' },
+      { label: 'Knowledge', value: 'knowledge' },
+    ];
+  }
+
+  if (upgradeKeys.length > 1) {
+    return upgradeKeys.map((key) => {
+      return {
+        label: upgradeStrings[key],
+        value: key,
+      };
+    });
+  }
+
+  return firstUpgradeKey;
 };

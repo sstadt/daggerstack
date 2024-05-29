@@ -43,20 +43,28 @@
           )
             SwiperSlide(v-for="tier in 3")
               .m-2
-                .flex.space-x-2.py-2(
-                  v-for="(upgrade, index) in levelingData[`tier${tier}`].upgrades"
-                )
-                  .option-checkboxes.pt-1.flex.justify-end.items-start.flex-shrink-0
-                    InputCheckboxCounter(
-                      v-model="tierChoices[tier - 1][index]"
-                      :max="upgrade.max"
-                      :enabled="tierEnabled[tier] ? choicesRemaining + tierChoices[tier - 1][index] : 0"
-                      :increment="upgrade.increase.multiclass ? 2 : 1"
-                    )
-                  .flex-grow
-                    p {{ upgrade.description }}
+                .py-2(v-for="(upgrade, index) in levelingData[`tier${tier}`].upgrades")
+                  .flex.space-x-2
+                    .option-checkboxes.pt-1.flex.justify-end.items-start.flex-shrink-0
+                      InputCheckboxCounter(
+                        v-model="tierChoices[tier - 1][index]"
+                        :max="upgrade.max"
+                        :enabled="choicesAvailable(tier, index, upgrade)"
+                        :increment="upgrade.increase.multiclass ? 2 : 1"
+                      )
+                    .flex-grow
+                      p {{ upgrade.description }}
+                  .space-y-2
+                    div(v-for="n in upgrade.max")
+                      Transition(name="slide-fade-left")
+                        InputSelect(
+                          :key="n"
+                          v-if="Array.isArray(tierOptions[tier - 1][index]) && tierChoices[tier - 1][index] >= n"
+                          v-model="tierOptionSelections[tier - 1][index][n - 1]"
+                          :options="tierOptions[tier - 1][index]"
+                        )
         .pt-6.mt-auto.shrink-0
-          BasicButton.w-full(@click="saveTierOptions") Save
+          BasicButton.w-full(@click="saveTierOptions") Next
       //- fanfare
       .absolute.transform(
         v-else
@@ -69,6 +77,7 @@
 <script>
   import confetti from 'canvas-confetti';
 
+  import { getOptionsByUpgrade } from '~/helpers/character';
   import { useCharactersStore } from '~/stores/characters';
 
   import CLASSES from '~/data/classes';
@@ -105,6 +114,8 @@
         addExperience: null,
         existingChoices: [],
         tierChoices: [],
+        tierOptions: [],
+        tierOptionSelections: [],
       };
     },
     computed: {
@@ -148,7 +159,7 @@
         this.loaded = true;
       }, this.introDuration);
 
-      this.generateChoicesModel();
+      this.generateChoicesData();
     },
     methods: {
       next() {
@@ -169,10 +180,25 @@
       saveTierOptions() {
         console.log('>>> saveTierOptions');
       },
-      generateChoicesModel() {
+      choicesAvailable(tier, index, upgrade) {
+        // TODO: use upgrade data to restrict based on multiclass/subclass selections
+
+        return this.tierEnabled[tier]
+          ? this.choicesRemaining + this.tierChoices[tier - 1][index]
+          : 0;
+      },
+      generateChoicesData() {
         const tier1Choices = [];
         const tier2Choices = [];
         const tier3Choices = [];
+
+        const tier1Options = [];
+        const tier2Options = [];
+        const tier3Options = [];
+
+        const tier1OptionSelections = [];
+        const tier2OptionSelections = [];
+        const tier3OptionSelections = [];
 
         const existingTier1Choices = [];
         const existingTier2Choices = [];
@@ -180,19 +206,34 @@
 
         this.levelingData.tier1.upgrades
           .forEach((upgrade) => {
+            const options = getOptionsByUpgrade(upgrade);
+            const [ firstOption ] = options;
+
             tier1Choices.push(0); // TODO: reconcile with existing choices
+            tier1Options.push(options);
+            tier1OptionSelections.push(Array.from(Array(upgrade.max)).map(() => firstOption.value)); // TODO: reconcole with existing choices
             existingTier1Choices.push(0); // TODO: reconcile with existing choices
           });
 
         this.levelingData.tier2.upgrades
           .forEach((upgrade) => {
+            const options = getOptionsByUpgrade(upgrade);
+            const [ firstOption ] = options;
+
             tier2Choices.push(0); // TODO: reconcile with existing choices
+            tier2Options.push(options);
+            tier2OptionSelections.push(Array.from(Array(upgrade.max)).map(() => firstOption.value)); // TODO: reconcole with existing choices
             existingTier2Choices.push(0); // TODO: reconcile with existing choices
           });
 
         this.levelingData.tier3.upgrades
           .forEach((upgrade) => {
+            const options = getOptionsByUpgrade(upgrade);
+            const [ firstOption ] = options;
+
             tier3Choices.push(0); // TODO: reconcile with existing choices
+            tier3Options.push(options);
+            tier3OptionSelections.push(Array.from(Array(upgrade.max)).map(() => firstOption.value)); // TODO: reconcole with existing choices
             existingTier3Choices.push(0); // TODO: reconcile with existing choices
           });
 
@@ -201,6 +242,18 @@
           [ ...tier2Choices ],
           [ ...tier3Choices ],
         ];
+
+        this.tierOptions = [
+          [ ...tier1Options ],
+          [ ...tier2Options ],
+          [ ...tier3Options ],
+        ];
+
+        this.tierOptionSelections = [
+          [ ...tier1OptionSelections ],
+          [ ...tier2OptionSelections ],
+          [ ...tier3OptionSelections ],
+        ],
 
         this.existingChoices = [
           [ ...existingTier1Choices ],
