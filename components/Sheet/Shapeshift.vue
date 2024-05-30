@@ -67,6 +67,7 @@
 </template>
 
 <script>
+  import GENERAL from '~/data/general';
   import CLASSES from '~/data/classes';
 
   import { ucFirst } from '~/helpers/string';
@@ -85,7 +86,7 @@
         traits: ['agility', 'strength', 'finesse', 'instinct', 'presence', 'knowledge'],
         selectedForm: null,
         currentArmor: this.character.armor.current,
-        maxArmor: 9,
+        maxArmor: GENERAL.maxArmorSlots,
         settingsLoaded: false,
       }
     },

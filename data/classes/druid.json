@@ -43,7 +43,7 @@
     },
     {
       "name": "Beastform",
-      "description": "Mark a Stress to transform into a magical creature (in the Beastform list) equal to your level or lower. You lose the use of your features, equipment, and domain cards but gain the features, attack trait, and armor score of the creature. You can drop out of this form at any time."
+      "description": "Mark a Stress to transform into a magical creature of your level or lower from the Beastform list. While transformed, you can't use your equipment or cast any spells, but you gain the features, attack trait, and armor score of the creature. You can drop out of this form at any time. When you do, your used armor slots remain marked.\n\nIf you mark your last Hit Point or Stress Point, this form automatically drops."
     }
   ],
   "alternateForms": [

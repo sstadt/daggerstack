@@ -5,7 +5,7 @@
       v-model="currentValue"
       :value="option.value"
       :label="option.label"
-      :disabled="currentValue.length >= maxSelections && !currentValue.includes(option.value)"
+      :disabled="isDisabled(option)"
     )
 </template>
 
@@ -35,6 +35,10 @@
         type: Number,
         default: 1,
       },
+      disabled: {
+        type: Array,
+        default: () => [],
+      },
     },
     data() {
       return {
@@ -44,6 +48,14 @@
     computed: {
       maxSelections() {
         return this.max ? this.max : this.options.length;
+      },
+    },
+    methods: {
+      isDisabled(option) {
+        if (this.currentValue.includes(option.value)) return false;
+
+        return this.disabled.includes(option.value) ||
+          this.currentValue.length >= this.maxSelections;
       },
     },
     watch: {

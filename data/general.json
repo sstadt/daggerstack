@@ -32,5 +32,6 @@
   "maxArmorSlots": 12,
   "companionMaxStress": 6,
   "maxShortRestOptions": 2,
-  "maxLongRestOptions": 2
+  "maxLongRestOptions": 2,
+  "traits": ["agility", "strength", "finesse", "instinct", "presence", "knowledge"]
 }

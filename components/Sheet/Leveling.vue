@@ -70,6 +70,7 @@
                               :cols="upgrade.increase.trait ? 2 : 1"
                               :max="upgrade.quantity"
                               :options="tierOptions[tier - 1][index]"
+                              :disabled="upgrade.increase.trait ? selectedTraits : []"
                             )
                             InputSelect(
                               v-else
@@ -94,6 +95,7 @@
   import { getOptionsByUpgrade, newUpgrade } from '~/helpers/character';
   import { useCharactersStore } from '~/stores/characters';
 
+  import GENERAL from '~/data/general';
   import CLASSES from '~/data/classes';
 
   export default {
@@ -155,6 +157,29 @@
           2: this.newLevel > 4,
           3: this.newLevel > 7,
         }
+      },
+      selectedTraits() {
+        const chosenTraits = [];
+        const traitOptionIndex = 0; // traits are always the first option in each tier
+
+        // check character upgrades first
+        for (let i = 0, j = GENERAL.traits.length; i < j; i++) {
+          if (this.character[GENERAL.traits[i]].upgraded === true) {
+            chosenTraits.push(GENERAL.traits[i]);
+          }
+        }
+
+        // TODO: reconcile this with existing choices;
+        //       we will need to start i after any pre-existing choiced
+        for (let tier = 0; tier < 3; tier++) {
+          for (let i = 0, j = this.tierChoices[tier][traitOptionIndex]; i < j; i++) {
+            this.tierOptionSelections[tier][traitOptionIndex][i].forEach((selection) => {
+              chosenTraits.push(selection);
+            });
+          }
+        }
+
+        return chosenTraits;
       },
       choicesMade() {
         const complexUpgrades = ['trait', 'experience'];
