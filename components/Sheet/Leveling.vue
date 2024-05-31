@@ -123,7 +123,7 @@
         newLevel,
         reachedNewTier,
         levelingData,
-        loaded: true, // TODO: set to false initially
+        loaded: false, // TODO: set to false initially
         introDuration: 5200,
         swiper: null,
         newExperience: '',
@@ -163,9 +163,11 @@
         const traitOptionIndex = 0; // traits are always the first option in each tier
 
         // check character upgrades first
-        for (let i = 0, j = GENERAL.traits.length; i < j; i++) {
-          if (this.character[GENERAL.traits[i]].upgraded === true) {
-            chosenTraits.push(GENERAL.traits[i]);
+        if (!this.reachedNewTier) {
+          for (let i = 0, j = GENERAL.traits.length; i < j; i++) {
+            if (this.character[GENERAL.traits[i]].upgraded === true) {
+              chosenTraits.push(GENERAL.traits[i]);
+            }
           }
         }
 
