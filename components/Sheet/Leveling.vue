@@ -13,10 +13,7 @@
         .pt-6.mt-auto
           BasicButton.w-full(:disabled="newExperience === ''" @click="saveNewTierOptions") Next
       //- tier options
-      .flex.flex-col.p-6.overflow-hidden.flex-grow(
-        v-else-if="showTierOptions"
-        @submit="saveTierOptions"
-      )
+      .flex.flex-col.p-6.overflow-hidden.flex-grow(v-else-if="showTierOptions")
         .flex.justify-center.items-center.space-x-4.shrink-0
           button.flex.text-xl(
             :disabled="currentTab === 0"
@@ -78,7 +75,28 @@
                               :options="tierOptions[tier - 1][index]"
                             )
         .pt-6.mt-auto.shrink-0
-          BasicButton.w-full(:disabled="choicesMade.length < 2" @click="saveTierOptions") Next
+          BasicButton.w-full(
+            :disabled="choicesMade.length < 2"
+            @click="saveTierOptions"
+          ) Next
+      //- confirm level
+      .flex.flex-col.p-6.overflow-hidden.flex-grow(
+        v-else-if="acceptTierChoices"
+        @submit="saveLevelUp"
+      )
+        h3.text-xl.font-bold.uppercase New Tier Upgrades
+        .divide-y
+          template(v-if="reachedNewTier")
+            p.text-xl.py-4 Proficiency increases by +1
+            p.text-xl.py-4 New Experience: {{ addExperience.name }} +{{ addExperience.score }}
+        h3.text-xl.font-bold.uppercase.mt-6 Upgrade Choices
+        .divide-y
+          p.text-xl.py-4(v-for="choice in choicesMade") {{ getChoiceLabel(choice) }}
+        h3.text-xl.font-bold.uppercase.mt-6 Additional Tier Upgrades
+        .divide-y
+          p.text-xl.py-4(v-for="upgrade in levelingData[`${currentTier}`].always") {{ upgrade.description }}
+        .pt-6.mt-auto.shrink-0
+          BasicButton.w-full(@click="saveTierOptions") Level Up
       //- fanfare
       .absolute.transform(
         v-else
@@ -132,6 +150,7 @@
         tierChoices: [],
         tierOptions: [],
         tierOptionSelections: [],
+        acceptTierChoices: false,
       };
     },
     computed: {
@@ -142,7 +161,10 @@
         return this.awaitingNewTierSelection && this.loaded;
       },
       showTierOptions() {
-        return !this.awaitingNewTierSelection && this.loaded;
+        return !this.awaitingNewTierSelection && !this.acceptTierChoices && this.loaded;
+      },
+      showConfirmLevel() {
+        return this.acceptTierChoices && this.loaded;
       },
       choicesRemaining() {
         const selectedChoices = this.tierChoices.reduce((acc, current) => {
@@ -150,6 +172,11 @@
         }, 0);
 
         return Math.max(0, 2 - selectedChoices);
+      },
+      currentTier() {
+        if (this.newLevel < 5) return 'tier1';
+        if (this.newLevel < 8) return 'tier2';
+        return 'tier3';
       },
       tierEnabled() {
         return {
@@ -172,7 +199,7 @@
         }
 
         // TODO: reconcile this with existing choices;
-        //       we will need to start i after any pre-existing choiced
+        //       we will need to start i after any pre-existing choices
         for (let tier = 0; tier < 3; tier++) {
           for (let i = 0, j = this.tierChoices[tier][traitOptionIndex]; i < j; i++) {
             this.tierOptionSelections[tier][traitOptionIndex][i].forEach((selection) => {
@@ -394,8 +421,69 @@
           [ ...existingTier3Choices ],
         ];
       },
+      getChoiceLabel(choice) {
+        // const tier = `tier${choice.id.match(/\d+/)[0]}`;
+
+        switch (choice.type) {
+          // trait
+          case 'trait':
+            return `Increase ${choice.options.join(' and ')} by ${choice.value}`;
+
+          // health
+          case 'healthSlot':
+            return `Your Hit Points increase by +${choice.value}`;
+
+          // stress
+          case 'stressSlot':
+            return `Your Stress increases by +${choice.value}`;
+
+          // experience
+          case 'experience':
+            let expArr = [];
+
+            choice.options.forEach((expId) => {
+              if (expId === this.addExperience.id) {
+                expArr.push(this.addExperience.name);
+              } else {
+                let existingExp = this.character.experience.find((xp) => xp.id === expId);
+                expArr.push(existingExp.name);
+              }
+            });
+
+            return `Your ${expArr.join(' and ')} experiences increase by +1`;
+
+          // armor
+          case 'armorSlot':
+            return `Your Armor Slots increase by +${choice.value}`;
+
+          // evasion
+          case 'evasion':
+            return `Your Evasion increases by +${choice.value}`;
+
+          // minor threshold
+          case 'minorDamageThreshold':
+            return `Your Minor Damage Threshold increases by +${choice.value}`;
+
+          // major threshold
+          case 'majorDamageThreshold':
+            return `Your Major Damage Threshold increases by +${choice.value}`;
+
+          // severe threshold
+          case 'severeDamageThreshold':
+            return `Your Severe Damage Threshold increases by +${choice.value}`;
+
+          // subclass TODO
+          // multiclass TODO
+
+          default:
+            return choice;
+        }
+      },
       saveTierOptions() {
-        console.log('>>> saveTierOptions');
+        this.acceptTierChoices = true;
+      },
+      saveLevelUp() {
+        console.log('>>> saveLevelUp');
       },
     },
   };
