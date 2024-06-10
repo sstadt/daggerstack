@@ -3,11 +3,13 @@
     transition(name="fade" mode="out-in")
       //- new tier selections
       .flex.flex-col.p-6.flex-grow(v-if="showNewTierOptions")
-        .space-y-4
-          p.text-xl.font-bold Proficiency increases by +1
+        .space-y-6
           .space-y-2
-            p.text-xl.font-bold Gain a New Experience
-            .flex.items-center.space-x-4
+            h3.text-xl.font-bold.uppercase New Tier Upgrades
+            p.text-xl.py-4 Your proficiency increases by +1
+          .space-y-2
+            h3.text-xl.font-bold.uppercase Gain a New Experience
+            .flex.items-center.space-x-4.py-4
               p.text-2xl.font-bold +1
               InputText.flex-grow(v-model="newExperience")
         .pt-6.mt-auto
@@ -46,7 +48,7 @@
                       InputCheckboxCounter(
                         v-model="tierChoices[tier - 1][index]"
                         :max="upgrade.max"
-                        :enabled="choicesAvailable(tier, index, upgrade)"
+                        :enabled="getChoicesAvailable(tier, index, upgrade)"
                         :increment="upgrade.increase.multiclass ? 2 : 1"
                       )
                     .flex-grow.space-y-2
@@ -96,7 +98,7 @@
         .divide-y
           p.text-xl.py-4(v-for="upgrade in levelingData[`${currentTier}`].always") {{ upgrade.description }}
         .pt-6.mt-auto.shrink-0
-          BasicButton.w-full(@click="saveTierOptions") Level Up
+          BasicButton.w-full(@click="saveLevelUp") Level Up
       //- fanfare
       .absolute.transform(
         v-else
@@ -303,11 +305,7 @@
       refreshSwiper() {
         this.swiper.updateAutoHeight(300);
       },
-      saveNewTierOptions() {
-        this.addExperience = { id: uuidv4(), score: 1, name: this.newExperience };
-        this.$nextTick(() => this.generateChoicesData());
-      },
-      choicesAvailable(tier, index, upgrade) {
+      getChoicesAvailable(tier, index, upgrade) {
         // TODO: use upgrade data to restrict based on multiclass/subclass selections
 
         return this.tierEnabled[tier]
@@ -422,8 +420,6 @@
         ];
       },
       getChoiceLabel(choice) {
-        // const tier = `tier${choice.id.match(/\d+/)[0]}`;
-
         switch (choice.type) {
           // trait
           case 'trait':
@@ -479,11 +475,47 @@
             return choice;
         }
       },
+      saveNewTierOptions() {
+        this.addExperience = { id: uuidv4(), score: 1, name: this.newExperience };
+        this.$nextTick(() => this.generateChoicesData());
+      },
       saveTierOptions() {
         this.acceptTierChoices = true;
       },
       saveLevelUp() {
-        console.log('>>> saveLevelUp');
+        // if new tier reached, clear previous trait selections
+        if (this.reachedNewTier) {
+          this.character.agility.upgraded = false;
+          this.character.strength.upgraded = false;
+          this.character.finesse.upgraded = false;
+          this.character.instinct.upgraded = false;
+          this.character.presence.upgraded = false;
+          this.character.knowledge.upgraded = false;
+        }
+
+        // new tier experience
+        if (this.addExperience) {
+          this.character.experience.push({ ...this.addExperience });
+        }
+
+        // tier choices
+        this.choicesMade.forEach((choice) => {
+          this.character.levelSelections.push({ ...choice });
+
+          // disable trait selections until next tier
+          if (choice.type === 'trait') {
+            for (let i = 0, j = choice.options.length; i < j; i++) {
+              this.character[choice.options[i]].upgraded = true;
+            }
+          }
+        });
+
+        // set new level
+        this.character.level = this.newLevel;
+
+        // save character
+        this.charactersStore.saveCharacter(this.character);
+        this.$emit('level-saved');
       },
     },
   };

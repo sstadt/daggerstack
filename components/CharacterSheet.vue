@@ -30,7 +30,7 @@
       .space-y-8.pb-4.py-8(v-else-if="currentTab === 'companion'")
         SheetCompanion(:character="character" :key="`${key}-companion`")
     BasicModal(ref="levelUpModal" :title="`Welcome to Level ${character.level + 1}!`")
-      SheetLeveling(:character="character")
+      SheetLeveling(:character="character" @level-saved="levelSaved")
 </template>
 
 <script>
@@ -109,7 +109,9 @@
       levelUp() {
         this.$refs.levelUpModal.open();
       },
+      levelSaved() {
+        this.$refs.levelUpModal.close();
+      },
     },
   };
 </script>
-
