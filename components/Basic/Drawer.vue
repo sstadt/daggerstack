@@ -47,3 +47,9 @@
     },
   };
 </script>
+
+<style lang="scss" scoped>
+  .drawer__content {
+    max-width: 360px;
+  }
+</style>

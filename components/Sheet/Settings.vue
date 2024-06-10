@@ -1,6 +1,12 @@
 <template lang="pug">
   BasicCard
-    .flex.flex-col.items-center.space-y-4
+    .space-y-4(v-if="settingsLoaded")
+      h3.text-xl.font-bold.uppercase Leveling
+      .space-y-2
+        InputToggle(
+          v-model="levelingFanfare"
+          label="Enable Fanfare"
+        )
       //- h3.text-xl.text-center.font-black.uppercase Character Export
       //- BasicButton(size="sm") Copy Link
       //- QRCodeVue3(v-if="importUrl" :value="importUrl")
@@ -20,15 +26,26 @@
         required: true,
       },
     },
-    // data() {
-    //   return {
-    //     encodedCharacter: null,
-    //     importUrl: null,
-    //   };
-    // },
-    // mounted() {
-    //   this.encodeCharacter();
-    // },
+    data() {
+      return {
+        settingsLoaded: false,
+        levelingFanfare: true,
+        // encodedCharacter: null,
+        // importUrl: null,
+      };
+    },
+    setup() {
+      const sheetStore = useSheetStore();
+
+      return { sheetStore };
+    },
+    mounted() {
+      // this.encodeCharacter();
+
+      this.levelingFanfare = this.sheetStore.settings.levelingFanfare;
+
+      this.settingsLoaded = true;
+    },
     // methods: {
     //   async encodeCharacter() {
     //     const stream = new Blob([JSON.stringify(this.character)], {
@@ -44,5 +61,14 @@
     //     this.importUrl = `http://localhost:3000/import?data=${compressedBase64}`;
     //   },
     // },
+    watch: {
+      levelingFanfare(newVal) {
+        if (newVal === true || newVal === false) {
+          this.sheetStore.saveSetting({
+            levelingFanfare: this.levelingFanfare,
+          });
+        }
+      },
+    },
   };
 </script>

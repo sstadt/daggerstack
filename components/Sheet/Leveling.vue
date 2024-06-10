@@ -18,19 +18,19 @@
       .flex.flex-col.p-6.overflow-hidden.flex-grow(v-else-if="showTierOptions")
         .flex.justify-center.items-center.space-x-4.shrink-0
           button.flex.text-xl(
-            :disabled="currentTab === 0"
-            :class="{ 'opacity-30': currentTab === 0 }"
+            :disabled="currentTierTab === 0"
+            :class="{ 'opacity-30': currentTierTab === 0 }"
             @click="prev"
           )
-            span.sr-only Tier {{ Math.max(currentTab, 1) }}
+            span.sr-only Tier {{ Math.max(currentTierTab, 1) }}
             NuxtIcon(name="chevron-left")
-          h3.text-xl.font-bold.uppercase Tier {{ currentTab + 1 }}
+          h3.text-xl.font-bold.uppercase Tier {{ currentTierTab + 1 }}
           button.flex.text-xl(
-            :disabled="currentTab >= 2"
-            :class="{ 'opacity-30': currentTab >= 2 }"
+            :disabled="currentTierTab >= 2"
+            :class="{ 'opacity-30': currentTierTab >= 2 }"
             @click="next"
           )
-            span.sr-only Tier {{ Math.min(currentTab + 2, 3) }}
+            span.sr-only Tier {{ Math.min(currentTierTab + 2, 3) }}
             NuxtIcon(name="chevron-right")
         .shrink-0(v-if="tierChoices.length > 0")
           Swiper.tier-carousel(
@@ -113,7 +113,6 @@
 
   import { uuidv4 } from '~/helpers/utility';
   import { getOptionsByUpgrade, newUpgrade } from '~/helpers/character';
-  import { useCharactersStore } from '~/stores/characters';
 
   import GENERAL from '~/data/general';
   import CLASSES from '~/data/classes';
@@ -127,21 +126,11 @@
       },
     },
     data() {
-      const newLevel = this.character.level + 1;
-      const reachedNewTier = [2, 5, 8].includes(newLevel);
       const { tier1, tier2, tier3 } = CLASSES[this.character.baseClass];
       const levelingData = { tier1, tier2, tier3 };
 
-      // current tab
-      let currentTab = 0;
-      if (newLevel > 4) {
-        currentTab = newLevel > 7 ? 2 : 1;
-      }
-
       return {
-        currentTab,
-        newLevel,
-        reachedNewTier,
+        currentTierTab: 0,
         levelingData,
         loaded: false, // TODO: set to false initially
         introDuration: 5200,
@@ -156,14 +145,20 @@
       };
     },
     computed: {
+      newLevel() {
+        return this.character.level + 1;
+      },
+      reachedNewTier() {
+        return [2, 5, 8].includes(this.newLevel);
+      },
       awaitingNewTierSelection() {
         return this.addExperience === null;
       },
       showNewTierOptions() {
-        return this.awaitingNewTierSelection && this.loaded;
+        return this.reachedNewTier && this.awaitingNewTierSelection && this.loaded;
       },
       showTierOptions() {
-        return !this.awaitingNewTierSelection && !this.acceptTierChoices && this.loaded;
+        return !this.showNewTierOptions && !this.acceptTierChoices && this.loaded;
       },
       showConfirmLevel() {
         return this.acceptTierChoices && this.loaded;
@@ -270,19 +265,32 @@
     },
     setup() {
       const charactersStore = useCharactersStore();
+      const sheetStore = useSheetStore();
 
-      return { charactersStore };
+      return { charactersStore, sheetStore };
     },
     mounted() {
-      confetti({
-        particleCount: 200,
-        angle: 90,
-        spread: 90,
-      });
+      // if this is a new tier, allow the addition of a new experience
+      if (this.newLevel > 7) {
+        this.currentTierTab = 2;
+      } else if (this.newLevel > 4) {
+        this.currentTierTab = 1;
+      }
 
-      setTimeout(() => {
+      // fanfare
+      if (this.sheetStore.settings.levelingFanfare) {
+        confetti({
+          particleCount: 200,
+          angle: 90,
+          spread: 90,
+        });
+
+        setTimeout(() => {
+          this.loaded = true;
+        }, this.introDuration);
+      } else {
         this.loaded = true;
-      }, this.introDuration);
+      }
 
       // NOTE: If we generate this before adding a new experience,
       //       player will be unable to increase that experience
@@ -291,16 +299,16 @@
     },
     methods: {
       next() {
-        this.swiper.slideTo(Math.min(this.currentTab + 1, 2));
+        this.swiper.slideTo(Math.min(this.currentTierTab + 1, 2));
       },
       prev() {
-        this.swiper.slideTo(Math.max(this.currentTab - 1, 0));
+        this.swiper.slideTo(Math.max(this.currentTierTab - 1, 0));
       },
       onSwiper(swiper) {
         this.swiper = swiper;
       },
       onSlideChange(swiper) {
-        this.currentTab = swiper.activeIndex;
+        this.currentTierTab = swiper.activeIndex;
       },
       refreshSwiper() {
         this.swiper.updateAutoHeight(300);
