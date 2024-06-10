@@ -1,7 +1,7 @@
 <template lang="pug">
   BasicCard(title="Experience")
     .flex.space-x-2.justify-between.text-xl.py-4.border-b(
-      v-for="experience in character.experience"
+      v-for="experience in experiences"
     )
       p {{ experience.name }}
       p +{{ experience.score }}
@@ -36,6 +36,24 @@
       const charactersStore = useCharactersStore();
 
       return { charactersStore };
+    },
+    computed: {
+      experiences() {
+        return this.character.experience.map((exp) => {
+          const experience = { ...exp };
+          const bonus = this.character.levelSelections
+            .filter((selection) => {
+              return selection.type === 'experience' && selection.options.includes(experience.id);
+            })
+            .reduce((acc, curr) => {
+              return acc + curr.value;
+            }, 0);
+
+          experience.score = experience.score + bonus;
+
+          return experience;
+        });
+      },
     },
     watch: {
       hope(newVal, oldVal) {

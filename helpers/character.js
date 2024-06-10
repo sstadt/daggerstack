@@ -348,6 +348,19 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
     });
   }
 
+  // tier selections
+  character.levelSelections.forEach((selection) => {
+    if (selection.type === attribute || selection.options.includes(attribute)) {
+      const feature = {
+        name: `Level ${selection.level}`,
+        modify: {},
+      };
+
+      feature.modify[attribute] = selection.value;
+      features.push(feature);
+    }
+  });
+
   return features;
 };
 

@@ -44,7 +44,11 @@
 
 <script>
   import { useCharactersStore } from '~/stores/characters';
-  import { newWeapon } from '~/helpers/character';
+  import {
+    newWeapon,
+    calculateModifiers,
+    getFeaturesByAttribute,
+  } from '~/helpers/character';
 
   import {
     PRIMARY_WEAPON_TYPE,
@@ -77,8 +81,14 @@
       return { charactersStore };
     },
     computed: {
+      baseProficiency() {
+        // base of 1 proficiency + 1 for each tier
+        return Math.floor((this.character.level + 1) / 3) + 1;
+      },
       proficiency() {
-        return this.character.proficiency;
+        const modifiers = getFeaturesByAttribute(this.character, 'proficiency');
+
+        return this.baseProficiency + calculateModifiers(modifiers, 'proficiency');
       },
       isPrimaryTwoHanded() {
         return this.character.equipment.primaryWeapon.burden > 1;

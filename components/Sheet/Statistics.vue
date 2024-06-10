@@ -24,42 +24,42 @@
         title="agility"
         :score="characterAgility"
         helper-text="Sprint, Leap, Maneuver"
-        :upgradeable="!character.agility.upgraded"
+        :upgraded="character.agility.upgraded"
         modifier
       )
       TraitDisplay(
         title="strength"
         :score="characterStrength"
         helper-text="Lift, Smash, Grapple"
-        :upgradeable="!character.strength.upgraded"
+        :upgraded="character.strength.upgraded"
         modifier
       )
       TraitDisplay(
         title="finesse"
         :score="characterFinesse"
         helper-text="Control, Hide, Tinker"
-        :upgradeable="!character.finesse.upgraded"
+        :upgraded="character.finesse.upgraded"
         modifier
       )
       TraitDisplay(
         title="instinct"
         :score="characterInstinct"
         helper-text="Perceive, Sense, Navigate"
-        :upgradeable="!character.instinct.upgraded"
+        :upgraded="character.instinct.upgraded"
         modifier
       )
       TraitDisplay(
         title="presence"
         :score="characterPresence"
         helper-text="Charm, Perform, Deceive"
-        :upgradeable="!character.presence.upgraded"
+        :upgraded="character.presence.upgraded"
         modifier
       )
       TraitDisplay(
         title="knowledge"
         :score="characterKnowledge"
         helper-text="Recall, Analyze, Comprehend"
-        :upgradeable="!character.knowledge.upgraded"
+        :upgraded="character.knowledge.upgraded"
         modifier
       )
 </template>

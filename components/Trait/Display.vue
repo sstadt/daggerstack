@@ -25,6 +25,10 @@
         type: Boolean,
         default: false,
       },
+      upgraded: {
+        type: Boolean,
+        default: false,
+      },
       helperText: {
         type: String,
         default: null,
