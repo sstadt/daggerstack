@@ -11,18 +11,10 @@
     .space-y-6
       .hit-points
         h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0 HP
-        InputCheckboxCounter(
-          v-model="currentHealth"
-          :max="maxHealth"
-          :enabled="character.health.slots"
-        )
+        InputCheckboxCounter(v-model="currentHealth" :max="maxHealth" :enabled="healthSlots")
       .stress
         h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0 stress
-        InputCheckboxCounter(
-          v-model="currentStress"
-          :max="maxStress"
-          :enabled="character.stress.slots"
-        )
+        InputCheckboxCounter(v-model="currentStress" :max="maxStress" :enabled="stressSlots")
 </template>
 
 <script>
@@ -143,6 +135,18 @@
           { name: 'major', score: this.majorThreshold },
           { name: 'severe', score: this.severeThreshold },
         ];
+      },
+      healthSlots() {
+        const base = this.character.health.slots;
+        const modifiers = getFeaturesByAttribute(this.character, 'healthSlot');
+
+        return base + calculateModifiers(modifiers, 'healthSlot');
+      },
+      stressSlots() {
+        const base = this.character.health.slots;
+        const modifiers = getFeaturesByAttribute(this.character, 'stressSlot');
+
+        return base + calculateModifiers(modifiers, 'stressSlot');
       },
     },
     watch: {

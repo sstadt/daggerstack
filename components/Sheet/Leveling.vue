@@ -47,6 +47,7 @@
                     .option-checkboxes.pt-1.flex.justify-end.items-start.flex-shrink-0
                       InputCheckboxCounter(
                         v-model="tierChoices[tier - 1][index]"
+                        :min="existingChoices[tier - 1][index]"
                         :max="upgrade.max"
                         :enabled="getChoicesAvailable(tier, index, upgrade)"
                         :increment="upgrade.increase.multiclass ? 2 : 1"
@@ -61,7 +62,7 @@
                         )
                           div(
                             :key="n"
-                            v-if="Array.isArray(tierOptions[tier - 1][index]) && tierChoices[tier - 1][index] >= n"
+                            v-if="n > existingChoices[tier - 1][index] && Array.isArray(tierOptions[tier - 1][index]) && tierChoices[tier - 1][index] >= n"
                           )
                             InputChecklist(
                               v-if="upgrade.quantity && upgrade.quantity > 1"
@@ -86,11 +87,10 @@
         v-else-if="acceptTierChoices"
         @submit="saveLevelUp"
       )
-        h3.text-xl.font-bold.uppercase New Tier Upgrades
-        .divide-y
-          template(v-if="reachedNewTier")
-            p.text-xl.py-4 Proficiency increases by +1
-            p.text-xl.py-4 New Experience: {{ addExperience.name }} +{{ addExperience.score }}
+        h3.text-xl.font-bold.uppercase(v-if="reachedNewTier") New Tier Upgrades
+        .divide-y(v-if="reachedNewTier")
+          p.text-xl.py-4 Proficiency increases by +1
+          p.text-xl.py-4 New Experience: {{ addExperience.name }} +{{ addExperience.score }}
         h3.text-xl.font-bold.uppercase.mt-6 Upgrade Choices
         .divide-y
           p.text-xl.py-4(v-for="choice in choicesMade") {{ getChoiceLabel(choice) }}
@@ -117,6 +117,8 @@
   import GENERAL from '~/data/general';
   import CLASSES from '~/data/classes';
 
+  const CHOICES_PER_LEVEL = 2;
+
   export default {
     name: 'SheetLeveling',
     props: {
@@ -137,10 +139,10 @@
         swiper: null,
         newExperience: '',
         addExperience: null,
-        existingChoices: [],
-        tierChoices: [],
-        tierOptions: [],
-        tierOptionSelections: [],
+        existingChoices: [], // selections from previous levels
+        tierChoices: [], // selections from current level up
+        tierOptions: [], // upgrade line items
+        tierOptionSelections: [], // options for line items (specific traits or choices on the same line)
         acceptTierChoices: false,
       };
     },
@@ -164,11 +166,12 @@
         return this.acceptTierChoices && this.loaded;
       },
       choicesRemaining() {
+        const totalChoices = this.character.level * CHOICES_PER_LEVEL;
         const selectedChoices = this.tierChoices.reduce((acc, current) => {
           return acc + current.reduce((p, c) => (p + c));
         }, 0);
 
-        return Math.max(0, 2 - selectedChoices);
+        return Math.max(0, totalChoices - selectedChoices);
       },
       currentTier() {
         if (this.newLevel < 5) return 'tier1';
@@ -195,8 +198,7 @@
           }
         }
 
-        // TODO: reconcile this with existing choices;
-        //       we will need to start i after any pre-existing choices
+        // check existing trait choices
         for (let tier = 0; tier < 3; tier++) {
           for (let i = 0, j = this.tierChoices[tier][traitOptionIndex]; i < j; i++) {
             this.tierOptionSelections[tier][traitOptionIndex][i].forEach((selection) => {
@@ -211,19 +213,22 @@
         const complexUpgrades = ['trait', 'experience'];
         const selections = [];
 
+        // iterate over all tiers
         this.tierChoices.forEach((tierChoices, tierIndex) => {
           const tier = tierIndex + 1;
 
+          // iterate over each choice in the tier
           tierChoices.forEach((choice, choiceIndex) => {
-            if (choice > 0) {
+            // do nothing if there are no options, or if the only choices are from previous levels
+            if (choice > this.existingChoices[tierIndex][choiceIndex]) {
               // user has selected this option, gather the data and push to selections[]
               const upgrade = this.levelingData[`tier${tier}`].upgrades[choiceIndex];
               const upgradeOptions = Object.keys(upgrade.increase);
               const [ firstOption ] = upgradeOptions;
 
               // check each choice made for this tier
-              // TODO: this will have to take into account choices made from previous levels
-              for (let i = 0; i < choice; i++) {
+              // skip existing choices
+              for (let i = this.existingChoices[tierIndex][choiceIndex]; i < choice; i++) {
                 // TODO: handle multiclass and subclass options separately
                 // complex upgrades
                 if (complexUpgrades.includes(firstOption)) {
@@ -339,11 +344,13 @@
 
         this.levelingData.tier1.upgrades
           .forEach((upgrade) => {
+            const numExisting = this.character.levelSelections
+              .filter((s) => s.id === upgrade.id).length;
             const options = getOptionsByUpgrade(upgrade, this.character);
             const [ firstOption ] = options;
             const optionSelections = Array.from(Array(upgrade.max)).map(() => {
               return upgrade.quantity && upgrade.quantity > 1 ? [] : firstOption.value;
-            }); // TODO: reconcole with existing choices
+            });
 
             // add the new experience to selection options, if applicable
             if (upgrade.increase.experience && this.addExperience) {
@@ -353,10 +360,10 @@
               });
             }
 
-            tier1Choices.push(0); // TODO: reconcile with existing choices
+            tier1Choices.push(numExisting);
             tier1Options.push(options);
             tier1OptionSelections.push(optionSelections);
-            existingTier1Choices.push(0); // TODO: reconcile with existing choices
+            existingTier1Choices.push(numExisting);
           });
 
         this.levelingData.tier2.upgrades
@@ -365,7 +372,7 @@
             const [ firstOption ] = options;
             const optionSelections = Array.from(Array(upgrade.max)).map(() => {
               return upgrade.quantity && upgrade.quantity > 1 ? [] : firstOption.value;
-            }); // TODO: reconcole with existing choices
+            }); // TODO: reconcile with existing choices
 
             // add the new experience to selection options, if applicable
             if (upgrade.increase.experience && this.addExperience) {
