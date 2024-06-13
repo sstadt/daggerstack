@@ -368,11 +368,13 @@
 
         this.levelingData.tier2.upgrades
           .forEach((upgrade) => {
+            const numExisting = this.character.levelSelections
+              .filter((s) => s.id === upgrade.id).length;
             const options = getOptionsByUpgrade(upgrade, this.character);
             const [ firstOption ] = options;
             const optionSelections = Array.from(Array(upgrade.max)).map(() => {
               return upgrade.quantity && upgrade.quantity > 1 ? [] : firstOption.value;
-            }); // TODO: reconcile with existing choices
+            });
 
             // add the new experience to selection options, if applicable
             if (upgrade.increase.experience && this.addExperience) {
@@ -382,19 +384,21 @@
               });
             }
 
-            tier2Choices.push(0); // TODO: reconcile with existing choices
+            tier2Choices.push(numExisting);
             tier2Options.push(options);
             tier2OptionSelections.push(optionSelections);
-            existingTier2Choices.push(0); // TODO: reconcile with existing choices
+            existingTier2Choices.push(numExisting);
           });
 
         this.levelingData.tier3.upgrades
           .forEach((upgrade) => {
+            const numExisting = this.character.levelSelections
+              .filter((s) => s.id === upgrade.id).length;
             const options = getOptionsByUpgrade(upgrade, this.character);
             const [ firstOption ] = options;
             const optionSelections = Array.from(Array(upgrade.max)).map(() => {
               return upgrade.quantity && upgrade.quantity > 1 ? [] : firstOption.value;
-            }); // TODO: reconcole with existing choices
+            });
 
             // add the new experience to selection options, if applicable
             if (upgrade.increase.experience && this.addExperience) {
@@ -404,10 +408,10 @@
               });
             }
 
-            tier3Choices.push(0); // TODO: reconcile with existing choices
+            tier3Choices.push(numExisting);
             tier3Options.push(options);
             tier3OptionSelections.push(optionSelections);
-            existingTier3Choices.push(0); // TODO: reconcile with existing choices
+            existingTier3Choices.push(numExisting);
           });
 
         this.tierChoices = [
