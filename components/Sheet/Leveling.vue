@@ -101,14 +101,18 @@
                               :disabled="domainOptions.length < 1"
                               required
                             )
+                            .space-y-2
+                              div(v-for="feature in multiclassFeatures")
+                                h3.font-bold.mb-px {{ feature.name }}
+                                BasicMarkdown.text-sm(
+                                  :source="feature.description"
+                                  :space="1"
+                                )
                           //- Subclass options
                           div(v-else-if="upgrade.increase.subclass && tierChoices[tier - 1][index] > 0")
                             p subclass
         .pt-6.mt-auto.shrink-0
-          BasicButton.w-full(
-            :disabled="choicesMade.length < 2"
-            @click="saveTierOptions"
-          ) Next
+          BasicButton.w-full(:disabled="!tierSelectionsFull" @click="saveTierOptions") Next
       //- confirm level
       .flex.flex-col.p-6.overflow-hidden.flex-grow(
         v-else-if="acceptTierChoices"
@@ -169,7 +173,7 @@
       return {
         currentTierTab: 0,
         levelingData,
-        loaded: false, // TODO: set to false initially
+        loaded: false,
         introDuration: 5200,
         swiper: null,
         newExperience: '',
@@ -194,6 +198,9 @@
         classes.splice(baseClassIndex, 1)
 
         return createSelectOptions(classes);
+      },
+      multiclassFeatures() {
+        return [ ...CLASSES[this.selectedMulticlass].classFeatures ];
       },
       domainOptions() {
         const domains = [ ...CLASSES[this.selectedMulticlass].domains ]
@@ -228,6 +235,12 @@
       },
       showTierOptions() {
         return !this.showNewTierOptions && !this.acceptTierChoices && this.loaded;
+      },
+      tierSelectionsFull() {
+        return Boolean(
+          this.choicesMade.length === 2 ||
+          this.choicesMade.find((choice) => choice.type === 'multiclass')
+        );
       },
       showConfirmLevel() {
         return this.acceptTierChoices && this.loaded;

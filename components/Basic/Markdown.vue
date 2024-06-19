@@ -1,5 +1,8 @@
 <template lang="pug">
-  .md(v-html="markdown.render(source)")
+  .md(
+    v-html="markdown.render(source)"
+    :class="`space-y-${space}`"
+  )
 </template>
 
 <script>
@@ -13,6 +16,10 @@
         type: String,
         required: true,
       },
+      space: {
+        type: [String, Number],
+        default: 2,
+      },
     },
     setup() {
       const markdown = new MarkdownIt().use(MarkdownItAttrs);
@@ -21,9 +28,3 @@
     },
   };
 </script>
-
-<style lang="scss" scoped>
-  .md :deep(> *:not(:first-child)) {
-    margin-top: 10px;
-  }
-</style>

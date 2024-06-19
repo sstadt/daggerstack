@@ -33,7 +33,7 @@
   "classFeatures": [
     {
       "name": "Ranger's Focus",
-      "description": "Spend Hope and make an attack with your weapon. On a success, you temporarily put your Ranger's Focus on the target along with doing damage from the attack. While they are your focus:\n\n- You know precisely what direction they are in.\n\n- All damage rolls you make against them add +1d6.\n\n- On a missed attack you make against them, you may end Ranger's Focus to reroll your Duality Dice and take the new result.\n\nYou may only hold Ranger's Focus on one creature at a time."
+      "description": "Spend Hope and make an attack with your weapon. On a success, you temporarily put your Ranger's Focus on the target along with doing damage from the attack. While they are your focus:\n\n- You know precisely what direction they are in.\n\n- All damage rolls you make against them add +1d6.\n\n- When you miss them with an attack, you can end Ranger's Focus to reroll your Duality dice and take the new result.\n\nOnly one creature can be your Focus at a time."
     }
   ],
   "backgroundQuestions": [

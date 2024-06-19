@@ -38,8 +38,8 @@
   },
   "classFeatures": [
     {
-      "name": "Unstoppable",
-      "description": "At the beginning of a session, place a **d6** on the spot to the right with the lowest value side (1) facing up. When anyone in your party rolls with Fear, increase the Rally die's value by one.\n\nWhen you would increase the value above 6, remove the die, describe how you rally the party, and give every character who listens a **1d6** Rally die. They can spend this die to roll it and add the result to any action roll, reaction roll, or damage roll.\n\nIf your Rally die hasn't finished this countdown by the end of a session, distribute the current value shown on the die as Hope amongst your party, splitting it any way you choose, and remove the die.\n\nThe Rally die you distribute increases to 1d8 at Level 5."
+      "name": "Rally",
+      "description": "Once per session, describe how you rally the party as they head into the fray, then give yourself and each of your allies a **d6** Rally die.\n\nAnyone with a Rally die can spend it to roll it, adding the result to an action roll, reaction roll, or damage roll, or clearing Stress equal to the Rally die result.\n\nAt the end of each session, all unspent Rally dice are cleared.\n\nThe Rally die you distribute increases to **1d8** at level 5."
     }
   ],
   "backgroundQuestions": [

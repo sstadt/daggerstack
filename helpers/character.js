@@ -26,10 +26,6 @@ export const newCharacter = () => {
     description: '',
     baseClass: '',
     subclass: [],
-    multiClass: { // todo: is this needed ??
-      name: null,
-      domain: null,
-    },
     community: '',
     ancestry: '',
     level: 1,
