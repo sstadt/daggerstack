@@ -142,9 +142,9 @@ export const newUpgrade = ({ id, level, type, value, options }) => {
   return {
     id, // must match the ID in the class leveling data
     level, // level upgrade was acquired
-    type, // upgrade name string
-    value, // TODO: does this need to be numerical ??
-    options: options || [], // TODO: what is this used for precisely ??
+    type, // upgrade type string
+    value, // primary option selected
+    options, // additional options; Array || Object
   };
 };
 

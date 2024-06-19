@@ -296,9 +296,24 @@
               // check each choice made for this tier
               // skip existing choices
               for (let i = this.existingChoices[tierIndex][choiceIndex]; i < choice; i++) {
-                // TODO: handle multiclass and subclass options separately
-                // complex upgrades
-                if (complexUpgrades.includes(firstOption)) {
+                // multiclass upgrades
+                if (upgrade.increase.multiclass) {
+                  if (!selections.find((selection) => selection.id === upgrade.id)) {
+                    selections.push(newUpgrade({
+                      id: upgrade.id,
+                      level: this.newLevel,
+                      type: 'multiclass',
+                      value: 2, // TODO: do we need to care about this ??
+                      options: {
+                        class: this.selectedMulticlass,
+                        subclass: this.selectedNewSubclass,
+                        domain: this.selectedDomain,
+                      },
+                    }));
+                  }
+                // TODO: subclass upgrades
+                // upgrades that select multiple single value options
+                } else if (complexUpgrades.includes(firstOption)) {
                   if (this.tierOptionSelections[tierIndex][choiceIndex][choice - 1].length >= upgrade.quantity) {
                     selections.push(newUpgrade({
                       id: upgrade.id,
