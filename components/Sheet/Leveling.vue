@@ -35,6 +35,7 @@
         .shrink-0(v-if="tierChoices.length > 0")
           Swiper.tier-carousel(
             :items-to-show="1"
+            :initial-slide="currentTierTab"
             :centered-slides="true"
             :auto-height="true"
             @swiper="onSwiper"
@@ -255,7 +256,7 @@
                     selections.push(newUpgrade({
                       id: upgrade.id,
                       level: this.newLevel,
-                      type: this.optionSelections[tierIndex][choiceIndex][choice - 1],
+                      type: this.tierOptionSelections[tierIndex][choiceIndex][choice - 1],
                       value: upgrade.increase[firstOption],
                     }));
                   }
@@ -294,7 +295,9 @@
           this.loaded = true;
         }, this.introDuration);
       } else {
-        this.loaded = true;
+        this.$nextTick(() => {
+          this.loaded = true;
+        });
       }
 
       // NOTE: If we generate this before adding a new experience,
@@ -319,8 +322,47 @@
         this.swiper.updateAutoHeight(300);
       },
       getChoicesAvailable(tier, index, upgrade) {
-        // TODO: use upgrade data to restrict based on multiclass/subclass selections
+        // NOTE: multiclass/subclass is only available in tier 2 and 3
+        //       so that's all we need to check
+        const tierLevels = tier === 2 ? [5, 6, 7] : [8, 9, 10];
 
+        // disable multiclass if multiclass has been picked before,
+        // or if subclass has been picked before in the same tier
+        if (upgrade.increase.multiclass) {
+          // previous multiclass selections
+          const multiclassSelection = this.character.levelSelections.find((selection) => {
+            return selection.type === 'multiclass';
+          });
+
+          // short circuit here if multiclass has ever been selected
+          if (multiclassSelection) return 0;
+
+          // active subclass choice
+          const subclassChosen = this.choicesMade.find((choice) => {
+            return choice.type === 'subclass';
+          });
+          // previous same-tier subclass choice
+          const sameTierSubclass = this.character.levelSelections.find((selection) => {
+            return selection.type === 'subclass' && tierLevels.includes(selection.level);
+          });
+
+          // if subclass exists in this tier already, disable multiclass
+          if (subclassChosen || sameTierSubclass) return 0;
+        }
+
+        // disable subclass if multiclass is chosen this tier
+        if (upgrade.increase.subclass) {
+          // NOTE: multiclass takes both level selections so we only need to
+          //       check prior level selections for subclass in the same tier
+          const sameTierMulticlass = this.character.levelSelections.find((selection) => {
+            return selection.type === 'multiclass' && tierLevels.includes(selection.level);
+          });
+
+          if (sameTierMulticlass) return 0;
+        }
+
+        // for all other selections, we only need to check against number of leveling selections
+        // NOTE: returning 0 here prevents this option from being selectable when leveling up
         return this.tierEnabled[tier]
           ? this.choicesRemaining + this.tierChoices[tier - 1][index]
           : 0;

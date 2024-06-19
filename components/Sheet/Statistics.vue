@@ -4,7 +4,7 @@
       TraitDisplay.px-2(
         title="evasion"
         class="w-1/3"
-        :score="character.evasion"
+        :score="characterEvasion"
       )
       .w-px.h-20.mx-2.bg-slate-300
       TraitDisplay.px-2(
