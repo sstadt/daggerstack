@@ -26,7 +26,7 @@ export const newCharacter = () => {
     description: '',
     baseClass: '',
     subclass: [],
-    multiClass: {
+    multiClass: { // todo: is this needed ??
       name: null,
       domain: null,
     },
@@ -140,11 +140,11 @@ export const newArmor = () => {
 
 export const newUpgrade = ({ id, level, type, value, options }) => {
   return {
-    id,
-    level,
-    type,
-    value,
-    options: options || [],
+    id, // must match the ID in the class leveling data
+    level, // level upgrade was acquired
+    type, // upgrade name string
+    value, // TODO: does this need to be numerical ??
+    options: options || [], // TODO: what is this used for precisely ??
   };
 };
 
@@ -152,6 +152,9 @@ export const newUpgrade = ({ id, level, type, value, options }) => {
  * Inventory items are stores as a single string, this function
  * breaks that master string down to be loaded into the character
  * builder when loading a saved character from localStorage.
+ *
+ * TODO: upgrade beginning inventory to use a list of items and get rid
+ *       of this garbage
  *
  * @param {String} items The comma separated item string to split
  * @param {String} baseClass The character's main class

@@ -61,7 +61,8 @@
                           @enter="refreshSwiper"
                           @after-leave="refreshSwiper"
                         )
-                          div(
+                          //- Basic options
+                          .upgrade-options(
                             :key="n"
                             v-if="n > existingChoices[tier - 1][index] && Array.isArray(tierOptions[tier - 1][index]) && tierChoices[tier - 1][index] >= n"
                           )
@@ -78,6 +79,31 @@
                               v-model="tierOptionSelections[tier - 1][index][n - 1]"
                               :options="tierOptions[tier - 1][index]"
                             )
+                          //- Multiclass options
+                          .space-y-2(v-else-if="upgrade.increase.multiclass && tierChoices[tier - 1][index] > 0 && n < 2")
+                            InputSelect(
+                              label="Class"
+                              v-model="selectedMulticlass"
+                              :options="multiclassOptions"
+                              required
+                            )
+                            InputSelect(
+                              label="Subclass"
+                              v-model="selectedNewSubclass"
+                              :options="newSubclassOptions"
+                              :disabled="newSubclassOptions.length < 1"
+                              required
+                            )
+                            InputSelect(
+                              label="Domain"
+                              v-model="selectedDomain"
+                              :options="domainOptions"
+                              :disabled="domainOptions.length < 1"
+                              required
+                            )
+                          //- Subclass options
+                          div(v-else-if="upgrade.increase.subclass && tierChoices[tier - 1][index] > 0")
+                            p subclass
         .pt-6.mt-auto.shrink-0
           BasicButton.w-full(
             :disabled="choicesMade.length < 2"
@@ -114,9 +140,11 @@
 
   import { uuidv4 } from '~/helpers/utility';
   import { getOptionsByUpgrade, newUpgrade } from '~/helpers/character';
+  import { createSelectOptions } from '~/helpers/array';
 
   import GENERAL from '~/data/general';
   import CLASSES from '~/data/classes';
+  import SUBCLASSES from '~/data/subclasses';
 
   const CHOICES_PER_LEVEL = 2;
 
@@ -129,6 +157,12 @@
       },
     },
     data() {
+      const [ firstClassOption ] = Object.keys(CLASSES)
+        .filter((className) => className !== this.character.baseClass);
+      const [ firstSubclassOption ] = SUBCLASSES[firstClassOption]
+        .map((subclass) => subclass.name);
+      const [ firstDomainOption ] = CLASSES[firstClassOption].domains
+        .filter((domain) => !CLASSES[this.character.baseClass].domains.includes(domain));
       const { tier1, tier2, tier3 } = CLASSES[this.character.baseClass];
       const levelingData = { tier1, tier2, tier3 };
 
@@ -145,9 +179,41 @@
         tierOptions: [], // upgrade line items
         tierOptionSelections: [], // options for line items (specific traits or choices on the same line)
         acceptTierChoices: false,
+        multiclassInputKey: uuidv4(),
+        selectedMulticlass: firstClassOption,
+        selectedNewSubclass: firstSubclassOption,
+        selectedDomain: firstDomainOption,
+        selectedSubclass: null,
       };
     },
     computed: {
+      multiclassOptions() {
+        const classes = Object.keys(CLASSES);
+        const baseClassIndex = classes.findIndex((className) => className === this.character.baseClass);
+
+        classes.splice(baseClassIndex, 1)
+
+        return createSelectOptions(classes);
+      },
+      domainOptions() {
+        const domains = [ ...CLASSES[this.selectedMulticlass].domains ]
+          .filter((domain) => !CLASSES[this.character.baseClass].domains.includes(domain));
+
+        return this.selectedMulticlass ? createSelectOptions(domains) : [];
+      },
+      // used for selecting a new subclass during multiclass selection
+      newSubclassOptions() {
+        const className = this.selectedMulticlass ? this.selectedMulticlass : null;
+        const subclasses = className
+          ? SUBCLASSES[className].map((subclass) => subclass.name)
+          : [];
+
+        return createSelectOptions(subclasses);
+      },
+      // used for selecting a subclass to apply upgrades to
+      subclassOptions() {
+        return [];
+      },
       newLevel() {
         return this.character.level + 1;
       },
@@ -304,6 +370,22 @@
       //       player will be unable to increase that experience
       //       during new tier level-up
       if (!this.reachedNewTier) this.generateChoicesData();
+    },
+    watch: {
+      selectedMulticlass() {
+        const [ firstSubclassOption ] = SUBCLASSES[this.selectedMulticlass].map((subclass) => subclass.name);
+        const [ firstDomainOption ] = CLASSES[this.selectedMulticlass].domains
+          .filter((domain) => !CLASSES[this.character.baseClass].domains.includes(domain));
+
+        // reset additional multiclass options
+        this.selectedNewSubclass = firstSubclassOption;
+        this.selectedDomain = firstDomainOption;
+
+        // re-render selects to resync v-model
+        this.$nextTick(() => {
+          this.multiclassInputKey = uuidv4();
+        });
+      },
     },
     methods: {
       next() {

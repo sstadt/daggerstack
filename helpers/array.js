@@ -1,4 +1,6 @@
 
+import { titleCase } from '~/helpers/string';
+
 /**
  * Exclude elements that occur in one array from another
  *
@@ -29,7 +31,7 @@ export const excludeArrayItems = (excludeArray, arrayToFilter) => {
  */
 export const createSelectOptions = (arr) => {
   return structuredClone(arr).map((item) => ({
-    label: item,
+    label: titleCase(item),
     value: item,
   }));
 };
