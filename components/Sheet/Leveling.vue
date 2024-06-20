@@ -523,8 +523,9 @@
 
         this.levelingData.tier2.upgrades
           .forEach((upgrade) => {
-            const numExisting = this.character.levelSelections
-              .filter((s) => s.id === upgrade.id).length;
+            const numExisting = upgrade.id === 'tier-2-multiclass' && this.character.levelSelections.find((s) => s.id === upgrade.id)
+              ? 2
+              : this.character.levelSelections.filter((s) => s.id === upgrade.id).length;
             const options = getOptionsByUpgrade(upgrade, this.character);
             const [ firstOption ] = options;
             const optionSelections = Array.from(Array(upgrade.max)).map(() => {
@@ -547,8 +548,9 @@
 
         this.levelingData.tier3.upgrades
           .forEach((upgrade) => {
-            const numExisting = this.character.levelSelections
-              .filter((s) => s.id === upgrade.id).length;
+            const numExisting = upgrade.id === 'tier-3-multiclass' && this.character.levelSelections.find((s) => s.id === upgrade.id)
+              ? 2
+              : this.character.levelSelections.filter((s) => s.id === upgrade.id).length;
             const options = getOptionsByUpgrade(upgrade, this.character);
             const [ firstOption ] = options;
             const optionSelections = Array.from(Array(upgrade.max)).map(() => {
@@ -641,6 +643,10 @@
           // severe threshold
           case 'severeDamageThreshold':
             return `Your Severe Damage Threshold increases by +${choice.value}`;
+
+          // proficiency
+          case 'proficiency':
+            return `Your Proficiency increases by +${choice.value}`;
 
           // subclass TODO
           // multiclass

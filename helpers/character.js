@@ -72,7 +72,6 @@ export const newCharacter = () => {
       slots: 6,
     },
     hope: 2,
-    proficiency: 1,
     equipment: {
       primaryWeapon: newWeapon(),
       secondaryWeapon: newWeapon(),
