@@ -80,7 +80,7 @@
                               :options="tierOptions[tier - 1][index]"
                             )
                           //- Multiclass options
-                          .space-y-2(v-else-if="upgrade.increase.multiclass && tierChoices[tier - 1][index] > 0 && n < 2")
+                          .space-y-2(v-else-if="upgrade.increase.multiclass && tierChoices[tier - 1][index] > existingChoices[tier - 1][index] && n < 2")
                             InputSelect(
                               label="Class"
                               v-model="selectedMulticlass"
@@ -110,8 +110,13 @@
                                   :space="1"
                                 )
                           //- Subclass options
-                          div(v-else-if="upgrade.increase.subclass && tierChoices[tier - 1][index] > 0")
-                            p subclass
+                          div(v-else-if="upgrade.increase.subclass && tierChoices[tier - 1][index] > existingChoices[tier - 1][index] && subclassOptions.length > 1")
+                            InputSelect(
+                              label="Subclass"
+                              v-model="selectedSubclass"
+                              :options="subclassOptions"
+                              required
+                            )
         .pt-6.mt-auto.shrink-0
           BasicButton.w-full(:disabled="!tierSelectionsFull" @click="saveTierOptions") Next
       //- confirm level
@@ -148,6 +153,7 @@
   import { uuidv4 } from '~/helpers/utility';
   import { getOptionsByUpgrade, newUpgrade } from '~/helpers/character';
   import { createSelectOptions } from '~/helpers/array';
+  import { titleCase } from '~/helpers/string';
 
   import GENERAL from '~/data/general';
   import CLASSES from '~/data/classes';
@@ -168,6 +174,7 @@
         .filter((className) => className !== this.character.baseClass);
       const [ firstSubclassOption ] = SUBCLASSES[firstClassOption]
         .map((subclass) => subclass.name);
+      const [ firstSubclass ] = this.character.subclass;
       const [ firstDomainOption ] = CLASSES[firstClassOption].domains
         .filter((domain) => !CLASSES[this.character.baseClass].domains.includes(domain));
       const { tier1, tier2, tier3 } = CLASSES[this.character.baseClass];
@@ -190,7 +197,7 @@
         selectedMulticlass: firstClassOption,
         selectedNewSubclass: firstSubclassOption,
         selectedDomain: firstDomainOption,
-        selectedSubclass: null,
+        selectedSubclass: firstSubclass,
       };
     },
     computed: {
@@ -222,7 +229,7 @@
       },
       // used for selecting a subclass to apply upgrades to
       subclassOptions() {
-        return [];
+        return createSelectOptions([ ...this.character.subclass ]);
       },
       newLevel() {
         return this.character.level + 1;
@@ -327,7 +334,14 @@
                       },
                     }));
                   }
-                // TODO: subclass upgrades
+                // subclass upgrades
+                } else if (upgrade.increase.subclass) {
+                  selections.push(newUpgrade({
+                    id: upgrade.id,
+                    level: this.newLevel,
+                    type: 'subclass',
+                    value: this.selectedSubclass,
+                  }));
                 // upgrades that select multiple single value options
                 } else if (complexUpgrades.includes(firstOption)) {
                   if (this.tierOptionSelections[tierIndex][choiceIndex][choice - 1].length >= upgrade.quantity) {
@@ -632,6 +646,10 @@
           case 'evasion':
             return `Your Evasion increases by +${choice.value}`;
 
+          // proficiency
+          case 'proficiency':
+            return `Your Proficiency increases by +${choice.value}`;
+
           // minor threshold
           case 'minorDamageThreshold':
             return `Your Minor Damage Threshold increases by +${choice.value}`;
@@ -644,11 +662,13 @@
           case 'severeDamageThreshold':
             return `Your Severe Damage Threshold increases by +${choice.value}`;
 
-          // proficiency
-          case 'proficiency':
-            return `Your Proficiency increases by +${choice.value}`;
+          // subclass
+          case 'subclass':
+            const subclassUpgrades = this.character.levelSelections.filter((s) => s.value === choice.value);
+            const rank = subclassUpgrades.length > 1 ? 'Mastery' : 'Specialization';
 
-          // subclass TODO
+            return `Your ${titleCase(choice.value)} Subclass rank becomes ${rank}`;
+
           // multiclass
           case 'multiclass':
             return `Multiclass into ${choice.options.subclass} ${choice.options.class}, gaining access to the ${choice.options.domain} domain`;

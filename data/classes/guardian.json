@@ -1,9 +1,9 @@
 {
   "domains": ["valor", "blade"],
   "startingThreshold": {
-    "minor": 6,
-    "major": 11,
-    "severe": 16
+    "minor": 3,
+    "major": 9,
+    "severe": 18
   },
   "startingEvasion": 6,
   "suggestedTraits": {
