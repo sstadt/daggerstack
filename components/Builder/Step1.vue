@@ -171,7 +171,7 @@
       async next() {
         this.builderStore.updateCharacter({
           baseClass: this.selectedClass,
-          subclass: [{ name: this.selectedSubclass, rank: 'foundation' }],
+          subclass: [ this.selectedSubclass ],
           ancestry: this.selectedAncestry,
           community: this.selectedCommunity,
         });

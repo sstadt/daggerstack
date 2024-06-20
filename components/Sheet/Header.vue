@@ -5,7 +5,7 @@
         NuxtIcon(v-for="domain in domains" :name="domain")
       h1.font-bold.text-4xl.uppercase.truncate {{ character.name }}
       p.sheet-header__details.text-slate-300.flex
-        span.text-lg Level {{ character.level }} {{ character.heritage }} {{ ucFirst(character.baseClass) }}
+        span.text-lg Level {{ character.level }} {{ ucFirst(character.baseClass) }}
         span.ml-auto {{ character.pronouns }}
     slot
     BasicDrawer(ref="characterDrawer" :title="tabs[currentIndex].title")

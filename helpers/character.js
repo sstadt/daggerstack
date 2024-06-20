@@ -246,7 +246,7 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
   const burden =
     character.equipment.primaryWeapon.burden + character.equipment.secondaryWeapon.burden;
   const subclasses = character.subclass.map((characterSubclass) => {
-    return allSubclasses.find((subclass) => subclass.name === characterSubclass.name);
+    return allSubclasses.find((subclass) => subclass.name === characterSubclass);
   });
   const community = COMMUNITY.find((community) => character.community === community.name);
   const ancestry = ANCESTRY.find((ancestry) => character.ancestry === ancestry.name);
@@ -299,33 +299,28 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
   if (subclasses.length > 0) {
     character.subclass.forEach((subclass, index) => {
       const subclassData = subclasses[index];
+      const numUpgrades = character.levelSelections.filter((upgrade) => {
+        return upgrade.type === 'subclass' && upgrade.value === subclass;
+      }).length;
 
-      // add foundation
-      if (subclassData.foundation[attribute]) {
-        features.push({
-          name: `${subclass.name} (foundation)`,
-          modify: { ...subclassData.foundation },
-        });
-      }
+      // add foundation for every subclass
+      features.push({
+        name: `${subclass} (foundation)`,
+        modify: { ...subclassData.foundation },
+      });
 
-      // add specialization
-      if (
-        subclass.rank !== 'foundation' &&
-        subclassData.specialization[attribute]
-      ) {
+      // add specialization for applicable
+      if (numUpgrades > 0) {
         features.push({
-          name: `${subclass.name} (specialization)`,
+          name: `${subclass} (specialization)`,
           modify: { ...subclassData.specialization },
         });
       }
 
-      // add mastery
-      if (
-        subclass.rank === 'mastery' &&
-        subclassData.mastery[attribute]
-      ) {
+      // add mastery for applicable
+      if (numUpgrades > 1) {
         features.push({
-          name: `${subclass.name} (mastery)`,
+          name: `${subclass} (mastery)`,
           modify: { ...subclassData.mastery },
         });
       }
@@ -352,7 +347,10 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
 
   // tier selections
   character.levelSelections.forEach((selection) => {
-    if (selection.type === attribute || selection.options.includes(attribute)) {
+    if (
+      selection.type === attribute ||
+      Array.isArray(selection.options) && selection.options.includes(attribute)
+    ) {
       const feature = {
         name: `Level ${selection.level}`,
         modify: {},
@@ -376,7 +374,7 @@ export const hasCompanion = (character) => {
   let hasCompanion = false;
 
   character.subclass.forEach((subclass) => {
-    const data = SUBCLASSES[character.baseClass].find((sc) => sc.name === subclass.name);
+    const data = SUBCLASSES[character.baseClass].find((sc) => sc.name === subclass);
 
     if (data.foundation.companion === true) {
       hasCompanion = true;

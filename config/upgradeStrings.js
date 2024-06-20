@@ -4,6 +4,7 @@ export default {
   stressSlot: 'Stress',
   experience: 'Experience',
   armorSlot: 'Armor Slot',
+  armorScore: 'Armor Score',
   evasion: 'Evasion',
   minorDamageThreshold: 'Minor Damage Threshold',
   majorDamageThreshold: 'Major Damage Threshold',

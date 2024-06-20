@@ -85,6 +85,7 @@
                               label="Class"
                               v-model="selectedMulticlass"
                               :options="multiclassOptions"
+                              @input="refreshSwiper"
                               required
                             )
                             InputSelect(
@@ -128,6 +129,8 @@
         h3.text-xl.font-bold.uppercase.mt-6 Additional Tier Upgrades
         .divide-y
           p.text-xl.py-4(v-for="upgrade in levelingData[`${currentTier}`].always") {{ upgrade.description }}
+        h3.text-xl.font-bold.uppercase.mt-6 Domain Cards
+        p.text-xl.py-4 Choose a new Domain Deck card at your Level or lower. If your loadout is full, you may choose a card to swap.
         .pt-6.mt-auto.shrink-0
           BasicButton.w-full(@click="saveLevelUp") Level Up
       //- fanfare
@@ -594,7 +597,7 @@
         switch (choice.type) {
           // trait
           case 'trait':
-            return `Increase ${choice.options.join(' and ')} by ${choice.value}`;
+            return `Your ${choice.options.join(' and ')} increase by +${choice.value}`;
 
           // health
           case 'healthSlot':
@@ -609,7 +612,7 @@
             let expArr = [];
 
             choice.options.forEach((expId) => {
-              if (expId === this.addExperience.id) {
+              if (this.addExperience && expId === this.addExperience.id) {
                 expArr.push(this.addExperience.name);
               } else {
                 let existingExp = this.character.experience.find((xp) => xp.id === expId);
@@ -640,7 +643,9 @@
             return `Your Severe Damage Threshold increases by +${choice.value}`;
 
           // subclass TODO
-          // multiclass TODO
+          // multiclass
+          case 'multiclass':
+            return `Multiclass into ${choice.options.subclass} ${choice.options.class}, gaining access to the ${choice.options.domain} domain`;
 
           default:
             return choice;
@@ -678,6 +683,11 @@
             for (let i = 0, j = choice.options.length; i < j; i++) {
               this.character[choice.options[i]].upgraded = true;
             }
+          }
+
+          // add new subclass when taking multiclass
+          if (choice.type === 'multiclass') {
+            this.character.subclass.push(choice.options.subclass);
           }
         });
 
