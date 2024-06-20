@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import classes from '~/data/classes';
+  import CLASSES from '~/data/classes';
 
   export default {
     name: 'SheetClassFeature',
@@ -18,9 +18,13 @@
     },
     computed: {
       features() {
-        const characterClass = classes[this.character.baseClass];
+        const classData = CLASSES[this.character.baseClass];
+        const multiclass = this.character.levelSelections.find((selection) => selection.type === 'multiclass');
+        const multiclassData = multiclass ? CLASSES[multiclass.options.class] : null;
 
-        return characterClass.classFeatures;
+        return multiclassData
+          ? [ ...classData.classFeatures ].concat(multiclassData.classFeatures)
+          : [ ...classData.classFeatures ];
       },
     },
   };

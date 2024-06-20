@@ -1,11 +1,15 @@
 <template lang="pug">
   .sheet-header.sticky.top-0.z-10.relative.transition-colors(:class="headerClass")
     .sheet-header__title.flex-none.py-4.px-6.text-white(@click="openDrawer")
-      .sheet-header__domain-icons.flex.absolute.opacity-20.-bottom-8(class="left-1/2")
+      .sheet-header__domain-icons.flex.absolute.opacity-20(
+        class="left-1/2"
+        :class="domainsClass"
+        :style="domainsStyle"
+      )
         NuxtIcon(v-for="domain in domains" :name="domain")
       h1.font-bold.text-4xl.uppercase.truncate {{ character.name }}
       p.sheet-header__details.text-slate-300.flex
-        span.text-lg Level {{ character.level }} {{ ucFirst(character.baseClass) }}
+        span.text-lg Level {{ character.level }} {{ classLabel }}
         span.ml-auto {{ character.pronouns }}
     slot
     BasicDrawer(ref="characterDrawer" :title="tabs[currentIndex].title")
@@ -50,7 +54,7 @@
 
   import CLASSES from '~/data/classes';
 
-  import { ucFirst } from '~/helpers/string';
+  import { ucFirst, titleCase } from '~/helpers/string';
 
   export default {
     name: 'SheetHeader',
@@ -77,8 +81,35 @@
       classData() {
         return CLASSES[this.character.baseClass];
       },
+      multiclassUpgrade() {
+        return this.character.levelSelections
+          .find((selection) => selection.type === 'multiclass');
+      },
+      classLabel() {
+        const classArr = [ titleCase(this.character.baseClass) ];
+
+        if (this.multiclassUpgrade) {
+          classArr.push(titleCase(this.multiclassUpgrade.options.class));
+        }
+
+        return classArr.join(' / ');
+      },
       domains() {
-        return this.healthPercent > 0 ? this.classData.domains : ['skull'];
+        const domains = [ ...this.classData.domains ];
+
+        if (this.multiclassUpgrade) domains.push(this.multiclassUpgrade.options.domain);
+
+        return this.healthPercent > 0 ? domains : ['skull'];
+      },
+      domainsClass() {
+        return {
+          '-bottom-8': this.domains.length < 3,
+        };
+      },
+      domainsStyle() {
+        return {
+          'font-size': this.domains.length < 3 ? '180px' : '150px',
+        };
       },
       healthPercent() {
         return (1 - (this.character.health.current / this.character.health.slots)).toFixed(2);
@@ -117,7 +148,6 @@
 
 <style lang="scss" scoped>
   .sheet-header__domain-icons {
-    font-size: 180px;
     transform: translateX(-50%);
 
     &:deep(svg) {

@@ -374,11 +374,18 @@ export const hasCompanion = (character) => {
   let hasCompanion = false;
 
   character.subclass.forEach((subclass) => {
-    const data = SUBCLASSES[character.baseClass].find((sc) => sc.name === subclass);
+    const multiclass = character.levelSelections.find((selection) => selection.type === 'multiclass');
+    const classData = SUBCLASSES[character.baseClass].find((sc) => sc.name === subclass);
+    const multiclassData = multiclass
+      ? SUBCLASSES[multiclass.options.class].find((sc) => sc.name === subclass)
+      : null;
 
-    if (data.foundation.companion === true) {
+    if (
+      classData && classData.foundation.companion === true ||
+      multiclassData && multiclassData.foundation.companion === true
+    ) {
       hasCompanion = true;
-      return;
+      return; // break forEach
     }
   });
 

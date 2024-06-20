@@ -3,6 +3,8 @@
     .space-y-6
       InputText(v-model="name" label="Name" @input="saveName")
       p.text-2xl {{ character.community }} {{ character.ancestry }}
+      p.text-2xl {{ classLabel }}
+      p.text-2xl(v-if="multiclassLabel") {{ multiclassLabel }}
       .flex.space-x-4
         .w-10.flex.flex-col.items-center(v-for="domain in domains")
           NuxtIcon.text-5xl(:name="domain")
@@ -44,8 +46,28 @@
       classData() {
         return CLASSES[this.character.baseClass];
       },
+      multiclassUpgrade() {
+        return this.character.levelSelections
+          .find((selection) => selection.type === 'multiclass');
+      },
+      classLabel() {
+        const [ subclass ] = this.character.subclass;
+
+        return `${subclass} ${this.character.baseClass}`;
+      },
+      multiclassLabel() {
+        const [ _, subclass ] = this.character.subclass;
+
+        return this.multiclassUpgrade && subclass
+          ? `${subclass} ${this.multiclassUpgrade.options.class}`
+          : null;
+      },
       domains() {
-        return this.classData.domains;
+        const domains = [ ...this.classData.domains ];
+
+        if (this.multiclassUpgrade) domains.push(this.multiclassUpgrade.options.domain);
+
+        return domains;
       },
     },
     methods: {
