@@ -397,8 +397,10 @@ export const hasCompanion = (character) => {
  * @return Array of options, or text string if only a single option
  */
 export const getOptionsByUpgrade = (upgrade, character) => {
-  const upgradeKeys = Object.keys(upgrade.increase);
+  const upgradeKeys = (upgrade.increase) ? Object.keys(upgrade.increase) : ['feature'];
   const [ firstUpgradeKey ] = upgradeKeys;
+
+  if (!upgrade.increase) return firstUpgradeKey;
 
   if (upgrade.increase.trait) {
     return [

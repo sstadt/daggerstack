@@ -13,7 +13,7 @@
     },
     {
       "id": "training-hopeSlot",
-      "description": "**Light in the Dark:** Raise an experience by +1",
+      "description": "**Light in the Dark:** Increase your Hope Slots by +1",
       "increase": {
         "hopeSlot": 1
       },
@@ -39,8 +39,8 @@
       "id": "training-companionDamage-companionRange",
       "description": "**Vicious:** Increase your companion's damage dice (**d6** to **d8**, etc.) or range (**melee** to **very close**, etc.)",
       "increase": {
-        "companionRange": 1,
-        "companionDamage": 1
+        "companionDamage": 1,
+        "companionRange": 1
       },
       "max": 3
     },

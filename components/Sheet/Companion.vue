@@ -9,13 +9,13 @@
             | {{ character.companion.name }}
             BasicButton.absolute.right-6.flex.items-center.justify-center(
               size="sm"
-              priority="secondary"
+              :priority="companionConfigPriority"
               class="top-1/2 -translate-y-1/2"
               icon
               @click="openEditor"
             )
               .sr-only Edit Companion
-              NuxtIcon(name="cog")
+              NuxtIcon(:name="companionConfigIcon")
           p.text-center.text-slate-500 {{ character.companion.species }}
         .px-3.flex.items-center
           TraitDisplay.px-2.shrink-0(
@@ -25,7 +25,7 @@
           )
           .flex.flex-col.justify-center.flex-grow.space-y-2.pl-4
             p.text-xl <strong>Traits:</strong> {{ character.companion.traits.join(', ') }}
-            p.text-xl <strong>Damage:</strong> {{ damage }} {{ range }}
+            p.text-xl <strong>Damage:</strong> {{ damage }} ({{ range }})
             .h-px.border-b(class="w-2/3")
             .stress.flex
               h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0 stress
@@ -55,7 +55,10 @@
                 | Anytime your companion would take damage, they mark stress. When their stress slots are full, they drop out of the scene (hide, flee, etc). They are unavailable to you, and will return at your next long rest with one stress cleared.
               p.text-xl Whenever you use the Clear Stress downtime action on yourself, it automatically clears that much stress on your companion as well.
     BasicDrawer(ref="companionTraining" title="Training")
-      SheetCompanionTraining
+      SheetCompanionTraining(
+        :character="character"
+        :points-available="trainingPointsAvailable"
+      )
     BasicDrawer(ref="companionEditor" title="Companion")
       form.space-y-8.px-8.pb-8(@submit.prevent="saveCompanion")
         InputText(
@@ -95,6 +98,8 @@
   import { helpers, required } from '@vuelidate/validators';
 
   import { useCharactersStore } from '~/stores/characters';
+  import { uuidv4 } from '~/helpers/utility';
+  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
   import { ucFirst } from '~/helpers/string';
 
   import GENERAL from '~/data/general';
@@ -115,7 +120,11 @@
 
       if (numCompanionExperience < numCharacterExperience) {
         for (let i = numCompanionExperience; i < numCharacterExperience; i++) {
-          experiences.push({ name: null, score: i === 0 ? 2 : 1 });
+          experiences.push({
+            id: uuidv4(),
+            name: null,
+            score: i === 0 ? 2 : 1,
+          });
         }
       }
 
@@ -156,6 +165,12 @@
           this.companionName.length > 0 &&
           this.companionSpecies.length > 0;
       },
+      companionConfigIcon() {
+        return this.newTraining ? 'meat' : 'cog';
+      },
+      companionConfigPriority() {
+        return this.newExperiences || this.newTraining ? 'primary' : 'secondary';
+      },
       maxTraitsSelected() {
         return this.companionTraits.length >= 2;
       },
@@ -167,6 +182,17 @@
         return this.experiences.filter(
           (experience) => experience.name === null || experience.name === '',
         ).length > 0;
+      },
+      trainingPointsAvailable() {
+        const pointsSpent = this.character.companion.levelSelections.length;
+        const trainingUpgrades = getFeaturesByAttribute(this.character, 'companionTraining');
+        const bonusPoints = calculateModifiers(trainingUpgrades, 'companionTraining');
+        const basePoints = this.character.level - 1;
+
+        return Math.max(basePoints + bonusPoints - pointsSpent, 0);
+      },
+      newTraining() {
+        return this.trainingPointsAvailable > 0;
       },
       damage() {
         const upgrades = this.character.companion.levelSelections.filter((selection) => {
@@ -186,7 +212,11 @@
     methods: {
       ucFirst,
       openEditor() {
-        this.$refs.companionEditor.open();
+        if (this.companionValid && this.newTraining && !this.newExperience) {
+          this.$refs.companionTraining.open();
+        } else {
+          this.$refs.companionEditor.open();
+        }
       },
       async saveCompanion() {
         const formValid = await this.v$.$validate();
