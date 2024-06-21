@@ -1,0 +1,72 @@
+{
+  "damage": ["d6", "d8", "d10", "d12"],
+  "range": ["melee", "close", "very close", "far"],
+  "exampleExperience": "On High Alert, Bold Distraction, Navigation, We Always Find Them, Fetch, Protective, Expert Climber, Nobody Left Behind, Friendly, Nimble, Guardian of the Forest, You Can't Hit What You Can't Find, Intimidating, Service Animal, Scout, Royal Companion, Trusted Mount",
+  "training": [
+    {
+      "id": "training-experience",
+      "description": "**Intelligent:** Raise an experience by +1",
+      "increase": {
+        "experience": 1
+      },
+      "max": 3
+    },
+    {
+      "id": "training-hopeSlot",
+      "description": "**Light in the Dark:** Raise an experience by +1",
+      "increase": {
+        "hopeSlot": 1
+      },
+      "max": 1
+    },
+    {
+      "id": "training-creatureComfort",
+      "feature": {
+        "title": "Creature Comfort",
+        "description": "Once per short rest, when you take time during a quiet moment to give your companion love and attention, you may both clear a Stress or take Hope."
+      },
+      "max": 1
+    },
+    {
+      "id": "training-armored",
+      "feature": {
+        "title": "Armored",
+        "description": "Your armor score increases by +2 when your companion is in melee."
+      },
+      "max": 1
+    },
+    {
+      "id": "training-companionDamage-companionRange",
+      "description": "**Vicious:** Increase your companion's damage dice (**d6** to **d8**, etc.) or range (**melee** to **very close**, etc.)",
+      "increase": {
+        "companionRange": 1,
+        "companionDamage": 1
+      },
+      "max": 3
+    },
+    {
+      "id": "training-stressSlot",
+      "description": "**Resilient:** Add an additional stress slot.",
+      "increase": {
+        "companionStressSlot": 1
+      },
+      "max": 3
+    },
+    {
+      "id": "training-bonded",
+      "feature": {
+        "title": "Bonded",
+        "description": "When you mark your last Hit Point, your Companion rushes to your side to comfort you. Roll a number of **d6** equal to the available stress slots they have and mark them. On a 6, they get you up. Clear your last Hit Point and return to the scene."
+      },
+      "max": 1
+    },
+    {
+      "id": "training-companionEvasion",
+      "description": "**Aware:** Increase your companion's Evasion by +2",
+      "increase": {
+        "companionEvasion": 2
+      },
+      "max": 3
+    }
+  ]
+}

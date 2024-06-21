@@ -95,7 +95,6 @@ export const newCharacter = () => {
       species: null,
       traits: [],
       evasion: 10,
-      damage: 'd6',
       stress: {
         current: 0,
         slots: 3,

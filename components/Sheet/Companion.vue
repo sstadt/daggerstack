@@ -25,7 +25,7 @@
           )
           .flex.flex-col.justify-center.flex-grow.space-y-2.pl-4
             p.text-xl <strong>Traits:</strong> {{ character.companion.traits.join(', ') }}
-            p.text-xl <strong>Damage:</strong> {{ character.companion.damage }}
+            p.text-xl <strong>Damage:</strong> {{ damage }} {{ range }}
             .h-px.border-b(class="w-2/3")
             .stress.flex
               h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0 stress
@@ -54,10 +54,20 @@
                 strong(class="mr-1.5") Stress:
                 | Anytime your companion would take damage, they mark stress. When their stress slots are full, they drop out of the scene (hide, flee, etc). They are unavailable to you, and will return at your next long rest with one stress cleared.
               p.text-xl Whenever you use the Clear Stress downtime action on yourself, it automatically clears that much stress on your companion as well.
+    BasicDrawer(ref="companionTraining" title="Training")
+      SheetCompanionTraining
     BasicDrawer(ref="companionEditor" title="Companion")
       form.space-y-8.px-8.pb-8(@submit.prevent="saveCompanion")
-        InputText(label="name" v-model="companionName")
-        InputText(label="species" v-model="companionSpecies")
+        InputText(
+          label="name"
+          v-model="companionName"
+          :errors="v$.companionName.$errors"
+        )
+        InputText(
+          label="species"
+          v-model="companionSpecies"
+          :errors="v$.companionSpecies.$errors"
+        )
         .grid.grid-cols-2.gap-4
           InputCheckbox(
             v-for="trait in traits"
@@ -68,31 +78,27 @@
           )
         .space-y-4
           h2.text-center.text-2xl.font-black.uppercase Experience
-          .flex.items-center.space-x-4
-            p.text-2xl.font-bold +{{ experience1Score }}
+          .flex.items-center.space-x-4(v-for="(experience, index) in experiences")
+            p.text-2xl.font-bold +{{ experience.score }}
             InputText.flex-grow(
-              v-model="experience1"
-              :errors="v$.experience1.$errors"
+              v-model="experience.name"
+              :errors="v$.experiences.$each.$response.$errors[index].name"
               required
             )
-          .flex.items-center.space-x-4
-            p.text-2xl.font-bold +{{ experience2Score }}
-            InputText.flex-grow(
-              v-model="experience2"
-              :errors="v$.experience2.$errors"
-              required
-            )
-        BasicButton.w-full(type="submit" :disabled="!maxTraitsSelected") Save
+          transition(name="slide-fade-left")
+            p.text-sm(v-if="newExperiences") <strong>Example Experiences:</strong> {{ exampleExperience }}
+        BasicButton.w-full(type="submit" :disabled="!companionValid") Save
 </template>
 
 <script>
   import { useVuelidate } from '@vuelidate/core';
-  import { required } from '@vuelidate/validators';
+  import { helpers, required } from '@vuelidate/validators';
 
   import { useCharactersStore } from '~/stores/characters';
   import { ucFirst } from '~/helpers/string';
 
   import GENERAL from '~/data/general';
+  import COMPANION from '~/data/companion';
 
   export default {
     name: 'SheetCompanion',
@@ -103,29 +109,36 @@
       },
     },
     data() {
-      let [ existingExperience1, existingExperience2 ] = this.character.companion.experience
-        ? this.character.companion.experience
-        : [{ name: null, score: 2 }, { name: null, score: 1 }];
+      const numCharacterExperience = this.character.experience.length;
+      const numCompanionExperience = this.character.companion.experience.length;
+      const experiences = [ ...this.character.companion.experience ];
+
+      if (numCompanionExperience < numCharacterExperience) {
+        for (let i = numCompanionExperience; i < numCharacterExperience; i++) {
+          experiences.push({ name: null, score: i === 0 ? 2 : 1 });
+        }
+      }
 
       return {
-        traits: ['agility', 'strength', 'finesse', 'presence', 'instinct', 'knowledge'],
+        traits: [ ...GENERAL.traits ],
+        maxStress: GENERAL.companionMaxStress,
+        exampleExperience: COMPANION.exampleExperience,
         companionName: this.character.companion.name,
         companionSpecies: this.character.companion.species,
         companionTraits: this.character.companion.traits,
         currentStress: this.character.companion.stress.current,
-        maxStress: GENERAL.companionMaxStress,
-        experience1: existingExperience1 ? existingExperience1.name : '',
-        experience1Score: existingExperience1 ? existingExperience1.score : 2,
-        experience2: existingExperience2 ? existingExperience2.name : '',
-        experience2Score: existingExperience2 ? existingExperience2.score : 1,
+        experiences,
       };
     },
     validations() {
       return {
         companionName: { required },
         companionSpecies: { required },
-        experience1: { required },
-        experience2: { required },
+        experiences: {
+          $each: helpers.forEach({
+            name: { required },
+          }),
+        },
       };
     },
     setup() {
@@ -137,12 +150,37 @@
       };
     },
     computed: {
+      companionValid() {
+        return this.maxTraitsSelected &&
+          !this.newExperiences &&
+          this.companionName.length > 0 &&
+          this.companionSpecies.length > 0;
+      },
       maxTraitsSelected() {
         return this.companionTraits.length >= 2;
       },
       stressSlots() {
         // TODO: calculate with leveling bonuses
         return this.character.companion.stress.slots;
+      },
+      newExperiences() {
+        return this.experiences.filter(
+          (experience) => experience.name === null || experience.name === '',
+        ).length > 0;
+      },
+      damage() {
+        const upgrades = this.character.companion.levelSelections.filter((selection) => {
+          return selection.type === 'companionDamage';
+        });
+
+        return COMPANION.damage[upgrades.length];
+      },
+      range() {
+        const upgrades = this.character.companion.levelSelections.filter((selection) => {
+          return selection.type === 'companionRange';
+        });
+
+        return COMPANION.range[upgrades.length];
       },
     },
     methods: {
@@ -159,10 +197,7 @@
           companion.name = this.companionName;
           companion.species = this.companionSpecies;
           companion.traits = [ ...this.companionTraits ];
-          companion.experience = [
-            { name: this.experience1, score: this.experience1Score },
-            { name: this.experience2, score: this.experience2Score },
-          ];
+          companion.experience = [ ...this.experiences ];
 
           this.character.companion = { ...companion };
           this.charactersStore.saveCharacter(this.character);
