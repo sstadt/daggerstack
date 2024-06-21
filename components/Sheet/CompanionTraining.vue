@@ -8,7 +8,7 @@
               v-model="choices[index]"
               :min="existingChoices[index]"
               :max="upgrade.max"
-              :enabled="pointsAvailable + choices[index]"
+              :enabled="pointsRemaining + choices[index]"
             )
           .flex-grow.space-y-2
             BasicMarkdown(
@@ -112,8 +112,11 @@
 
         return selections;
       },
+      pointsRemaining() {
+        return Math.max(this.pointsAvailable - this.choicesMade.length, 0)
+      },
       allChoicesMade() {
-        return this.pointsAvailable - this.choicesMade.length > 0;
+        return this.pointsRemaining === 0;
       },
     },
     methods: {
