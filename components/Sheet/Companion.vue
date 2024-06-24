@@ -21,7 +21,7 @@
           TraitDisplay.px-2.shrink-0(
             title="evasion"
             class="w-1/3"
-            :score="character.companion.evasion"
+            :score="evasion"
           )
           .flex.flex-col.justify-center.flex-grow.space-y-2.pl-4
             p.text-xl <strong>Traits:</strong> {{ character.companion.traits.join(', ') }}
@@ -36,28 +36,22 @@
               )
         BasicCard(title="experience")
           .flex.space-x-2.justify-between.text-xl.py-4(
-            v-for="(experience, index) in character.companion.experience"
+            v-for="(experience, index) in companionExperience"
             :class="{ 'border-t': index !== 0 }"
           )
             p {{ experience.name }}
             p +{{ experience.score }}
         BasicCard(title="features")
           .space-y-2.py-4
-            p.text-xl
-              strong(class="mr-1.5") Actions:
-              | You can make an action roll to command your companion using Instinct, and take advantage if they are using one of their companion traits.
-            p.text-xl
-              strong(class="mr-1.5") Attack:
-              | If you command them to attack a target, on a success, their damage roll uses your proficiency and their damage dice.
-            .space-y-2
-              p.text-xl
-                strong(class="mr-1.5") Stress:
-                | Anytime your companion would take damage, they mark stress. When their stress slots are full, they drop out of the scene (hide, flee, etc). They are unavailable to you, and will return at your next long rest with one stress cleared.
-              p.text-xl Whenever you use the Clear Stress downtime action on yourself, it automatically clears that much stress on your companion as well.
+            BasicMarkdown(
+              v-for="feature in companionFeatures"
+              :source="`**${ucFirst(feature.title)}:** ${feature.description}`"
+            )
     BasicDrawer(ref="companionTraining" title="Training")
       SheetCompanionTraining(
         :character="character"
         :points-available="trainingPointsAvailable"
+        @training-saved="closeTraining"
       )
     BasicDrawer(ref="companionEditor" title="Companion")
       form.space-y-8.px-8.pb-8(@submit.prevent="saveCompanion")
@@ -82,7 +76,7 @@
         .space-y-4
           h2.text-center.text-2xl.font-black.uppercase Experience
           .flex.items-center.space-x-4(v-for="(experience, index) in experiences")
-            p.text-2xl.font-bold +{{ experience.score }}
+            p.text-2xl.font-bold +{{ companionExperience[index] ? companionExperience[index].score : experience.score }}
             InputText.flex-grow(
               v-model="experience.name"
               :errors="v$.experiences.$each.$response.$errors[index].name"
@@ -174,9 +168,37 @@
       maxTraitsSelected() {
         return this.companionTraits.length >= 2;
       },
+      evasion() {
+        const base = this.character.companion.evasion;
+        const modifiers = getFeaturesByAttribute(this.character.companion, 'companionEvasion');
+
+        return base + calculateModifiers(modifiers, 'companionEvasion');
+      },
       stressSlots() {
-        // TODO: calculate with leveling bonuses
-        return this.character.companion.stress.slots;
+        const base = this.character.companion.stress.slots;
+        const modifiers = getFeaturesByAttribute(this.character.companion, 'companionStressSlot');
+
+        return base + calculateModifiers(modifiers, 'companionStressSlot');
+      },
+      companionExperience() {
+        return this.character.companion.experience.map((experience) => {
+          const exp = { ...experience };
+          const upgrades = this.character.companion.levelSelections.filter(
+            (selection) => selection.type === 'experience' && selection.options.includes(exp.id),
+          ).length;
+
+          exp.score = exp.score + upgrades;
+
+          return exp;
+        });
+      },
+      companionFeatures() {
+        const features = [ ...COMPANION.features ];
+        const trainedFeatures = this.character.companion.levelSelections
+          .filter((selection) => selection.type === 'feature')
+          .map(({ options }) => ({ ...options }));
+
+        return features.concat(trainedFeatures);
       },
       newExperiences() {
         return this.experiences.filter(
@@ -233,6 +255,9 @@
           this.charactersStore.saveCharacter(this.character);
           this.$refs.companionEditor.close();
         }
+      },
+      closeTraining() {
+        this.$refs.companionTraining.close();
       },
     },
     watch: {

@@ -16,6 +16,8 @@
 <script>
   import { useCharactersStore } from '~/stores/characters';
 
+  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
+
   import GENERAL from '~/data/general';
 
   export default {
@@ -29,7 +31,6 @@
     data() {
       return {
         hope: this.character.hope,
-        maxHope: GENERAL.maxHope,
       };
     },
     setup() {
@@ -38,6 +39,14 @@
       return { charactersStore };
     },
     computed: {
+      maxHope() {
+        const base = GENERAL.maxHope;
+        const modifiers = this.character.companion.name
+          ? getFeaturesByAttribute(this.character.companion, 'hopeSlot')
+          : [];
+
+        return base + calculateModifiers(modifiers, 'hopeSlot');
+      },
       experiences() {
         return this.character.experience.map((exp) => {
           const experience = { ...exp };

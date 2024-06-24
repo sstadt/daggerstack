@@ -12,7 +12,7 @@
             )
           .flex-grow.space-y-2
             BasicMarkdown(
-              :source="upgrade.feature ? `**${upgrade.feature.title}** ${upgrade.feature.description}` : upgrade.description"
+              :source="upgrade.feature ? `**${upgrade.feature.title}:** ${upgrade.feature.description}` : upgrade.description"
             )
             .space-y-2(v-for="n in upgrade.max")
               Transition(name="slide-fade-left")
@@ -54,6 +54,11 @@
         existingChoices: [],
         optionsLoaded: false,
       };
+    },
+    setup() {
+      const charactersStore = useCharactersStore();
+
+      return { charactersStore };
     },
     mounted() {
       this.generateChoicesData();
@@ -120,13 +125,6 @@
       },
     },
     methods: {
-      // getChoicesAvailable(index, upgrade) {
-      //   // TODO
-      //   return [];
-      //   // for all other selections, we only need to check against number of leveling selections
-      //   // NOTE: returning 0 here prevents this option from being selectable when leveling up
-      //   return this.pointsAvailable + this.choices[index];
-      // },
       generateChoicesData() {
         const choices = [];
         const choiceOptions = [];
@@ -153,7 +151,14 @@
         this.optionsLoaded = true;
       },
       saveTraining() {
-        console.log('>>> save training');
+        // add leveling choices to character
+        this.choicesMade.forEach((choice) => {
+          this.character.companion.levelSelections.push({ ...choice });
+        });
+
+        // save character
+        this.charactersStore.saveCharacter(this.character);
+        this.$emit('training-saved');
       },
     },
   };

@@ -2,6 +2,20 @@
   "damage": ["d6", "d8", "d10", "d12"],
   "range": ["melee", "close", "very close", "far"],
   "exampleExperience": "On High Alert, Bold Distraction, Navigation, We Always Find Them, Fetch, Protective, Expert Climber, Nobody Left Behind, Friendly, Nimble, Guardian of the Forest, You Can't Hit What You Can't Find, Intimidating, Service Animal, Scout, Royal Companion, Trusted Mount",
+  "features": [
+    {
+      "title": "actions",
+      "description": "You can make an action roll to command your companion using Instinct, and take advantage if they are using one of their companion traits."
+    },
+    {
+      "title": "attack",
+      "description": "If you command them to attack a target, on a success, their damage roll uses your proficiency and their damage dice."
+    },
+    {
+      "title": "stress",
+      "description": "Anytime your companion would take damage, they mark stress. When their stress slots are full, they drop out of the scene (hide, flee, etc). They are unavailable to you, and will return at your next long rest with one stress cleared.\n\nWhenever you use the Clear Stress downtime action on yourself, it automatically clears that much stress on your companion as well."
+    }
+  ],
   "training": [
     {
       "id": "training-experience",

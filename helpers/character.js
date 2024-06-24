@@ -232,7 +232,9 @@ export const calculateModifiers = (features, attribute) => {
 };
 
 /**
- * Get all character sheet features that modify a given attribute
+ * Get all character sheet features that modify a given attribute.
+ * If companion is passed, skips all modifier types except level
+ * selections (training).
  *
  * @param {Object} character The character to compile modifiers for
  * @param {attribute} attribute The attribute to compile modifiers for
@@ -241,17 +243,24 @@ export const calculateModifiers = (features, attribute) => {
  * @returns An array of features
  */
 export const getFeaturesByAttribute = (character, attribute, options = {}) => {
-  const burden =
-    character.equipment.primaryWeapon.burden + character.equipment.secondaryWeapon.burden;
-  const subclasses = character.subclass.map((characterSubclass) => {
-    return allSubclasses.find((subclass) => subclass.name === characterSubclass);
-  });
-  const community = COMMUNITY.find((community) => character.community === community.name);
-  const ancestry = ANCESTRY.find((ancestry) => character.ancestry === ancestry.name);
+  const burden = character.equipment
+    ? character.equipment.primaryWeapon.burden + character.equipment.secondaryWeapon.burden
+    : 0;
+  const subclasses = character.subclass
+    ? character.subclass.map((characterSubclass) => {
+        return allSubclasses.find((subclass) => subclass.name === characterSubclass);
+      })
+    : [];
+  const community = character.community
+    ? COMMUNITY.find((community) => character.community === community.name)
+    : null;
+  const ancestry = character.ancestry
+    ? ANCESTRY.find((ancestry) => character.ancestry === ancestry.name)
+    : null;
   const features = [];
 
   // weapons
-  if (character.equipment.primaryWeapon.feature) {
+  if (character.equipment && character.equipment.primaryWeapon.feature) {
     const primaryFeature = equipmentFeatures.find(
       (feature) => feature.name === character.equipment.primaryWeapon.feature,
     );
@@ -262,7 +271,7 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
   }
 
   // verify we are not carrying too much before including secondary weapon feature
-  if (burden < 3 && character.equipment.secondaryWeapon.secondaryFeature) {
+  if (character.equipment && burden < 3 && character.equipment.secondaryWeapon.secondaryFeature) {
     const secondaryFeature = equipmentFeatures.find(
       (feature) => feature.name === character.equipment.secondaryWeapon.secondaryFeature,
     );
@@ -273,7 +282,7 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
   }
 
   // armor
-  if (character.equipment.armor.name) {
+  if (character.equipment && character.equipment.armor.name) {
     const armorFeature = equipmentFeatures.find(
       (feature) => feature.name === character.equipment.armor.feature,
     );
