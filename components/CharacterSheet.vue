@@ -1,7 +1,7 @@
 <template lang="pug">
   .character-sheet
     SheetHeader(:character="character" @level-up="levelUp")
-      .flex.relative
+      .flex.relative(v-if="mq.mdMinus")
         NavButton(
           v-for="(button, index) in navButtons"
           :icon="button.icon"
@@ -11,7 +11,8 @@
         .nav-indicator.absolute.bottom-0.h-2.bg-white.pointer-events-none.transition-all.translate-y-px(
           :style="indicatorStyle"
         )
-    transition(:name="transition" mode="out-in")
+    //- Mobile/Tablet Character Sheet
+    transition(v-if="mq.mdMinus" :name="transition" mode="out-in")
       .space-y-16.pb-4.py-8(
         v-if="currentTab === 'attributes'"
         class="md:space-y-0 md:flex"
@@ -44,6 +45,19 @@
         SheetShapeshift(:character="character")
       .space-y-8.pb-4.py-8(v-else-if="currentTab === 'companion'")
         SheetCompanion(:character="character" :key="`${key}-companion`")
+    //- Desktop Sheet
+    .container.pb-16(v-else)
+      SheetStatistics(:character="character" :key="`${key}-statistics`")
+      .flex.space-x-8
+        .space-y-12(class="w-5/12")
+          SheetHealth(:character="character" :key="`${key}-health`")
+          SheetExperience(:character="character" :key="`${key}-experience`")
+          SheetGold(:character="character")
+          SheetClassFeature(:character="character")
+        .space-y-12(class="w-7/12")
+          SheetWeapons(:character="character")
+          SheetArmor(:character="character")
+          SheetInventory(:character="character")
     BasicModal(ref="levelUpModal" :title="`Welcome to Level ${character.level + 1}!`")
       SheetLeveling(:character="character" @level-saved="levelSaved")
 </template>

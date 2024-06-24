@@ -1,7 +1,7 @@
 <template lang="pug">
-  .text-center(:style="displayStyle")
+  .text-center.flex-shrink-0(:style="displayStyle")
     .flex.items-center(:class="displayClass")
-      .u-angled-corners.bg-black.px-2.w-full(class="py-0.5" :class="titleClass")
+      .u-angled-corners.bg-black.px-2(class="py-0.5" :class="titleClass")
         p.text-xs.uppercase.font-bold.text-white.truncate {{ title }}
       p.text-3xl.my-auto(:class="scoreClass")
         span(v-if="modifier && score > 0") +
@@ -48,12 +48,13 @@
       },
       displayStyle() {
         return {
-          'max-width': `${this.isStatistic ? '93' : '106'}px`,
+          'width': `${this.isStatistic ? '93' : '122'}px`,
         };
       },
       titleClass() {
         return {
-          'absolute bottom-5 left-0 w-full': !this.isStatistic,
+          'absolute bottom-5 left-1/2 w-5/6 -translate-x-1/2': !this.isStatistic,
+          'w-full': this.isStatistic,
         };
       },
       scoreClass() {

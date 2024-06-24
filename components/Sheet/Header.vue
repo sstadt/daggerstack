@@ -1,16 +1,19 @@
 <template lang="pug">
   .sheet-header.sticky.top-0.z-10.relative.transition-colors(:class="headerClass")
-    .sheet-header__title.flex-none.py-4.px-6.text-white(@click="openDrawer")
+    .sheet-header__title.flex-none.py-4.px-6.text-white.cursor-pointer(
+      :class="{ 'container': mq.lgPlus }"
+      @click="openDrawer"
+    )
       .sheet-header__domain-icons.flex.absolute.opacity-20(
         class="left-1/2"
         :class="domainsClass"
         :style="domainsStyle"
       )
         NuxtIcon(v-for="domain in domains" :name="domain")
-      h1.font-bold.text-4xl.uppercase.truncate {{ character.name }}
+      h1.font-bold.text-4xl.uppercase.truncate {{ character.name }} <span v-if="mq.lgPlus">({{ character.pronouns }})</span>
       p.sheet-header__details.text-slate-300.flex
         span.text-lg Level {{ character.level }} {{ classLabel }}
-        span.ml-auto {{ character.pronouns }}
+        span.ml-auto(v-if="mq.mdMinus") {{ character.pronouns }}
     slot
     BasicDrawer(ref="characterDrawer" :title="tabs[currentIndex].title")
       .flex.flex-col.flex-grow
@@ -58,6 +61,7 @@
 
   export default {
     name: 'SheetHeader',
+    inject: ['mq'],
     props: {
       character: {
         type: Object,

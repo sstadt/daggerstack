@@ -1,6 +1,6 @@
 <template lang="pug">
-  BasicCard.sheet-health
-    .flex.items-center.justify-center.pb-10
+  BasicCard.sheet-health(:title="mq.lgPlus ? 'Health' : null")
+    .flex.items-center.justify-center.pb-10(class="lg:mt-4")
       template(v-for="(threshold, index) in thresholds")
         p.relative.border.border-black.rounded.text-lg.py-1.pr-1.w-12.text-center
           | {{ threshold.score }}
@@ -26,6 +26,7 @@
 
   export default {
     name: 'SheetHealth',
+    inject: ['mq'],
     props: {
       character: {
         type: Object,

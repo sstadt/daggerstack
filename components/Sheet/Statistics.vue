@@ -1,13 +1,13 @@
 <template lang="pug">
-  .statistics
-    .px-3.flex.items-center
-      TraitDisplay.px-2(
+  .statistics(class="lg:flex lg:justify-between lg:items-center lg:mb-8")
+    .px-3.flex.items-center.flex-shrink-0.space-x-2(class="lg:px-0")
+      TraitDisplay(
         title="evasion"
         class="w-1/3"
         :score="characterEvasion"
       )
-      .w-px.h-20.mx-2.bg-slate-300
-      TraitDisplay.px-2(
+      .w-px.h-20.bg-slate-300(v-if="mq.mdMinus")
+      TraitDisplay(
         title="armor"
         class="w-1/3"
         :score="characterArmor"
@@ -18,8 +18,10 @@
           :max="maxArmor"
           :enabled="armorSlots"
         )
-    .h-px.bg-slate-300.mx-auto.mt-5.mb-8(class="w-4/5")
-    .px-6.grid.gap-8.grid-cols-3
+    .h-px.bg-slate-300.mx-auto.mt-5.mb-8(v-if="mq.mdMinus" class="w-4/5")
+    .px-6.grid.gap-6.grid-cols-3(
+      class="lg:flex lg:space-x-0 lg:mt-8 lg:px-0 lg:scale-90"
+    )
       TraitDisplay(
         title="agility"
         :score="characterAgility"
@@ -72,6 +74,7 @@
 
   export default {
     name: 'SheetStatistics',
+    inject: ['mq'],
     props: {
       character: {
         type: Object,
