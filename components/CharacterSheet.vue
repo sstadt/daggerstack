@@ -5,7 +5,7 @@
         NavButton(
           v-for="(button, index) in navButtons"
           :icon="button.icon"
-          :class="`w-1/${navButtons.length}`"
+          :style="buttonStyle"
           @click="open(button.icon)"
         )
         .nav-indicator.absolute.bottom-0.h-2.bg-white.pointer-events-none.transition-all.translate-y-px(
@@ -111,12 +111,19 @@
       baseClass() {
         return CLASSES[this.character.baseClass];
       },
+      buttonWidth() {
+        return 100 / this.navButtons.length;
+      },
+      buttonStyle() {
+        return {
+          width: `${this.buttonWidth}%`,
+        };
+      },
       indicatorStyle() {
-        const indicatorWidth = 100 / this.navButtons.length
-        const left = this.currentIndex * indicatorWidth;
+        const left = this.currentIndex * this.buttonWidth;
 
         return {
-          width: `${indicatorWidth}%`,
+          width: `${this.buttonWidth}%`,
           left: `${left}%`,
         };
       },
