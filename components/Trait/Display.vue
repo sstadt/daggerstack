@@ -1,5 +1,5 @@
 <template lang="pug">
-  .text-center
+  .text-center(:style="displayStyle")
     .flex.items-center(:class="displayClass")
       .u-angled-corners.bg-black.px-2.w-full(class="py-0.5" :class="titleClass")
         p.text-xs.uppercase.font-bold.text-white.truncate {{ title }}
@@ -44,6 +44,11 @@
           'flex-col u-bg-statistic': this.isStatistic,
           'u-bg-evasion': this.title === 'evasion',
           'u-bg-armor': this.title === 'armor',
+        };
+      },
+      displayStyle() {
+        return {
+          'max-width': `${this.isStatistic ? '93' : '106'}px`,
         };
       },
       titleClass() {

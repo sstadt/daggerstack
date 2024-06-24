@@ -10,9 +10,6 @@
 </template>
 
 <script>
-  import { useBuilderStore } from '~/stores/builder';
-  import { useCharactersStore } from '~/stores/characters';
-
   export default {
     name: 'App',
     data() {

@@ -7,6 +7,10 @@ export default defineNuxtConfig({
       mode: 'out-in',
     },
   },
+  plugins: [
+    '~/plugins/vue3-touch-events',
+    '~/plugins/vue3-mq',
+  ],
   modules: [
     'nuxt-icons',
     'nuxt-swiper',

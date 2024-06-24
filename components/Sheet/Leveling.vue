@@ -15,7 +15,10 @@
         .pt-6.mt-auto
           BasicButton.w-full(:disabled="newExperience === ''" @click="saveNewTierOptions") Next
       //- tier options
-      .flex.flex-col.p-6.overflow-hidden.flex-grow(v-else-if="showTierOptions")
+      .flex.flex-col.p-6.overflow-hidden.flex-grow(
+        v-else-if="showTierOptions"
+        class="md:px-32"
+      )
         .flex.justify-center.items-center.space-x-4.shrink-0
           button.flex.text-xl(
             :disabled="currentTierTab === 0"
@@ -34,7 +37,7 @@
             NuxtIcon(name="chevron-right")
         .shrink-0(v-if="tierChoices.length > 0")
           Swiper.tier-carousel(
-            :items-to-show="1"
+            :items-to-show="mq.lg ? 3 : 1"
             :initial-slide="currentTierTab"
             :centered-slides="true"
             :auto-height="true"
@@ -163,6 +166,7 @@
 
   export default {
     name: 'SheetLeveling',
+    inject: ['mq'],
     props: {
       character: {
         type: Object,
