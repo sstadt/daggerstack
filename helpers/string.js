@@ -11,7 +11,7 @@ export const traitLabel = (num) => {
 };
 
 export const titleCase = (str) => {
-  return ucFirst(str).replace(/([A-Z]+)/g, " $1").replace(/([A-Z][a-z])/g, " $1");
+  return str.split(' ').map((s) => ucFirst(s)).join(' ');
 };
 
 export const modifierString = (modifiers) => {

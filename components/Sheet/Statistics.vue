@@ -1,18 +1,18 @@
 <template lang="pug">
   .statistics(class="lg:flex lg:justify-between lg:items-center lg:mb-8")
-    .px-3.flex.items-center.flex-shrink-0.space-x-2(class="lg:px-0")
+    .px-3.flex.items-center.flex-shrink-0(class="lg:px-0")
       TraitDisplay(
         title="evasion"
         class="w-1/3"
         :score="characterEvasion"
       )
-      .w-px.h-20.bg-slate-300(v-if="mq.mdMinus")
+      .w-px.h-20.mx-2.bg-slate-300(v-if="mq.mdMinus")
       TraitDisplay(
         title="armor"
         class="w-1/3"
         :score="characterArmor"
       )
-      .flex.items-start.justify-center.flex-grow
+      .flex.items-start.justify-center.ml-1(class="md:ml-4 lg:ml-2")
         InputCheckboxCounter.grid.grid-cols-3.grid-rows-3.gap-1(
           v-model="currentArmor"
           :max="maxArmor"
