@@ -16,7 +16,7 @@
         span.ml-auto(v-if="mq.sm") {{ character.pronouns }}
     slot
     BasicDrawer(ref="characterDrawer" :title="tabs[currentIndex].title")
-      .flex.flex-col.flex-grow.overflow-x-hidden
+      .flex.flex-col.flex-grow.flex-shrink-0.overflow-x-hidden
         .flex.justify-center.items-center
           button.px-3.text-4xl(
             v-for="(tab, index) in tabs"
@@ -34,6 +34,9 @@
             SheetDescription.mt-2(:character="character")
             .flex.justify-center.pt-10(v-if="character.level < 10")
               BasicButton(@click="levelUp") Level Up
+          .space-y-6.mt-2(v-else-if="tabs[currentIndex].icon === 'background'")
+            SheetBackground(:character="character")
+            SheetConnections(:character="character")
           .space-y-6.mt-2(v-else-if="tabs[currentIndex].icon === 'cog'")
             SheetSettings.mt-2(:character="character")
         BasicCard.mt-auto
@@ -72,11 +75,16 @@
           tabs.push({ title: 'Hit Points & Stress', icon: 'health' });
         }
 
-        return tabs.concat([
-          { title: 'Rest', icon: 'campfire' },
-          { title: 'Persona', icon: 'persona' },
-          { title: 'Settings', icon: 'cog' },
-        ]);
+        tabs.push({ title: 'Rest', icon: 'campfire' });
+        tabs.push({ title: 'Persona', icon: 'persona' });
+
+        if (this.mq.lgPlus) {
+          tabs.push({ title: 'Background', icon: 'background' })
+        }
+
+        tabs.push({ title: 'Settings', icon: 'cog' });
+
+        return tabs;
       },
       classData() {
         return CLASSES[this.character.baseClass];

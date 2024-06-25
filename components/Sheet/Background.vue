@@ -1,5 +1,5 @@
 <template lang="pug">
-  BasicCard(title="Background Questions")
+  BasicCard(title="Background")
     .space-y-4.pt-4
       .space-y-1(v-for="item in background")
         p {{ item.question }}
