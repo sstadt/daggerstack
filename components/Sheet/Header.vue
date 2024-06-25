@@ -5,15 +5,15 @@
       @click="openDrawer"
     )
       .sheet-header__domain-icons.flex.absolute.opacity-20(
-        class="left-1/2 lg:left-auto lg:right-0"
+        class="left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-0 md:-translate-y-8 lg:-translate-x-1/2 lg:translate-y-0"
         :class="domainsClass"
         :style="domainsStyle"
       )
         NuxtIcon(v-for="domain in domains" :name="domain")
-      h1.font-bold.text-4xl.uppercase.truncate {{ character.name }} <span v-if="mq.lgPlus">({{ character.pronouns }})</span>
+      h1.font-bold.text-4xl.uppercase.truncate {{ character.name }} <span v-if="mq.mdPlus">({{ character.pronouns }})</span>
       p.sheet-header__details.text-slate-300.flex
         span.text-lg Level {{ character.level }} {{ classLabel }}
-        span.ml-auto(v-if="mq.mdMinus") {{ character.pronouns }}
+        span.ml-auto(v-if="mq.sm") {{ character.pronouns }}
     slot
     BasicDrawer(ref="characterDrawer" :title="tabs[currentIndex].title")
       .flex.flex-col.flex-grow.overflow-x-hidden
@@ -154,11 +154,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .sheet-header__domain-icons {
-    transform: translateX(-50%);
-
-    &:deep(svg) {
-      margin-bottom: 0;
-    }
+  .sheet-header__domain-icons:deep(svg) {
+    margin-bottom: 0;
   }
 </style>
