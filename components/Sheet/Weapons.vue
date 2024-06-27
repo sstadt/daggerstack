@@ -21,12 +21,12 @@
       .relative(v-if="character && character.equipment.secondaryWeapon.name")
         InventoryWeapon(
           :weapon="character.equipment.secondaryWeapon"
-          :class="{ 'opacity-20 pointer-events-none': isPrimaryTwoHanded }"
+          :class="{ 'opacity-20 pointer-events-none': respectBurden && isPrimaryTwoHanded }"
           :type="secondaryWeaponType"
           @click="openPicker(secondaryWeaponType)"
         )
         .absolute.transform.text-2xl.text-red-600.uppercase.w-full.text-center.font-black(
-          v-if="isPrimaryTwoHanded"
+          v-if="respectBurden && isPrimaryTwoHanded"
           class="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         ) No free hands
       BasicButton.mx-auto.block(v-else @click="openPicker(secondaryWeaponType)")
@@ -48,6 +48,7 @@
     newWeapon,
     calculateModifiers,
     getFeaturesByAttribute,
+    respectBurden,
   } from '~/helpers/character';
 
   import {
@@ -92,6 +93,9 @@
       },
       isPrimaryTwoHanded() {
         return this.character.equipment.primaryWeapon.burden > 1;
+      },
+      respectBurden() {
+        return respectBurden(this.character);
       },
     },
     methods: {

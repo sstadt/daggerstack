@@ -232,6 +232,23 @@ export const calculateModifiers = (features, attribute) => {
 };
 
 /**
+ * Determine if a character should respect burden when calculating equipment
+ * bonuses
+ *
+ * @param {Object} character The character to check
+ * @returns True if character sould respect burden limitations, false if not
+ */
+export const respectBurden = (character) => {
+  const multiclass = character.levelSelections
+    .find((selection) => selection.type === 'multiclass');
+
+  return !(
+    character.baseClass === 'warrior' ||
+    multiclass && multiclass.options.class === 'warrior'
+  );
+};
+
+/**
  * Get all character sheet features that modify a given attribute.
  * If companion is passed, skips all modifier types except level
  * selections (training).
@@ -243,7 +260,7 @@ export const calculateModifiers = (features, attribute) => {
  * @returns An array of features
  */
 export const getFeaturesByAttribute = (character, attribute, options = {}) => {
-  const burden = character.equipment
+  const burden = respectBurden(character) && character.equipment
     ? character.equipment.primaryWeapon.burden + character.equipment.secondaryWeapon.burden
     : 0;
   const subclasses = character.subclass

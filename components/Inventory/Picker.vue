@@ -36,6 +36,7 @@
   import WEAPONS from '~/data/weapons';
   import ARMOR from '~/data/armor';
 
+  import { respectBurden } from '~/helpers/character';
   import { REMOVE_EQUIPPED_ITEM } from '~/config/events';
   import {
     ALL_WEAPON_TYPE,
@@ -133,11 +134,15 @@
         }
 
         if (this.type === PRIMARY_WEAPON_TYPE) {
-          return [ ...WEAPONS.items.filter((item) => item.primary === true) ];
+          return WEAPONS.items.filter((item) => item.primary === true);
         }
 
         if (this.type === SECONDARY_WEAPON_TYPE) {
-          return [ ...WEAPONS.items.filter((item) => item.secondary === true) ];
+          return this.respectBurden
+            ? WEAPONS.items.filter((item) => item.secondary === true)
+            : WEAPONS.items.filter((item) => {
+                return item.secondary === true || item.primary === true && item.burden > 1;
+              });
         }
 
         if (this.type === ARMOR_TYPE) {
@@ -145,6 +150,9 @@
         }
 
         return [];
+      },
+      respectBurden() {
+        return respectBurden(this.character);
       },
     },
     methods: {
