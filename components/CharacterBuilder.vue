@@ -45,6 +45,7 @@
       } else {
         this.builderStore.currentPage = 0;
         this.builderStore.savePage();
+        this.$router.replace({'query': null});
       }
 
       this.saveLoaded = true;
