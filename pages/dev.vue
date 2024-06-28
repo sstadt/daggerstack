@@ -9,15 +9,15 @@
         InputTextarea(v-model="input")
     .flex-grow
       BasicButton(@click="copyToClipboard") Copy to Clipboard
-      pre(ref="output") {{ output }}
+      pre {{ output }}
 </template>
 
 <script>
-  // Weapons expect:
+  // Weapons expect (one per line):
   // Name       | trait   | range | damage | damage type | Burden     | Feature  | Tier
   // Broadsword | Agility | Melee | d8     | (Phy)       | One-Handed | Reliable | 0
 
-  // Armor expects:
+  // Armor expects (one per line):
   // Name           | Score | Feature  | Tier
   // Gambeson Armor | 2     | Flexible | 0
 
