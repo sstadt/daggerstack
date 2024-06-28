@@ -7,7 +7,7 @@
       v-model="currentValue"
       :key="`${key}-${n}`"
       :value="n - 1"
-      :disabled="n > maxSelectable || n < min"
+      :disabled="n > maxSelectable || n <= min"
       @click.prevent="updateValue(n)"
     )
     p.text-xs.text-slate-500.ml-auto.w-full(v-if="helperText !== null")
