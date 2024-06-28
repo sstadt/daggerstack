@@ -1,501 +1,2764 @@
 {
+  "features": [],
   "items": [
     {
-      "name": "Battleaxe",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "strength",
-      "range": "melee",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d10+3",
-      "damageType": "phy",
-      "burden": 2,
-      "starting": true
-    },
-    {
-      "name": "Warhammer",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "strength",
-      "range": "melee",
-      "feature": "heavy",
-      "secondaryFeature": null,
-      "damage": "1d12+3",
-      "damageType": "phy",
-      "burden": 2,
-      "starting": true
-    },
-    {
-      "name": "Greatsword",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "strength",
-      "range": "melee",
-      "feature": "massive",
-      "secondaryFeature": null,
-      "damage": "1d10+3",
-      "damageType": "phy",
-      "burden": 2,
-      "starting": true
-    },
-    {
-      "name": "Mace",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "strength",
-      "range": "melee",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d8+1",
-      "damageType": "phy",
-      "burden": 1,
-      "starting": true
-    },
-    {
-      "name": "Cutlas",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "presence",
-      "range": "melee",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d8+1",
-      "damageType": "phy",
-      "burden": 1,
-      "starting": true
-    },
-    {
       "name": "Broadsword",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "agility",
-      "range": "melee",
-      "feature": "reliable",
-      "secondaryFeature": null,
-      "damage": "1d8",
-      "damageType": "phy",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d8",
+      "damageType": "physical",
+      "tier": 0,
       "burden": 1,
-      "starting": true
+      "feature": {
+        "name": "reliable",
+        "label": "Reliable",
+        "description": "+1 to attack rolls with this weapon",
+        "modify": {}
+      }
     },
     {
       "name": "Longsword",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "agility",
-      "range": "melee",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d8+3",
-      "damageType": "phy",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d8+3",
+      "damageType": "physical",
+      "tier": 0,
       "burden": 2,
-      "starting": true
+      "feature": null
     },
     {
-      "name": "Rapier",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "presence",
-      "range": "melee",
-      "feature": "quick",
-      "secondaryFeature": null,
-      "damage": "1d8",
-      "damageType": "phy",
+      "name": "Mace",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d8+1",
+      "damageType": "physical",
+      "tier": 0,
       "burden": 1,
-      "starting": true
+      "feature": null
+    },
+    {
+      "name": "Battleaxe",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+3",
+      "damageType": "physical",
+      "tier": 0,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Greatsword",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+3",
+      "damageType": "physical",
+      "tier": 0,
+      "burden": 2,
+      "feature": {
+        "name": "massive",
+        "label": "Massive",
+        "description": "-1 Agility, roll one extra damage die and drop the lowest",
+        "modify": {
+          "agility": -1
+        }
+      }
+    },
+    {
+      "name": "Warhammer",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d12+3",
+      "damageType": "physical",
+      "tier": 0,
+      "burden": 2,
+      "feature": {
+        "name": "heavy",
+        "label": "Heavy",
+        "description": "-1 to Agility",
+        "modify": {
+          "agility": -1
+        }
+      }
     },
     {
       "name": "Dagger",
-      "type": "weapon",
-      "primary": true,
-      "secondary": true,
-      "trait": "finesse",
-      "range": "melee",
-      "feature": null,
-      "secondaryFeature": "paired",
-      "damage": "1d8+1",
-      "damageType": "phy",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Melee",
+      "damage": "d8+1",
+      "damageType": "physical",
+      "tier": 0,
       "burden": 1,
-      "starting": true
+      "feature": null
     },
     {
       "name": "Quarterstaff",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "instinct",
-      "range": "melee",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d10+3",
-      "damageType": "phy",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Melee",
+      "damage": "d10+3",
+      "damageType": "physical",
+      "tier": 0,
       "burden": 2,
-      "starting": true
+      "feature": null
+    },
+    {
+      "name": "Cutlass",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Melee",
+      "damage": "d8+1",
+      "damageType": "physical",
+      "tier": 0,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Rapier",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Melee",
+      "damage": "d8",
+      "damageType": "physical",
+      "tier": 0,
+      "burden": 1,
+      "feature": {
+        "name": "quick",
+        "label": "Quick",
+        "description": "When making an attack roll, mark a Stress to include an additional target in range",
+        "modify": {}
+      }
     },
     {
       "name": "Halberd",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "strength",
-      "range": "very close",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d8+2",
-      "damageType": "phy",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Very Close",
+      "damage": "d8+2",
+      "damageType": "physical",
+      "tier": 0,
       "burden": 2,
-      "starting": true
+      "feature": null
     },
     {
       "name": "Spear",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "finesse",
-      "range": "very close",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d8+2",
-      "damageType": "phy",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Very Close",
+      "damage": "d8+2",
+      "damageType": "physical",
+      "tier": 0,
       "burden": 2,
-      "starting": true
+      "feature": null
     },
     {
       "name": "Shortbow",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "agility",
-      "range": "far",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d6+3",
-      "damageType": "phy",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Far",
+      "damage": "d6+3",
+      "damageType": "physical",
+      "tier": 0,
       "burden": 2,
-      "starting": true
+      "feature": null
     },
     {
       "name": "Crossbow",
-      "type": "weapon",
-      "primary": true,
-      "secondary": true,
-      "trait": "finesse",
-      "range": "far",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d6+1",
-      "damageType": "phy",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Far",
+      "damage": "d6+1",
+      "damageType": "physical",
+      "tier": 0,
       "burden": 1,
-      "starting": true
+      "feature": null
     },
     {
       "name": "Longbow",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "agility",
-      "range": "very far",
-      "feature": "cumbersome",
-      "secondaryFeature": null,
-      "damage": "1d6+3",
-      "damageType": "phy",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Very Far",
+      "damage": "d6+3",
+      "damageType": "physical",
+      "tier": 0,
       "burden": 2,
-      "starting": true
-    },
-    {
-      "name": "Arcane Gauntlets",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "strength",
-      "range": "melee",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d10+3",
-      "damageType": "mag",
-      "burden": 2,
-      "starting": true
+      "feature": {
+        "name": "cumbersome",
+        "label": "Cumbersome",
+        "description": "-1 to Evasion",
+        "modify": {
+          "evasion": -1
+        }
+      }
     },
     {
       "name": "Hallowed Axe",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "strength",
-      "range": "melee",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d10+1",
-      "damageType": "mag",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+1",
+      "damageType": "magical",
+      "tier": 0,
       "burden": 1,
-      "starting": true
+      "feature": null
     },
     {
-      "name": "Hand Runes",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "instinct",
-      "range": "very close",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d10",
-      "damageType": "mag",
-      "burden": 1,
-      "starting": true
+      "name": "Arcane Gauntlets",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+3",
+      "damageType": "magical",
+      "tier": 0,
+      "burden": 2,
+      "feature": null
     },
     {
       "name": "Glowing Rings",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "agility",
-      "range": "very close",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d10+2",
-      "damageType": "mag",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Very Close",
+      "damage": "d10+12",
+      "damageType": "magical",
+      "tier": 0,
       "burden": 2,
-      "starting": true
+      "feature": null
     },
     {
-      "name": "Shortstaff",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "instinct",
-      "range": "close",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d8+1",
-      "damageType": "mag",
-      "burden": 1,
-      "starting": true
+      "name": "Hand Runes",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Very Close",
+      "damage": "d10",
+      "damageType": "magical",
+      "tier": 0,
+      "burden": 2,
+      "feature": null
     },
     {
       "name": "Returning Blade",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "finesse",
-      "range": "close",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d8+1",
-      "damageType": "mag",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Close",
+      "damage": "d8+1",
+      "damageType": "magical",
+      "tier": 0,
       "burden": 1,
-      "starting": true
+      "feature": null
     },
     {
-      "name": "Wand",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "knowledge",
-      "range": "far",
-      "feature": null,
-      "secondaryFeature": null,
-      "damage": "1d6+1",
-      "damageType": "mag",
+      "name": "Shortstaff",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Close",
+      "damage": "d8+1",
+      "damageType": "magical",
+      "tier": 0,
       "burden": 1,
-      "starting": true
+      "feature": null
     },
     {
       "name": "Dualstaff",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "instinct",
-      "range": "far",
-      "feature": null,
-      "damage": "1d6+3",
-      "damageType": "mag",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Far",
+      "damage": "d6+3",
+      "damageType": "magical",
+      "tier": 0,
       "burden": 2,
-      "starting": true
+      "feature": null
     },
     {
       "name": "Scepter",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "presence",
-      "range": "far",
-      "feature": "versatile",
-      "secondaryFeature": null,
-      "damage": "1d6",
-      "damageType": "mag",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Far",
+      "damage": "d6",
+      "damageType": "magical",
+      "tier": 0,
       "burden": 2,
-      "starting": true
+      "feature": {
+        "name": "versatile",
+        "label": "Versatile",
+        "description": "Presence Melee - d10",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Wand",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Far",
+      "damage": "d6+1",
+      "damageType": "magical",
+      "tier": 0,
+      "burden": 1,
+      "feature": null
     },
     {
       "name": "Greatstaff",
-      "type": "weapon",
-      "primary": true,
-      "secondary": false,
-      "trait": "knowledge",
-      "range": "very far",
-      "feature": "powerful",
-      "secondaryFeature": null,
-      "damage": "1d6",
-      "damageType": "mag",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Very Far",
+      "damage": "d6",
+      "damageType": "magical",
+      "tier": 0,
       "burden": 2,
-      "starting": true
+      "feature": {
+        "name": "powerful",
+        "label": "Powerful",
+        "description": "Roll one extra damage die and drop the lowest",
+        "modify": {}
+      }
     },
     {
-      "name": "Round Shield",
-      "type": "weapon",
-      "primary": false,
-      "secondary": true,
-      "trait": "strength",
-      "range": "melee",
-      "feature": null,
-      "secondaryFeature": "protective",
-      "damage": "1d4",
-      "damageType": "phy",
+      "name": "Improved Broadsword",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d8+3",
+      "damageType": "physical",
+      "tier": 1,
       "burden": 1,
-      "starting": true
+      "feature": {
+        "name": "reliable",
+        "label": "Reliable",
+        "description": "+1 to attack rolls with this weapon",
+        "modify": {}
+      }
     },
     {
-      "name": "Tower Shield",
-      "type": "weapon",
-      "primary": false,
-      "secondary": true,
-      "trait": "strength",
-      "range": "melee",
-      "feature": null,
-      "secondaryFeature": "barrier",
-      "damage": "1d6",
-      "damageType": "phy",
-      "burden": 1,
-      "starting": true
+      "name": "Improved Longsword",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d8+6",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 2,
+      "feature": null
     },
     {
-      "name": "Small Dagger",
-      "type": "weapon",
-      "primary": false,
-      "secondary": true,
-      "trait": "finesse",
-      "range": "melee",
-      "feature": null,
-      "secondaryFeature": "paired",
-      "damage": "1d8",
-      "damageType": "phy",
+      "name": "Improved Mace",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+4",
+      "damageType": "physical",
+      "tier": 1,
       "burden": 1,
-      "starting": true
+      "feature": null
+    },
+    {
+      "name": "Improved Battleaxe",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+6",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Improved Greatsword",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+6",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 2,
+      "feature": {
+        "name": "massive",
+        "label": "Massive",
+        "description": "-1 Agility, roll one extra damage die and drop the lowest",
+        "modify": {
+          "agility": -1
+        }
+      }
+    },
+    {
+      "name": "Improved Warhammer",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d12+6",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 2,
+      "feature": {
+        "name": "heavy",
+        "label": "Heavy",
+        "description": "-1 to Agility",
+        "modify": {
+          "agility": -1
+        }
+      }
+    },
+    {
+      "name": "Improved Dagger",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Melee",
+      "damage": "d8+4",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Improved Quarterstaff",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Melee",
+      "damage": "d10+6",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Improved Cutlass",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Melee",
+      "damage": "d8+4",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Improved Rapier",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Melee",
+      "damage": "d8+3",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "quick",
+        "label": "Quick",
+        "description": "When making an attack roll, mark a Stress to include an additional target in range",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Improved Halberd",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Very Close",
+      "damage": "d8+5",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Improved Spear",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Very Close",
+      "damage": "d8+5",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Improved Shortbow",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Far",
+      "damage": "d6+6",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Improved Crossbow",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Far",
+      "damage": "d6+4",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Improved Longbow",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Very",
+      "damage": "Far",
+      "damageType": "magical",
+      "tier": null,
+      "burden": 2,
+      "feature": {
+        "name": "two-handed",
+        "label": "Two-Handed",
+        "description": "-1 to Evasion",
+        "modify": {
+          "evasion": -1
+        }
+      }
+    },
+    {
+      "name": "Gilded Falchion",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+4",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "powerful",
+        "label": "Powerful",
+        "description": "Roll one extra damage die and drop the lowest",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Knuckle Blades",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+6",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 2,
+      "feature": {
+        "name": "brutal",
+        "label": "Brutal",
+        "description": "For every 10 rolled on a damage die, roll an extra d10 of damage",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Urok Broadsword",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Melee",
+      "damage": "d8+3",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "deadly",
+        "label": "Deadly",
+        "description": "When you do Severe damage, deal one extra HP",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Bladed Whip",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Very Close",
+      "damage": "d8+3",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "quick",
+        "label": "Quick",
+        "description": "When making an attack roll, mark a Stress to include an additional target in range",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Steelforged Halberd",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Very Close",
+      "damage": "d8+4",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 2,
+      "feature": {
+        "name": "scary",
+        "label": "Scary",
+        "description": "Successful attacks also deal an extra Stress",
+        "modify": {}
+      }
+    },
+    {
+      "name": "War Scythe",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Very Close",
+      "damage": "d8+5",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 2,
+      "feature": {
+        "name": "reliable",
+        "label": "Reliable",
+        "description": "+1 on attack rolls with this weapon",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Greatbow",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Far",
+      "damage": "d6+6",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 2,
+      "feature": {
+        "name": "powerful",
+        "label": "Powerful",
+        "description": "Roll one extra damage die and drop the lowest",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Blunderbuss",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Far",
+      "damage": "d6+6",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "reloading",
+        "label": "Reloading",
+        "description": "Roll 1d6 after the attack. On a 1, you must use an action to reload your weapon before you can fire it again",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Finehair Bow",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Very Far",
+      "damage": "d6+5",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 2,
+      "feature": {
+        "name": "reliable",
+        "label": "Reliable",
+        "description": "+1 on attack rolls with this weapon",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Improved Hallowed Axe",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+4",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Improved Arcane Gauntlets",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+6",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Improved Glowing Rings",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Very Close",
+      "damage": "d10+5",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Improved Hand Runes",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Very Close",
+      "damage": "d10+3",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Improved Returning Blade",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Close",
+      "damage": "d8+4",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Improved Shortstaff",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Close",
+      "damage": "d8+4",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Improved Dualstaff",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Far",
+      "damage": "d6+6",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Improved Scepter",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Far",
+      "damage": "d6+3",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 2,
+      "feature": {
+        "name": "versatile",
+        "label": "Versatile",
+        "description": "Presence Melee - d10+3",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Improved Wand",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Far",
+      "damage": "d6+4",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Improved Greatstaff",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Very Far",
+      "damage": "d6+3",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 2,
+      "feature": {
+        "name": "powerful",
+        "label": "Powerful",
+        "description": "Roll one extra damage die and drop the lowest",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Ego Blade",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d12+4",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "pompous",
+        "label": "Pompous",
+        "description": "Must have a Presence score of 0 or less to use this weapon",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Casting Sword",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+4",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 2,
+      "feature": {
+        "name": "versatile",
+        "label": "Versatile",
+        "description": "Knowledge Far - d6+3",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Devouring Dagger",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Melee",
+      "damage": "d8+4",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "scary",
+        "label": "Scary",
+        "description": "Successful attacks also deal a stress",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Hammer of Exota",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Melee",
+      "damage": "d8+6",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 2,
+      "feature": {
+        "name": "eruptive",
+        "label": "Eruptive",
+        "description": "When you hit a creature in Melee, each Very Close enemy must make a Reaction Roll (14) or take half damage as well.",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Yutari Bloodbow",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Far",
+      "damage": "d6+4",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 2,
+      "feature": {
+        "name": "brutal",
+        "label": "Brutal",
+        "description": "For every 6 rolled on a damage die, roll an additional d6 of damage",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Elder Bow",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Far",
+      "damage": "d6+4",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 2,
+      "feature": {
+        "name": "powerful",
+        "label": "Powerful",
+        "description": "Roll one extra damage die and drop the lowest",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Scepter of Elias",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Far",
+      "damage": "d6+3",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "invigorating",
+        "label": "Invigorating",
+        "description": "When you make a successful attack, roll a d4. On a 4, clear a stress",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Wand of Enthrallment",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Far",
+      "damage": "d6+4",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "persuasive",
+        "label": "Persuasive",
+        "description": "Mark stress before rolling Presence to add +2 to the result",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Bonded Staff",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Far",
+      "damage": "d6+4",
+      "damageType": "magical",
+      "tier": 1,
+      "burden": 2,
+      "feature": {
+        "name": "reliable",
+        "label": "Reliable",
+        "description": "1 on any attack rolls with this weapon",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Advanced Broadsword",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d8+6",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "reliable",
+        "label": "Reliable",
+        "description": "+1 to attack rolls with this weapon",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Advanced Longsword",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d8+9",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Advanced Mace",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d8+7",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Advanced Battleaxe",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+9",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Advanced Greatsword",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+9",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 2,
+      "feature": {
+        "name": "massive",
+        "label": "Massive",
+        "description": "-1 Agility, roll one extra damage die and drop the lowest",
+        "modify": {
+          "agility": -1
+        }
+      }
+    },
+    {
+      "name": "Advanced Warhammer",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d12+9",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 2,
+      "feature": {
+        "name": "heavy",
+        "label": "Heavy",
+        "description": "-1 to Agility",
+        "modify": {
+          "agility": -1
+        }
+      }
+    },
+    {
+      "name": "Advanced Dagger",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Melee",
+      "damage": "d8+7",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Advanced Quarterstaff",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Melee",
+      "damage": "d10+9",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Advanced Cutlass",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Melee",
+      "damage": "d8+7",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Advanced Rapier",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Melee",
+      "damage": "d8+6",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "quick",
+        "label": "Quick",
+        "description": "When making an attack roll, mark a Stress to include an additional target in range",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Advanced Halberd",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Very Close",
+      "damage": "d8+8",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Advanced Spear",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Very Close",
+      "damage": "d8+8",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Advanced Shortbow",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Far",
+      "damage": "d6+9",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Advanced Crossbow",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Far",
+      "damage": "d6+7",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Advanced Longbow",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Very Far",
+      "damage": "d6+9",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 2,
+      "feature": {
+        "name": "cumbersome",
+        "label": "Cumbersome",
+        "description": "-1 to Evasion",
+        "modify": {
+          "evasion": -1
+        }
+      }
+    },
+    {
+      "name": "Flickerfly Blade",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d8+5",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "sharpwing",
+        "label": "Sharpwing",
+        "description": "Add your Agility score to this weapon's damage roll",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Bravesword",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d12+7",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 2,
+      "feature": {
+        "name": "dense",
+        "label": "Dense",
+        "description": "-1 to Agility & +3 to Severe Damage Threshold",
+        "modify": {
+          "agility": -1,
+          "severeDamageThreshold": 3
+        }
+      }
+    },
+    {
+      "name": "Hell's Hammer",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+7",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 2,
+      "feature": {
+        "name": "devastating",
+        "label": "Devastating",
+        "description": "Mark stress before your attack roll to use d20s as your damage dice instead",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Labrys Axe",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+7",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 2,
+      "feature": {
+        "name": "protective",
+        "label": "Protective",
+        "description": "Add +1 to your Armor score",
+        "modify": {
+          "armorScore": 1
+        }
+      }
+    },
+    {
+      "name": "Meridian Cutlass",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Melee",
+      "damage": "d10+5",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "dueling",
+        "label": "Dueling",
+        "description": "Take advantage on attack rolls when there are no other adversaries or allies besides the current target in Close range",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Retractable Saber",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Melee",
+      "damage": "d10+7",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "retractable",
+        "label": "Retractable",
+        "description": "Blade can be hidden in hilt to avoid recognition as a weapon",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Double Flail",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Very Close",
+      "damage": "d10+8",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 2,
+      "feature": {
+        "name": "powerful",
+        "label": "Powerful",
+        "description": "Roll one extra damage die and drop the lowest",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Talon Blades",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Close",
+      "damage": "d10+7",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 2,
+      "feature": {
+        "name": "brutal",
+        "label": "Brutal",
+        "description": "For every 10 rolled on a damage die, roll an additional d10 of damage",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Spiked Bow",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Very Far",
+      "damage": "d6+7",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 2,
+      "feature": {
+        "name": "versatile",
+        "label": "Versatile",
+        "description": "Agility Melee - d12+5",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Black Powder Revolver",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Very Far",
+      "damage": "d6+6",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "reloading",
+        "label": "Reloading",
+        "description": "Roll 1d6 after the attack. On a 1, you must use an action to reload your weapon before you can fire it again",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Advanced Hallowed Axe",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+7",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Advanced Arcane Gauntlets",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+9",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Advanced Glowing Rings",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Very Close",
+      "damage": "d10+8",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Advanced Hand Runes",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Very Close",
+      "damage": "d10+6",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Advanced Returning Blade",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Close",
+      "damage": "d8+7",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Advanced Shortstaff",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Close",
+      "damage": "d8+7",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Advanced Dualstaff",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Far",
+      "damage": "d6+9",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Advanced Scepter",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Far",
+      "damage": "d6+6",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 2,
+      "feature": {
+        "name": "versatile",
+        "label": "Versatile",
+        "description": "Presence Melee - d10+4",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Advanced Wand",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Far",
+      "damage": "d6+7",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Advanced Greatstaff",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Very Far",
+      "damage": "d6+6",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 2,
+      "feature": {
+        "name": "powerful",
+        "label": "Powerful",
+        "description": "oll one extra damage die and drop the lowest",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Axe of Fortunis",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+8",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 2,
+      "feature": {
+        "name": "lucky",
+        "label": "Lucky",
+        "description": "Spend a Stress on a failure to reroll your attack and take the new result",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Blessed Anlace",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Melee",
+      "damage": "d10+6",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "healing",
+        "label": "Healing",
+        "description": "During downtime, automatically heal 1 hit point",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Ghostblade",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Melee",
+      "damage": "d10+7",
+      "damageType": "any",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "otherworldly",
+        "label": "Otherworldly",
+        "description": "You can choose whether to do Physical or Magic damage",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Body Runes",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Very Close",
+      "damage": "d20+4",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "painful",
+        "label": "Painful",
+        "description": "Mark stress every time you attack with this weapon",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Widogast Pendant",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Close",
+      "damage": "d10+5",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "timebender",
+        "label": "Timebender",
+        "description": "You may choose the target of your attack after making your attack roll",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Gilded Bow",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Far",
+      "damage": "d6+7",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 2,
+      "feature": {
+        "name": "self-correcting",
+        "label": "Self-Correcting",
+        "description": "Any 1's rolled on the damage dice may be treated as 8's instead",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Firestaff",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Far",
+      "damage": "d6+7",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 2,
+      "feature": {
+        "name": "burn",
+        "label": "Burn",
+        "description": "For every damage dice that rolls an 6, deal a stress",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Mage Orb",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Far",
+      "damage": "d6+7",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "powerful",
+        "label": "Powerful",
+        "description": "Roll one extra damage die and drop the lowest",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Ilmari's Blunderbuss",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Very Far",
+      "damage": "d6+6",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "reloading",
+        "label": "Reloading",
+        "description": "Roll 1d6 after the attack. On a 1, you must use an action to reload your weapon before you can fire it again",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Legendary Broadsword",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d8+9",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "reliable",
+        "label": "Reliable",
+        "description": "+1 to attack rolls with this weapon",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Legendary Longsword",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d8+12",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Legendary Mace",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d8+10",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Legendary Battleaxe",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+12",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Legendary Greatsword",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+12",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "massive",
+        "label": "Massive",
+        "description": "-1 Agility, roll one extra damage die and drop the lowest",
+        "modify": {
+          "agility": -1
+        }
+      }
+    },
+    {
+      "name": "Legendary Warhammer",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d12+12",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "heavy",
+        "label": "Heavy",
+        "description": "-1 to Agility",
+        "modify": {
+          "agility": -1
+        }
+      }
+    },
+    {
+      "name": "Legendary Dagger",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Melee",
+      "damage": "d8+10",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Legendary Quarterstaff",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Melee",
+      "damage": "d10+12",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Legendary Cutlass",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Melee",
+      "damage": "d8+10",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Legendary Rapier",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Melee",
+      "damage": "d8+9",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "quick",
+        "label": "Quick",
+        "description": "When making an attack roll, mark a Stress to include an additional target in range",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Legendary Halberd",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Very Close",
+      "damage": "d8+11",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Legendary Spear",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Very Close",
+      "damage": "d8+11",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Legendary Shortbow",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Far",
+      "damage": "d6+12",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Legendary Crossbow",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Far",
+      "damage": "d6+10",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Legendary Longbow",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Very Far",
+      "damage": "d6+12",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "cumbersome",
+        "label": "Cumbersome",
+        "description": "-1 to Evasion",
+        "modify": {
+          "evasion": -1
+        }
+      }
+    },
+    {
+      "name": "Double-Sided Sword",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d10+9",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "quick",
+        "label": "Quick",
+        "description": "When making an attack roll, mark a Stress to include an additional target in range",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Impact Gauntlet",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+11",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "concussive",
+        "label": "Concussive",
+        "description": "Spend Hope on a successful attack to launch the target into Far range",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Sledge Axe",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d12+13",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "destructive",
+        "label": "Destructive",
+        "description": "-1 to Agility, all Very Close enemies mark a Stress on a successful attack",
+        "modify": {
+          "agility": -1
+        }
+      }
+    },
+    {
+      "name": "Curved Dagger",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Melee",
+      "damage": "d8+9",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "serrated",
+        "label": "Serrated",
+        "description": "Any 1's rolled on the damage dice count as 11 points of damage",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Extended Polearm",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Very Close",
+      "damage": "d8+10",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "long",
+        "label": "Long",
+        "description": "Can target all enemies in a line within range with your attack",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Swinging Ropeblade",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Close",
+      "damage": "d8+9",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "grappling",
+        "label": "Grappling",
+        "description": "Spend Hope on a successful attack to temporarily make the target Restrained, or pull them into melee with you",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Ricochet Axes",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Far",
+      "damage": "d6+11",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "bouncing",
+        "label": "Bouncing",
+        "description": "Spend any amount of Stress to hit that many targets in range with the attack",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Aantari Bow",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Far",
+      "damage": "d6+11",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "reliable",
+        "label": "Reliable",
+        "description": "+1 on any attack rolls with this weapon",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Hand Cannon",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Very Far",
+      "damage": "d6+12",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "reloading",
+        "label": "Reloading",
+        "description": "Roll 1d6 after the attack. On a 1, you must use an action to reload your weapon before you can fire it again",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Legendary Hallowed Axe",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+10",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Legendary Arcane Gauntlets",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+12",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Legendary Glowing Rings",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Very Close",
+      "damage": "d10+11",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Legendary Hand Runes",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Very Close",
+      "damage": "d10+9",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Legendary Returning Blade",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Close",
+      "damage": "d8+10",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Legendary Shortstaff",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Close",
+      "damage": "d8+10",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Legendary Dualstaff",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Far",
+      "damage": "d8+12",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 2,
+      "feature": null
+    },
+    {
+      "name": "Legendary Scepter",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Far",
+      "damage": "d6+9",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "versatile",
+        "label": "Versatile",
+        "description": "Presence Melee - d10+6",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Legendary Wand",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Far",
+      "damage": "d6+10",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Legendary Greatstaff",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Very Far",
+      "damage": "d6+9",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "powerful",
+        "label": "Powerful",
+        "description": "Roll one extra damage die and drop the lowest",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Sword of Light & Flame",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d10+11",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "penetrating",
+        "label": "Penetrating",
+        "description": "Cuts through solid material",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Siphoning Gauntlets",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Melee",
+      "damage": "d10+9",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "lifestealing",
+        "label": "Lifestealing",
+        "description": "On a successful attack, roll a d6. On a 6, heal a hit point or clear a Stress",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Midas Scythe",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Melee",
+      "damage": "d10+9",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "greedy",
+        "label": "Greedy",
+        "description": "You may spend one handful of gold to increase your proficiency by +1 on a damage roll",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Floating Bladeshards",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Close",
+      "damage": "d8+9",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "powerful",
+        "label": "Powerful",
+        "description": "Roll one extra damage die and drop the lowest",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Bloodstaff",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Far",
+      "damage": "d20+7",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "painful",
+        "label": "Painful",
+        "description": "Mark a Stress every time you attack with this weapon",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Thistlebow",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Far",
+      "damage": "d6+13",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "reliable",
+        "label": "Reliable",
+        "description": "+1 on any attack rolls with this weapon",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Wand of Essek",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Far",
+      "damage": "d8+13",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "timebender",
+        "label": "Timebender",
+        "description": "-1 to Agility. You may choose the target of your attack after making your attack roll",
+        "modify": {
+          "agility": -1
+        }
+      }
+    },
+    {
+      "name": "Magus Revolver",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Very Far",
+      "damage": "d6+13",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "reloading",
+        "label": "Reloading",
+        "description": "Roll 1d6 after the attack. On a 1, you must use an action to reload your weapon before you can fire it again",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Fusion Gloves",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Very Far",
+      "damage": "d6+9",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 2,
+      "feature": {
+        "name": "bonded",
+        "label": "Bonded",
+        "description": "Add your Level to the damage result",
+        "modify": {}
+      }
     },
     {
       "name": "Shortsword",
-      "type": "weapon",
-      "primary": false,
-      "secondary": true,
-      "trait": "agility",
-      "range": "melee",
-      "feature": null,
-      "secondaryFeature": "paired",
-      "damage": "1d8",
-      "damageType": "phy",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d8",
+      "damageType": "physical",
+      "tier": 0,
       "burden": 1,
-      "starting": true
+      "feature": {
+        "name": "paired",
+        "label": "Paired",
+        "description": "+2 to Primary Weapon damage in Melee",
+        "modify": {
+          "primaryMeleeDamage": 2
+        }
+      }
+    },
+    {
+      "name": "Round Shield",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d4",
+      "damageType": "physical",
+      "tier": 0,
+      "burden": 1,
+      "feature": {
+        "name": "protective",
+        "label": "Protective",
+        "description": "Add +1 to your armor score",
+        "modify": {
+          "armorScore": 1
+        }
+      }
+    },
+    {
+      "name": "Tower Shield",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d6",
+      "damageType": "physical",
+      "tier": 0,
+      "burden": 1,
+      "feature": {
+        "name": "barrier",
+        "label": "Barrier",
+        "description": "Add +3 to your armor score, -2 to Evasion",
+        "modify": {
+          "armorScore": 3,
+          "evasion": -2
+        }
+      }
+    },
+    {
+      "name": "Small Dagger",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Melee",
+      "damage": "d8",
+      "damageType": "physical",
+      "tier": 0,
+      "burden": 1,
+      "feature": {
+        "name": "paired",
+        "label": "Paired",
+        "description": "+2 to Primary Weapon damage in Melee",
+        "modify": {
+          "primaryMeleeDamage": 2
+        }
+      }
     },
     {
       "name": "Whip",
-      "type": "weapon",
-      "primary": false,
-      "secondary": true,
-      "trait": "agility",
-      "range": "melee",
-      "feature": null,
-      "secondaryFeature": "whipcrack",
-      "damage": "1d6",
-      "damageType": "phy",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Very Close",
+      "damage": "d6",
+      "damageType": "physical",
+      "tier": 0,
       "burden": 1,
-      "starting": true
+      "feature": {
+        "name": "whipcrack",
+        "label": "Whipcrack",
+        "description": "Mark a Stress to scatter enemies in Melee into Close range",
+        "modify": {}
+      }
     },
     {
       "name": "Grappler",
-      "type": "weapon",
-      "primary": false,
-      "secondary": true,
-      "trait": "finesse",
-      "range": "close",
-      "feature": null,
-      "secondaryFeature": "hook",
-      "damage": "1d6",
-      "damageType": "phy",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Close",
+      "damage": "d6",
+      "damageType": "physical",
+      "tier": 0,
       "burden": 1,
-      "starting": true
-    }
-  ],
-  "features": [
-    {
-      "name": "heavy",
-      "modify": {
-        "agility": -1
+      "feature": {
+        "name": "hook",
+        "label": "Hook",
+        "description": "On a successful attack, you may also pull the target into Melee with you",
+        "modify": {}
       }
     },
     {
-      "name": "massive",
-      "modify": {
-        "agility": -1
-      },
-      "description": "Roll one extra damage die and drop the lowest"
+      "name": "Hand Crossbow",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Far",
+      "damage": "d6+1",
+      "damageType": "physical",
+      "tier": 0,
+      "burden": 1,
+      "feature": null
     },
     {
-      "name": "reliable",
-      "description": "+1 to attack rolls with this weapon"
-    },
-    {
-      "name": "quick",
-      "description": "Mark stress to attack an additional target in range"
-    },
-    {
-      "name": "cumbersome",
-      "modify": {
-        "evasion": -1
+      "name": "Improved Shortsword",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d8+2",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "paired",
+        "label": "Paired",
+        "description": "+3 to Primary Weapon damage in Melee",
+        "modify": {
+          "primaryMeleeDamage": 3
+        }
       }
     },
     {
-      "name": "versatile",
-      "description": "Presence Melee - d10"
-    },
-    {
-      "name": "powerful",
-      "description": "Roll one extra damage die and drop the lowest"
-    },
-    {
-      "name": "paired",
-      "modify": {
-        "primaryWeaponDamage": 2
+      "name": "Improved Round Shield",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d4+2",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "protective",
+        "label": "Protective",
+        "description": "+2 to Armor Score",
+        "modify": {
+          "armorScore": 2
+        }
       }
     },
     {
-      "name": "protective",
-      "modify": {
-        "armorScore": 1
+      "name": "Improved Tower Shield",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d6+2",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "barrier",
+        "label": "Barrier",
+        "description": "+4 to Armor Score, -2 to Evasion",
+        "modify": {
+          "armorScore": 4,
+          "evasion": -2
+        }
       }
     },
     {
-      "name": "barrier",
-      "modify": {
-        "armorScore": 3,
-        "evasion": -2
+      "name": "Improved Small Dagger",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Melee",
+      "damage": "d8+2",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "paired",
+        "label": "Paired",
+        "description": "+3 to Primary Weapon damage in Melee",
+        "modify": {
+          "primaryMeleeDamage": 3
+        }
       }
     },
     {
-      "name": "whipcrack",
-      "description": "Mark Stress to scatter enemies in melee back to close range."
+      "name": "Improved Whip",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Very Close",
+      "damage": "d6+2",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "whipcrack",
+        "label": "Whipcrack",
+        "description": "Mark stress to scatter enemies in Melee into Close range",
+        "modify": {}
+      }
     },
     {
-      "name": "hook",
-      "description": "On a successful attack, you may also pull the target into melee with you."
+      "name": "Improved Grappler",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Close",
+      "damage": "d6+2",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "hook",
+        "label": "Hook",
+        "description": "On a successful attack, you may also pull the target into Melee with you",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Improved Hand Crossbow",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Far",
+      "damage": "d6+3",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Spiked Shield",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d6+2",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "double duty",
+        "label": "Double Duty",
+        "description": "+2 to Armor score, +1 to Primary Weapon damage in Melee",
+        "modify": {
+          "armorScore": 2,
+          "primaryMeleeDamage": 1
+        }
+      }
+    },
+    {
+      "name": "Parrying Dagger",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Melee",
+      "damage": "d6+2",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": {
+        "name": "parry",
+        "label": "Parry",
+        "description": "On an attack against you, roll this weapon's damage dice. If any match the attacker's, they are removed before damage is totalled",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Returning Axe",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Close",
+      "damage": "d6+4",
+      "damageType": "physical",
+      "tier": 1,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Advanced Shortsword",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d8+4",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "paired",
+        "label": "Paired",
+        "description": "+4 to Primary Weapon damage in Melee",
+        "modify": {
+          "primaryMeleeDamage": 4
+        }
+      }
+    },
+    {
+      "name": "Advanced Round Shield",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d4+4",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "protective",
+        "label": "Protective",
+        "description": "+3 to Armor Score",
+        "modify": {
+          "armorScore": 3
+        }
+      }
+    },
+    {
+      "name": "Advanced Tower Shield",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d6+4",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "barrier",
+        "label": "Barrier",
+        "description": "+5 to Armor Score, -2 to Evasion",
+        "modify": {
+          "armorScore": 5,
+          "evasion": -2
+        }
+      }
+    },
+    {
+      "name": "Advanced Small Dagger",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Melee",
+      "damage": "d8+4",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "paired",
+        "label": "Paired",
+        "description": "+4 to Primary Weapon damage in Melee",
+        "modify": {
+          "primaryMeleeDamage": 4
+        }
+      }
+    },
+    {
+      "name": "Advanced Whip",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Very Close",
+      "damage": "d6+4",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "whipcrack",
+        "label": "Whipcrack",
+        "description": "Mark stress to scatter enemies in Melee into Close range",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Advanced Grappler",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Close",
+      "damage": "d6+4",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "hook",
+        "label": "Hook",
+        "description": "On a successful attack, you may also pull the target into Melee with you",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Advanced Hand Crossbow",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Far",
+      "damage": "d6+4",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Buckler",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d4+4",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "deflecting",
+        "label": "Deflecting",
+        "description": "On an incoming attack, you may spend an armor slot to boost your Evasion score by your Armor score",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Powered Gauntlet",
+      "slot": "primary",
+      "trait": "Knowledge",
+      "range": "Close",
+      "damage": "d6+4",
+      "damageType": "magical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "charged attack",
+        "label": "Charged Attack",
+        "description": "Mark stress to increase proficiency by +1 on Primary Weapon attack",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Hand Sling",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Very Far",
+      "damage": "d6+4",
+      "damageType": "physical",
+      "tier": 2,
+      "burden": 1,
+      "feature": {
+        "name": "versatile",
+        "label": "Versatile",
+        "description": "Finesse Close - d8+4",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Legendary Shortsword",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d8+6",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "paired",
+        "label": "Paired",
+        "description": "+5 to Primary Weapon damage in Melee",
+        "modify": {
+          "primaryMeleeDamage": 5
+        }
+      }
+    },
+    {
+      "name": "Legendary Round Shield",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d4+6",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "protective",
+        "label": "Protective",
+        "description": "+4 to Armor Score",
+        "modify": {
+          "armorScore": 4
+        }
+      }
+    },
+    {
+      "name": "Legendary Tower Shield",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d4+6",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "barrier",
+        "label": "Barrier",
+        "description": "+6 to Armor Score, -2 to Evasion",
+        "modify": {
+          "armorScore": 6,
+          "evasion": -2
+        }
+      }
+    },
+    {
+      "name": "Legendary Small Dagger",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Melee",
+      "damage": "d8+6",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "paired",
+        "label": "Paired",
+        "description": "+5 to Primary Weapon damage in Melee",
+        "modify": {
+          "primaryMeleeDamage": 5
+        }
+      }
+    },
+    {
+      "name": "Legendary Whip",
+      "slot": "primary",
+      "trait": "Presence",
+      "range": "Very Close",
+      "damage": "d6+6",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "whipcrack",
+        "label": "Whipcrack",
+        "description": "Mark stress to scatter enemies in Melee into Close range",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Legendary Grappler",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Close",
+      "damage": "d6+6",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "hook",
+        "label": "Hook",
+        "description": "On a successful attack, you may also pull the target into Melee with you",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Legendary Hand Crossbow",
+      "slot": "primary",
+      "trait": "Finesse",
+      "range": "Far",
+      "damage": "d6+7",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": null
+    },
+    {
+      "name": "Braveshield",
+      "slot": "primary",
+      "trait": "Agility",
+      "range": "Melee",
+      "damage": "d4+6",
+      "damageType": "physical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "sheltering",
+        "label": "Sheltering",
+        "description": "Using an armor slot reduces damage for you and all allies in Melee with you",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Knuckle Claws",
+      "slot": "primary",
+      "trait": "Strength",
+      "range": "Melee",
+      "damage": "d6+6",
+      "damageType": "magical",
+      "tier": 3,
+      "burden": 1,
+      "feature": {
+        "name": "doubled up",
+        "label": "Doubled Up",
+        "description": "When you make an attack with your Primary Weapon, you may also deal damage with this weapon to another creature in melee",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Primer Shard",
+      "slot": "primary",
+      "trait": "Instinct",
+      "range": "Very Close",
+      "damage": "none",
+      "damageType": "magical",
+      "tier": null,
+      "burden": 2,
+      "feature": {
+        "name": "3",
+        "label": "3",
+        "description": "On a successful attack with this weapon against a target, the next hit with your Primary Weapon automatically hits that target",
+        "modify": {}
+      }
     }
   ]
 }
