@@ -1,5 +1,5 @@
 {
-  "currentCharacterVersion": "1.4.1",
+  "currentCharacterVersion": "1.4.1a",
   "startingGear": {
     "gold": {
       "handful": 1
@@ -33,5 +33,6 @@
   "companionMaxStress": 6,
   "maxShortRestOptions": 2,
   "maxLongRestOptions": 2,
-  "traits": ["agility", "strength", "finesse", "instinct", "presence", "knowledge"]
+  "traits": ["agility", "strength", "finesse", "instinct", "presence", "knowledge"],
+  "spellcasters": ["bard", "druid", "ranger", "rogue", "seraph", "sorcerer", "wizard"]
 }

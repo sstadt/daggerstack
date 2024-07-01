@@ -23,16 +23,17 @@
         InventoryWeapon(:weapon="inventoryWeapon" :type="type")
     h3.text-xl.font-black.uppercase.p-4 Available Items
     button.w-full.text-left.p-4(
-      v-for="(item, index) in itemList"
+      v-for="(item, index) in sortedItems"
       class="focus:bg-slate-100"
       :class="{ 'border-b': index + 1 < itemList.length }"
-      @click="$emit('select', { item: { ...item } })"
+      @click="$emit('select', item.name)"
     )
-      InventoryWeapon(v-if="item.type === weaponType" :weapon="item" :type="type")
-      InventoryArmor(v-else-if="item.type === armorType" :armor="item")
+      InventoryWeapon(v-if="isWeaponType" :weapon="item" :type="type")
+      InventoryArmor(v-else :armor="item")
 </template>
 
 <script>
+  import GENERAL from '~/data/general';
   import WEAPONS from '~/data/weapons';
   import ARMOR from '~/data/armor';
 
@@ -82,7 +83,11 @@
       },
       character: {
         type: Object,
-        default: null,
+        default: null, // TODO make this required
+      },
+      startingOnly: {
+        type: Boolean,
+        default: false,
       },
     },
     data() {
@@ -92,27 +97,47 @@
       };
     },
     computed: {
+      bestStatistic() {
+        // TODO: remove once character is required
+        if (!this.character) return null;
+
+        let best = '';
+        let score = -10;
+
+        GENERAL.traits.forEach((trait) => {
+          if (this.character[trait].score > score) {
+            best = trait;
+            score = score;
+          }
+        });
+
+        return best;
+      },
+      isCaster() {
+        return GENERAL.spellcasters.includes(this.character.baseClass);
+      },
       equippedItem() {
         if (!this.activeSlot || !this.character) return null;
 
-        switch (this.activeSlot) {
-          case SLOT_INVENTORY_WEAPON:
-            return this.character.inventory.weapon.name
-              ? { ...this.character.inventory.weapon }
-              : null;
-          case SLOT_PRIMARY_WEAPON:
-            return this.character.equipment.primaryWeapon.name
-              ? { ...this.character.equipment.primaryWeapon }
-              : null;
-          case SLOT_SECONDARY_WEAPON:
-            return this.character.equipment.secondaryWeapon.name
-              ? { ...this.character.equipment.secondaryWeapon }
-              : null;
-          case SLOT_ARMOR:
-            return this.character.equipment.armor.name
-              ? { ...this.character.equipment.armor }
-              : null;
-        }
+        // TODO: this will break as soon as it's accessed because of the change in structure
+        // switch (this.activeSlot) {
+        //   case SLOT_INVENTORY_WEAPON:
+        //     return this.character.inventory.weapon.name
+        //       ? { ...this.character.inventory.weapon }
+        //       : null;
+        //   case SLOT_PRIMARY_WEAPON:
+        //     return this.character.equipment.primaryWeapon.name
+        //       ? { ...this.character.equipment.primaryWeapon }
+        //       : null;
+        //   case SLOT_SECONDARY_WEAPON:
+        //     return this.character.equipment.secondaryWeapon.name
+        //       ? { ...this.character.equipment.secondaryWeapon }
+        //       : null;
+        //   case SLOT_ARMOR:
+        //     return this.character.equipment.armor.name
+        //       ? { ...this.character.equipment.armor }
+        //       : null;
+        // }
 
         return null;
       },
@@ -134,15 +159,11 @@
         }
 
         if (this.type === PRIMARY_WEAPON_TYPE) {
-          return WEAPONS.items.filter((item) => item.primary === true);
+          return WEAPONS.items.filter((item) => item.slot === 'primary');
         }
 
         if (this.type === SECONDARY_WEAPON_TYPE) {
-          return this.respectBurden
-            ? WEAPONS.items.filter((item) => item.secondary === true)
-            : WEAPONS.items.filter((item) => {
-                return item.secondary === true || item.primary === true && item.burden > 1;
-              });
+          return WEAPONS.items.filter((item) => item.slot === 'secondary');
         }
 
         if (this.type === ARMOR_TYPE) {
@@ -150,6 +171,27 @@
         }
 
         return [];
+      },
+      sortedItems() {
+        if (this.startingOnly) {
+          return this.itemList
+            .filter((item) => {
+              return this.isCaster
+                ? item.tier === 0
+                : item.tier === 0 && item.damageType !== 'magical';
+            })
+            .sort((a, b) => {
+              if (a.trait === this.bestStatistic && b.trait !== this.bestStatistic) {
+                return 1;
+              }
+
+              if (a.trait !== this.bestStatistic && b.trait === this.bestStatistic) {
+                return -1;
+              }
+
+              return 0;
+            });
+        }
       },
       respectBurden() {
         return respectBurden(this.character);

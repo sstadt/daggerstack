@@ -1,25 +1,19 @@
 <template lang="pug">
-  .w-full
+  .w-full.space-y-1
     .flex.justify-between.items-center
       h3.text-xl.font-bold.truncate {{ weapon.name }}
       .flex
         NuxtIcon(v-if="showMainHand" name="left-hand")
         NuxtIcon(v-if="showOffhand" name="right-hand")
     .flex.justify-between
-      p {{ ucFirst(weapon.trait) }} {{ weapon.range }}
+      p {{ weapon.trait }} {{ weapon.range }}
       p {{ weapon.damage }} ({{ weapon.damageType }})
-    p.text-slate-600.text-sm.space-x-1(v-if="feature")
-      span.font-bold {{ ucFirst(feature.name) }}
-      span.italic(v-if="featureDescription") {{ featureDescription }}
+    p.text-slate-600.text-sm.space-x-1(v-if="weapon.feature")
+      span.font-bold {{ weapon.feature.label }}
+      span.italic {{ weapon.feature.description }}
 </template>
 
 <script>
-  import { SECONDARY_WEAPON_TYPE } from '~/config/equipmentPicker';
-
-  import { ucFirst, featureDescription } from '~/helpers/string';
-
-  import WEAPONS from '~/data/weapons';
-
   export default {
     name: 'InventoryWeapon',
     props: {
@@ -33,30 +27,12 @@
       },
     },
     computed: {
-      secondary() {
-        return this.type === SECONDARY_WEAPON_TYPE;
-      },
       showMainHand() {
-        return this.weapon.primary === true;
+        return this.weapon.slot === 'primary';
       },
       showOffhand() {
-        return this.weapon.burden > 1 || (!this.weapon.primary && this.weapon.secondary);
+        return this.weapon.burden > 1 || this.weapon.slot === 'secondary';
       },
-      feature() {
-        const featureName = this.secondary || this.weapon.primary === false
-          ? this.weapon.secondaryFeature
-          : this.weapon.feature;
-
-        if (!featureName) return null;
-
-        return WEAPONS.features.find((feature) => feature.name === featureName);
-      },
-      featureDescription() {
-        return this.feature ? featureDescription(this.feature) : null;
-      },
-    },
-    methods: {
-      ucFirst,
     },
   };
 </script>

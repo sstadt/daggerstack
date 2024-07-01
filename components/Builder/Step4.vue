@@ -6,7 +6,7 @@
         h3.text-lg.font-bold.uppercase.mb-2 primary weapon
         InventoryWeapon(
           v-if="primaryWeapon.name"
-          :weapon="primaryWeapon"
+          :weapon="getWeapon(primaryWeapon.name)"
           @click="openPicker(primaryWeaponType)"
         )
         BasicButton.block.mx-auto(
@@ -17,7 +17,7 @@
         h3.text-lg.font-bold.uppercase.mb-2 secondary weapon
         InventoryWeapon(
           v-if="secondaryWeapon.name"
-          :weapon="secondaryWeapon"
+          :weapon="getWeapon(secondaryWeapon.name)"
           @click="openPicker(secondaryWeaponType)"
         )
         BasicButton.block.mx-auto(
@@ -28,7 +28,7 @@
         h3.text-lg.font-bold.uppercase.mb-2 armor
         InventoryArmor(
           v-if="armor.name"
-          :armor="armor"
+          :armor="getArmor(armor.name)"
           @click="openPicker(armorType)"
         )
         BasicButton.block.mx-auto(
@@ -39,11 +39,23 @@
         NuxtLink(to="/") Finish Later
         BasicButton.block(type="submit") Next
     BasicDrawer(ref="equipmentPicker" :title="pickerTitle")
-      InventoryPicker(:type="activeType" @select="selectItem")
+      InventoryPicker(
+        :character="builderStore.character"
+        :type="activeType"
+        starting-only
+        @select="selectItem"
+      )
 </template>
 
 <script>
   import { useBuilderStore } from '~/stores/builder';
+
+  import {
+    newWeapon,
+    getWeapon,
+    newArmor,
+    getArmor,
+  } from '~/helpers/character';
 
   import {
     PRIMARY_WEAPON_TYPE,
@@ -62,13 +74,13 @@
         secondaryWeaponType: SECONDARY_WEAPON_TYPE,
         armorType: ARMOR_TYPE,
         primaryWeapon: isNewCharacter
-          ? {}
+          ? newWeapon()
           : { ...this.builderStore.character.equipment.primaryWeapon },
         secondaryWeapon: isNewCharacter
-          ? {}
+          ? newWeapon()
           : { ...this.builderStore.character.equipment.secondaryWeapon },
         armor: isNewCharacter
-          ? {}
+          ? newArmor()
           : { ...this.builderStore.character.equipment.armor },
       };
     },
@@ -83,21 +95,25 @@
       return { builderStore };
     },
     methods: {
+      getWeapon,
+      getArmor,
       openPicker(type) {
         this.activeType = type;
         this.$refs.equipmentPicker.open();
       },
-      selectItem({ item }) {
-        this[this.activeType] = { ...item };
+      selectItem(item) {
+        this[this.activeType] = this.activeType === ARMOR_TYPE
+          ? newArmor({ name: item })
+          : newWeapon({ name: item });
         this.$refs.equipmentPicker.close();
       },
       async next() {
         if (this.primaryWeapon.name && this.armor.name) {
           this.builderStore.updateCharacter({
             equipment: {
-              primaryWeapon: this.primaryWeapon,
-              secondaryWeapon: this.secondaryWeapon,
-              armor: this.armor,
+              primaryWeapon: { ...this.primaryWeapon },
+              secondaryWeapon: { ...this.secondaryWeapon },
+              armor: { ...this.armor },
             },
           });
 

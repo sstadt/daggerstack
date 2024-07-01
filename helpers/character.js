@@ -84,7 +84,7 @@ export const newCharacter = () => {
         bag: 0,
         chest: 0,
       },
-      weapon: newWeapon(),
+      weapons: [],
     },
     experience: [],
     background: [],
@@ -105,32 +105,25 @@ export const newCharacter = () => {
   };
 };
 
-export const newWeapon = () => {
+export const newWeapon = (weapon) => {
   return {
-    name: null,
-    type: 'weapon',
-    trait: null,
-    primary: false,
-    secondary: false,
-    range: null,
-    feature: null,
-    secondaryFeature: null,
-    damage: null,
-    damageType: null,
-    burden: 0,
-    starting: false,
+    name: weapon ? weapon.name : null,
+    notes: '',
   };
 };
 
-export const newArmor = () => {
+export const getWeapon = (name) =>
+  WEAPONS.items.find((weapon) => weapon.name === name);
+
+export const newArmor = (armor) => {
   return {
-    name: null,
-    type: 'armor',
-    feature: null,
-    score: 0,
-    starting: false,
+    name: armor ? armor.name : null,
+    notes: '',
   };
 };
+
+export const getArmor = (name) =>
+  ARMOR.items.find((armor) => armor.name === name);
 
 export const newUpgrade = ({ id, level, type, value, options }) => {
   return {
@@ -200,6 +193,23 @@ export const separateItemsForBuilder = (items, baseClass) => {
 };
 
 /**
+ * Determine if a character should respect burden when calculating equipment
+ * bonuses
+ *
+ * @param {Object} character The character to check
+ * @returns True if character sould respect burden limitations, false if not
+ */
+export const respectBurden = (character) => {
+  const multiclass = character.levelSelections
+    .find((selection) => selection.type === 'multiclass');
+
+  return !(
+    character.baseClass === 'warrior' ||
+    multiclass && multiclass.options.class === 'warrior'
+  );
+};
+
+/**
  * Calculate the total modifiers to a given attribute from an array
  * of upgrades. Each child of the modify parameter will count it's
  * modifier in the end result.
@@ -229,23 +239,6 @@ export const calculateModifiers = (features, attribute) => {
   }
 
   return score;
-};
-
-/**
- * Determine if a character should respect burden when calculating equipment
- * bonuses
- *
- * @param {Object} character The character to check
- * @returns True if character sould respect burden limitations, false if not
- */
-export const respectBurden = (character) => {
-  const multiclass = character.levelSelections
-    .find((selection) => selection.type === 'multiclass');
-
-  return !(
-    character.baseClass === 'warrior' ||
-    multiclass && multiclass.options.class === 'warrior'
-  );
 };
 
 /**
