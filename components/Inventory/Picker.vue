@@ -13,20 +13,27 @@
         v-else-if="equippedItem.type === armorType"
         :armor="equippedItem"
       )
-    div(v-if="isWeaponType && includeInventory && inventoryWeapon")
+    div(v-if="isWeaponType && includeInventory && inventoryWeapons.length > 0")
       h3.text-xl.font-black.uppercase.p-4 From Inventory
       button.w-full.text-left.p-4(
+        v-for="weapon in inventoryWeapons"
         class="focus:bg-slate-100"
         :class="{ 'border-b': index + 1 < itemList.length }"
-        @click="$emit('select', { item: inventoryWeapon, fromInventory: true })"
+        @click="$emit('select', { item: weapon, fromInventory: true })"
       )
-        InventoryWeapon(:weapon="inventoryWeapon" :type="type")
-    h3.text-xl.font-black.uppercase.p-4 Available Items
+        InventoryWeapon(:weapon="weapon" :type="type")
+    .sticky.p-4.top-0.bg-white.shadow
+      h3.text-xl.font-black.uppercase Available Items
+      InputFilter(
+        v-model="selectedTiers"
+        label="tiers"
+        :options="[0, 1, 2, 3]"
+      )
     button.w-full.text-left.p-4(
       v-for="(item, index) in sortedItems"
       class="focus:bg-slate-100"
       :class="{ 'border-b': index + 1 < itemList.length }"
-      @click="$emit('select', item.name)"
+      @click="$emit('select', { item: item.name })"
     )
       InventoryWeapon(v-if="isWeaponType" :weapon="item" :type="type")
       InventoryArmor(v-else :armor="item")
@@ -57,7 +64,6 @@
         type: String,
         validator(val) {
           return [
-            ALL_WEAPON_TYPE,
             PRIMARY_WEAPON_TYPE,
             SECONDARY_WEAPON_TYPE,
             ARMOR_TYPE,
@@ -83,7 +89,7 @@
       },
       character: {
         type: Object,
-        default: null, // TODO make this required
+        required: true,
       },
       startingOnly: {
         type: Boolean,
@@ -91,7 +97,20 @@
       },
     },
     data() {
+      const selectedTiers = [];
+
+      if (this.character.level > 1) {
+        selectedTiers.push(1);
+      } else if (this.character.level > 4) {
+        selectedTiers.push(2);
+      } if (this.character.level > 7) {
+        selectedTiers.push(3);
+      } else {
+        selectedTiers.push(0);
+      }
+
       return {
+        selectedTiers,
         weaponType: 'weapon',
         armorType: 'armor',
       };
@@ -148,16 +167,12 @@
           SECONDARY_WEAPON_TYPE,
         ].includes(this.type);
       },
-      inventoryWeapon() {
-        return this.character && this.character.inventory.weapon.name
-          ? this.character.inventory.weapon
-          : null;
+      inventoryWeapons() {
+        return this.character.inventory.weapons
+          .map((w) => WEAPONS.find((weapon) => weapon.name === w.name))
+          .filter((w) => w.slot === this.type);
       },
       itemList() {
-        if (this.type === ALL_WEAPON_TYPE) {
-          return [ ...WEAPONS.items ];
-        }
-
         if (this.type === PRIMARY_WEAPON_TYPE) {
           return WEAPONS.items.filter((item) => item.slot === 'primary');
         }
@@ -173,25 +188,26 @@
         return [];
       },
       sortedItems() {
-        if (this.startingOnly) {
-          return this.itemList
-            .filter((item) => {
-              return this.isCaster
-                ? item.tier === 0
-                : item.tier === 0 && item.damageType !== 'magical';
-            })
-            .sort((a, b) => {
-              if (a.trait === this.bestStatistic && b.trait !== this.bestStatistic) {
-                return 1;
-              }
+        const tiers = this.startingOnly ? [0] : this.selectedTiers;
 
-              if (a.trait !== this.bestStatistic && b.trait === this.bestStatistic) {
-                return -1;
-              }
+        return this.itemList
+          .filter((item) => {
+            // TODO: make a "show unavailable" toggle to bypass this
+            const showMagical = item.damageType !== 'magical' || this.isCaster;
 
-              return 0;
-            });
-        }
+            return tiers.includes(item.tier) && showMagical;
+          })
+          .sort((a, b) => {
+            if (a.trait === this.bestStatistic && b.trait !== this.bestStatistic) {
+              return 1;
+            }
+
+            if (a.trait !== this.bestStatistic && b.trait === this.bestStatistic) {
+              return -1;
+            }
+
+            return 0;
+          });
       },
       respectBurden() {
         return respectBurden(this.character);

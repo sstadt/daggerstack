@@ -101,7 +101,7 @@
         this.activeType = type;
         this.$refs.equipmentPicker.open();
       },
-      selectItem(item) {
+      selectItem({ item }) {
         this[this.activeType] = this.activeType === ARMOR_TYPE
           ? newArmor({ name: item })
           : newWeapon({ name: item });

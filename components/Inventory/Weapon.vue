@@ -1,7 +1,7 @@
 <template lang="pug">
   .w-full.space-y-1
     .flex.justify-between.items-center
-      h3.text-xl.font-bold.truncate {{ weapon.name }}
+      h3.text-xl.font-bold.truncate(:class="titleClass") {{ weapon.name }}
       .flex
         NuxtIcon(v-if="showMainHand" name="left-hand")
         NuxtIcon(v-if="showOffhand" name="right-hand")
@@ -32,6 +32,13 @@
       },
       showOffhand() {
         return this.weapon.burden > 1 || this.weapon.slot === 'secondary';
+      },
+      titleClass() {
+        return {
+          'text-blue-600': this.weapon.tier === 1,
+          'text-purple-700': this.weapon.tier === 2,
+          'text-orange-600': this.weapon.tier === 3,
+        };
       },
     },
   };

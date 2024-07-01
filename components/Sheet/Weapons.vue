@@ -10,17 +10,17 @@
     .pb-8.border-b.mb-8.space-y-4
       h3.text-xl.font-black.uppercase.mt-6 Primary
       InventoryWeapon(
-        v-if="character && character.equipment.primaryWeapon.name"
-        :weapon="character.equipment.primaryWeapon"
+        v-if="primaryWeapon.name"
+        :weapon="getWeapon(primaryWeapon.name)"
         @click="openPicker(primaryWeaponType)"
       )
       BasicButton.mx-auto.block(v-else @click="openPicker(primaryWeaponType)")
         | Select Weapon
     .space-y-4
       h3.text-xl.font-black.uppercase Secondary
-      .relative(v-if="character && character.equipment.secondaryWeapon.name")
+      .relative(v-if="secondaryWeapon.name")
         InventoryWeapon(
-          :weapon="character.equipment.secondaryWeapon"
+          :weapon="getWeapon(secondaryWeapon.name)"
           :class="{ 'opacity-20 pointer-events-none': respectBurden && isPrimaryTwoHanded }"
           :type="secondaryWeaponType"
           @click="openPicker(secondaryWeaponType)"
@@ -43,9 +43,12 @@
 </template>
 
 <script>
+  import WEAPONS from '~/data/weapons';
+
   import { useCharactersStore } from '~/stores/characters';
   import {
     newWeapon,
+    getWeapon,
     calculateModifiers,
     getFeaturesByAttribute,
     respectBurden,
@@ -68,8 +71,6 @@
     },
     data() {
       return {
-        primaryWeapon: this.character.equipment.primaryWeapon,
-        secondaryWeapon: this.character.equipment.secondaryWeapon,
         primaryWeaponType: PRIMARY_WEAPON_TYPE,
         secondaryWeaponType: SECONDARY_WEAPON_TYPE,
         activeSlot: null,
@@ -91,14 +92,25 @@
 
         return this.baseProficiency + calculateModifiers(modifiers, 'proficiency');
       },
+      primaryWeapon() {
+        return this.character.equipment.primaryWeapon.name
+          ? WEAPONS.items.find((weapon) => this.character.equipment.primaryWeapon.name === weapon.name)
+          : null;
+      },
+      secondaryWeapon() {
+        return this.character.equipment.secondaryWeapon.name
+          ? WEAPONS.items.find((weapon) => this.character.equipment.secondaryWeapon.name === weapon.name)
+          : null;
+      },
       isPrimaryTwoHanded() {
-        return this.character.equipment.primaryWeapon.burden > 1;
+        return this.primaryWeapon.burden > 1;
       },
       respectBurden() {
         return respectBurden(this.character);
       },
     },
     methods: {
+      getWeapon,
       openPicker(weaponType) {
         this.pickerType = weaponType === PRIMARY_WEAPON_TYPE
           ? PRIMARY_WEAPON_TYPE
@@ -112,24 +124,27 @@
       selectItem({ item, fromInventory = false }) {
         let weaponUpdated = false;
 
+        // swap from inventory
         if (fromInventory === true) {
+          const inventoryIndex = this.character.inventory.weapons.find((w) => w.name === item);
+          const inventoryWeapon = { ...this.character.inventory.weapons[inventoryIndex] };
           const currentWeapon = this.activeSlot === SLOT_PRIMARY_WEAPON
-            ? { ...this.primaryWeapon }
-            : { ...this.secondaryWeapon };
+            ? { ...this.character.equipment.primaryWeapon }
+            : { ...this.character.equipment.secondaryWeapon };
 
-          this.character.inventory.weapon = currentWeapon;
+          this.character.equipment[this.activeSlot] === inventoryWeapon;
+          this.character.inventory.weapons =
+            this.character.inventory.weapons.splice(inventoryIndex, 1, currentWeapon);
           weaponUpdated = true;
-        }
 
-        if (this.activeSlot === SLOT_PRIMARY_WEAPON) {
-          this.primaryWeapon = { ...item };
-          this.character.equipment.primaryWeapon = { ...item };
+        // new primary weapon
+        } else if (this.activeSlot === SLOT_PRIMARY_WEAPON) {
+          this.character.equipment.primaryWeapon = newWeapon({ name: item });
           weaponUpdated = true;
-        }
 
-        if (this.activeSlot === SLOT_SECONDARY_WEAPON) {
-          this.secondaryWeapon = { ...item };
-          this.character.equipment.secondaryWeapon = { ...item };
+        // new secondary weapon
+        } else if (this.activeSlot === SLOT_SECONDARY_WEAPON) {
+          this.character.equipment.secondaryWeapon = newWeapon({ name: item });
           weaponUpdated = true;
         }
 
