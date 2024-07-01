@@ -108,7 +108,7 @@ export const newCharacter = () => {
 export const newWeapon = (weapon) => {
   return {
     name: weapon ? weapon.name : null,
-    notes: '',
+    notes: weapon ? weapon.notes : '',
   };
 };
 
@@ -118,7 +118,7 @@ export const getWeapon = (name) =>
 export const newArmor = (armor) => {
   return {
     name: armor ? armor.name : null,
-    notes: '',
+    notes: armor ? armor.notes : '',
   };
 };
 

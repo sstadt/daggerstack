@@ -126,15 +126,14 @@
 
         // swap from inventory
         if (fromInventory === true) {
-          const inventoryIndex = this.character.inventory.weapons.find((w) => w.name === item);
+          const inventoryIndex = this.character.inventory.weapons.findIndex((w) => w.name === item);
           const inventoryWeapon = { ...this.character.inventory.weapons[inventoryIndex] };
           const currentWeapon = this.activeSlot === SLOT_PRIMARY_WEAPON
             ? { ...this.character.equipment.primaryWeapon }
             : { ...this.character.equipment.secondaryWeapon };
 
-          this.character.equipment[this.activeSlot] === inventoryWeapon;
-          this.character.inventory.weapons =
-            this.character.inventory.weapons.splice(inventoryIndex, 1, currentWeapon);
+          this.character.equipment[this.activeSlot] = inventoryWeapon;
+          this.character.inventory.weapons.splice(inventoryIndex, 1, currentWeapon);
           weaponUpdated = true;
 
         // new primary weapon

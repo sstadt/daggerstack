@@ -15,13 +15,13 @@
       )
     div(v-if="isWeaponType && includeInventory && inventoryWeapons.length > 0")
       h3.text-xl.font-black.uppercase.p-4 From Inventory
-      button.w-full.text-left.p-4(
-        v-for="weapon in inventoryWeapons"
-        class="focus:bg-slate-100"
-        :class="{ 'border-b': index + 1 < itemList.length }"
-        @click="$emit('select', { item: weapon, fromInventory: true })"
-      )
-        InventoryWeapon(:weapon="weapon" :type="type")
+      .divide-y
+        button.w-full.text-left.p-4(
+          v-for="weapon in inventoryWeapons"
+          class="focus:bg-slate-100"
+          @click="$emit('select', { item: weapon.name, fromInventory: true })"
+        )
+          InventoryWeapon(:weapon="weapon" :type="type")
     .sticky.p-4.top-0.bg-white.shadow.space-y-1
       h3.text-xl.font-black.uppercase Available Items
       .flex.space-x-6
@@ -36,14 +36,14 @@
           label="slot"
           :options="['primary', 'secondary']"
         )
-    button.w-full.text-left.p-4(
-      v-for="(item, index) in sortedItems"
-      class="focus:bg-slate-100"
-      :class="{ 'border-b': index + 1 < itemList.length }"
-      @click="$emit('select', { item: item.name })"
-    )
-      InventoryWeapon(v-if="isWeaponType" :weapon="item" :type="type")
-      InventoryArmor(v-else :armor="item")
+    .divide-y
+      button.w-full.text-left.p-4(
+        v-for="item in sortedItems"
+        class="focus:bg-slate-100"
+        @click="$emit('select', { item: item.name })"
+      )
+        InventoryWeapon(v-if="isWeaponType" :weapon="item" :type="type")
+        InventoryArmor(v-else :armor="item")
 </template>
 
 <script>
@@ -180,7 +180,7 @@
       inventoryWeapons() {
         return this.character.inventory.weapons
           .map((w) => WEAPONS.items.find((weapon) => weapon.name === w.name))
-          .filter((w) => w.slot === this.type);
+          .filter((w) => this.type.includes(w.slot));
       },
       itemList() {
         if (this.type === ALL_WEAPON_TYPE) {
