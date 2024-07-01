@@ -1,6 +1,6 @@
 <template lang="pug">
   .input--filter.flex.space-x-2.items-center
-    p.text-sm.font-bold.uppercase(v-if="label") {{ label }}
+    p.text-sm.font-bold.uppercase(v-if="label && !hideLabel") {{ label }}
     label.text-xs.py-1.px-2.rounded.border.transition-colors(
       v-for="option in options"
       :class="getInputClass(currentValue.includes(option))"
@@ -34,6 +34,10 @@
       disabled: {
         type: Array,
         default: () => [],
+      },
+      hideLabel: {
+        type: Boolean,
+        default: false,
       },
     },
     data() {

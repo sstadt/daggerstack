@@ -29,7 +29,7 @@
         v-else-if="currentTab === 'inventory' || mq.md && currentTab === 'equipment'"
         class="md:space-y-0 md:flex"
       )
-        .space-y-8(class="md:w-1/2")
+        .space-y-8(v-if="mq.md" class="md:w-1/2")
           SheetWeapons(:character="character")
           SheetArmor(:character="character")
         .space-y-8(class="md:w-1/2")

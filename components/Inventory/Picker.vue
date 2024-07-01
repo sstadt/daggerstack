@@ -22,13 +22,21 @@
         @click="$emit('select', { item: weapon, fromInventory: true })"
       )
         InventoryWeapon(:weapon="weapon" :type="type")
-    .sticky.p-4.top-0.bg-white.shadow
+    .sticky.p-4.top-0.bg-white.shadow.space-y-1
       h3.text-xl.font-black.uppercase Available Items
-      InputFilter(
-        v-model="selectedTiers"
-        label="tiers"
-        :options="[0, 1, 2, 3]"
-      )
+      .flex.justify-between
+        InputFilter(
+          v-model="selectedTiers"
+          label="tiers"
+          :options="[0, 1, 2, 3]"
+        )
+        InputFilter(
+          v-if="type === allWeaponsType"
+          v-model="selectedType"
+          label="slot"
+          hide-label
+          :options="['primary', 'secondary']"
+        )
     button.w-full.text-left.p-4(
       v-for="(item, index) in sortedItems"
       class="focus:bg-slate-100"
@@ -64,6 +72,7 @@
         type: String,
         validator(val) {
           return [
+            ALL_WEAPON_TYPE,
             PRIMARY_WEAPON_TYPE,
             SECONDARY_WEAPON_TYPE,
             ARMOR_TYPE,
@@ -111,8 +120,10 @@
 
       return {
         selectedTiers,
+        selectedType: ['primary'],
         weaponType: 'weapon',
         armorType: 'armor',
+        allWeaponsType: ALL_WEAPON_TYPE,
       };
     },
     computed: {
@@ -170,6 +181,10 @@
           .filter((w) => w.slot === this.type);
       },
       itemList() {
+        if (this.type === ALL_WEAPON_TYPE) {
+          return [ ...WEAPONS.items ];
+        }
+
         if (this.type === PRIMARY_WEAPON_TYPE) {
           return WEAPONS.items.filter((item) => item.slot === 'primary');
         }
@@ -184,15 +199,22 @@
 
         return [];
       },
+      showingAllWeapons() {
+        return this.type === this.allWeaponsType;
+      },
       sortedItems() {
         const tiers = this.startingOnly ? [0] : this.selectedTiers;
 
         return this.itemList
           .filter((item) => {
+            const matchesTierFilter = tiers.includes(item.tier);
             // TODO: make a "show unavailable" toggle to bypass this
-            const showMagical = item.damageType !== 'magical' || this.isCaster;
+            const matchesMagicFilter = item.damageType !== 'magical' || this.isCaster;
+            const matchesTypeFilter = !this.showingAllWeapons || this.selectedType.includes(item.slot);
 
-            return tiers.includes(item.tier) && showMagical;
+            return matchesTierFilter &&
+              matchesMagicFilter &&
+              matchesTypeFilter;
           })
           .sort((a, b) => {
             if (a.trait === this.bestStatistic && b.trait !== this.bestStatistic) {

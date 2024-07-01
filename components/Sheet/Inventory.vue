@@ -1,12 +1,18 @@
 <template lang="pug">
   BasicCard(title="inventory")
     InputTextarea.pb-8.border-b.mb-8.mt-6(label="Items" v-model="items")
-    InventoryWeapon(
-      v-if="character.inventory.weapon.name"
-      :weapon="character.inventory.weapon"
-      @click="openPicker"
-    )
-    BasicButton.mx-auto.block(v-else @click="openPicker") Select Weapon
+    div(v-for="n in maxInventoryWeapons")
+      h3.text-xl.font-black.uppercase.mt-6 Inventory Weapon {{ n }}
+      InventoryWeapon(
+        v-if="inventoryWeapons[n - 1]"
+        :weapon="inventoryWeapons[n - 1]"
+        @click="openPicker(n - 1)"
+      )
+      BasicButton.mx-auto.my-4.block(
+        v-else
+        priority="secondary"
+        @click="openPicker(n - 1)"
+      ) Select Weapon
     BasicDrawer(ref="equipmentPicker" title="Weapons")
       InventoryPicker(
         :type="type"
@@ -18,6 +24,9 @@
 </template>
 
 <script>
+  import GENERAL from '~/data/general';
+  import WEAPONS from '~/data/weapons';
+
   import { newWeapon } from '~/helpers/character';
   import { debounce } from '~/helpers/utility';
 
@@ -38,6 +47,8 @@
     },
     data() {
       return {
+        activeSlot: 0,
+        maxInventoryWeapons: GENERAL.maxInventoryWeapons,
         items: this.character.inventory.items,
         type: ALL_WEAPON_TYPE,
         slot: SLOT_INVENTORY_WEAPON,
@@ -48,18 +59,32 @@
 
       return { charactersStore };
     },
+    computed: {
+      inventoryWeapons() {
+        const weapons = this.character.inventory.weapons
+          .map((w) => WEAPONS.items.find((weapon) => weapon.name === w.name));
+
+        return weapons;
+      },
+    },
     methods: {
-      openPicker() {
+      openPicker(activeSlot) {
+        this.activeSlot = activeSlot;
         this.$refs.equipmentPicker.open();
       },
       selectWeapon({ item }) {
-        this.character.inventory.weapon = { ...item };
+        if (this.character.inventory.weapons[this.activeSlot]) {
+          this.character.inventory.weapons.splice(this.activeSlot, 1, newWeapon({ name: item }));
+        } else {
+          this.character.inventory.weapons.push(newWeapon({ name: item }));
+        }
+
         this.charactersStore.saveCharacter(this.character);
         this.$refs.equipmentPicker.close();
       },
       removeEquippedWeapon() {
-        this.character.inventory.weapon = newWeapon();
-        this.charactersStore.saveCharacter(this.character);
+        // this.character.inventory.weapon = newWeapon();
+        // this.charactersStore.saveCharacter(this.character);
         this.$refs.equipmentPicker.close();
       },
       saveItems: debounce(function () {

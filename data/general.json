@@ -34,5 +34,6 @@
   "maxShortRestOptions": 2,
   "maxLongRestOptions": 2,
   "traits": ["agility", "strength", "finesse", "instinct", "presence", "knowledge"],
-  "spellcasters": ["bard", "druid", "ranger", "rogue", "seraph", "sorcerer", "wizard"]
+  "spellcasters": ["bard", "druid", "ranger", "rogue", "seraph", "sorcerer", "wizard"],
+  "maxInventoryWeapons": 2
 }
