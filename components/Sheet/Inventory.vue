@@ -18,6 +18,7 @@
         :type="type"
         :character="character"
         :active-slot="slot"
+        :active-index="activeSlot"
         @select="selectWeapon"
         @remove-equipped-item="removeEquippedWeapon"
       )
@@ -83,8 +84,8 @@
         this.$refs.equipmentPicker.close();
       },
       removeEquippedWeapon() {
-        // this.character.inventory.weapon = newWeapon();
-        // this.charactersStore.saveCharacter(this.character);
+        this.character.inventory.weapons.splice(this.activeSlot, 1, newWeapon());
+        this.charactersStore.saveCharacter(this.character);
         this.$refs.equipmentPicker.close();
       },
       saveItems: debounce(function () {

@@ -5,12 +5,12 @@
         h3.text-xl.font-black.uppercase Currently Equipped
         BasicButton.ml-auto(size="sm" @click="removeItem") Remove
       InventoryWeapon(
-        v-if="equippedItem.type === weaponType"
+        v-if="isWeaponType"
         :weapon="equippedItem"
         :type="type"
       )
       InventoryArmor(
-        v-else-if="equippedItem.type === armorType"
+        v-else
         :armor="equippedItem"
       )
     div(v-if="isWeaponType && includeInventory && inventoryWeapons.length > 0")
@@ -24,17 +24,16 @@
         InventoryWeapon(:weapon="weapon" :type="type")
     .sticky.p-4.top-0.bg-white.shadow.space-y-1
       h3.text-xl.font-black.uppercase Available Items
-      .flex.justify-between
+      .flex.space-x-6
         InputFilter(
           v-model="selectedTiers"
-          label="tiers"
+          label="tier"
           :options="[0, 1, 2, 3]"
         )
         InputFilter(
           v-if="type === allWeaponsType"
           v-model="selectedType"
           label="slot"
-          hide-label
           :options="['primary', 'secondary']"
         )
     button.w-full.text-left.p-4(
@@ -92,6 +91,10 @@
           ].includes(val);
         },
       },
+      activeIndex: {
+        type: Number,
+        default: -1,
+      },
       includeInventory: {
         type: Boolean,
         default: false,
@@ -121,8 +124,6 @@
       return {
         selectedTiers,
         selectedType: ['primary'],
-        weaponType: 'weapon',
-        armorType: 'armor',
         allWeaponsType: ALL_WEAPON_TYPE,
       };
     },
@@ -144,27 +145,28 @@
         return GENERAL.spellcasters.includes(this.character.baseClass);
       },
       equippedItem() {
-        if (!this.activeSlot || !this.character) return null;
+        if (!this.activeSlot) return null;
 
-        // TODO: this will break as soon as it's accessed because of the change in structure
-        // switch (this.activeSlot) {
-        //   case SLOT_INVENTORY_WEAPON:
-        //     return this.character.inventory.weapon.name
-        //       ? { ...this.character.inventory.weapon }
-        //       : null;
-        //   case SLOT_PRIMARY_WEAPON:
-        //     return this.character.equipment.primaryWeapon.name
-        //       ? { ...this.character.equipment.primaryWeapon }
-        //       : null;
-        //   case SLOT_SECONDARY_WEAPON:
-        //     return this.character.equipment.secondaryWeapon.name
-        //       ? { ...this.character.equipment.secondaryWeapon }
-        //       : null;
-        //   case SLOT_ARMOR:
-        //     return this.character.equipment.armor.name
-        //       ? { ...this.character.equipment.armor }
-        //       : null;
-        // }
+        switch (this.activeSlot) {
+          case SLOT_INVENTORY_WEAPON:
+            return this.activeIndex > -1 && this.character.inventory.weapons[this.activeIndex]
+              ? WEAPONS.items.find((w) => {
+                  return w.name === this.character.inventory.weapons[this.activeIndex].name;
+                })
+              : null;
+          case SLOT_PRIMARY_WEAPON:
+            return this.character.equipment.primaryWeapon.name
+              ? WEAPONS.items.find((w) => w.name === this.character.equipment.primaryWeapon.name)
+              : null;
+          case SLOT_SECONDARY_WEAPON:
+            return this.character.equipment.secondaryWeapon.name
+              ? WEAPONS.items.find((w) => w.name === this.character.equipment.secondaryWeapon.name)
+              : null;
+          case SLOT_ARMOR:
+            return this.character.equipment.armor.name
+              ? ARMOR.items.find((w) => w.name === this.character.equipment.armor.name)
+              : null;
+        }
 
         return null;
       },
@@ -177,7 +179,7 @@
       },
       inventoryWeapons() {
         return this.character.inventory.weapons
-          .map((w) => WEAPONS.find((weapon) => weapon.name === w.name))
+          .map((w) => WEAPONS.items.find((weapon) => weapon.name === w.name))
           .filter((w) => w.slot === this.type);
       },
       itemList() {

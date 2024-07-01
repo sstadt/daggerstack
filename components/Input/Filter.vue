@@ -1,18 +1,19 @@
 <template lang="pug">
-  .input--filter.flex.space-x-2.items-center
+  .input--filter.space-y-2.items-center
     p.text-sm.font-bold.uppercase(v-if="label && !hideLabel") {{ label }}
-    label.text-xs.py-1.px-2.rounded.border.transition-colors(
-      v-for="option in options"
-      :class="getInputClass(currentValue.includes(option))"
-    )
-      input(
-        type="checkbox"
-        v-model="currentValue"
-        :value="option"
-        :disabled="disabled.includes(option)"
-        @change="changed"
+    .flex.space-x-2
+      label.text-xs.py-1.px-2.rounded.border.transition-colors(
+        v-for="option in options"
+        :class="getInputClass(currentValue.includes(option))"
       )
-      span {{ option }}
+        input(
+          type="checkbox"
+          v-model="currentValue"
+          :value="option"
+          :disabled="disabled.includes(option)"
+          @change="changed"
+        )
+        span {{ option }}
 </template>
 
 <script>

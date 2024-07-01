@@ -7,10 +7,10 @@
         :checked="proficiency >= n"
         read-only
       )
-    .pb-8.border-b.mb-8.space-y-4
+    .mb-8.space-y-4
       h3.text-xl.font-black.uppercase.mt-6 Primary
       InventoryWeapon(
-        v-if="primaryWeapon.name"
+        v-if="primaryWeapon"
         :weapon="getWeapon(primaryWeapon.name)"
         @click="openPicker(primaryWeaponType)"
       )
@@ -18,7 +18,7 @@
         | Select Weapon
     .space-y-4
       h3.text-xl.font-black.uppercase Secondary
-      .relative(v-if="secondaryWeapon.name")
+      .relative(v-if="secondaryWeapon")
         InventoryWeapon(
           :weapon="getWeapon(secondaryWeapon.name)"
           :class="{ 'opacity-20 pointer-events-none': respectBurden && isPrimaryTwoHanded }"

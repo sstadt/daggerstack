@@ -2,7 +2,7 @@
   BasicCard(title="Active Armor")
     .mt-6
       InventoryArmor(
-        v-if="armor.name"
+        v-if="armor"
         :armor="armor"
         @click="openPicker"
       )
