@@ -117,9 +117,6 @@
     },
     computed: {
       bestStatistic() {
-        // TODO: remove once character is required
-        if (!this.character) return null;
-
         let best = '';
         let score = -10;
 
