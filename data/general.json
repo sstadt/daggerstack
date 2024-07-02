@@ -1,5 +1,5 @@
 {
-  "currentCharacterVersion": "1.4.1a",
+  "currentCharacterVersion": "1.4.1b",
   "startingGear": {
     "gold": {
       "handful": 1
@@ -10,8 +10,8 @@
       "basic supplies"
     ],
     "choose": [
-      "minor health potion",
-      "minor stamina potion"
+      "Minor Health Potion",
+      "Minor Stamina Potion"
     ]
   },
   "description": {

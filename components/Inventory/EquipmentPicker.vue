@@ -1,5 +1,5 @@
 <template lang="pug">
-  .item-picker
+  .equipment-picker
     .p-4(v-if="equippedItem")
       .flex.justify-between.items-center.mb-4
         h3.text-xl.font-black.uppercase Currently Equipped
@@ -65,7 +65,7 @@
   } from '~/config/equipmentPicker';
 
   export default {
-    name: 'InventoryPicker',
+    name: 'InventoryEquipmentPicker',
     props: {
       type: {
         type: String,
@@ -129,17 +129,15 @@
     },
     computed: {
       bestStatistic() {
-        let best = '';
-        let score = -10;
+        const [ best ] = GENERAL.traits
+          .map((trait) => ({ name: trait, score: this.character[trait].score }))
+          .sort((a, b) => {
+            if (a.score < b.score) return 1;
+            if (b.score < a.score) return -1;
+            return 0;
+          });
 
-        GENERAL.traits.forEach((trait) => {
-          if (this.character[trait].score > score) {
-            best = trait;
-            score = score;
-          }
-        });
-
-        return best;
+        return best.name;
       },
       isCaster() {
         return GENERAL.spellcasters.includes(this.character.baseClass);
@@ -219,12 +217,15 @@
               matchesTypeFilter;
           })
           .sort((a, b) => {
-            if (a.trait === this.bestStatistic && b.trait !== this.bestStatistic) {
-              return 1;
+            const aTrait = a.trait.toLowerCase();
+            const bTrait = b.trait.toLowerCase();
+
+            if (aTrait === this.bestStatistic && bTrait !== this.bestStatistic) {
+              return -1;
             }
 
-            if (a.trait !== this.bestStatistic && b.trait === this.bestStatistic) {
-              return -1;
+            if (aTrait !== this.bestStatistic && bTrait === this.bestStatistic) {
+              return 1;
             }
 
             return 0;

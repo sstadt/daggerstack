@@ -3,10 +3,8 @@
     form(@submit.prevent="next").space-y-8
       .space-y-4
         h2.text-center.text-2xl.font-black.uppercase.mb-2 Take
-        InputTextarea(
-          v-model="items"
-          label="items"
-        )
+        .divide-y
+          InventoryItem(v-for="item in items" :character-item="item")
         InputText(
           v-if="spellBookPlaceholder"
           v-model="spellbook"
@@ -33,30 +31,35 @@
 <script>
   import { useVuelidate } from '@vuelidate/core';
 
-  import general from '~/data/general';
-  import classes from '~/data/classes';
+  import GENERAL from '~/data/general';
+  import CLASSES from '~/data/classes';
 
   import { createSelectOptions } from '~/helpers/array';
-  import { separateItemsForBuilder } from '~/helpers/character';
+  import { newItem } from '~/helpers/character';
 
   import { useBuilderStore } from '~/stores/builder';
 
   export default {
     name: 'BuilderStep3',
     data() {
-      const existingItems = this.builderStore.character.inventory.items;
-      const {
-        items,
-        spellbook,
-        generalItem,
-        classItem,
-      } = separateItemsForBuilder(existingItems, this.builderStore.baseClass);
+      const classData = CLASSES[this.builderStore.baseClass];
+      const existingItems = [ ...this.builderStore.character.inventory.items ];
+      const spellbook = existingItems.find((i) => i.name.toLowerCase().includes('spellbook'));
+      const existingGeneralItem = existingItems.find((i) => GENERAL.startingGear.choose.includes(i.name));
+      const [ firstGeneralItem ] = GENERAL.startingGear.choose;
+      const existingClassItem = existingItems.find((i) => classData.startingGear.choose.includes(i.name));
+      const [ firstClassItem ] = classData.startingGear.choose;
+      const items = [];
+
+      GENERAL.startingGear.take.forEach((itemName) => {
+        items.push(newItem({ name: itemName, custom: true }));
+      });
 
       return {
         items,
-        spellbook,
-        selectedGeneralItem: generalItem,
-        selectedClassItem: classItem,
+        spellbook: spellbook ? spellbook.name.replace(' (spellbook)', '') : '',
+        selectedGeneralItem: existingGeneralItem ? existingGeneralItem.name : firstGeneralItem,
+        selectedClassItem: existingClassItem ? existingClassItem.name : firstClassItem,
       };
     },
     setup() {
@@ -69,16 +72,16 @@
     },
     computed: {
       generalChoice() {
-        return createSelectOptions(general.startingGear.choose);
+        return createSelectOptions(GENERAL.startingGear.choose);
       },
       classChoice() {
-        return classes[this.builderStore.baseClass]
-          ? createSelectOptions(classes[this.builderStore.baseClass].startingGear.choose)
+        return CLASSES[this.builderStore.baseClass]
+          ? createSelectOptions(CLASSES[this.builderStore.baseClass].startingGear.choose)
           : [];
       },
       spellBookPlaceholder() {
-        return classes[this.builderStore.baseClass] && classes[this.builderStore.baseClass].startingGear.spellbook
-          ? `${classes[this.builderStore.baseClass].startingGear.spellbook.join(', ')}, etc.`
+        return CLASSES[this.builderStore.baseClass] && CLASSES[this.builderStore.baseClass].startingGear.spellbook
+          ? `${CLASSES[this.builderStore.baseClass].startingGear.spellbook.join(', ')}, etc.`
           : null;
       },
     },
@@ -87,19 +90,18 @@
         const formValid = await this.v$.$validate();
 
         if (formValid) {
-          let items = this.items;
-          const spellbook = `${this.spellbook} (spellbook)`;
+          let items = [ ...this.items ];
 
-          if (!items.includes(spellbook) && this.spellbook !== '') {
-            items = `${items}, ${spellbook}`;
+          if (CLASSES[this.builderStore.baseClass].startingGear.spellbook) {
+            items.push(newItem({ name: `${this.spellbook} (spellbook)`, custom: true }));
           }
 
           if (!items.includes(this.selectedGeneralItem)) {
-            items = `${items}, ${this.selectedGeneralItem}`;
+            items.push(newItem({ name: this.selectedGeneralItem }));
           }
 
           if (!items.includes(this.selectedClassItem)) {
-            items = `${items}, ${this.selectedClassItem}`;
+            items.push(newItem({ name: this.selectedClassItem }));
           }
 
           this.builderStore.updateCharacter({ inventory: { items } });

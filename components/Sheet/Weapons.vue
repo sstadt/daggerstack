@@ -33,7 +33,7 @@
       BasicButton.mx-auto.block(v-else @click="openPicker(secondaryWeaponType)")
         | Select Weapon
     BasicDrawer(ref="equipmentPicker" title="Weapons")
-      InventoryPicker(
+      InventoryEquipmentPicker(
         :type="pickerType"
         :character="character"
         :active-slot="activeSlot"

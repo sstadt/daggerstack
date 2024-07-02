@@ -9,7 +9,10 @@
       p {{ weapon.trait }} {{ weapon.range }}
       p
         | {{ damageDice }}
-        span(v-if="damageModifier !== modifier || damageModifier !== 0" :class="modifierClass") +{{ damageModifier }}
+        span(
+          v-if="damageModifier !== modifier || damageModifier !== 0"
+          :class="modifierClass"
+        ) +{{ damageModifier }}
         |  ({{ weapon.damageType }})
     p.text-slate-600.text-sm.space-x-1(v-if="weapon.feature")
       span.font-bold {{ weapon.feature.label }}

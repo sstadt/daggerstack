@@ -14,7 +14,7 @@
         @click="openPicker(n - 1)"
       ) Select Weapon
     BasicDrawer(ref="equipmentPicker" title="Weapons")
-      InventoryPicker(
+      InventoryEquipmentPicker(
         :type="type"
         :character="character"
         :active-slot="slot"

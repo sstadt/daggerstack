@@ -39,7 +39,7 @@
         NuxtLink(to="/") Finish Later
         BasicButton.block(type="submit") Next
     BasicDrawer(ref="equipmentPicker" :title="pickerTitle")
-      InventoryPicker(
+      InventoryEquipmentPicker(
         :character="builderStore.character"
         :type="activeType"
         starting-only

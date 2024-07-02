@@ -7,6 +7,7 @@ import CLASSES from '~/data/classes';
 import SUBCLASSES from '~/data/subclasses';
 import WEAPONS from '~/data/weapons';
 import ARMOR from '~/data/armor';
+import ITEMS from '~/data/items';
 import COMMUNITY from '~/data/community';
 import ANCESTRY from '~/data/ancestry';
 
@@ -78,7 +79,7 @@ export const newCharacter = () => {
       armor: newArmor(),
     },
     inventory: {
-      items: '',
+      items: [],
       gold: {
         handful: 1,
         bag: 0,
@@ -105,25 +106,67 @@ export const newCharacter = () => {
   };
 };
 
-export const newWeapon = (weapon) => {
+export const newWeapon = (weapon = {}) => {
+  const defaults = {
+    id: uuidv4(),
+    name: null,
+    notes: '',
+    attachment: null,
+  };
+  const options = Object.assign({}, defaults, weapon);
+
   return {
-    name: weapon ? weapon.name : null,
-    notes: weapon ? weapon.notes : '',
+    id: options.id,
+    name: options.name,
+    notes: options.notes,
+    attachment: options.attachment,
   };
 };
 
 export const getWeapon = (name) =>
   WEAPONS.items.find((weapon) => weapon.name === name);
 
-export const newArmor = (armor) => {
+export const newArmor = (armor = {}) => {
+  const defaults = {
+    id: uuidv4(),
+    name: null,
+    notes: '',
+    attachment: null,
+  };
+  const options = Object.assign({}, defaults, armor);
+
   return {
-    name: armor ? armor.name : null,
-    notes: armor ? armor.notes : '',
+    id: options.id,
+    name: options.name,
+    notes: options.notes,
+    attachment: options.attachment,
   };
 };
 
 export const getArmor = (name) =>
   ARMOR.items.find((armor) => armor.name === name);
+
+export const newItem = (item = {}) => {
+  const defaults = {
+    id: uuidv4(),
+    name: null,
+    chargesUsed: 0,
+    notes: '',
+    attachment: null,
+    custom: false,
+  };
+  const options = Object.assign({}, defaults, item);
+
+  return {
+    name: options.name,
+    chargesUsed: options.chargesUsed,
+    notes: options.notes,
+    custom: options.custom,
+  };
+};
+
+export const getItem = (name) =>
+  ITEMS.items.find((item) => item.name === name);
 
 export const newUpgrade = ({ id, level, type, value, options }) => {
   return {
@@ -132,63 +175,6 @@ export const newUpgrade = ({ id, level, type, value, options }) => {
     type, // upgrade type string
     value, // primary option selected
     options, // additional options; Array || Object
-  };
-};
-
-/**
- * Inventory items are stores as a single string, this function
- * breaks that master string down to be loaded into the character
- * builder when loading a saved character from localStorage.
- *
- * TODO: upgrade beginning inventory to use a list of items and get rid
- *       of this garbage
- *
- * @param {String} items The comma separated item string to split
- * @param {String} baseClass The character's main class
- * @returns {
- *  items: String,
- *  spellbook: String,
- *  generalItem: String,
- *  classItem: String,
- * }
- */
-export const separateItemsForBuilder = (items, baseClass) => {
-  const itemArr = items !== '' ? items.split(',').map((item) => item.trim()) : [];
-  const spellbookIndex = itemArr.findIndex((item) => item.includes('spellbook'));
-  const [existingSpellbook] = spellbookIndex > -1
-    ? itemArr.splice(spellbookIndex, 1)
-    : [''];
-  const spellbook = existingSpellbook.replace('(spellbook)', '').trim();
-
-  let generalItem = '';
-  let classItem = '';
-
-  GENERAL.startingGear.choose.forEach((choice) => {
-    const itemIndex = itemArr.findIndex((item) => item === choice);
-
-    if (itemIndex > -1) {
-      generalItem = itemArr.splice(itemIndex, 1);
-    }
-  });
-
-  if (baseClass) {
-    CLASSES[baseClass].startingGear.choose
-      .forEach((choice) => {
-        const itemIndex = itemArr.findIndex((item) => item === choice);
-
-        if (itemIndex > -1) {
-          classItem = itemArr.splice(itemIndex, 1);
-        }
-      });
-  }
-
-  return {
-    items: itemArr.length > 0
-      ? itemArr.join(', ')
-      : GENERAL.startingGear.take.join(', '),
-    spellbook,
-    generalItem,
-    classItem,
   };
 };
 
@@ -289,10 +275,7 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
 
   // armor
   if (character.equipment && character.equipment.armor.name) {
-    const armor = ARMOR.items.find((a) => a.name === character.equipment.armor.name)
-    const armorFeature = equipmentFeatures.find(
-      (feature) => feature.name === character.equipment.armor.feature,
-    );
+    const armor = ARMOR.items.find((a) => a.name === character.equipment.armor.name);
     const armorScore = options.exclude && options.exclude.includes('armorScore')
       ? 0
       : armor.score;
