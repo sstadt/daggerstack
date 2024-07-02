@@ -217,6 +217,8 @@
               matchesTypeFilter;
           })
           .sort((a, b) => {
+            if (!a.trait || !b.trait) return 0;
+
             const aTrait = a.trait.toLowerCase();
             const bTrait = b.trait.toLowerCase();
 

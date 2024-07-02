@@ -1,6 +1,7 @@
 <template lang="pug">
   BasicCard(title="inventory")
-    InputTextarea.pb-8.border-b.mb-8.mt-6(label="Items" v-model="items")
+    .divide-y
+      InventoryItem(v-for="item in items" :character-item="item")
     div(v-for="n in maxInventoryWeapons")
       h3.text-xl.font-black.uppercase.mt-6 Inventory Weapon {{ n }}
       InventoryWeapon(

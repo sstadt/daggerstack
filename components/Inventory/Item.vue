@@ -1,6 +1,6 @@
 <template lang="pug">
-  .w-full.py-2
-    .flex-grow
+  .w-full.py-3
+    .flex-grow(v-if="item")
       .flex.justify-between.items-center.space-x-2
         h3.text-xl.font-bold.truncate {{ item.name }}
         .no-shrink
@@ -10,7 +10,7 @@
             v-model="chargesUsed"
             :max="item.charge.max"
           )
-      p.text-sm {{ item.description }}
+      p.text-sm.text-slate-600 {{ item.description }}
 </template>
 
 <script>
