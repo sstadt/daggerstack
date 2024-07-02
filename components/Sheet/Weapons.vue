@@ -12,6 +12,7 @@
       InventoryWeapon(
         v-if="primaryWeapon"
         :weapon="getWeapon(primaryWeapon.name)"
+        :character="character"
         @click="openPicker(primaryWeaponType)"
       )
       BasicButton.mx-auto.block(v-else @click="openPicker(primaryWeaponType)")

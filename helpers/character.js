@@ -270,45 +270,42 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
   const features = [];
 
   // weapons
-  if (character.equipment && character.equipment.primaryWeapon.feature) {
-    const primaryFeature = equipmentFeatures.find(
-      (feature) => feature.name === character.equipment.primaryWeapon.feature,
-    );
+  if (character.equipment && character.equipment.primaryWeapon.name) {
+    const primaryWeapon = WEAPONS.items.find((w) => w.name === character.equipment.primaryWeapon.name);
 
-    if (primaryFeature && primaryFeature.modify && primaryFeature.modify[attribute]) {
-      features.push(primaryFeature);
+    if (primaryWeapon.feature && primaryWeapon.feature.modify && primaryWeapon.feature.modify[attribute]) {
+      features.push({ ...primaryWeapon.feature });
     }
   }
 
   // verify we are not carrying too much before including secondary weapon feature
-  if (character.equipment && burden < 3 && character.equipment.secondaryWeapon.secondaryFeature) {
-    const secondaryFeature = equipmentFeatures.find(
-      (feature) => feature.name === character.equipment.secondaryWeapon.secondaryFeature,
-    );
+  if (character.equipment && burden < 3 && character.equipment.secondaryWeapon.name) {
+    const secondaryWeapon = WEAPONS.items.find((w) => w.name === character.equipment.secondaryWeapon.name);
 
-    if (secondaryFeature && secondaryFeature.modify && secondaryFeature.modify[attribute]) {
-      features.push(secondaryFeature);
+    if (secondaryWeapon.feature && secondaryWeapon.feature.modify && secondaryWeapon.feature.modify[attribute]) {
+      features.push({ ...secondaryWeapon.feature });
     }
   }
 
   // armor
   if (character.equipment && character.equipment.armor.name) {
+    const armor = ARMOR.items.find((a) => a.name === character.equipment.armor.name)
     const armorFeature = equipmentFeatures.find(
       (feature) => feature.name === character.equipment.armor.feature,
     );
     const armorScore = options.exclude && options.exclude.includes('armorScore')
       ? 0
-      : character.equipment.armor.score;
+      : armor.score;
 
     features.push({
-      name: character.equipment.armor.name,
+      name: armor.name,
       modify: {
         armorScore,
       },
     });
 
-    if (armorFeature && armorFeature.modify && armorFeature.modify[attribute]) {
-      features.push(armorFeature);
+    if (armor.feature && armor.feature.modify && armor.feature.modify[attribute]) {
+      features.push({ ...armor.feature });
     }
   }
 

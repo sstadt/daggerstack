@@ -6,6 +6,9 @@ module.exports = {
     './plugins/**/*.{js,ts}',
     './nuxt.config.{js,ts}',
   ],
+  safelist: [
+    'text-red-600',
+  ],
   darkMode: 'media', // or 'media' or 'class'
   theme: {
     extend: {

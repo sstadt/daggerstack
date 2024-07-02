@@ -7,13 +7,18 @@
         NuxtIcon(v-if="showOffhand" name="right-hand")
     .flex.justify-between
       p {{ weapon.trait }} {{ weapon.range }}
-      p {{ weapon.damage }} ({{ weapon.damageType }})
+      p
+        | {{ damageDice }}
+        span(v-if="damageModifier !== modifier || damageModifier !== 0" :class="modifierClass") +{{ damageModifier }}
+        |  ({{ weapon.damageType }})
     p.text-slate-600.text-sm.space-x-1(v-if="weapon.feature")
       span.font-bold {{ weapon.feature.label }}
       span.italic {{ weapon.feature.description }}
 </template>
 
 <script>
+  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
+
   export default {
     name: 'InventoryWeapon',
     props: {
@@ -25,8 +30,36 @@
         type: String,
         default: null,
       },
+      character: {
+        type: Object,
+        default: null,
+      },
+    },
+    data() {
+      const [ damageDice, modifier ] = this.weapon.damage.split('+');
+
+      return {
+        damageDice,
+        modifier: modifier ? parseInt(modifier, 10) : 0,
+      };
     },
     computed: {
+      damageModifier() {
+        if (!this.character) return this.modifier;
+
+        const base = this.modifier;
+        const modifiers = getFeaturesByAttribute(this.character, 'primaryMeleeDamage');
+
+        return this.weapon.range.toLowerCase() === 'melee' && this.showMainHand
+          ? base + calculateModifiers(modifiers, 'primaryMeleeDamage')
+          : base;
+      },
+      modifierClass() {
+        return {
+          'text-green-700': this.damageModifier > this.modifier,
+          'text-red-600': this.damageModifier < this.modifier,
+        };
+      },
       showMainHand() {
         return this.weapon.slot === 'primary';
       },
