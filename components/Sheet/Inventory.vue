@@ -1,7 +1,14 @@
 <template lang="pug">
   BasicCard(title="inventory")
     .divide-y
-      InventoryItem(v-for="item in items" :character-item="item")
+      transition-group(name="slide-fade-right" appear)
+        InventoryItem(
+          v-for="(item, index) in items"
+          :key="item.id"
+          :character-item="item"
+          @update="(updatedItem) => updateItem(updatedItem, index)"
+          @remove="removeItem(index)"
+        )
     div(v-for="n in maxInventoryWeapons")
       h3.text-xl.font-black.uppercase.mt-6 Inventory Weapon {{ n }}
       InventoryWeapon(
@@ -88,6 +95,15 @@
         this.character.inventory.weapons.splice(this.activeSlot, 1, newWeapon());
         this.charactersStore.saveCharacter(this.character);
         this.$refs.equipmentPicker.close();
+      },
+      updateItem(updatedItem, index) {
+        const item = Object.assign({}, this.character.inventory.items[index], updatedItem);
+        this.character.inventory.items.splice(index, 1, item);
+        this.charactersStore.saveCharacter(this.character);
+      },
+      removeItem(index) {
+        this.character.inventory.items.splice(index, 1);
+        this.charactersStore.saveCharacter(this.character);
       },
       saveItems: debounce(function () {
         this.character.inventory.items = this.items;

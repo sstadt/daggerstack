@@ -19,7 +19,7 @@
         h2.text-2xl.font-bold.uppercase {{ characterItem.name }}
         InputCounter.justify-between(
           label="Quantity"
-          v-model="itemQuentity"
+          v-model="itemQuantity"
           :min="0"
         )
         InputTextarea(label="notes" v-model="itemNotes")
@@ -42,7 +42,7 @@
     data() {
       return {
         chargesUsed: this.characterItem.chargesUsed,
-        itemQuentity: this.characterItem.quantity,
+        itemQuantity: this.characterItem.quantity,
         itemNotes: this.characterItem.notes,
       };
     },
@@ -55,18 +55,32 @@
     },
     methods: {
       use() {
-        console.log('>>> use item');
+        if (this.itemQuantity > 0) {
+          this.$emit('update', { quantity: this.itemQuantity - 1 });
+        } else {
+          this.remove();
+        }
       },
       remove() {
-        console.log('>>> remove item');
+        this.$emit('remove');
+        this.$refs.details.close();
       },
       save() {
-        console.log('>>> save item');
+        this.$emit('update', {
+          quantity: this.itemQuantity,
+          notes: this.itemNotes,
+        });
         this.$refs.details.close();
       },
       openDetails() {
-        console.log('>>> open details');
         this.$refs.details.open();
+      },
+    },
+    watch: {
+      chargesUsed(newVal, oldVal) {
+        if (newVal !== oldVal && newVal > -1) {
+          this.$emit('update', { chargesUsed: this.chargesUsed });
+        }
       },
     },
   };
