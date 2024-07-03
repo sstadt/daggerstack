@@ -35,6 +35,7 @@
         h2.text-2xl.font-bold.uppercase(v-else :class="titleClass") {{ characterItem.name }}
         InputCounter.justify-between(
           v-if="!item.charge"
+          :key="`${key}-editor`"
           label="Quantity"
           v-model="itemQuantity"
           :min="0"
@@ -48,6 +49,7 @@
 
 <script>
   import { getItem } from '~/helpers/character';
+import { uuidv4 } from '~/helpers/utility';
 
   export default {
     name: 'InventoryItem',
@@ -67,6 +69,7 @@
     },
     data() {
       return {
+        key: uuidv4(),
         deleting: false,
         itemName: this.characterItem && this.characterItem.custom ? this.characterItem.name : null,
         chargesUsed: this.characterItem ? this.characterItem.chargesUsed : 0,
@@ -94,10 +97,13 @@
     },
     methods: {
       use() {
-        if (this.itemQuantity > 0) {
-          this.$emit('update', { quantity: this.itemQuantity - 1 });
+        if (this.itemQuantity > 1) {
+          this.itemQuantity = this.itemQuantity - 1;
+
+          this.$emit('update', { quantity: this.itemQuantity });
+          this.key = uuidv4();
         } else {
-          this.remove();
+          this.$emit('remove');
         }
       },
       remove() {
