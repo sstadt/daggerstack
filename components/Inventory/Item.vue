@@ -1,20 +1,21 @@
 <template lang="pug">
   .w-full.py-3.text-left
+    //- base item only - used in item picker
     .flex-grow(v-if="baseItem" @click="openDetails")
       .flex.justify-between.items-center.space-x-2
-        h3.font-bold.truncate {{ baseItem.name }}
+        h3.font-bold.truncate(:class="titleClass") {{ baseItem.name }}
         .no-shrink(v-if="baseItem.charge")
           InputCheckboxCounter.no-shrink(
             v-model="chargesUsed"
             :max="baseItem.charge.max"
-            read-only
-            @click.stop
+            @click.prevent
           )
       p.text-sm.text-slate-600(v-if="baseItem.description") {{ baseItem.description }}
+    //- character item (base item gets calculated)
     .flex-grow(v-else-if="item" @click="openDetails")
       .flex.justify-between.items-center.space-x-2
         h3.font-bold.truncate
-          | {{ characterItem.name }}
+          span(:class="titleClass") {{ characterItem.name }}
           span.text-slate-400(v-if="characterItem.quantity > 1")  (x{{ characterItem.quantity }})
         .no-shrink
           BasicButton(v-if="item.consumable && !readOnly" size="sm" @click.stop="use") Use
@@ -25,12 +26,15 @@
             :read-only="readOnly"
             @click.stop
           )
-      p.text-sm.text-slate-600.truncate(v-if="item.description") {{ item.description }}
+      p.text-sm.text-slate-600(v-if="item.description") {{ item.description }}
       p.text-sm.text-slate-600(v-if="characterItem.notes !== ''") {{ characterItem.notes }}
+    //- item editor
     BasicDrawer(v-if="characterItem" ref="details" title="Item Details" @close="detailsClosed")
       .px-8.space-y-6
-        h2.text-2xl.font-bold.uppercase {{ characterItem.name }}
+        InputText(v-if="characterItem.custom" label="name" v-model="itemName")
+        h2.text-2xl.font-bold.uppercase(v-else :class="titleClass") {{ characterItem.name }}
         InputCounter.justify-between(
+          v-if="!item.charge"
           label="Quantity"
           v-model="itemQuantity"
           :min="0"
@@ -64,6 +68,7 @@
     data() {
       return {
         deleting: false,
+        itemName: this.characterItem && this.characterItem.custom ? this.characterItem.name : null,
         chargesUsed: this.characterItem ? this.characterItem.chargesUsed : 0,
         itemQuantity: this.characterItem ? this.characterItem.quantity : 1,
         itemNotes: this.characterItem ? this.characterItem.notes : '',
@@ -76,6 +81,15 @@
         return this.characterItem.custom
           ? this.characterItem
           : getItem(this.characterItem.name);
+      },
+      titleClass() {
+        const item = this.item || this.baseItem;
+
+        return {
+          'text-cyan-950': !item.consumable && !item.relic,
+          'text-green-600': item.consumable,
+          'text-orange-600': item.relic,
+        }
       },
     },
     methods: {
@@ -96,7 +110,15 @@
         }
       },
       save() {
+        if (this.itemQuantity < 1) {
+          this.remove();
+          return;
+        }
+
+        const item = this.item || this.baseItem;
+
         this.$emit('update', {
+          name: this.characterItem && this.characterItem.custom ? this.itemName : item.name,
           quantity: this.itemQuantity,
           notes: this.itemNotes,
         });

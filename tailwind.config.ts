@@ -8,6 +8,9 @@ module.exports = {
   ],
   safelist: [
     'text-red-600',
+    'text-green-600',
+    'text-orange-600',
+    'text-cyan-950',
   ],
   darkMode: 'media', // or 'media' or 'class'
   theme: {
