@@ -154,14 +154,18 @@ export const newItem = (item = {}) => {
     notes: '',
     attachment: null,
     custom: false,
+    quantity: 1,
   };
   const options = Object.assign({}, defaults, item);
 
   return {
+    id: options.id,
     name: options.name,
     chargesUsed: options.chargesUsed,
     notes: options.notes,
+    attachment: options.attachment,
     custom: options.custom,
+    quantity: options.quantity,
   };
 };
 

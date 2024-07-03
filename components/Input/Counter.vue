@@ -1,6 +1,6 @@
 <template lang="pug">
   .flex
-    label.text-2xl.font-bold.mr-4(v-if="label") {{ label }}
+    label.text-xl.mr-4(v-if="label") {{ label }}
     .input--counter.flex.items-center.space-x-2
       BasicButton.flex(
         size="xs"
@@ -32,7 +32,7 @@
       },
       max: {
         type: Number,
-        required: true,
+        default: 9999,
       },
       modifier: {
         type: Boolean,
