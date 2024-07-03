@@ -1,26 +1,30 @@
 <template lang="pug">
   BasicCard(title="inventory")
-    .divide-y
-      transition-group(name="slide-fade-right" appear)
-        InventoryItem(
-          v-for="(item, index) in items"
-          :key="item.id"
-          :character-item="item"
-          @update="(updatedItem) => updateItem(updatedItem, index)"
-          @remove="removeItem(index)"
+    .space-y-6
+      .flex.flex-col.space-y-2.items-end
+        TransitionGroup.w-full.divide-y(name="slide-fade-left" tag="div")
+          InventoryItem(
+            v-for="(item, index) in items"
+            :key="item.id"
+            :character-item="item"
+            @update="(updatedItem) => updateItem(updatedItem, index)"
+            @remove="removeItem(index)"
+          )
+        BasicButton(size="sm" priority="secondary" @click="openItemPicker") Add Item
+      div(v-for="n in maxInventoryWeapons")
+        h3.text-xl.font-black.uppercase.mt-6 Inventory Weapon {{ n }}
+        InventoryWeapon(
+          v-if="inventoryWeapons[n - 1]"
+          :weapon="inventoryWeapons[n - 1]"
+          @click="openEquipmentPicker(n - 1)"
         )
-    div(v-for="n in maxInventoryWeapons")
-      h3.text-xl.font-black.uppercase.mt-6 Inventory Weapon {{ n }}
-      InventoryWeapon(
-        v-if="inventoryWeapons[n - 1]"
-        :weapon="inventoryWeapons[n - 1]"
-        @click="openPicker(n - 1)"
-      )
-      BasicButton.mx-auto.my-4.block(
-        v-else
-        priority="secondary"
-        @click="openPicker(n - 1)"
-      ) Select Weapon
+        BasicButton.mx-auto.my-4.block(
+          v-else
+          priority="secondary"
+          @click="openEquipmentPicker(n - 1)"
+        ) Select Weapon
+    BasicDrawer(ref="itemPicker" title="Items")
+      InventoryItemPicker(@select="addItem")
     BasicDrawer(ref="equipmentPicker" title="Weapons")
       InventoryEquipmentPicker(
         :type="type"
@@ -37,7 +41,6 @@
   import WEAPONS from '~/data/weapons';
 
   import { newWeapon } from '~/helpers/character';
-  import { debounce } from '~/helpers/utility';
 
   import { useCharactersStore } from '~/stores/characters';
 
@@ -77,7 +80,7 @@
       },
     },
     methods: {
-      openPicker(activeSlot) {
+      openEquipmentPicker(activeSlot) {
         this.activeSlot = activeSlot;
         this.$refs.equipmentPicker.open();
       },
@@ -96,6 +99,14 @@
         this.charactersStore.saveCharacter(this.character);
         this.$refs.equipmentPicker.close();
       },
+      openItemPicker() {
+        this.$refs.itemPicker.open();
+      },
+      addItem(item) {
+        this.$refs.itemPicker.close();
+        this.character.inventory.items.push({ ...item });
+        this.charactersStore.saveCharacter(this.character);
+      },
       updateItem(updatedItem, index) {
         const item = Object.assign({}, this.character.inventory.items[index], updatedItem);
         this.character.inventory.items.splice(index, 1, item);
@@ -104,17 +115,6 @@
       removeItem(index) {
         this.character.inventory.items.splice(index, 1);
         this.charactersStore.saveCharacter(this.character);
-      },
-      saveItems: debounce(function () {
-        this.character.inventory.items = this.items;
-        this.charactersStore.saveCharacter(this.character);
-      }, 500),
-    },
-    watch: {
-      items(newVal, oldVal) {
-        if (newVal !== oldVal) {
-          this.saveItems();
-        }
       },
     },
   };

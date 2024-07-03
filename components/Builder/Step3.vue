@@ -17,11 +17,13 @@
           v-model="selectedGeneralItem"
           :options="generalChoice"
           label="potion"
+          required
         )
         InputSelect.mb-8(
           v-model="selectedClassItem"
           :options="classChoice"
           label="class item"
+          required
         )
       .flex.justify-between.items-center
         NuxtLink(to="/") Finish Later
@@ -93,7 +95,7 @@
           let items = [ ...this.items ];
 
           if (CLASSES[this.builderStore.baseClass].startingGear.spellbook) {
-            items.push(newItem({ name: `${this.spellbook} (spellbook)`, custom: true }));
+            items.push(newItem({ name: this.spellbook, notes: 'Spellbook', custom: true }));
           }
 
           if (!items.includes(this.selectedGeneralItem)) {
@@ -101,7 +103,7 @@
           }
 
           if (!items.includes(this.selectedClassItem)) {
-            items.push(newItem({ name: this.selectedClassItem }));
+            items.push(newItem({ name: this.selectedClassItem, custom: true }));
           }
 
           this.builderStore.updateCharacter({ inventory: { items } });
