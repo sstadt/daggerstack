@@ -1,5 +1,5 @@
 {
-  "currentCharacterVersion": "1.4.1",
+  "currentCharacterVersion": "1.4.1b",
   "startingGear": {
     "gold": {
       "handful": 1
@@ -10,8 +10,8 @@
       "basic supplies"
     ],
     "choose": [
-      "minor health potion",
-      "minor stamina potion"
+      "Minor Health Potion",
+      "Minor Stamina Potion"
     ]
   },
   "description": {
@@ -33,5 +33,7 @@
   "companionMaxStress": 6,
   "maxShortRestOptions": 2,
   "maxLongRestOptions": 2,
-  "traits": ["agility", "strength", "finesse", "instinct", "presence", "knowledge"]
+  "traits": ["agility", "strength", "finesse", "instinct", "presence", "knowledge"],
+  "spellcasters": ["bard", "druid", "ranger", "rogue", "seraph", "sorcerer", "wizard"],
+  "maxInventoryWeapons": 2
 }

@@ -1,4 +1,16 @@
 
+// right
+.slide-fade-right-enter-active,
+.slide-fade-right-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-fade-right-enter-from,
+.slide-fade-right-leave-active {
+  transform: translateX(-30px);
+  opacity: 0;
+}
+
 // left
 .slide-fade-left-enter-active,
 .slide-fade-left-leave-active {

@@ -1,52 +1,391 @@
 {
+  "features": [],
   "items": [
     {
       "name": "Gambeson Armor",
-      "type": "armor",
-      "feature": "flexible",
       "score": 2,
-      "starting": true
+      "tier": 0,
+      "feature": {
+        "name": "flexible",
+        "label": "Flexible",
+        "description": "+1 to Evasion",
+        "modify": {
+          "evasion": 1
+        }
+      }
     },
     {
       "name": "Leather Armor",
-      "type": "armor",
-      "feature": null,
       "score": 4,
-      "starting": true
+      "tier": 0,
+      "feature": null
     },
     {
       "name": "Chainmail Armor",
-      "type": "armor",
-      "feature": "heavy",
       "score": 6,
-      "starting": true
+      "tier": 0,
+      "feature": {
+        "name": "heavy",
+        "label": "Heavy",
+        "description": "-1 to Evasion",
+        "modify": {
+          "evasion": -1
+        }
+      }
     },
     {
       "name": "Full Plate Armor",
-      "type": "armor",
-      "feature": "veryHeavy",
       "score": 8,
-      "starting": true
-    }
-  ],
-  "features": [
-    {
-      "name": "flexible",
-      "modify": {
-        "evasion": 1
+      "tier": 0,
+      "feature": {
+        "name": "very heavy",
+        "label": "Very Heavy",
+        "description": "-2 to Evasion and -1 to Agility",
+        "modify": {
+          "evasion": -2,
+          "agility": -1
+        }
       }
     },
     {
-      "name": "heavy",
-      "modify": {
-        "evasion": -1
+      "name": "Improved Gambeson Armor",
+      "score": 3,
+      "tier": 1,
+      "feature": {
+        "name": "flexible",
+        "label": "Flexible",
+        "description": "+1 to Evasion",
+        "modify": {
+          "evasion": 1
+        }
       }
     },
     {
-      "name": "veryHeavy",
-      "modify": {
-        "evasion": -2,
-        "agility": -1
+      "name": "Improved Leather Armor",
+      "score": 5,
+      "tier": 1,
+      "feature": null
+    },
+    {
+      "name": "Improved Chainmail Armor",
+      "score": 7,
+      "tier": 1,
+      "feature": {
+        "name": "heavy",
+        "label": "Heavy",
+        "description": "-1 to Evasion",
+        "modify": {
+          "evasion": -1
+        }
+      }
+    },
+    {
+      "name": "Improved Full Plate Armor",
+      "score": 9,
+      "tier": 1,
+      "feature": {
+        "name": "very heavy",
+        "label": "Very Heavy",
+        "description": "-2 to Evasion and -1 to Agility",
+        "modify": {
+          "evasion": -2,
+          "agility": -1
+        }
+      }
+    },
+    {
+      "name": "Elundrian Chain Armor",
+      "score": 2,
+      "tier": 1,
+      "feature": {
+        "name": "reinforced",
+        "label": "Reinforced",
+        "description": "Increase your armor score by the number of unmarked armor slots you have",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Harrowbone Armor",
+      "score": 5,
+      "tier": 1,
+      "feature": {
+        "name": "resistant",
+        "label": "Resistant",
+        "description": "Mark 2 armor slots to make yourself resistant to the incoming damage instead of reducing it by your armor score",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Irontree Breastplate Armor",
+      "score": 5,
+      "tier": 1,
+      "feature": {
+        "name": "sturdy",
+        "label": "Sturdy",
+        "description": "Before you mark your last armor slot, roll a d6. On a 6, you use the armor without marking the slot",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Runetan Shield",
+      "score": 5,
+      "tier": 1,
+      "feature": {
+        "name": "warded",
+        "label": "Warded",
+        "description": "Each armor slot is worth an extra 2d4 against magic damage",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Tyris Soft Armor",
+      "score": 5,
+      "tier": 1,
+      "feature": {
+        "name": "quiet",
+        "label": "Quiet",
+        "description": "+2 to any rolls you make to move without being heard",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Rosewild Armor",
+      "score": 6,
+      "tier": 1,
+      "feature": {
+        "name": "hopeful",
+        "label": "Hopeful",
+        "description": "Anytime you need to spend Hope, you may mark an Armor Slot instead.",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Advanced Gambeson Armor",
+      "score": 4,
+      "tier": 2,
+      "feature": {
+        "name": "flexible",
+        "label": "Flexible",
+        "description": "+1 to Evasion",
+        "modify": {
+          "evasion": 1
+        }
+      }
+    },
+    {
+      "name": "Advanced Leather Armor",
+      "score": 6,
+      "tier": 2,
+      "feature": null
+    },
+    {
+      "name": "Advanced Chainmail Armor",
+      "score": 8,
+      "tier": 2,
+      "feature": {
+        "name": "heavy",
+        "label": "Heavy",
+        "description": "",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Advanced Full Plate Armor",
+      "score": 10,
+      "tier": 2,
+      "feature": {
+        "name": "very heavy",
+        "label": "Very Heavy",
+        "description": "-2 to Evasion and -1 to Agility",
+        "modify": {
+          "evasion": -2,
+          "agility": -1
+        }
+      }
+    },
+    {
+      "name": "Bellamoi Fine Armor",
+      "score": 6,
+      "tier": 2,
+      "feature": {
+        "name": "gilded",
+        "label": "Gilded",
+        "description": "When you mark an armor slot, you may spend any amount of Hope to also reduce the incoming damage by an amount equal to your proficiency per Hope spent",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Dragonscale Armor",
+      "score": 6,
+      "tier": 2,
+      "feature": {
+        "name": "impenetrable",
+        "label": "Impenetrable",
+        "description": "When you mark an armor slot, you cannot fill your last hit point as the result of physical damage",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Spiked Armor Plating",
+      "score": 6,
+      "tier": 2,
+      "feature": {
+        "name": "sharp",
+        "label": "Sharp",
+        "description": "Add 1d4 to any damage rolls you make on a successful Melee attack",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Bladefare Armor",
+      "score": 9,
+      "tier": 2,
+      "feature": {
+        "name": "physical",
+        "label": "Physical",
+        "description": "You cannot use this armor against Magic damage",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Monett's Cloak",
+      "score": 9,
+      "tier": 2,
+      "feature": {
+        "name": "magic",
+        "label": "Magic",
+        "description": "You cannot use this armor against Physical damage",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Body Runes",
+      "score": 10,
+      "tier": 2,
+      "feature": {
+        "name": "painful",
+        "label": "Painful",
+        "description": "Mark stress every time you use one or more armor slots on an attack",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Legendary Gambeson Armor",
+      "score": 6,
+      "tier": 3,
+      "feature": {
+        "name": "flexible",
+        "label": "Flexible",
+        "description": "+1 to Evasion",
+        "modify": {
+          "evasion": 1
+        }
+      }
+    },
+    {
+      "name": "Legendary Leather Armor",
+      "score": 8,
+      "tier": 3,
+      "feature": null
+    },
+    {
+      "name": "Legendary Chainmail Armor",
+      "score": 10,
+      "tier": 3,
+      "feature": {
+        "name": "heavy",
+        "label": "Heavy",
+        "description": "-1 to Evasion",
+        "modify": {
+          "evasion": -1
+        }
+      }
+    },
+    {
+      "name": "Legendary Full Plate Armor",
+      "score": 12,
+      "tier": 3,
+      "feature": {
+        "name": "very heavy",
+        "label": "Very Heavy",
+        "description": "-2 to Evasion and -1 to Agility",
+        "modify": {
+          "evasion": -2,
+          "agility": -1
+        }
+      }
+    },
+    {
+      "name": "Dunamis Silkchain",
+      "score": 5,
+      "tier": 3,
+      "feature": {
+        "name": "timeslowing",
+        "label": "Timeslowing",
+        "description": "On any incoming attacks, roll 1d4 and add its value to your Evasion score",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Channeling Armor",
+      "score": 7,
+      "tier": 3,
+      "feature": {
+        "name": "channeling",
+        "label": "Channeling",
+        "description": "While this armor is equipped, take +1 to all Spellcast rolls",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Emberwoven Armor",
+      "score": 8,
+      "tier": 3,
+      "feature": {
+        "name": "burning",
+        "label": "Burning",
+        "description": "When an enemy strikes you in Melee, they immediately mark a stress",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Full Reinforced Armor",
+      "score": 8,
+      "tier": 3,
+      "feature": {
+        "name": "variable",
+        "label": "Variable",
+        "description": "Add +1 to your armor score for every range beyond Melee the damage is coming from",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Veritas Opal Armor",
+      "score": 8,
+      "tier": 3,
+      "feature": {
+        "name": "truthseeking",
+        "label": "Truthseeking",
+        "description": "This armor glows when anyone within Close range tells a lie",
+        "modify": {}
+      }
+    },
+    {
+      "name": "Savior Chainmail",
+      "score": 15,
+      "tier": 3,
+      "feature": {
+        "name": "difficult",
+        "label": "Difficult",
+        "description": "-1 to all Character Traits",
+        "modify": {
+          "agility": -1,
+          "strength": -1,
+          "finesse": -1,
+          "instinct": -1,
+          "presence": -1,
+          "knowledge": -1
+        }
       }
     }
   ]

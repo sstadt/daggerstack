@@ -7,6 +7,7 @@ import CLASSES from '~/data/classes';
 import SUBCLASSES from '~/data/subclasses';
 import WEAPONS from '~/data/weapons';
 import ARMOR from '~/data/armor';
+import ITEMS from '~/data/items';
 import COMMUNITY from '~/data/community';
 import ANCESTRY from '~/data/ancestry';
 
@@ -78,13 +79,13 @@ export const newCharacter = () => {
       armor: newArmor(),
     },
     inventory: {
-      items: '',
+      items: [],
       gold: {
         handful: 1,
         bag: 0,
         chest: 0,
       },
-      weapon: newWeapon(),
+      weapons: [],
     },
     experience: [],
     background: [],
@@ -105,32 +106,75 @@ export const newCharacter = () => {
   };
 };
 
-export const newWeapon = () => {
-  return {
+export const newWeapon = (weapon = {}) => {
+  const defaults = {
+    id: uuidv4(),
     name: null,
-    type: 'weapon',
-    trait: null,
-    primary: false,
-    secondary: false,
-    range: null,
-    feature: null,
-    secondaryFeature: null,
-    damage: null,
-    damageType: null,
-    burden: 0,
-    starting: false,
+    notes: '',
+    attachment: null,
+  };
+  const options = Object.assign({}, defaults, weapon);
+
+  return {
+    id: options.id,
+    name: options.name,
+    notes: options.notes,
+    attachment: options.attachment,
   };
 };
 
-export const newArmor = () => {
-  return {
+export const getWeapon = (name) =>
+  WEAPONS.items.find((weapon) => weapon.name === name);
+
+export const newArmor = (armor = {}) => {
+  const defaults = {
+    id: uuidv4(),
     name: null,
-    type: 'armor',
-    feature: null,
-    score: 0,
-    starting: false,
+    notes: '',
+    attachment: null,
+  };
+  const options = Object.assign({}, defaults, armor);
+
+  return {
+    id: options.id,
+    name: options.name,
+    notes: options.notes,
+    attachment: options.attachment,
   };
 };
+
+export const getArmor = (name) =>
+  ARMOR.items.find((armor) => armor.name === name);
+
+export const newItem = (item = {}) => {
+  const defaults = {
+    id: uuidv4(),
+    name: null,
+    chargesUsed: 0,
+    notes: '',
+    attachment: null,
+    custom: false,
+    quantity: 1,
+    modify: {},
+    options: {},
+  };
+  const options = Object.assign({}, defaults, item);
+
+  return {
+    id: options.id,
+    name: options.name,
+    chargesUsed: options.chargesUsed,
+    notes: options.notes,
+    attachment: options.attachment,
+    custom: options.custom,
+    quantity: options.quantity,
+    modify: { ...options.modify },
+    options: { ...options.options },
+  };
+};
+
+export const getItem = (name) =>
+  ITEMS.items.find((item) => item.name === name);
 
 export const newUpgrade = ({ id, level, type, value, options }) => {
   return {
@@ -143,60 +187,20 @@ export const newUpgrade = ({ id, level, type, value, options }) => {
 };
 
 /**
- * Inventory items are stores as a single string, this function
- * breaks that master string down to be loaded into the character
- * builder when loading a saved character from localStorage.
+ * Determine if a character should respect burden when calculating equipment
+ * bonuses
  *
- * TODO: upgrade beginning inventory to use a list of items and get rid
- *       of this garbage
- *
- * @param {String} items The comma separated item string to split
- * @param {String} baseClass The character's main class
- * @returns {
- *  items: String,
- *  spellbook: String,
- *  generalItem: String,
- *  classItem: String,
- * }
+ * @param {Object} character The character to check
+ * @returns True if character sould respect burden limitations, false if not
  */
-export const separateItemsForBuilder = (items, baseClass) => {
-  const itemArr = items !== '' ? items.split(',').map((item) => item.trim()) : [];
-  const spellbookIndex = itemArr.findIndex((item) => item.includes('spellbook'));
-  const [existingSpellbook] = spellbookIndex > -1
-    ? itemArr.splice(spellbookIndex, 1)
-    : [''];
-  const spellbook = existingSpellbook.replace('(spellbook)', '').trim();
+export const respectBurden = (character) => {
+  const multiclass = character.levelSelections
+    .find((selection) => selection.type === 'multiclass');
 
-  let generalItem = '';
-  let classItem = '';
-
-  GENERAL.startingGear.choose.forEach((choice) => {
-    const itemIndex = itemArr.findIndex((item) => item === choice);
-
-    if (itemIndex > -1) {
-      generalItem = itemArr.splice(itemIndex, 1);
-    }
-  });
-
-  if (baseClass) {
-    CLASSES[baseClass].startingGear.choose
-      .forEach((choice) => {
-        const itemIndex = itemArr.findIndex((item) => item === choice);
-
-        if (itemIndex > -1) {
-          classItem = itemArr.splice(itemIndex, 1);
-        }
-      });
-  }
-
-  return {
-    items: itemArr.length > 0
-      ? itemArr.join(', ')
-      : GENERAL.startingGear.take.join(', '),
-    spellbook,
-    generalItem,
-    classItem,
-  };
+  return !(
+    character.baseClass === 'warrior' ||
+    multiclass && multiclass.options.class === 'warrior'
+  );
 };
 
 /**
@@ -232,23 +236,6 @@ export const calculateModifiers = (features, attribute) => {
 };
 
 /**
- * Determine if a character should respect burden when calculating equipment
- * bonuses
- *
- * @param {Object} character The character to check
- * @returns True if character sould respect burden limitations, false if not
- */
-export const respectBurden = (character) => {
-  const multiclass = character.levelSelections
-    .find((selection) => selection.type === 'multiclass');
-
-  return !(
-    character.baseClass === 'warrior' ||
-    multiclass && multiclass.options.class === 'warrior'
-  );
-};
-
-/**
  * Get all character sheet features that modify a given attribute.
  * If companion is passed, skips all modifier types except level
  * selections (training).
@@ -277,45 +264,54 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
   const features = [];
 
   // weapons
-  if (character.equipment && character.equipment.primaryWeapon.feature) {
-    const primaryFeature = equipmentFeatures.find(
-      (feature) => feature.name === character.equipment.primaryWeapon.feature,
-    );
+  if (character.equipment && character.equipment.primaryWeapon.name) {
+    const primaryWeapon = WEAPONS.items
+      .find((w) => w.name === character.equipment.primaryWeapon.name);
 
-    if (primaryFeature && primaryFeature.modify && primaryFeature.modify[attribute]) {
-      features.push(primaryFeature);
+    if (primaryWeapon.feature && primaryWeapon.feature.modify && primaryWeapon.feature.modify[attribute]) {
+      features.push({ ...primaryWeapon.feature });
     }
   }
 
-  // verify we are not carrying too much before including secondary weapon feature
-  if (character.equipment && burden < 3 && character.equipment.secondaryWeapon.secondaryFeature) {
-    const secondaryFeature = equipmentFeatures.find(
-      (feature) => feature.name === character.equipment.secondaryWeapon.secondaryFeature,
-    );
+  // items
+  if (character.inventory && character.inventory.items) {
+    character.inventory.items
+      .filter((i) => i.modify && i.modify[attribute])
+      .forEach((item) => {
+        console.log(item);
+        features.push({
+          name: item.name,
+          modify: { ...item.modify },
+        });
+      });
+  }
 
-    if (secondaryFeature && secondaryFeature.modify && secondaryFeature.modify[attribute]) {
-      features.push(secondaryFeature);
+  // verify we are not carrying too much before including secondary weapon feature
+  if (character.equipment && burden < 3 && character.equipment.secondaryWeapon.name) {
+    const secondaryWeapon = WEAPONS.items
+      .find((w) => w.name === character.equipment.secondaryWeapon.name);
+
+    if (secondaryWeapon.feature && secondaryWeapon.feature.modify && secondaryWeapon.feature.modify[attribute]) {
+      features.push({ ...secondaryWeapon.feature });
     }
   }
 
   // armor
   if (character.equipment && character.equipment.armor.name) {
-    const armorFeature = equipmentFeatures.find(
-      (feature) => feature.name === character.equipment.armor.feature,
-    );
+    const armor = ARMOR.items.find((a) => a.name === character.equipment.armor.name);
     const armorScore = options.exclude && options.exclude.includes('armorScore')
       ? 0
-      : character.equipment.armor.score;
+      : armor.score;
 
     features.push({
-      name: character.equipment.armor.name,
+      name: armor.name,
       modify: {
         armorScore,
       },
     });
 
-    if (armorFeature && armorFeature.modify && armorFeature.modify[attribute]) {
-      features.push(armorFeature);
+    if (armor.feature && armor.feature.modify && armor.feature.modify[attribute]) {
+      features.push({ ...armor.feature });
     }
   }
 

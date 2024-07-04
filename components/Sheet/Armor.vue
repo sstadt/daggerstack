@@ -2,14 +2,16 @@
   BasicCard(title="Active Armor")
     .mt-6
       InventoryArmor(
-        v-if="character.equipment.armor.name"
-        :armor="character.equipment.armor"
+        v-if="armor"
+        :armor="armor"
+        :character-armor="character.equipment.armor"
+        :character="character"
         @click="openPicker"
       )
       BasicButton.mx-auto.block(v-else @click="openPicker")
         | Select Armor
       BasicDrawer(ref="equipmentPicker" title="Weapons")
-        InventoryPicker(
+        InventoryEquipmentPicker(
           :type="type"
           :character="character"
           :active-slot="slot"
@@ -19,6 +21,8 @@
 </template>
 
 <script>
+  import ARMOR from '~/data/armor';
+
   import { useCharactersStore } from '~/stores/characters';
   import { newArmor } from '~/helpers/character';
 
@@ -46,12 +50,19 @@
 
       return { charactersStore };
     },
+    computed: {
+      armor() {
+        return this.character.equipment.armor.name
+          ? ARMOR.items.find((armor) => this.character.equipment.armor.name === armor.name)
+          : null;
+      },
+    },
     methods: {
       openPicker() {
         this.$refs.equipmentPicker.open();
       },
       selectItem({ item }) {
-        this.character.equipment.armor = { ...item };
+        this.character.equipment.armor = newArmor({ name: item });
         this.charactersStore.saveCharacter(this.character);
         this.$refs.equipmentPicker.close();
       },

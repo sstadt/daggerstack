@@ -15,4 +15,5 @@ export default {
   companionRange: 'Attack Range',
   companionDamage: 'Attack Damage',
   companionEvasion: 'Companion Evasion',
+  primaryMeleeDamage: 'Primary Weapon Melee Damage',
 };
