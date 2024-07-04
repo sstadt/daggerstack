@@ -17,6 +17,8 @@
         InventoryWeapon(
           v-if="inventoryWeapons[n - 1]"
           :weapon="inventoryWeapons[n - 1]"
+          :character-weapon="character.inventory.weapons[n - 1]"
+          :character="character"
           @click="openEquipmentPicker(n - 1)"
         )
         BasicButton.mx-auto.my-4.block(

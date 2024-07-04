@@ -12,6 +12,7 @@
       InventoryWeapon(
         v-if="primaryWeapon"
         :weapon="getWeapon(primaryWeapon.name)"
+        :character-weapon="character.equipment.primaryWeapon"
         :character="character"
         @click="openPicker(primaryWeaponType)"
       )
@@ -22,8 +23,9 @@
       .relative(v-if="secondaryWeapon")
         InventoryWeapon(
           :weapon="getWeapon(secondaryWeapon.name)"
+          :character-weapon="character.equipment.secondaryWeapon"
+          :character="character"
           :class="{ 'opacity-20 pointer-events-none': respectBurden && isPrimaryTwoHanded }"
-          :type="secondaryWeaponType"
           @click="openPicker(secondaryWeaponType)"
         )
         .absolute.transform.text-2xl.text-red-600.uppercase.w-full.text-center.font-black(

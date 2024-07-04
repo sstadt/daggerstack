@@ -4,6 +4,8 @@
       InventoryArmor(
         v-if="armor"
         :armor="armor"
+        :character-armor="character.equipment.armor"
+        :character="character"
         @click="openPicker"
       )
       BasicButton.mx-auto.block(v-else @click="openPicker")

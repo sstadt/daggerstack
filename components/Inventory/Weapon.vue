@@ -17,10 +17,18 @@
     p.text-slate-600.text-sm.space-x-1(v-if="weapon.feature")
       span.font-bold {{ weapon.feature.label }}
       span.italic {{ weapon.feature.description }}
+    InventoryAttachment(
+      v-if="attachment"
+      :character="character"
+      :attachment="attachment"
+    )
 </template>
 
 <script>
-  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
+  import {
+    calculateModifiers,
+    getFeaturesByAttribute,
+  } from '~/helpers/character';
 
   export default {
     name: 'InventoryWeapon',
@@ -29,8 +37,8 @@
         type: Object,
         required: true,
       },
-      type: {
-        type: String,
+      characterWeapon: {
+        type: Object,
         default: null,
       },
       character: {
@@ -44,9 +52,17 @@
       return {
         damageDice,
         modifier: modifier ? parseInt(modifier, 10) : 0,
+        attachmentChargesUsed: 0,
       };
     },
     computed: {
+      attachment() {
+        if (!this.characterWeapon || !this.character) return null;
+
+        return this.character.inventory.items.find((item) => {
+          return item.attachment === this.characterWeapon.id;
+        });
+      },
       damageModifier() {
         if (!this.character) return this.modifier;
 

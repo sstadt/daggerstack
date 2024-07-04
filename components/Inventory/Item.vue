@@ -20,7 +20,7 @@
         .no-shrink
           BasicButton(v-if="item.consumable && !readOnly" size="sm" @click.stop="use") Use
           InputCheckboxCounter.no-shrink(
-            v-if="item.charge"
+            v-if="item.charge && !item.attach"
             v-model="chargesUsed"
             :max="item.charge.max"
             :read-only="readOnly"
