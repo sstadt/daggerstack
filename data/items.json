@@ -83,7 +83,7 @@
       "name": "Valorstone",
       "description": "Attach to armor. Adds the following feature to armor that doesn't already have a feature: Resilient (Before you mark your last armor slot, roll a d6. On a 6, you use the armor without marking the slot.)",
       "attach": {
-        "type": "weapon",
+        "type": "armor",
         "feature": {
           "name": "Resilient",
           "description": "Before you mark your last armor slot, roll a d6. On a 6, you use the armor without marking the slot."
@@ -258,16 +258,17 @@
       "description": "Attach to a melee weapon to make it able to attack at a Close distance. 3 uses per short rest.",
       "attach": {
         "type": "meleeWeapon",
-        "modify": {
-          "weaponRange": 2
-        },
-        "charge": {
-          "max": 3,
-          "start": 0,
-          "recharge": {
-            "on": "shortRest",
-            "quantity": 3
-          }
+        "feature": {
+          "name": "Airblade Charm",
+          "description": "Make an attack at Close distance. 3 uses per short rest."
+        }
+      },
+      "charge": {
+        "max": 3,
+        "start": 0,
+        "recharge": {
+          "on": "shortRest",
+          "quantity": 3
         }
       }
     },

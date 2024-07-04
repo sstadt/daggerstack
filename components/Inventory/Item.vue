@@ -34,7 +34,7 @@
         InputText(v-if="characterItem.custom" label="name" v-model="itemName")
         h2.text-2xl.font-bold.uppercase(v-else :class="titleClass") {{ characterItem.name }}
         InputCounter.justify-between(
-          v-if="!item.charge"
+          v-if="!item.charge && !item.attach"
           :key="`${key}-editor`"
           label="Quantity"
           v-model="itemQuantity"
@@ -42,11 +42,17 @@
         )
         p.text-lg {{ item.description }}
         InputSelect(
-          v-if="item.modify.experience"
+          v-if="item.modify && item.modify.experience"
           label="Select Experience"
           v-model="selectedExperience"
           :options="experienceOptions"
           required
+        )
+        InputSelect(
+          v-if="attachmentTargets.length > 0"
+          label="Attach"
+          v-model="selectedAttachmentTarget"
+          :options="attachmentTargets"
         )
         InputTextarea(label="notes" v-model="itemNotes")
       .flex.justify-end.space-x-2.mt-auto.px-8
@@ -55,15 +61,21 @@
 </template>
 
 <script>
-  import { getItem } from '~/helpers/character';
+  import { getArmor, getItem, getWeapon } from '~/helpers/character';
   import { uuidv4 } from '~/helpers/utility';
+
+  import {
+    ATTACH_TYPE_MELEE_WEAPON,
+    ATTACH_TYPE_WEAPON,
+    ATTACH_TYPE_ARMOR,
+  } from '~/config/itemPicker';
 
   export default {
     name: 'InventoryItem',
     props: {
       character: {
         type: Object,
-        required: true,
+        default: null,
       },
       characterItem: {
         type: Object,
@@ -79,7 +91,8 @@
       },
     },
     data() {
-      const [ firstExperience ] = this.character.experience;
+      const [ firstExperience ] = this.character ? this.character.experience : [];
+      const selectedAttachmentTarget = this.characterItem ? this.characterItem.attachment : null;
 
       return {
         key: uuidv4(),
@@ -88,9 +101,10 @@
         chargesUsed: this.characterItem ? this.characterItem.chargesUsed : 0,
         itemQuantity: this.characterItem ? this.characterItem.quantity : 1,
         itemNotes: this.characterItem ? this.characterItem.notes : '',
-        selectedExperience: this.characterItem && this.characterItem.options && this.characterItem.options.experience
+        selectedExperience: this.characterItem?.options?.experience
           ? this.characterItem.options.experience
-          : firstExperience.id,
+          : firstExperience ? firstExperience.id : null,
+        selectedAttachmentTarget,
       };
     },
     computed: {
@@ -105,9 +119,10 @@
         const item = this.item || this.baseItem;
 
         return {
-          'text-cyan-950': !item.consumable && !item.relic,
+          'text-cyan-950': !item.consumable && !item.relic && !item.attach,
           'text-green-600': item.consumable,
           'text-orange-600': item.relic,
+          'text-pink-800': item.attach,
         }
       },
       experienceOptions() {
@@ -117,6 +132,74 @@
             value: experience.id,
           };
         });
+      },
+      attachmentTargets() {
+        if (!this.item.attach || this.readOnly) return [];
+
+        const options = [];
+        const primaryWeapon = getWeapon(this.character.equipment.primaryWeapon.name);
+        const secondaryWeapon = getWeapon(this.character.equipment.secondaryWeapon.name);
+        const armor = getArmor(this.character.equipment.armor.name);
+
+        // primary weapon
+        if (primaryWeapon && !primaryWeapon.feature) {
+          if (
+            this.item.attach.type === ATTACH_TYPE_WEAPON ||
+            this.item.attach.type === ATTACH_TYPE_MELEE_WEAPON &&
+            primaryWeapon.range.toLowerCase() === 'melee'
+          ) {
+            options.push({
+              label: this.character.equipment.primaryWeapon.name,
+              value: this.character.equipment.primaryWeapon.id,
+            });
+          }
+        }
+
+        // secondary weapon
+        if (secondaryWeapon && !secondaryWeapon.feature) {
+          if (
+            this.item.attach.type === ATTACH_TYPE_WEAPON ||
+            this.item.attach.type === ATTACH_TYPE_MELEE_WEAPON &&
+            secondaryWeapon.range.toLowerCase() === 'melee'
+          ) {
+            options.push({
+              label: this.character.equipment.secondaryWeapon.name,
+              value: this.character.equipment.secondaryWeapon.id,
+            });
+          }
+        }
+
+        if (
+          this.item.attach.type === ATTACH_TYPE_WEAPON ||
+          this.item.attach.type === ATTACH_TYPE_MELEE_WEAPON
+        ) {
+          this.character.inventory.weapons.forEach((characterWeapon) => {
+            const weapon = getWeapon(characterWeapon.name);
+
+            if (
+              !weapon.feature &&
+              (
+                this.item.attach.type === ATTACH_TYPE_WEAPON ||
+                this.item.attach.type === ATTACH_TYPE_MELEE_WEAPON &&
+                weapon.range.toLowerCase() === 'melee'
+              )
+            ) {
+              options.push({
+                label: characterWeapon.name,
+                value: characterWeapon.id,
+              });
+            }
+          });
+        }
+
+        if (armor && !armor.feature && this.item.attach.type === ATTACH_TYPE_ARMOR) {
+          options.push({
+            label: this.character.equipment.armor.name,
+            value: this.character.equipment.armor.id,
+          });
+        }
+
+        return options;
       },
     },
     methods: {
@@ -147,8 +230,11 @@
 
         const item = this.item || this.baseItem;
         const options = {};
+        const attachment = this.selectedAttachmentTarget === '' || this.selectedAttachmentTarget === null
+          ? null
+          : this.selectedAttachmentTarget;
 
-        if (this.item.modify.experience) {
+        if (this.item.modify?.experience) {
           options.experience = this.selectedExperience;
         }
 
@@ -157,6 +243,7 @@
           quantity: this.itemQuantity,
           notes: this.itemNotes,
           options,
+          attachment,
         });
         this.$refs.details.close();
       },

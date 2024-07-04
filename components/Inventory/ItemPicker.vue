@@ -15,7 +15,7 @@
         :class="{ 'opacity-50': item.relic && hasRelic }"
         @click="addItem(item)"
       )
-        InventoryItem(:base-item="item")
+        InventoryItem(:character="character" :base-item="item")
 </template>
 
 <script>

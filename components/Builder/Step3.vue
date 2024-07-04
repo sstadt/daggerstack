@@ -4,7 +4,7 @@
       .space-y-4
         h2.text-center.text-2xl.font-black.uppercase.mb-2 Take
         .divide-y
-          InventoryItem(v-for="item in items" :character-item="item")
+          InventoryItem(v-for="item in items" :character-item="item" read-only)
         InputText(
           v-if="spellBookPlaceholder"
           v-model="spellbook"
