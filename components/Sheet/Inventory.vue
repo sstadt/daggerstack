@@ -7,6 +7,7 @@
             v-for="(item, index) in items"
             :key="item.id"
             :character-item="item"
+            :character="character"
             @update="(updatedItem) => updateItem(updatedItem, index)"
             @remove="removeItem(index)"
           )
@@ -24,7 +25,7 @@
           @click="openEquipmentPicker(n - 1)"
         ) Select Weapon
     BasicDrawer(ref="itemPicker" title="Items")
-      InventoryItemPicker(@select="addItem")
+      InventoryItemPicker(:character="character" @select="addItem")
     BasicDrawer(ref="equipmentPicker" title="Weapons")
       InventoryEquipmentPicker(
         :type="type"

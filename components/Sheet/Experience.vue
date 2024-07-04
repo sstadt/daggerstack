@@ -57,8 +57,18 @@
             .reduce((acc, curr) => {
               return acc + curr.value;
             }, 0);
+          const itemBonus = this.character.inventory
+            ? this.character.inventory.items
+                .filter((item) => {
+                  return item.modify &&
+                    item.modify.experience &&
+                    item.options &&
+                    item.options.experience === experience.id;
+                })
+                .reduce((acc, curr) => acc + curr.modify.experience, 0)
+            : 0;
 
-          experience.score = experience.score + bonus;
+          experience.score = experience.score + bonus + itemBonus;
 
           return experience;
         });

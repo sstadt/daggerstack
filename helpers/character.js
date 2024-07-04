@@ -155,6 +155,8 @@ export const newItem = (item = {}) => {
     attachment: null,
     custom: false,
     quantity: 1,
+    modify: {},
+    options: {},
   };
   const options = Object.assign({}, defaults, item);
 
@@ -166,6 +168,8 @@ export const newItem = (item = {}) => {
     attachment: options.attachment,
     custom: options.custom,
     quantity: options.quantity,
+    modify: { ...options.modify },
+    options: { ...options.options },
   };
 };
 
@@ -261,16 +265,31 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
 
   // weapons
   if (character.equipment && character.equipment.primaryWeapon.name) {
-    const primaryWeapon = WEAPONS.items.find((w) => w.name === character.equipment.primaryWeapon.name);
+    const primaryWeapon = WEAPONS.items
+      .find((w) => w.name === character.equipment.primaryWeapon.name);
 
     if (primaryWeapon.feature && primaryWeapon.feature.modify && primaryWeapon.feature.modify[attribute]) {
       features.push({ ...primaryWeapon.feature });
     }
   }
 
+  // items
+  if (character.inventory && character.inventory.items) {
+    character.inventory.items
+      .filter((i) => i.modify && i.modify[attribute])
+      .forEach((item) => {
+        console.log(item);
+        features.push({
+          name: item.name,
+          modify: { ...item.modify },
+        });
+      });
+  }
+
   // verify we are not carrying too much before including secondary weapon feature
   if (character.equipment && burden < 3 && character.equipment.secondaryWeapon.name) {
-    const secondaryWeapon = WEAPONS.items.find((w) => w.name === character.equipment.secondaryWeapon.name);
+    const secondaryWeapon = WEAPONS.items
+      .find((w) => w.name === character.equipment.secondaryWeapon.name);
 
     if (secondaryWeapon.feature && secondaryWeapon.feature.modify && secondaryWeapon.feature.modify[attribute]) {
       features.push({ ...secondaryWeapon.feature });

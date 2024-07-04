@@ -9,7 +9,12 @@
       h3.text-xl.font-black.uppercase All Items
       //- todo: filtering
     .divide-y
-      button.px-4.w-full(v-for="item in itemList" @click="addItem(item)")
+      button.px-4.w-full(
+        v-for="item in itemList"
+        :disabled="item.relic && hasRelic"
+        :class="{ 'opacity-50': item.relic && hasRelic }"
+        @click="addItem(item)"
+      )
         InventoryItem(:base-item="item")
 </template>
 
@@ -20,6 +25,12 @@
 
   export default {
     name: 'InventoryItemPicker',
+    props: {
+      character: {
+        type: Object,
+        required: true,
+      },
+    },
     data() {
       return {
         key: uuidv4(),
@@ -28,9 +39,23 @@
         customNotes: '',
       };
     },
+    computed: {
+      relicList() {
+        return this.itemList
+          .filter((item) => item.relic === true)
+          .map((item) => item.name);
+      },
+      hasRelic() {
+        return this.character.inventory.items
+          .find((item) => this.relicList.includes(item.name));
+      },
+    },
     methods: {
       addItem(item) {
-        this.$emit('select', newItem({ name: item.name }));
+        this.$emit('select', newItem({
+          name: item.name,
+          modify: item.modify ? { ...item.modify } : {},
+        }));
       },
       addCustomItem() {
         this.$emit('select', newItem({

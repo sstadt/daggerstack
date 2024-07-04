@@ -41,6 +41,13 @@
           :min="0"
         )
         p.text-lg {{ item.description }}
+        InputSelect(
+          v-if="item.modify.experience"
+          label="Select Experience"
+          v-model="selectedExperience"
+          :options="experienceOptions"
+          required
+        )
         InputTextarea(label="notes" v-model="itemNotes")
       .flex.justify-end.space-x-2.mt-auto.px-8
         BasicButton(size="sm" priority="secondary" confirm @click="remove") Delete
@@ -49,11 +56,15 @@
 
 <script>
   import { getItem } from '~/helpers/character';
-import { uuidv4 } from '~/helpers/utility';
+  import { uuidv4 } from '~/helpers/utility';
 
   export default {
     name: 'InventoryItem',
     props: {
+      character: {
+        type: Object,
+        required: true,
+      },
       characterItem: {
         type: Object,
         default: null,
@@ -68,6 +79,8 @@ import { uuidv4 } from '~/helpers/utility';
       },
     },
     data() {
+      const [ firstExperience ] = this.character.experience;
+
       return {
         key: uuidv4(),
         deleting: false,
@@ -75,6 +88,9 @@ import { uuidv4 } from '~/helpers/utility';
         chargesUsed: this.characterItem ? this.characterItem.chargesUsed : 0,
         itemQuantity: this.characterItem ? this.characterItem.quantity : 1,
         itemNotes: this.characterItem ? this.characterItem.notes : '',
+        selectedExperience: this.characterItem && this.characterItem.options && this.characterItem.options.experience
+          ? this.characterItem.options.experience
+          : firstExperience.id,
       };
     },
     computed: {
@@ -93,6 +109,14 @@ import { uuidv4 } from '~/helpers/utility';
           'text-green-600': item.consumable,
           'text-orange-600': item.relic,
         }
+      },
+      experienceOptions() {
+        return this.character.experience.map((experience) => {
+          return {
+            label: experience.name,
+            value: experience.id,
+          };
+        });
       },
     },
     methods: {
@@ -122,11 +146,17 @@ import { uuidv4 } from '~/helpers/utility';
         }
 
         const item = this.item || this.baseItem;
+        const options = {};
+
+        if (this.item.modify.experience) {
+          options.experience = this.selectedExperience;
+        }
 
         this.$emit('update', {
           name: this.characterItem && this.characterItem.custom ? this.itemName : item.name,
           quantity: this.itemQuantity,
           notes: this.itemNotes,
+          options,
         });
         this.$refs.details.close();
       },
