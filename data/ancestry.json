@@ -9,6 +9,10 @@
         "modify": {
           "experience": 1
         }
+      },
+      {
+        "name": "Efficient",
+        "description": "When you take a short rest, you can substitute a long rest move for one of your short rest moves."
       }
     ]
   },
@@ -17,12 +21,12 @@
     "description": "Those of ribbet ancestry resemble anthropomorphic frogs with protruding eyes and webbed hands and feet.",
     "features": [
       {
-        "name": "Amphibious",
-        "description": "You can breathe and move underwater just as easily as on land."
+        "name": "Long Tongue",
+        "description": "You can use your long, powerful tongue to grab onto things close to you. You may also mark **Stress** to unleash it as a Finesse Close weapon that does **d12** physical damage using your Proficiency."
       },
       {
-        "name": "Long Tongue",
-        "description": "You can use your long, powerful tongue to grab onto things close to you. You may also mark **Stress** to unleash it as a Finesse Close weapon that does **d12** physical damage."
+        "name": "Amphibious",
+        "description": "You can breathe and move underwater just as easily as on land."
       }
     ]
   },
@@ -32,11 +36,11 @@
     "features": [
       {
         "name": "Fearless",
-        "description": "When you roll with **Fear**, you may choose to mark a **stress** instead of the GM gaining **fear**"
+        "description": "When you roll with **Fear**, you may choose to mark a **2 Stress** to make it a roll with **Hope** instead."
       },
       {
         "name": "Dread Visage",
-        "description": "You have advantage on rolls to intimidate other non-Daemon creatures."
+        "description": "You have advantage on rolls to intimidate a hostile target."
       }
     ]
   },
@@ -46,7 +50,11 @@
     "features": [
       {
         "name": "Increased Fortitude",
-        "description": "When you should take physical damage, you may spend three **Hope** to only take half the damage instead."
+        "description": "You can spend **3 Hope** to halve incoming physical damage."
+      },
+      {
+        "name": "Thick Skin",
+        "description": "Add half the value of your proficiency to your Minot Threshold (rounded up)."
       }
     ]
   },
@@ -55,15 +63,15 @@
     "description": "Giants are very tall humanoids with long arms, broad stature, and one to three eyes.",
     "features": [
       {
-        "name": "Reach",
-        "description": "Any melee weapon you wield has its range increased to very close."
-      },
-      {
         "name": "Endurance",
         "description": "Gain an additional Hit Point Slot at character creation.",
         "modify": {
           "healthSlot": 1
         }
+      },
+      {
+        "name": "Reach",
+        "description": "Treat any weapon, ability, or spell that has Melee range as though it has very close range instead."
       }
     ]
   },
@@ -72,8 +80,12 @@
     "description": "Elves are typically tall humanoids with pointed ears and acutely attuned senses.",
     "features": [
       {
+        "name": "Quick Reaction",
+        "description": "You can mark a **Stress** to take advantage on a Reaction Roll."
+      },
+      {
         "name": "Celestial Trance",
-        "description": "During a long rest, as one of your actions, you may choose to drop into an elven trance. When you do, roll a number of **d8** equal to the **Stress** you have marked, and clear all Stredd. If any of those dice have a matching value, also clear all Hit Points."
+        "description": "During a rest, you can drop into a trance and make an extra downtime move."
       }
     ]
   },
@@ -82,8 +94,15 @@
     "description": "Those of human ancestry are most easily recognized by their dextrous hands, rounded ears, and bodies built for endurance.",
     "features": [
       {
-        "name": "Perseverance",
-        "description": "When you fail a roll that utilized one of your Experiences, you may spend a **Hope** to reroll. You must take the new result."
+        "name": "High Stamina",
+        "description": "Take an additional **Stress** slot at character creation",
+        "modify": {
+          "stressSlot": 1
+        }
+      },
+      {
+        "name": "Adaptability",
+        "description": "When you fail a roll that utilized one of your Experience, you can mark a **Stress** to reroll. You must take the new result."
       }
     ]
   },
@@ -93,7 +112,11 @@
     "features": [
       {
         "name": "Sturdy",
-        "description": "When you should mark an armor slot, roll a **d6**. On a **5+**, you don't mark the armor slot but still reduce the incoming damage by your armor score."
+        "description": "When you use armor, roll a number of **d6** equal to the armor slots you should mark. For every result of **6**, don't mark an armor slot."
+      },
+      {
+        "name": "Tusks",
+        "description": "After making a successful Melee attack, you can spend **Hope** to also gore the target with your tusks, adding **+1d6** to the damage roll."
       }
     ]
   },
@@ -102,8 +125,12 @@
     "description": "Halflings are typically smallet humanoids, with large hairy feet and prominent, rounded ears.",
     "features": [
       {
+        "name": "Youthful Spirit",
+        "description": "At the beginning of each session, give everyone in your party a **Hope**."
+      },
+      {
         "name": "Little Lucky",
-        "description": "At the beginning of each session, give everyone in your party a **Hope**. You may always reroll a **1** on your Hope Die. If you do, take the new result instead."
+        "description": "When you roll a **1** on your **Hope** die, you can reroll it, and must take the new result."
       }
     ]
   },
@@ -119,7 +146,14 @@
     "features": [
       {
         "name": "Elemental Breath",
-        "description": "Spend a **Hope** to make an Instinct Roll using your breath against an enemy or group of enemies within close range. Deal **d8** magic damage to all enemies you succeed against."
+        "description": "Choose an element for your breath (ice, fire, electricity, etc.). You can use this breath weapon against a target or group of targets within Very Close range, treating it as an Instinct weapon that deals **d8** magic damage using your Proficiency."
+      },
+      {
+        "name": "Scales",
+        "description": "Your natural scales act as protection, increasing your Armor Score by +1.",
+        "modify": {
+          "armorScore": 1
+        }
       }
     ]
   },
@@ -129,7 +163,11 @@
     "features": [
       {
         "name": "Feline Instinct",
-        "description": "On any Agility Rolls, you may mark a **Stress** to reroll your Hope Die. If you do, take the new result instead."
+        "description": "When you make an Agility roll, you can mark a **Sress** to reroll your Hope Die. You must take the new result."
+      },
+      {
+        "name": "Retracting Claws",
+        "description": "You can make an Agility roll to scratch a target in Melee range. On a success, they become Vulnerable."
       }
     ]
   },
@@ -139,11 +177,11 @@
     "features": [
       {
         "name": "Wings",
-        "description": "Mark **Stress** to take flight until you next roll with **Fear**. While flying, your Evasion score is increased by **+2**."
+        "description": "You can fly. While flying, mark a **Stress** before an adversaries attack roll to increase your Evasion by **+2** agains tthe attack."
       },
       {
         "name": "Luckbender",
-        "description": "Once per session, after you or an ally in close range makes an Action Roll, you can mark **Stress** to allow a reroll of the duality Dice. If you do, take the new result."
+        "description": "Once per session, after you or an ally in Close range makes an **Action Roll**, you can spend **3 Hope** to reroll the Duality Dice. You must take the new result."
       }
     ]
   },
@@ -152,8 +190,12 @@
     "description": "Those of faun ancestry resemble goats in humanoid form, with curving horns, square pupils, and cloven hooves.",
     "features": [
       {
-        "name": "Headbutt",
-        "description": "Give the GM one **Fear** to headbutt an enemy you move into melee with. The target immediately takes **d8** direct phycial damage and can't be targeted again by this attack during the fight."
+        "name": "Leap",
+        "description": "You can easily leap up to Close range across gaps or chasms without making an Agility roll."
+      },
+      {
+        "name": "Kick",
+        "description": "On a successful melee attack, you can mark a Stress to kick yourself off the target, adding 2d6 to the damage and pushing either them or yourself out of Melee range."
       }
     ]
   },
@@ -163,7 +205,11 @@
     "features": [
       {
         "name": "Shell of Protection",
-        "description": "The shell on your back always protects you. Add your Proficiency to your armor score."
+        "description": "Your shell provides a natural shield. Add your Proficiency to your Armor Score."
+      },
+      {
+        "name": "Slow and Steady",
+        "description": "During combat, you can make an attack roll with advantage by placing an additional token on the action tracker."
       }
     ]
   },
@@ -173,7 +219,11 @@
     "features": [
       {
         "name": "Danger Sense",
-        "description": "Once per short rest, you may mark a **Stress** to make the GM reroll an attack roll. If it still hits you, reduce the incoming value by your proficiency."
+        "description": "Once per short rest, mark a **Stress** to make an adversary reroll an attack against you or an ally within Very Close range of you."
+      },
+      {
+        "name": "Surefooted",
+        "description": "You ignore disadvantage on Agility rolls."
       }
     ]
   },
@@ -182,8 +232,12 @@
     "description": "Fungrils resemble a muchroom in humanoid form, bearing the features of the fungus from which they descend.",
     "features": [
       {
-        "name": "Always Connected",
-        "description": "To speak with other Fungril across distance to access their hivemind of information, make an Instinct roll. At character creation, describe what ritual you must perform to tap into this connection."
+        "name": "Fungril Network",
+        "description": "You can make an **Instinct Roll (12)** to speak with others of your ancestry across any distance using your mycelial array."
+      },
+      {
+        "name": "Death Connection",
+        "description": "While touching a corpse that died recently, you can mark a **Stress** to extract one memory related to a specific emotion or sensation."
       }
     ]
   },
@@ -193,7 +247,11 @@
     "features": [
       {
         "name": "Natural Calm",
-        "description": "Whenever you should mark a **Stress**, roll **1d6**. On a **6**, you take no **Stress**"
+        "description": "Whenever you should mark a **Stress**, roll a **d6**. On a **6**, don't mark it."
+      },
+      {
+        "name": "Charge",
+        "description": "When you succeed on an Agility roll to move from Far or Very Far range into Melee with one or more targets, mark a **Stress** to deal **1d12** physical damage to all targets."
       }
     ]
   },
@@ -203,10 +261,14 @@
     "features": [
       {
         "name": "Nimble",
-        "description": "Take advantage of Agility Rolls that involve balancing and climbing. Add **+1** to evasion at character creation.",
+        "description": "Increase your Evasion by **+1** at character creation.",
         "modify": {
           "evasion": 1
         }
+      },
+      {
+        "name": "Natural Climber",
+        "description": "You have advantage on Agility rolls that involve balancing and climbing."
       }
     ]
   }

@@ -24,7 +24,7 @@
   "classFeatures": [
     {
       "name": "Unstoppable",
-      "description": "Once per Long Rest, you can become Unstoppable. Your Unstoppable die begins as a **d4**. Place it on the spot to the right, starting with the die's highest value facing up. While Unstoppable, you:\n\n- Gain resistance to physical damage.\n\n- Add an additional d6 to any damage rolls you make.\n\n- Can spend stress to reroll any single die you've rolled.\n\nAnytime you roll your damage dice, reduce the Unstoppable die value by one. When you would reduce the value below 1 or the scene ends, remove it and drop out of Unstoppable. At Level 3, upgrade your Unstoppable die to a **d6**. At Level 7, upgrade it to a **d8**."
+      "description": "Once per Long Rest, you can choose to become Unstoppable. You gain an Unstoppable die, which begins as a **d4**. Place it on the spot to the right, starting with the “1” value facing up. Whenever you deal one or more hit points to an adversary, increase the Unstoppable die value by one. When you increase the value above the die's highest number or when the scene ends, remove the die and drop out of Unstoppable. At Level 3, upgrade your Unstoppable die to a **d6**. At Level 7, upgrade it to a **d8**.\n\nWhile Unstoppable, you:\n\n- Gain resistance to physical damage\n\n- Add the current value of the Unstoppable die to your damage dice total\n\n- Increase your current Armor Score by your Proficiency\n\n- Cannot be Restrained or Vulnerable"
     }
   ],
   "backgroundQuestions": [
@@ -90,27 +90,27 @@
       },
       {
         "id": "tier-1-minorThreshold",
-        "description": "Increase your Minor Damage Threshold by +2",
+        "description": "Increase your Minor Damage Threshold by +1",
         "increase": {
-          "minorDamageThreshold": 2
+          "minorDamageThreshold": 1
         },
         "max": 1
       },
       {
         "id": "tier-1-majorThreshold",
-        "description": "Increase your Major Damage Threshold by +2",
+        "description": "Increase your Major Damage Threshold by +1",
         "increase": {
-          "majorDamageThreshold": 2
+          "majorDamageThreshold": 1
         },
-        "max": 1
+        "max": 2
       },
       {
         "id": "tier-1-severeThreshold",
-        "description": "Increase your Severe Damage Threshold by +2",
+        "description": "Increase your Severe Damage Threshold by +1",
         "increase": {
-          "severeDamageThreshold": 2
+          "severeDamageThreshold": 1
         },
-        "max": 1
+        "max": 2
       }
     ],
     "entry": [
@@ -191,18 +191,18 @@
       },
       {
         "id": "tier-2-majorThreshold",
-        "description": "Increase your Minor or Major Damage Threshold by +2",
+        "description": "Increase your Minor or Major Damage Threshold by +1",
         "increase": {
-          "minorDamageThreshold": 2,
-          "majorDamageThreshold": 2
+          "minorDamageThreshold": 1,
+          "majorDamageThreshold": 1
         },
         "max": 2
       },
       {
         "id": "tier-2-severeThreshold",
-        "description": "Increase your Severe Damage Threshold by +3",
+        "description": "Increase your Severe Damage Threshold by +2",
         "increase": {
-          "severeDamageThreshold": 3
+          "severeDamageThreshold": 2
         },
         "max": 2
       },
@@ -307,17 +307,18 @@
       },
       {
         "id": "tier-3-majorThreshold",
-        "description": "Increase your Major Damage Threshold by +2",
+        "description": "Increase your Minor or Major Damage Threshold by +1",
         "increase": {
-          "majorDamageThreshold": 2
+          "minorDamageThreshold": 1,
+          "majorDamageThreshold": 1
         },
-        "max": 1
+        "max": 2
       },
       {
         "id": "tier-3-severeThreshold",
-        "description": "Increase your Severe Damage Threshold by +3",
+        "description": "Increase your Severe Damage Threshold by +2",
         "increase": {
-          "severeDamageThreshold": 3
+          "severeDamageThreshold": 2
         },
         "max": 1
       },
