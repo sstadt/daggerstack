@@ -3,15 +3,12 @@ import { uuidv4 } from '~/helpers/utility';
 import upgradeStrings from '~/config/upgradeStrings';
 
 import GENERAL from '~/data/general';
-import CLASSES from '~/data/classes';
 import SUBCLASSES from '~/data/subclasses';
 import WEAPONS from '~/data/weapons';
 import ARMOR from '~/data/armor';
 import ITEMS from '~/data/items';
 import COMMUNITY from '~/data/community';
 import ANCESTRY from '~/data/ancestry';
-
-const equipmentFeatures = [ ...WEAPONS.features ].concat([ ...ARMOR.features ]);
 
 let allSubclasses = [];
 for (const [key] of Object.entries(SUBCLASSES)) {
@@ -28,7 +25,7 @@ export const newCharacter = () => {
     baseClass: '',
     subclass: [],
     community: '',
-    ancestry: '',
+    ancestry: [],
     level: 1,
     agility: {
       score: '',
@@ -259,7 +256,8 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
     ? COMMUNITY.find((community) => character.community === community.name)
     : null;
   const ancestry = character.ancestry
-    ? ANCESTRY.find((ancestry) => character.ancestry === ancestry.name)
+    ? character.ancestry
+        .map((ancestryName) => ANCESTRY.find((ancestry) => ancestry.name === ancestryName))
     : null;
   const features = [];
 
@@ -358,11 +356,19 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
 
   // ancestry
   if (ancestry) {
-    ancestry.features.forEach((feature) => {
-      if (feature.modify && feature.modify[attribute]) {
-        features.push(feature);
-      }
-    });
+    const [ topAncestry, bottomAncestry ] = ancestry;
+    const [ topFeature ] = topAncestry.features;
+    const [ _, bottomFeature ] = ancestry.length > 1
+      ? bottomAncestry.features
+      : topAncestry.features;
+
+    if (topFeature.modify && topFeature.modify[attribute]) {
+      features.push({ ...topFeature });
+    }
+
+    if (bottomFeature.modify && bottomFeature.modify[attribute]) {
+      features.push({ ...bottomFeature });
+    }
   }
 
   // tier selections

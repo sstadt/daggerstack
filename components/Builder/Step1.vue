@@ -27,13 +27,29 @@
         InputSelect(
           v-model="selectedAncestry"
           :options="ancestryOptions"
-          label="ancestry"
+          :label="mixedAncestry ? 'top ancestry' : 'ancestry'"
           :disabled="ancestryOptions.length === 0"
           required
         )
         transition(name="slide-fade-left")
           ul.text-right(v-if="ancestryDetails && ancestryDetails.length > 0")
             template(v-for="feature in ancestryDetails")
+              li(v-for="(bonus, trait) in feature.modify")
+                | {{ trait }}:
+                span.mr-1
+                  span(v-if="bonus > 0") +
+                  | {{ bonus }}
+        InputCheckbox(label="Mixed Ancestry" v-model="mixedAncestry")
+        InputSelect(
+          v-if="mixedAncestry"
+          v-model="selectedMixedAncestry"
+          :options="bottomAncestryOptions"
+          label="bottom ancestry"
+          :disabled="bottomAncestryOptions.length === 0"
+        )
+        transition(name="slide-fade-left")
+          ul.text-right(v-if="mixedAncestryDetails && mixedAncestryDetails.length > 0")
+            template(v-for="feature in mixedAncestryDetails")
               li(v-for="(bonus, trait) in feature.modify")
                 | {{ trait }}:
                 span.mr-1
@@ -90,7 +106,9 @@
       const startingSubclass = firstCharacterSubclass
         ? firstCharacterSubclass.name
         : SUBCLASSES[startingClass][0] ? SUBCLASSES[startingClass][0].name : null;
-      const startingAncestry = ancestry || ANCESTRY[0].name;
+      const [ topAncestry, bottomAncestry ] = ancestry;
+      const startingAncestry = topAncestry || ANCESTRY[0].name;
+      const startingBottomAncestry = bottomAncestry || '';
       const startingCommunity = community || COMMUNITY[0].name;
 
       return {
@@ -98,7 +116,9 @@
         selectedClass: startingClass,
         selectedSubclass: startingSubclass,
         selectedAncestry: startingAncestry,
+        selectedMixedAncestry: startingBottomAncestry,
         selectedCommunity: startingCommunity,
+        mixedAncestry: startingBottomAncestry !== '',
       };
     },
     computed: {
@@ -126,13 +146,34 @@
           value: ancestry.name,
         }));
       },
+      bottomAncestryOptions() {
+        const index = this.ancestryOptions
+          .findIndex((option) => option.value === this.selectedAncestry);
+        const options = [ ...this.ancestryOptions ];
+
+        options.splice(index, 1);
+
+        return options;
+      },
       ancestryDetails() {
         if (!this.selectedAncestry) return null;
 
         const ancestry = ANCESTRY
           .find((ancestry) => ancestry.name === this.selectedAncestry);
+        const [ topFeature ] = ancestry.features;
 
-        return ancestry.features.filter((feature) => Boolean(feature.modify));
+        return this.mixedAncestry
+          ? [ topFeature ].filter((feature) => Boolean(feature.modify))
+          : ancestry.features.filter((feature) => Boolean(feature.modify));
+      },
+      mixedAncestryDetails() {
+        if (!this.mixedAncestry || this.selectedMixedAncestry === '') return null;
+
+        const ancestry = ANCESTRY
+          .find((ancestry) => ancestry.name === this.selectedMixedAncestry);
+        const [ _, bottomFeature ] = ancestry.features;
+
+        return [ bottomFeature ].filter((feature) => Boolean(feature.modify));
       },
       communityOptions() {
         return COMMUNITY.map((community) => ({
@@ -169,10 +210,16 @@
     },
     methods: {
       async next() {
+        const ancestry = [ this.selectedAncestry ];
+
+        if (this.mixedAncestry && this.selectedMixedAncestry !== '') {
+          ancestry.push(this.selectedMixedAncestry);
+        }
+
         this.builderStore.updateCharacter({
           baseClass: this.selectedClass,
           subclass: [ this.selectedSubclass ],
-          ancestry: this.selectedAncestry,
+          ancestry,
           community: this.selectedCommunity,
         });
 

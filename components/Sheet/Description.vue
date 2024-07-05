@@ -2,7 +2,7 @@
   BasicCard
     .space-y-6
       InputText(v-model="name" label="Name" @input="saveName")
-      p.text-2xl {{ character.community }} {{ character.ancestry }}
+      p.text-2xl {{ character.community }} {{ character.ancestry.join(' / ') }}
       p.text-2xl {{ classLabel }}
       p.text-2xl(v-if="multiclassLabel") {{ multiclassLabel }}
       .flex.space-x-4
