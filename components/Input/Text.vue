@@ -7,7 +7,7 @@
       | {{ label }}
       span(v-if="required") *
     input.px-4.py-2.text-xl.outline-0(
-      type="text"
+      :type="type"
       :class="inputClass"
       :value="modelValue"
       :placeholder="placeholder"
@@ -22,6 +22,10 @@
     name: 'InputText',
     props: {
       modelValue: {},
+      type: {
+        type: String,
+        default: 'text'
+      },
       label: {
         type: String,
         default: null,
