@@ -10,7 +10,6 @@
 <script>
   export default {
     name: 'Card',
-    inject: ['mq'],
     props: {
       title: {
         type: String,
@@ -28,7 +27,7 @@
     computed: {
       contentClasses() {
         return {
-          'px-8': !this.expand && !this.mq.lgPlus,
+          'px-8': !this.expand,
         };
       },
     },

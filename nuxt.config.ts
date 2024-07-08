@@ -7,6 +7,9 @@ export default defineNuxtConfig({
       mode: 'out-in',
     },
   },
+  supabase: {
+    redirect: false,
+  },
   plugins: [
     '~/plugins/vue3-touch-events',
     '~/plugins/vue3-mq',
@@ -16,6 +19,7 @@ export default defineNuxtConfig({
     'nuxt-swiper',
     '@pinia/nuxt',
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/supabase',
     [
       'nuxt-gtag',
       {
