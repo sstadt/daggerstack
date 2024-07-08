@@ -7,7 +7,7 @@
             type="email"
             label="email"
             v-model="email"
-            :errors="v$.email.$errors"
+            :errors="v$.email ? v$.email.$errors : []"
             required
           )
           .space-y-1
@@ -15,7 +15,7 @@
               type="password"
               label="password"
               v-model="password"
-              :errors="v$.password.$errors"
+              :errors="v$.email ? v$.password.$errors : []"
               required
             )
             //- NuxtLink.inline-block(to="/auth/reset-password") Forgot Password

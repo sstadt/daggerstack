@@ -7,7 +7,13 @@
             type="email"
             label="email"
             v-model="email"
-            :errors="v$.email.$errors"
+            :errors="v$.email ? v$.email.$errors : []"
+            required
+          )
+          InputText(
+            label="display name"
+            v-model="displayName"
+            :errors="v$.displayName ? v$.displayName.$errors : []"
             required
           )
           .space-y-2
@@ -15,7 +21,7 @@
               type="password"
               label="password"
               v-model="password"
-              :errors="v$.password.$errors"
+              :errors="v$.password ? v$.password.$errors : []"
               required
             )
             AuthPasswordStrength(:password="password")
@@ -23,7 +29,7 @@
             type="password"
             label="confirm password"
             v-model="confirmPassword"
-            :errors="v$.confirmPassword.$errors"
+            :errors="v$.confirmPassword ? v$.confirmPassword.$errors : []"
             required
           )
           .flex.justify-end.items-center.space-x-4
@@ -37,9 +43,12 @@
   import {
     required,
     email,
+    minLength,
     sameAs,
     helpers,
   } from '@vuelidate/validators';
+
+  const MIN_USERNAME_LENGTH = 3;
 
   export default {
     name: 'SignupPage',
@@ -47,6 +56,7 @@
     data() {
       return {
         email: '',
+        displayName: '',
         password: '',
         confirmPassword: '',
       };
@@ -54,6 +64,7 @@
     validations() {
       return {
         email: { required, email },
+        displayName: { required, minLength: minLength(MIN_USERNAME_LENGTH) },
         password: { required },
         confirmPassword: {
           required,
@@ -62,7 +73,12 @@
       };
     },
     setup() {
-      return { v$: useVuelidate() };
+      const supabase = useSupabaseClient();
+
+      return {
+        supabase,
+        v$: useVuelidate(),
+      };
     },
     computed: {
       title() {
@@ -75,6 +91,13 @@
 
         if (formValid) {
           console.log('>>> sign up', this.email, this.password);
+          const { data, error } = this.supabase.auth.signUp({
+            email: this.email,
+            password: this.password,
+          });
+
+          console.log('>>> data', data);
+          console.log('>>> error', error);
         }
       },
     },
