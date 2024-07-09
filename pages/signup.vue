@@ -41,6 +41,7 @@
                 NuxtLink(to="/login")
                   BasicButton(priority="secondary" :disabled="waiting") Log In
                 BasicButton(type="submit" :disabled="waiting") Sign Up
+              BasicLoader.mx-auto(v-if="waiting")
             BasicAlert.mt-6(
               v-else
               type="success"
@@ -87,10 +88,10 @@
       };
     },
     setup() {
-      const supabase = useSupabaseClient();
+      const userStore = useUserStore();
 
       return {
-        supabase,
+        userStore,
         v$: useVuelidate(),
       };
     },
@@ -101,7 +102,7 @@
         if (formValid) {
           this.waiting = true;
 
-          const { data, error } = await this.supabase.auth.signUp({
+          const { data, error } = await this.userStore.supabase.auth.signUp({
             email: this.email,
             password: this.password,
             options: {

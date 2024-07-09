@@ -6,6 +6,8 @@
       .login.w-full.max-w-md
         BasicCard(title="log in")
           form.space-y-6.mt-6(@submit.prevent="login" novalidate)
+            Transition(name="slide-fade-left")
+              BasicAlert(v-if="responseError" :message="responseError" type="error")
             InputText(
               type="email"
               label="email"
@@ -26,6 +28,7 @@
               NuxtLink(to="/signup")
                 BasicButton(priority="secondary") Sign Up
               BasicButton(type="submit") Log In
+            BasicLoader.mx-auto(v-if="waiting")
 </template>
 
 <script>
@@ -39,6 +42,8 @@
       return {
         email: '',
         password: '',
+        waiting: false,
+        responseError: null,
       };
     },
     validations() {
@@ -48,14 +53,31 @@
       };
     },
     setup() {
-      return { v$: useVuelidate() };
+      const userStore = useUserStore();
+
+      return {
+        userStore,
+        v$: useVuelidate(),
+      };
     },
     methods: {
       async login() {
         const formValid = await this.v$.$validate();
 
         if (formValid) {
-          console.log('>>> log in', this.email, this.password);
+          const { data, error } = await this.userStore.supabase.auth.signInWithPassword({
+            email: this.email,
+            password: this.password,
+          });
+
+          this.responseError = error ? error.message : null;
+
+          if (!error && data.user) {
+            await this.userStore.loggedIn();
+            this.$router.push('/character');
+          }
+
+          this.waiting = false;
         }
       },
     },

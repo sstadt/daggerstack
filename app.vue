@@ -5,6 +5,7 @@
         name="viewport"
         content="height=device-height,width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"
       )
+    NavTopbar(v-if="$route.name !== 'index'")
     NuxtPage
     BasicToast
 </template>
@@ -41,9 +42,21 @@
   .nuxt-icon {
     display: inline-block;
 
-    h1, h2, h3, h4, h5, h6, p, a & {
+    h1 &,
+    h2 &,
+    h3 &,
+    h4 &,
+    h5 &,
+    h6 &,
+    p &,
+    a &,
+    button & {
       vertical-align: middle;
     }
+  }
+
+  .title {
+    font-family: "Cinzel Decorative", serif;
   }
 
   .link {

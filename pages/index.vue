@@ -7,13 +7,13 @@
       :small-image="mobileImage"
       image-alt="Adventuring party walking down the path with the sun setting over mountains in the background"
     )
-      .bg-white.w-full.p-8.text-center.absolute(
+      .bg-white.w-full.px-8.pt-8.pb-6.text-center.absolute(
         class="top-12 left-1/2 -translate-x-1/2 md:top-auto md:left-auto md:translate-x-0"
       )
         .space-y-4
           .space-y-2
             h1.title.text-4xl(class="md:text-6xl") Daggerstack
-            p.max-w-md.mx-auto An <strong>unofficial</strong> digital character sheet for <a href="https://daggerheart.com" target="_blank" class="link">Daggerheart</a> characters. Currently supports version {{ characterVersion }}.
+            p.max-w-72.mx-auto(class="md:max-w-md") An <strong>unofficial</strong> digital character sheet for <a href="https://daggerheart.com" target="_blank" class="link">Daggerheart</a> characters. Currently supports version {{ characterVersion }}.
           Transition(name="fade" mode="out-in")
             BasicLoader.mx-auto.my-8(v-if="!userStore.loaded")
             .space-x-4(v-else-if="!userStore.user")
@@ -49,9 +49,3 @@
     },
   };
 </script>
-
-<style lang="scss" scoped>
-  .title {
-    font-family: "Cinzel Decorative", serif;
-  }
-</style>

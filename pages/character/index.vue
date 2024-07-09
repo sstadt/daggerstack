@@ -13,6 +13,7 @@
 
 <style lang="scss" scoped>
   .character-select {
-    min-height: 100vh;
+    // account for the topbar
+    height: calc(100vh - 38px);
   }
 </style>

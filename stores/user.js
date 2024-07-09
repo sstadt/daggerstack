@@ -18,6 +18,24 @@ export const useUserStore = defineStore('user', {
       }
 
       this.loaded = true;
+
+      return;
+    },
+    async loggedIn() {
+      const { data: { user } } = await this.supabase.auth.getUser();
+
+      if (user) {
+        this.user = user;
+      }
+
+      return;
+    },
+    async logOut() {
+      const { error } = await this.supabase.auth.signOut();
+
+      this.user = null;
+
+      return error;
     },
   },
 });
