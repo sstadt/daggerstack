@@ -3,6 +3,8 @@
     .login.w-full.max-w-md
       BasicCard(:title="title" :expand="mq.mdPlus")
         form.space-y-6.mt-6(@submit.prevent="signup" novalidate)
+          Transition(name="slide-fade-left")
+            BasicAlert(v-if="responseError" :message="responseError" type="error")
           InputText(
             type="email"
             label="email"
@@ -16,15 +18,14 @@
             :errors="v$.displayName ? v$.displayName.$errors : []"
             required
           )
-          .space-y-2
-            InputText(
-              type="password"
-              label="password"
-              v-model="password"
-              :errors="v$.password ? v$.password.$errors : []"
-              required
-            )
-            AuthPasswordStrength(:password="password")
+          InputText(
+            type="password"
+            label="password"
+            v-model="password"
+            :errors="v$.password ? v$.password.$errors : []"
+            password-strength
+            required
+          )
           InputText(
             type="password"
             label="confirm password"
@@ -49,6 +50,7 @@
   } from '@vuelidate/validators';
 
   const MIN_USERNAME_LENGTH = 3;
+  const MIN_PASSWORD_LENGTH = 6;
 
   export default {
     name: 'SignupPage',
@@ -59,13 +61,14 @@
         displayName: '',
         password: '',
         confirmPassword: '',
+        responseError: null,
       };
     },
     validations() {
       return {
         email: { required, email },
         displayName: { required, minLength: minLength(MIN_USERNAME_LENGTH) },
-        password: { required },
+        password: { required, minLength: minLength(MIN_PASSWORD_LENGTH) },
         confirmPassword: {
           required,
           sameAsPassword: helpers.withMessage('Must match password value', sameAs(this.password)),
@@ -90,14 +93,16 @@
         const formValid = await this.v$.$validate();
 
         if (formValid) {
-          console.log('>>> sign up', this.email, this.password);
-          const { data, error } = this.supabase.auth.signUp({
+          const { data, error } = await this.supabase.auth.signUp({
             email: this.email,
             password: this.password,
+            display_name: this.displayName,
           });
 
+          this.responseError = error ? error.message : null;
+
+          // TODO: check for auth existence and forward over to
           console.log('>>> data', data);
-          console.log('>>> error', error);
         }
       },
     },

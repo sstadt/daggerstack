@@ -1,5 +1,5 @@
 <template lang="pug">
-  .w-full.h-2.border.rounded.relative
+  .w-full.h-2.border.rounded-b.relative
     .absolute.top-0.left-0.h-full.transition-all(
       :style="indicatorStyle"
       :class="indicatorClass"
