@@ -12,24 +12,21 @@
 <script>
   export default {
     name: 'App',
-    data() {
-      return {
-        storageLoaded: false,
-      };
-    },
     setup() {
       const builderStore = useBuilderStore();
       const charactersStore = useCharactersStore();
+      const userStore = useUserStore();
 
       return {
         builderStore,
         charactersStore,
+        userStore,
       };
     },
     mounted() {
       this.builderStore.loadSavedCharacter();
       this.charactersStore.loadSavedCharacters();
-      this.storageLoaded = true;
+      this.userStore.init();
     },
   };
 </script>
