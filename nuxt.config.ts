@@ -44,6 +44,9 @@ export default defineNuxtConfig({
             wght: [300, 400, 500, 700],
             ital: [300, 400, 500, 700],
           },
+          'Cinzel Decorative': {
+            wght: [900]
+          },
         },
       },
     ],

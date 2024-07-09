@@ -44,9 +44,13 @@
   .nuxt-icon {
     display: inline-block;
 
-    h1, h2, h3, h4, h5, h6, p & {
+    h1, h2, h3, h4, h5, h6, p, a & {
       vertical-align: middle;
     }
+  }
+
+  .link {
+    text-decoration: underline;
   }
 
   select {

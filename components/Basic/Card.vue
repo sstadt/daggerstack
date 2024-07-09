@@ -3,7 +3,7 @@
     .pb-2.border-b(v-if="title || subtitle")
       h2.px-4.text-center.text-2xl.font-black.uppercase(v-if="title") {{ title }}
       p.text-center.mb-2.text-sm.text-slate-500(v-if="subtitle") {{ subtitle }}
-    div.card__content(:class="contentClasses")
+    div.card__content.px-8(class="md:px-0")
       slot
 </template>
 
@@ -22,13 +22,6 @@
       expand: {
         type: Boolean,
         default: false,
-      },
-    },
-    computed: {
-      contentClasses() {
-        return {
-          'px-8': !this.expand,
-        };
       },
     },
   };
