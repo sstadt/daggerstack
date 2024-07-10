@@ -59,14 +59,18 @@
         v$: useVuelidate(),
       };
     },
+    computed: {
+      location() {
+        return { ...window.location };
+      },
+    },
     methods: {
       async requestReset() {
         const formValid = await this.v$.$validate();
 
         if (formValid) {
           const { error } = await this.userStore.supabase.auth.resetPasswordForEmail(this.email, {
-            // TODO: programmatically generate
-            redirectTo: 'https://localhost:3000/auth/update-password',
+            redirectTo: `${window.location.origin}/auth/update-password`,
           });
 
           this.responseError = error ? error.message : null;
