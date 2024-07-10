@@ -17,9 +17,9 @@
           Transition(name="fade" mode="out-in")
             BasicLoader.mx-auto.my-8(v-if="!userStore.loaded")
             .space-x-4(v-else-if="!userStore.user")
-              NuxtLink.inline-block(to="/signup")
+              NuxtLink.inline-block(to="/auth/signup")
                 BasicButton(size="lg" priority="secondary") Sign Up
-              NuxtLink.inline-block(to="/login")
+              NuxtLink.inline-block(to="/auth/login")
                 BasicButton(size="lg") Log In
             NuxtLink.inline-block(v-else to="/character")
               BasicButton(size="lg") Character List
@@ -45,7 +45,15 @@
     },
     setup() {
       const userStore = useUserStore();
-      return { userStore };
+      const toastStore = useToastStore();
+
+      return { userStore, toastStore };
+    },
+    mounted() {
+      // show errors when clicking through verification emails
+      if (this.$route.query.error_description) {
+        this.toastStore.postMessage({ body: this.$route.query.error_description });
+      }
     },
   };
 </script>

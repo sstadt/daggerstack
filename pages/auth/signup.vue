@@ -6,7 +6,7 @@
       .login.w-full.max-w-md
         BasicCard(title="sign up" :expand="mq.mdPlus")
           Transition(name="fade" mode="out-in")
-            form.space-y-6.mt-6(v-if="!user" novalidate @submit.prevent="signup")
+            form.space-y-6.mt-6(v-if="!success" novalidate @submit.prevent="signup")
               Transition(name="slide-fade-left")
                 BasicAlert(v-if="responseError" :message="responseError" type="error")
               InputText(
@@ -38,14 +38,14 @@
                 required
               )
               .flex.justify-end.items-center.space-x-4
-                NuxtLink(to="/login")
+                NuxtLink(to="/auth/login")
                   BasicButton(priority="secondary" :disabled="waiting") Log In
                 BasicButton(type="submit" :disabled="waiting") Sign Up
               BasicLoader.mx-auto(v-if="waiting")
             BasicAlert.mt-6(
               v-else
               type="success"
-              message="Success !!\n\nWe sent you an email to verify your account before logging in."
+              message="Success!!\n\nWe sent you an email to verify your account before logging in."
             )
 </template>
 
@@ -59,8 +59,7 @@
     helpers,
   } from '@vuelidate/validators';
 
-  const MIN_USERNAME_LENGTH = 3;
-  const MIN_PASSWORD_LENGTH = 6;
+  import { MIN_USERNAME_LENGTH, MIN_PASSWORD_LENGTH } from '~/config/app';
 
   export default {
     name: 'SignupPage',
@@ -73,7 +72,7 @@
         confirmPassword: '',
         responseError: null,
         waiting: false,
-        user: null,
+        success: false,
       };
     },
     validations() {
@@ -115,7 +114,7 @@
           this.responseError = error ? error.message : null;
 
           if (!error && data.user) {
-            this.user = { ...data.user };
+            this.success = true;
           }
 
           this.waiting = false;

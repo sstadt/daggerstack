@@ -5,7 +5,8 @@
         name="viewport"
         content="height=device-height,width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"
       )
-    NavTopbar(v-if="$route.name !== 'index'")
+    Transition(name="slide-fade-top")
+      NavTopbar(v-if="$route.name !== 'index'")
     NuxtPage
     BasicToast
 </template>
