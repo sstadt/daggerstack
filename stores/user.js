@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 
+
 export const useUserStore = defineStore('user', {
   state: () => {
     return {
@@ -10,11 +11,14 @@ export const useUserStore = defineStore('user', {
   },
   actions: {
     async init() {
+      const charactersStore = useCharactersStore();
+
       this.supabase = useSupabaseClient();
       const { data: { user } } = await this.supabase.auth.getUser();
 
       if (user) {
         this.user = user;
+        charactersStore.hydrate();
       }
 
       this.loaded = true;
@@ -22,10 +26,12 @@ export const useUserStore = defineStore('user', {
       return;
     },
     async loggedIn() {
+      const charactersStore = useCharactersStore();
       const { data: { user } } = await this.supabase.auth.getUser();
 
       if (user) {
         this.user = user;
+        charactersStore.hydrate();
       }
 
       return;

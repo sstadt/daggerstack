@@ -11,6 +11,19 @@ export const useCharactersStore = defineStore('characters', {
     };
   },
   actions: {
+    async hydrate() {
+      const userStore = useUserStore();
+      const toastStore = useToastStore();
+
+      console.log('>>> hydrating characters');
+      console.log('>>> user', userStore.user.id);
+      const { data, error } = await userStore.supabase
+        .from('characters')
+        .select();
+
+      console.log('... data', data);
+      console.log('... error', error);
+    },
     loadSavedCharacters() {
       if (process.client) {
         const list = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
