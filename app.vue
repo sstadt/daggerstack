@@ -25,10 +25,9 @@
         userStore,
       };
     },
-    mounted() {
-      this.builderStore.loadSavedCharacter();
-      this.charactersStore.loadSavedCharacters();
+    async mounted() {
       this.userStore.init();
+      this.builderStore.loadSavedCharacter();
     },
   };
 </script>
@@ -58,6 +57,11 @@
 
   .title {
     font-family: "Cinzel Decorative", serif;
+  }
+
+  .h-full-minus-topbar {
+    // account for the topbar
+    height: calc(100vh - 38px);
   }
 
   .link {

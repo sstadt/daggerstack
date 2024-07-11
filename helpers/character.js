@@ -17,7 +17,6 @@ for (const [key] of Object.entries(SUBCLASSES)) {
 
 export const newCharacter = () => {
   return {
-    id: uuidv4(),
     version: GENERAL.currentCharacterVersion,
     name: '',
     pronouns: '',

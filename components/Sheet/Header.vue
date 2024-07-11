@@ -28,7 +28,6 @@
         transition.my-12(:name="transition" mode="out-in")
           .space-y-6.mt-2(v-if="tabs[currentIndex].icon === 'health'")
             SheetHealth.mt-2(:character="character" :key="`${key}-health`")
-            BasicButton(@click="testSave") Save Character
           .space-y-6.mt-2(v-else-if="tabs[currentIndex].icon === 'campfire'")
             SheetRest.mt-2(:character="character" @rest-complete="closeDrawer")
           .space-y-6(v-else-if="tabs[currentIndex].icon === 'persona'")
@@ -164,22 +163,6 @@
       levelUp() {
         this.$emit('level-up');
         this.$refs.characterDrawer.close();
-      },
-      async testSave() {
-        const character = clone(this.character);
-
-        delete character.id;
-
-        console.log('>>> adding character to database', character);
-
-        const { error } = await this.userStore.supabase
-          .from('characters')
-          .insert(character);
-
-        if (error) {
-          console.log('error code:', error.code);
-          this.toastStore.postMessage({ body: error.message });
-        }
       },
     },
   };

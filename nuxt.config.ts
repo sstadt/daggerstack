@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     redirect: false,
   },
   plugins: [
+    '~/plugins/pinia-debounce',
     '~/plugins/vue3-touch-events',
     '~/plugins/vue3-mq',
   ],
