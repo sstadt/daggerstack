@@ -39,9 +39,6 @@
             SheetConnections(:character="character")
           .space-y-6.mt-2(v-else-if="tabs[currentIndex].icon === 'cog'")
             SheetSettings.mt-2(:character="character")
-        BasicCard.mt-auto
-          NuxtLink(to="/character")
-            BasicButton.w-full(priority="secondary") Character List
 </template>
 
 <script>

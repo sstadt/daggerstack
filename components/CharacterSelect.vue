@@ -1,5 +1,5 @@
 <template lang="pug">
-  .flex.flex-col.h-full
+  .flex.flex-col.h-full-minus-topbar
     .flex.flex-col.flex-grow.overflow-y-auto
       Transition(name="fade" mode="out-in")
         .flex.items-center.justify-center.flex-grow(v-if="!hydrated")
@@ -13,9 +13,9 @@
         .flex.items-center.justify-center.flex-grow(v-else)
           p.text-4xl.text-center You don't have any characters.... yet!
     Transition(name="slide-fade-bottom")
-      .flex.flex-col.translate-y-px(v-if="hydrated && characterList.length < 10")
+      .flex.flex-col(v-if="hydrated && characterList.length < 10")
         NuxtLink(to="/builder")
-          BasicButton.rounded-none.w-full(v-if="character && character.name")
+          BasicButton.rounded-none.w-full(v-if="character?.baseClass")
             | {{ characterLabel }}
         NuxtLink(:to="{ name: 'builder', query: { new: true } }")
           BasicButton.rounded-none.w-full

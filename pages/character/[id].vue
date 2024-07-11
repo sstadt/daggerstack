@@ -2,12 +2,12 @@
   .character
     Head
       Title Daggerstack.com - {{ characterName }}
-    Transition(name="fade")
+    Transition(name="fade" mode="out-in")
       .flex.flex-col.items-center.justify-center.w-screen.h-full-minus-topbar.space-y-6(
-        v-if="hydrated && !character.id"
+        v-if="hydrated && !character?.id"
       )
         p.text-4xl.text-center Could not find character!
-        NuxtLink(to="/")
+        NuxtLink(to="/character")
           BasicButton Go Back
       CharacterSheet(v-else-if="character?.id" :character="character")
       .flex.flex-col.items-center.justify-center.h-full-minus-topbar(v-else)

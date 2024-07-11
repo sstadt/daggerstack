@@ -30,6 +30,8 @@ export const useCharactersStore = defineStore('characters', {
         this.characterList = [ ...data ];
         this.hydrated = true;
       }
+
+      return;
     },
     async loadLocalCharacters() {
       const userStore = useUserStore();
@@ -59,19 +61,42 @@ export const useCharactersStore = defineStore('characters', {
           }
         }
       }
+
+      return;
     },
     async saveCharacter(character) {
+      const toastStore = useToastStore();
       const index = this.characterList.findIndex((c) => c.id === character.id);
 
       if (index > -1) {
         this.characterList.splice(index, 1, character);
+
+        // set waiting flag and pushed to debounced update
+        this.pushQueued = true;
+        this.pushCharacter(character.id);
       } else {
-        this.characterList.push(character);
+        toastStore.postMessage({ body: 'Character not found' });
+      }
+    },
+    async createCharacter(character) {
+      const userStore = useUserStore();
+      const toastStore = useToastStore();
+      const { data, error } = await userStore.supabase
+        .from('characters')
+        .insert(character)
+        .select();
+
+      if (error) {
+        toastStore.postMessage({ body: error.message });
+      } else {
+        const [ newCharacter ] = data;
+
+        this.characterList.push(newCharacter);
+
+        return newCharacter.id;
       }
 
-      // set waiting flag
-      this.pushQueued = true;
-      this.pushCharacter(character.id);
+      return data.id;
     },
     async pushCharacter(characterId) {
       const userStore = useUserStore();
@@ -92,17 +117,23 @@ export const useCharactersStore = defineStore('characters', {
 
       this.savingCharacter = false;
     },
-    deleteCharacter(characterId) {
-      // TODO: provide a confirm dialog before calling this
-      // const index = this.characterList.findIndex((c) => c.id === characterId);
+    async deleteCharacter(characterId) {
+      const userStore = useUserStore();
+      const toastStore = useToastStore();
+      const index = this.characterList.findIndex((c) => c.id === characterId);
 
-      // if (index > -1) {
-      //   this.characterList.splice(index, 1);
+      if (index > -1) {
+        const { error } = await userStore.supabase
+          .from('characters')
+          .delete()
+          .eq('id', characterId);
 
-      //   if (process.client) {
-      //     localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(this.characterList));
-      //   }
-      // }
+        this.characterList.splice(index, 1);
+
+        if (error) {
+          toastStore.postMessage({ body: error.message });
+        }
+      }
     },
   },
   debounce: {
