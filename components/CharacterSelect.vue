@@ -42,6 +42,7 @@
       };
     },
     computed: {
+      ...mapState(useUserStore, ['user']),
       ...mapState(useBuilderStore, ['character']),
       ...mapState(useCharactersStore, ['characterList', 'hydrated']),
       characterLabel() {
@@ -49,6 +50,11 @@
           ? `Resume ${this.character.baseClass}`
           : 'Resume Character';
       },
+    },
+    mounted() {
+      if (!this.user) {
+        this.$router.push('/');
+      }
     },
     methods: {
       createNewCharacter(clearBuilder) {

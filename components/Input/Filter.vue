@@ -2,11 +2,11 @@
   .input--filter.space-y-2.items-center
     p.text-sm.font-bold.uppercase(v-if="label && !hideLabel") {{ label }}
     .flex.space-x-2
-      label.text-xs.py-1.px-2.rounded.border.transition-colors(
+      label.text-xs.py-1.px-2.rounded.border.transition-colors.relative(
         v-for="option in options"
         :class="getInputClass(currentValue.includes(option))"
       )
-        input(
+        input.absolute.pointer-events-none.opacity-0.w-full.h-full(
           type="checkbox"
           v-model="currentValue"
           :value="option"

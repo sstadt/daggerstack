@@ -4,7 +4,7 @@
       :class="{ 'container': mq.lgPlus }"
       @click="openDrawer"
     )
-      .sheet-header__domain-icons.flex.absolute.opacity-20(
+      .sheet-header__domain-icons.flex.absolute.opacity-20.pointer-events-none(
         class="left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-0 md:-translate-y-8 lg:-translate-x-1/2 lg:translate-y-0"
         :class="domainsClass"
         :style="domainsStyle"

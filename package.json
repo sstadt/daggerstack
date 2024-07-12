@@ -2,7 +2,7 @@
   "name": "daggerstack",
   "private": true,
   "type": "module",
-  "version": "0.3.2",
+  "version": "0.3.2a",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",

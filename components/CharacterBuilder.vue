@@ -31,6 +31,7 @@
     },
     computed: {
       ...mapState(useBuilderStore, ['currentPage', 'character']),
+      ...mapState(useUserStore, ['user']),
     },
     setup() {
       const builderStore = useBuilderStore();
@@ -39,6 +40,10 @@
       return { builderStore, charactersStore };
     },
     mounted() {
+      if (!this.user) {
+        this.$router.push('/');
+      }
+
       if (!this.$route.query.new) {
         this.builderStore.loadSavedCharacter();
       } else {

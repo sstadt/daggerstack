@@ -93,6 +93,7 @@
     },
     computed: {
       ...mapState(useSheetStore, ['key']),
+      ...mapState(useUserStore, ['user']),
       navButtons() {
         const buttons = this.mq.md
           ? [{ icon: 'attributes' }, { icon: 'inventory' }, { icon: 'background' }]
@@ -130,6 +131,10 @@
       },
     },
     mounted() {
+      if (!this.user) {
+        this.$router.push('/');
+      }
+
       this.sheetStore.loadSheetSettings();
     },
     methods: {
