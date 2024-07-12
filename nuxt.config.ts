@@ -10,6 +10,11 @@ export default defineNuxtConfig({
   supabase: {
     redirect: false,
   },
+  nitro: {
+    prerender: {
+      failOnError: false,
+    },
+  },
   plugins: [
     '~/plugins/pinia-debounce',
     '~/plugins/vue3-touch-events',
