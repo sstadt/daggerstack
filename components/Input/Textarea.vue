@@ -4,7 +4,7 @@
       v-if="label"
       :class="{ 'sr-only': hideLabel }"
     ) {{ label }}
-    textarea.px-4.py-2.text-xl.resize-none.overflow-hidden.outline-0(
+    textarea.px-4.py-2.text-xl.resize-none.overflow-hidden.outline-0.border(
       ref="textarea"
       type="text"
       :class="inputClass"

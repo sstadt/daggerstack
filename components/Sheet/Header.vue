@@ -39,9 +39,6 @@
             SheetConnections(:character="character")
           .space-y-6.mt-2(v-else-if="tabs[currentIndex].icon === 'cog'")
             SheetSettings.mt-2(:character="character")
-        BasicCard.mt-auto
-          NuxtLink(to="/")
-            BasicButton.w-full(priority="secondary") Character List
 </template>
 
 <script>
@@ -50,6 +47,7 @@
   import CLASSES from '~/data/classes';
 
   import { ucFirst, titleCase } from '~/helpers/string';
+  import { clone } from '~/helpers/utility';
 
   export default {
     name: 'SheetHeader',
@@ -65,6 +63,12 @@
         transition: 'paginate-left',
         currentIndex: 0,
       };
+    },
+    setup() {
+      const userStore = useUserStore();
+      const toastStore = useToastStore();
+
+      return { userStore, toastStore };
     },
     computed: {
       ...mapState(useSheetStore, ['key']),

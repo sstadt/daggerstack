@@ -39,7 +39,7 @@
             :errors="v$.name.$errors"
             required
           )
-          button.u-inline-button.bg-slate-100.px-4.ml-1.flex.items-center.justify-center.border-l-white(
+          button.u-inline-button.bg-slate-100.px-4.flex.items-center.justify-center(
             type="button"
             @click="generateName"
           )

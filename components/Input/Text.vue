@@ -7,12 +7,13 @@
       | {{ label }}
       span(v-if="required") *
     input.px-4.py-2.text-xl.outline-0(
-      type="text"
+      :type="type"
       :class="inputClass"
       :value="modelValue"
       :placeholder="placeholder"
       @input="$emit('update:modelValue', $event.target.value)"
     )
+    AuthPasswordStrength(v-if="passwordStrength" :password="modelValue")
     transition(name="slide-fade-left")
       p.text-red-400.font-bold(v-if="firstError") {{ firstError.$message }}
 </template>
@@ -22,6 +23,10 @@
     name: 'InputText',
     props: {
       modelValue: {},
+      type: {
+        type: String,
+        default: 'text'
+      },
       label: {
         type: String,
         default: null,
@@ -50,6 +55,10 @@
         type: Array,
         default: [],
       },
+      passwordStrength: {
+        type: Boolean,
+        default: false,
+      },
     },
     computed: {
       wrapperClasses() {
@@ -60,7 +69,9 @@
       inputClass() {
         return {
           'bg-slate-100 focus:bg-slate-200': this.errors.length === 0,
-          'bg-red-100 focus:bg-red-200': this.errors.length > 0
+          'bg-red-100 focus:bg-red-200': this.errors.length > 0,
+          'border': !this.passwordStrength,
+          'border-t border-x': this.passwordStrength,
         };
       },
       firstError() {

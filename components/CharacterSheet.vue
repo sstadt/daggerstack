@@ -58,6 +58,7 @@
           SheetWeapons(:character="character")
           SheetArmor(:character="character")
           SheetInventory(:character="character")
+    SheetSaveSpinner
     BasicModal(ref="levelUpModal" :title="`Welcome to Level ${character.level + 1}!`")
       SheetLeveling(:character="character" @level-saved="levelSaved")
 </template>

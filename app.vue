@@ -5,6 +5,8 @@
         name="viewport"
         content="height=device-height,width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"
       )
+    Transition(name="slide-fade-top")
+      NavTopbar(v-if="$route.name !== 'index'")
     NuxtPage
     BasicToast
 </template>
@@ -12,24 +14,20 @@
 <script>
   export default {
     name: 'App',
-    data() {
-      return {
-        storageLoaded: false,
-      };
-    },
     setup() {
       const builderStore = useBuilderStore();
       const charactersStore = useCharactersStore();
+      const userStore = useUserStore();
 
       return {
         builderStore,
         charactersStore,
+        userStore,
       };
     },
-    mounted() {
+    async mounted() {
+      this.userStore.init();
       this.builderStore.loadSavedCharacter();
-      this.charactersStore.loadSavedCharacters();
-      this.storageLoaded = true;
     },
   };
 </script>
@@ -44,9 +42,30 @@
   .nuxt-icon {
     display: inline-block;
 
-    h1, h2, h3, h4, h5, h6, p & {
+    h1 &,
+    h2 &,
+    h3 &,
+    h4 &,
+    h5 &,
+    h6 &,
+    p &,
+    a &,
+    button & {
       vertical-align: middle;
     }
+  }
+
+  .title {
+    font-family: "Cinzel Decorative", serif;
+  }
+
+  .h-full-minus-topbar {
+    // account for the topbar
+    height: calc(100vh - 38px);
+  }
+
+  .link {
+    text-decoration: underline;
   }
 
   select {

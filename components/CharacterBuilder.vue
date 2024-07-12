@@ -21,8 +21,6 @@
 
   import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
 
-  import { useBuilderStore } from '~/stores/builder';
-
   export default {
     name: 'CharacterBuilder',
     data() {
@@ -36,8 +34,9 @@
     },
     setup() {
       const builderStore = useBuilderStore();
+      const charactersStore = useCharactersStore();
 
-      return { builderStore };
+      return { builderStore, charactersStore };
     },
     mounted() {
       if (!this.$route.query.new) {
@@ -62,20 +61,25 @@
         this.builderStore.currentPage = page;
         this.builderStore.savePage();
       },
-      createCharacter() {
-        const characterId = this.character.id;
+      async createCharacter() {
         const modifiers = getFeaturesByAttribute(this.character, 'goldHandful');
         const bonusGold = calculateModifiers(modifiers, 'goldHandful');
         const currentGold =  this.character.inventory.gold.handful;
 
-        this.builderStore.createCharacter({
+        this.builderStore.updateCharacter({
           inventory: {
             gold: {
               handful: currentGold + bonusGold,
             }
           }
         });
-        this.$router.push({ path: `/character/${characterId}` });
+
+        const id = await this.charactersStore.createCharacter(this.character);
+
+        if (id) {
+          this.$router.push({ path: `/character/${id}` });
+          this.builderStore.newCharacter();
+        }
       },
     },
   };

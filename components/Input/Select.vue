@@ -4,7 +4,7 @@
       v-if="label"
       :class="{ 'sr-only': hideLabel }"
     ) {{ label }}
-    select.w-full.px-4.py-2.text-xl.outline-0(
+    select.w-full.px-4.py-2.text-xl.outline-0.border(
       :class="inputClass"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"

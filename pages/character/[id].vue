@@ -2,25 +2,28 @@
   .character
     Head
       Title Daggerstack.com - {{ characterName }}
-    .flex.flex-col.items-center.justify-center.w-screen.h-screen.space-y-6(
-      v-if="characterLoaded && !character.id"
-    )
-      p.text-4xl.text-center Could not find character!
-      NuxtLink(to="/")
-        BasicButton Go Back
-    CharacterSheet(v-else-if="character && character.id" :character="character")
+    Transition(name="fade" mode="out-in")
+      .flex.flex-col.items-center.justify-center.w-screen.h-full-minus-topbar.space-y-6(
+        v-if="hydrated && !character?.id"
+      )
+        p.text-4xl.text-center Could not find character!
+        NuxtLink(to="/character")
+          BasicButton Go Back
+      CharacterSheet(v-else-if="character?.id" :character="character")
+      .flex.flex-col.items-center.justify-center.h-full-minus-topbar(v-else)
+        BasicLoader
 </template>
 
 <script>
   import { mapState } from 'pinia';
   import { useCharactersStore } from '~/stores/characters';
+  import { clone } from '~/helpers/utility';
 
   export default {
     name: 'CharacterPage',
     data() {
       return {
         character: null,
-        characterLoaded: false,
       };
     },
     setup() {
@@ -29,31 +32,30 @@
       return { charactersStore };
     },
     computed: {
-      ...mapState(useCharactersStore, ['charactersLoaded']),
+      ...mapState(useCharactersStore, ['hydrated']),
       characterName() {
         return this.character ? this.character.name : 'Loading Character...';
       },
     },
     mounted() {
-      if (this.charactersLoaded === true) {
-        this.loadCharacterFromState();
+      if (this.hydrated === true) {
+        this.loadCharacter();
       }
     },
     methods: {
-      loadCharacterFromState() {
+      loadCharacter() {
         const routeCharacter = this.charactersStore.characterList
           .find((character) => {
-            return character.id === this.$route.params.id;
+            return character.id === parseInt(this.$route.params.id, 10);
           });
 
-        this.character = { ...routeCharacter };
-        this.characterLoaded = true;
+        this.character = clone(routeCharacter);
       },
     },
     watch: {
-      charactersLoaded(newVal) {
-        if (this.characterLoaded === false && newVal === true) {
-          this.loadCharacterFromState();
+      hydrated(newVal) {
+        if (!this.character && newVal === true) {
+          this.loadCharacter();
         }
       },
     },
