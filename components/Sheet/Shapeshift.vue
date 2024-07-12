@@ -37,19 +37,20 @@
           p +{{ selectedForm[primaryTrait] }} {{ ucFirst(primaryTrait) }}
           p Attack: {{ selectedForm.attack }}
         .space-y-4
-          p.text-xl(v-for="feature in selectedForm.features")
-            strong(class="mr-1.5") {{ feature.name }}:
-            | {{ feature.description }}
+          BasicMarkdown.text-xl(
+            v-for="feature in selectedForm.features"
+            :source="`**${feature.name}** ${feature.description}`"
+          )
     .space-y-6(v-else-if="settingsLoaded")
       BasicCard(
         v-for="category in forms"
-        :title="`Level ${category.level}`"
+        :title="`Level ${category.level} Wildshape`"
         expand
       )
         .divide-y
           button.py-4.px-8.space-y-2.w-full.text-left(
             v-for="(form, index) in category.forms"
-            class="focus:bg-slate-100"
+            class="focus:bg-slate-100 lg:px-0"
             @click="shapeshift(form)"
           )
             h3.text-lg.font-bold.uppercase.mb-2 {{ form.name }}
@@ -61,9 +62,10 @@
                   span {{ form[trait] }} {{ ucFirst(trait) }} - {{ form.attack }}
               span Evasion: {{ form.evasion }}
               span Armor: {{ form.armor }}
-            p(v-for="feature in form.features")
-              strong(class="mr-1.5") {{ feature.name }}:
-              | {{ feature.description }}
+            BasicMarkdown(
+              v-for="feature in form.features"
+              :source="`**${feature.name}** ${feature.description}`"
+            )
 </template>
 
 <script>

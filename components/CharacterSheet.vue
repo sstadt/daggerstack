@@ -58,6 +58,8 @@
           SheetWeapons(:character="character")
           SheetArmor(:character="character")
           SheetInventory(:character="character")
+          SheetShapeshift(v-if="baseClass.alternateForms" :character="character")
+          SheetCompanion(v-if="hasCompanion" :character="character" :key="`${key}-companion`")
     SheetSaveSpinner
     BasicModal(ref="levelUpModal" :title="`Welcome to Level ${character.level + 1}!`")
       SheetLeveling(:character="character" @level-saved="levelSaved")
@@ -104,11 +106,14 @@
           buttons.push({ icon: 'shapeshift' });
         }
 
-        if (hasCompanion(this.character)) {
+        if (this.hasCompanion) {
           buttons.push({ icon: 'companion' });
         }
 
         return buttons;
+      },
+      hasCompanion() {
+        return hasCompanion(this.character);
       },
       baseClass() {
         return CLASSES[this.character.baseClass];
