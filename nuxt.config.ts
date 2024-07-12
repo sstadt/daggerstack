@@ -12,11 +12,6 @@ export default defineNuxtConfig({
     url: 'https://biftneoctpqfefxgelcv.supabase.co',
     key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpZnRuZW9jdHBxZmVmeGdlbGN2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTkwNzAzMzAsImV4cCI6MjAzNDY0NjMzMH0.w1kyOcbuQodwHb7tncNbJaLEGPLRs3rwELcYWQH1cq0',
   },
-  nitro: {
-    prerender: {
-      failOnError: false,
-    },
-  },
   plugins: [
     '~/plugins/pinia-debounce',
     '~/plugins/vue3-touch-events',
