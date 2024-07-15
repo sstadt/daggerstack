@@ -270,11 +270,13 @@
 
         // hit points
         for (let i = 0, j = this.shortTendWounds; i < j; i++) {
-          if (this.healWounds[i] === 0 && this.shortTendWoundsTarget[i] === 'self') {
+          if (this.healWounds[i] === 0) {
             this.healWounds[i] = rollDice('1d4').total;
           }
 
-          restoreHitPoints += this.healWounds[i];
+          if (this.shortTendWoundsTarget[i] === 'self') {
+            restoreHitPoints += this.healWounds[i];
+          }
         }
 
         if (restoreHitPoints > 0) {
@@ -303,11 +305,13 @@
 
         // armor
         for (let i = 0, j = this.shortRepairArmor; i < j; i++) {
-          if (this.healArmor[i] === 0 && this.shortRepairArmorTarget[i] === 'self') {
+          if (this.healArmor[i] === 0) {
             this.healArmor[i] = rollDice('1d4').total;
           }
 
-          restoreArmor += this.healArmor[i];
+          if (this.shortRepairArmorTarget[i] === 'self') {
+            restoreArmor += this.healArmor[i];
+          }
         }
 
         if (restoreArmor > 0) {
