@@ -108,7 +108,6 @@
       characterArmor() {
         const base = 0;
         const features = getFeaturesByAttribute(this.character, 'armorScore');
-        console.log(features);
 
         return base + calculateModifiers(features, 'armorScore');
       },
