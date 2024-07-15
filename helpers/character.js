@@ -243,8 +243,14 @@ export const calculateModifiers = (features, attribute) => {
  * @returns An array of features
  */
 export const getFeaturesByAttribute = (character, attribute, options = {}) => {
+  const primaryWeapon = character.equipment.primaryWeapon.name
+    ? WEAPONS.items.find((w) => w.name === character.equipment.primaryWeapon.name)
+    : null;
+  const secondaryWeapon = character.equipment.secondaryWeapon.name
+    ? WEAPONS.items.find((w) => w.name === character.equipment.secondaryWeapon.name)
+    : null;
   const burden = respectBurden(character) && character.equipment
-    ? character.equipment.primaryWeapon.burden + character.equipment.secondaryWeapon.burden
+    ? primaryWeapon.burden + secondaryWeapon.burden
     : 0;
   const subclasses = character.subclass
     ? character.subclass.map((characterSubclass) => {
@@ -261,17 +267,21 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
   const features = [];
 
   // weapons
-  if (character.equipment && character.equipment.primaryWeapon.name) {
-    const primaryWeapon = WEAPONS.items
-      .find((w) => w.name === character.equipment.primaryWeapon.name);
-
+  if (primaryWeapon) {
     if (primaryWeapon.feature && primaryWeapon.feature.modify && primaryWeapon.feature.modify[attribute]) {
       features.push({ ...primaryWeapon.feature });
     }
   }
 
+  // verify we are not carrying too much before including secondary weapon feature
+  if (burden < 3 && secondaryWeapon) {
+    if (secondaryWeapon.feature && secondaryWeapon.feature.modify && secondaryWeapon.feature.modify[attribute]) {
+      features.push({ ...secondaryWeapon.feature });
+    }
+  }
+
   // items
-  if (character.inventory && character.inventory.items) {
+  if (character.inventory?.items) {
     character.inventory.items
       .filter((i) => i.modify && i.modify[attribute])
       .forEach((item) => {
@@ -283,18 +293,8 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
       });
   }
 
-  // verify we are not carrying too much before including secondary weapon feature
-  if (character.equipment && burden < 3 && character.equipment.secondaryWeapon.name) {
-    const secondaryWeapon = WEAPONS.items
-      .find((w) => w.name === character.equipment.secondaryWeapon.name);
-
-    if (secondaryWeapon.feature && secondaryWeapon.feature.modify && secondaryWeapon.feature.modify[attribute]) {
-      features.push({ ...secondaryWeapon.feature });
-    }
-  }
-
   // armor
-  if (character.equipment && character.equipment.armor.name) {
+  if (character.equipment?.armor?.name) {
     const armor = ARMOR.items.find((a) => a.name === character.equipment.armor.name);
     const armorScore = options.exclude && options.exclude.includes('armorScore')
       ? 0
