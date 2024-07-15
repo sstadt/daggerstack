@@ -1,5 +1,5 @@
 <template lang="pug">
-  .container.p-8
+  .max-w-5xl.container.p-8
     .space-y-8
       h2.text-center.text-2xl.font-black.uppercase Connections
       .space-y-2(v-for="(question, index) in connectionQuestions")

@@ -6,7 +6,7 @@
           v-for="(button, index) in navButtons"
           :icon="button.icon"
           :style="buttonStyle"
-          @click="open(button.icon)"
+          @click="openPage(button.icon)"
         )
         .nav-indicator.absolute.bottom-0.h-2.bg-white.pointer-events-none.transition-all.translate-y-px(
           :style="indicatorStyle"
@@ -14,7 +14,7 @@
     //- Mobile/Tablet Character Sheet
     transition(v-if="mq.mdMinus" :name="transition" mode="out-in")
       .space-y-16.pb-4.py-8(
-        v-if="currentTab === 'attributes'"
+        v-if="currentPage === 'attributes'"
         class="md:space-y-0 md:flex"
       )
         .space-y-16(class="md:w-1/2")
@@ -22,11 +22,11 @@
           SheetExperience(:character="character" :key="`${key}-experience`")
         div(class="md:w-1/2")
           SheetClassFeature(:character="character")
-      .space-y-8.pb-4.py-8(v-else-if="currentTab === 'equipment'")
+      .space-y-8.pb-4.py-8(v-else-if="currentPage === 'equipment'")
         SheetWeapons(:character="character")
         SheetArmor(:character="character")
       .space-y-8.pb-4.py-8(
-        v-else-if="currentTab === 'inventory' || mq.md && currentTab === 'equipment'"
+        v-else-if="currentPage === 'inventory' || mq.md && currentPage === 'equipment'"
         class="md:space-y-0 md:flex"
       )
         .space-y-8(v-if="mq.md" class="md:w-1/2")
@@ -36,30 +36,41 @@
           SheetGold(:character="character")
           SheetInventory(:character="character")
       .space-y-8.pb-4.py-8(
-        v-else-if="currentTab === 'background'"
+        v-else-if="currentPage === 'background'"
         class="md:space-y-0 md:flex"
       )
         SheetBackground(:character="character" class="md:w-1/2")
         SheetConnections(:character="character" class="md:w-1/2")
-      .space-y-8.pb-4.py-8(v-else-if="currentTab === 'shapeshift'")
+      .space-y-8.pb-4.py-8(v-else-if="currentPage === 'shapeshift'")
         SheetShapeshift(:character="character")
-      .space-y-8.pb-4.py-8(v-else-if="currentTab === 'companion'")
+      .space-y-8.pb-4.py-8(v-else-if="currentPage === 'companion'")
         SheetCompanion(:character="character" :key="`${key}-companion`")
     //- Desktop Sheet
-    .container.pb-16(v-else)
+    .max-w-5xl.container.pb-16(v-else)
       SheetStatistics(:character="character" :key="`${key}-statistics`")
-      .flex.space-x-8
-        .space-y-12(class="w-5/12")
+      .flex.space-x-12
+        .space-y-12(class="w-1/3")
           SheetHealth(:character="character" :key="`${key}-health`")
           SheetExperience(:character="character" :key="`${key}-experience`")
-          SheetGold(:character="character")
           SheetClassFeature(:character="character")
-        .space-y-12(class="w-7/12")
-          SheetWeapons(:character="character")
-          SheetArmor(:character="character")
-          SheetInventory(:character="character")
-          SheetShapeshift(v-if="baseClass.alternateForms" :character="character")
-          SheetCompanion(v-if="hasCompanion" :character="character" :key="`${key}-companion`")
+        .space-y-6(class="w-2/3")
+          .flex.space-x-6
+            button.uppercase.text-sm.font-bold.transition-colors.border-b-2.text-slate-400(
+              v-for="(tab, index) in tabs"
+              :class="{ 'border-b-slate-800 text-slate-800': currentTabIndex === index }"
+              @click="openTab(tab)"
+            ) {{ tab }}
+          Transition(:name="transition" mode="out-in")
+            .space-y-12(v-if="currentTab === 'equipment'")
+              SheetWeapons(:character="character")
+              SheetArmor(:character="character")
+            .space-y-12(v-else-if="currentTab === 'inventory'")
+              SheetGold(:character="character")
+              SheetInventory(:character="character")
+            .space-y-12(v-else-if="currentTab === 'shapeshift'")
+              SheetShapeshift(v-if="baseClass.alternateForms" :character="character")
+            .space-y-12(v-else-if="currentTab === 'companion'")
+              SheetCompanion(v-if="hasCompanion" :character="character" :key="`${key}-companion`")
     SheetSaveSpinner
     BasicModal(ref="levelUpModal" :title="`Welcome to Level ${character.level + 1}!`")
       SheetLeveling(:character="character" @level-saved="levelSaved")
@@ -84,8 +95,8 @@
     data() {
       return {
         transition: 'paginate-right',
-        currentTab: 'attributes',
-        currentIndex: 0,
+        currentPage: 'attributes',
+        currentTab: 'equipment',
       };
     },
     setup() {
@@ -96,13 +107,20 @@
     computed: {
       ...mapState(useSheetStore, ['key']),
       ...mapState(useUserStore, ['user']),
+      // character data
+      hasCompanion() {
+        return hasCompanion(this.character);
+      },
+      baseClass() {
+        return CLASSES[this.character.baseClass];
+      },
+      // mobile nav
       navButtons() {
         const buttons = this.mq.md
           ? [{ icon: 'attributes' }, { icon: 'inventory' }, { icon: 'background' }]
           : [{ icon: 'attributes' }, { icon: 'equipment' }, { icon: 'inventory' }, { icon: 'background' }];
-        const baseClass = CLASSES[this.character.baseClass];
 
-        if (baseClass.alternateForms) {
+        if (this.baseClass.alternateForms) {
           buttons.push({ icon: 'shapeshift' });
         }
 
@@ -112,11 +130,8 @@
 
         return buttons;
       },
-      hasCompanion() {
-        return hasCompanion(this.character);
-      },
-      baseClass() {
-        return CLASSES[this.character.baseClass];
+      currentPageIndex() {
+        return this.navButtons.findIndex((button) => button.icon === this.currentPage);
       },
       buttonWidth() {
         return 100 / this.navButtons.length;
@@ -127,12 +142,29 @@
         };
       },
       indicatorStyle() {
-        const left = this.currentIndex * this.buttonWidth;
+        const left = this.currentPageIndex * this.buttonWidth;
 
         return {
           width: `${this.buttonWidth}%`,
           left: `${left}%`,
         };
+      },
+      // desktop tabs
+      tabs() {
+        const tabs = ['equipment', 'inventory'];
+
+        if (this.baseClass.alternateForms) {
+          tabs.push('shapeshift');
+        }
+
+        if (this.hasCompanion) {
+          tabs.push('companion');
+        }
+
+        return tabs;
+      },
+      currentTabIndex() {
+        return this.tabs.findIndex((tab) => tab === this.currentTab);
       },
     },
     mounted() {
@@ -143,14 +175,21 @@
       this.sheetStore.loadSheetSettings();
     },
     methods: {
-      open(icon) {
+      openPage(icon) {
         const index = this.navButtons.findIndex((button) => button.icon === icon);
-        this.transition = index > this.currentIndex
+        this.transition = index > this.currentPageIndex
           ? 'paginate-right'
           : 'paginate-left';
 
-        this.currentTab = icon;
-        this.currentIndex = index;
+        this.currentPage = icon;
+      },
+      openTab(name) {
+        const index = this.tabs.findIndex((tab) => tab === name);
+        this.transition = index > this.currentTabIndex
+          ? 'paginate-right'
+          : 'paginate-left';
+
+        this.currentTab = name;
       },
       levelUp() {
         this.$refs.levelUpModal.open();

@@ -1,5 +1,5 @@
 <template lang="pug">
-  BasicCard(title="inventory")
+  BasicCard(title="items")
     .space-y-8
       .flex.flex-col.space-y-2.items-end
         TransitionGroup.w-full.divide-y(name="slide-fade-left" tag="div")

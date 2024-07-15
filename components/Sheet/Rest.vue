@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  BasicCard
     .flex.justify-center.space-x-8.mb-4
       button.py-2.border-b.transition-colors(
         type="button"
@@ -13,7 +13,7 @@
       ) Long Rest
     transition(name="fade" mode="out-in")
       //- short rest
-      .space-y-4.px-8(v-if="currentTab === 0")
+      .space-y-4(v-if="currentTab === 0")
         p.text-sm.text-center You may swap out any number of domain cards in your Loadout for any cards in your Vault. Then, choose two options below.
         .space-y-2
           .flex.space-x-2

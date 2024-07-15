@@ -1,6 +1,6 @@
 <template lang="pug">
-  .w-screen.bg-black.-my-px
-    .container.flex.justify-between.items-center.text-white
+  .w-full.bg-black.-my-px
+    .max-w-5xl.container.flex.justify-between.items-center.text-white
       NuxtLink.title.inline-block.py-2(to="/") Daggerstack
       .relative(v-if="userStore.user")
         button.h-full.py-2(@click="toggleUserMenu")

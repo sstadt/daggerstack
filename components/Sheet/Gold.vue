@@ -1,27 +1,40 @@
 <template lang="pug">
   BasicCard(title="Gold")
-    .space-y-2.mt-6
-      .flex.space-x-2.items-center
-        h3.uppercase.text-sm.text-center.font-bold.text-right.w-20 handfuls
-        .flex
-          InputCheckboxCounter.bg-amber-300.p-1.pr-0(
-            v-model="handful"
-            :max="maxHandfuls"
-          )
-      .flex.space-x-2.items-center
-        h3.uppercase.text-sm.text-center.font-bold.text-right.w-20 bags
-        .flex
-          InputCheckboxCounter.bg-amber-400.p-1.pr-0(
-            v-model="bag"
-            :max="maxBags"
-          )
-      .flex.space-x-2.items-center
-        h3.uppercase.text-sm.text-center.font-bold.text-right.w-20 chest
-        .flex
-          InputCheckboxCounter.bg-amber-500.p-1.pr-0(
-            v-model="chest"
-            :max="maxChests"
-          )
+    .flex.justify-center
+      .mt-6(class="lg:flex max-md:space-y-2")
+        .flex.space-x-2.items-center(
+          class="lg:flex-col lg:items-start"
+        )
+          h3.uppercase.text-sm.text-center.font-bold.text-right(
+            class="max-md:w-20 lg:ml-2"
+          ) handfuls
+          .flex
+            InputCheckboxCounter.bg-amber-300.p-1.pr-0(
+              v-model="handful"
+              :max="maxHandfuls"
+            )
+        .flex.space-x-2.items-center(
+          class="lg:flex-col lg:items-start"
+        )
+          h3.uppercase.text-sm.text-center.font-bold.text-right(
+            class="max-md:w-20 lg:ml-2"
+          ) bags
+          .flex
+            InputCheckboxCounter.bg-amber-400.p-1.pr-0(
+              v-model="bag"
+              :max="maxBags"
+            )
+        .flex.space-x-2.items-center(
+          class="lg:flex-col lg:items-start"
+        )
+          h3.uppercase.text-sm.text-center.font-bold.text-right(
+            class="max-md:w-20 lg:ml-2"
+          ) chest
+          .flex
+            InputCheckboxCounter.bg-amber-500.p-1.pr-0(
+              v-model="chest"
+              :max="maxChests"
+            )
 </template>
 
 <script>

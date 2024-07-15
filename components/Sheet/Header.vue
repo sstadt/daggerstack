@@ -1,6 +1,6 @@
 <template lang="pug">
   .sheet-header.sticky.top-0.z-10.relative.transition-colors(:class="headerClass")
-    .sheet-header__title.flex-none.py-4.px-6.text-white.cursor-pointer(
+    .max-w-5xl.container.sheet-header__title.flex-none.py-4.text-white.cursor-pointer(
       :class="{ 'container': mq.lgPlus }"
       @click="openDrawer"
     )
@@ -16,7 +16,7 @@
         span.ml-auto(v-if="mq.sm") {{ character.pronouns }}
     slot
     BasicDrawer(ref="characterDrawer" :title="tabs[currentIndex].title")
-      .flex.flex-col.flex-grow.flex-shrink-0.overflow-x-hidden
+      .flex.flex-col.flex-grow.flex-shrink-0.overflow-x-hidden(class="lg:px-8")
         .flex.justify-center.items-center
           button.px-3.text-4xl(
             v-for="(tab, index) in tabs"

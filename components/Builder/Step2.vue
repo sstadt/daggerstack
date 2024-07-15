@@ -1,5 +1,5 @@
 <template lang="pug">
-  .container.p-8
+  .max-w-5xl.container.p-8
     form(@submit.prevent="next").space-y-8
       .space-2-y
         h2.text-center.text-2xl.font-black.uppercase Basic Traits

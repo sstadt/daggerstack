@@ -1,14 +1,14 @@
 <template lang="pug">
   BasicCard.sheet-health(:title="mq.lgPlus ? 'Health' : null")
-    .flex.items-center.justify-center.pb-10(class="lg:mt-4")
-      template(v-for="(threshold, index) in thresholds")
-        p.relative.border.border-black.rounded.text-lg.py-1.pr-1.w-12.text-center
-          | {{ threshold.score }}
-          span.threshold__helper-text.absolute.text-slate-500.text-xs.whitespace-nowrap
-            | {{ index + 1 }} HP
-        p.threshold-name.relative.py-1.text-xs.text-white.bg-black.uppercase.font-bold(class="pr-1.5")
-          | {{ threshold.name }}
-    .space-y-6
+    .flex.flex-col.items-center.space-y-6.mt-4
+      .flex.items-center.justify-center(class="lg:mt-4")
+        template(v-for="(threshold, index) in thresholds")
+          p.relative.border.border-black.rounded.text-lg.py-1.pr-1.w-12.text-center
+            | {{ threshold.score }}
+            span.threshold__helper-text.absolute.text-slate-500.text-xs.whitespace-nowrap
+              | {{ index + 1 }} HP
+          p.threshold-name.relative.py-1.text-xs.text-white.bg-black.uppercase.font-bold(class="pr-1.5")
+            | {{ threshold.name }}
       .hit-points
         h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0 HP
         InputCheckboxCounter(v-model="currentHealth" :max="maxHealth" :enabled="healthSlots")

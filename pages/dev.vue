@@ -1,5 +1,5 @@
 <template lang="pug">
-  .container.flex.space-x-2.py-6
+  .max-w-5xl.container.flex.space-x-2.py-6
     .flex-shrink-0(class="w-4/5")
       .space-y-2
         InputSelect(v-model="slot" :options="slots" required)

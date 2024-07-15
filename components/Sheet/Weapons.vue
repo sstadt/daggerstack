@@ -8,20 +8,23 @@
         read-only
       )
     .mb-8.space-y-4
-      h3.text-xl.font-black.uppercase.mt-6 Primary
-      InventoryWeapon(
+      h3.font-black.uppercase.mt-6 Primary
+      InventoryWeapon.cursor-pointer(
         v-if="primaryWeapon"
         :weapon="getWeapon(primaryWeapon.name)"
         :character-weapon="character.equipment.primaryWeapon"
         :character="character"
         @click="openPicker(primaryWeaponType)"
       )
-      BasicButton.mx-auto.block(v-else @click="openPicker(primaryWeaponType)")
-        | Select Weapon
+      BasicButton.mx-auto.block(
+        v-else
+        priority="secondary"
+        @click="openPicker(primaryWeaponType)"
+      ) Select Weapon
     .space-y-4
-      h3.text-xl.font-black.uppercase Secondary
+      h3.font-black.uppercase Secondary
       .relative(v-if="secondaryWeapon")
-        InventoryWeapon(
+        InventoryWeapon.cursor-pointer(
           :weapon="getWeapon(secondaryWeapon.name)"
           :character-weapon="character.equipment.secondaryWeapon"
           :character="character"
@@ -32,8 +35,11 @@
           v-if="respectBurden && isPrimaryTwoHanded"
           class="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         ) No free hands
-      BasicButton.mx-auto.block(v-else @click="openPicker(secondaryWeaponType)")
-        | Select Weapon
+      BasicButton.mx-auto.block(
+        v-else
+        priority="secondary"
+        @click="openPicker(secondaryWeaponType)"
+      ) Select Weapon
     BasicDrawer(ref="equipmentPicker" title="Weapons")
       InventoryEquipmentPicker(
         :type="pickerType"

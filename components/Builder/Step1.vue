@@ -1,5 +1,5 @@
 <template lang="pug">
-  .container.p-8
+  .max-w-5xl.container.p-8
     form(@submit.prevent="next").space-y-8
       InputSelect(
         v-model="selectedClass"

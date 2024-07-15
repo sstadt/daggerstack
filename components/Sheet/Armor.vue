@@ -1,16 +1,19 @@
 <template lang="pug">
   BasicCard(title="Active Armor")
     .mt-6
-      InventoryArmor(
+      InventoryArmor.cursor-pointer(
         v-if="armor"
         :armor="armor"
         :character-armor="character.equipment.armor"
         :character="character"
         @click="openPicker"
       )
-      BasicButton.mx-auto.block(v-else @click="openPicker")
-        | Select Armor
-      BasicDrawer(ref="equipmentPicker" title="Weapons")
+      BasicButton.mx-auto.block(
+        v-else
+        priority="secondary"
+        @click="openPicker"
+      ) Select Armor
+      BasicDrawer(ref="equipmentPicker" title="Armor")
         InventoryEquipmentPicker(
           :type="type"
           :character="character"
