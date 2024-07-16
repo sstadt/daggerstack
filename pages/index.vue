@@ -23,7 +23,7 @@
                 BasicButton(size="lg") Log In
             NuxtLink.inline-block(v-else to="/character")
               BasicButton(size="lg") Character List
-        a.mt-6.inline-block.text-lg.uppercase.font-bold(href="https://discord.gg/qPDntvtaNx" target="_blank")
+        a.mt-6.inline-block.text-lg.uppercase.font-bold(:href="discordLink" target="_blank")
           span Join the discussion
           NuxtIcon.ml-2.text-3xl(name="discord")
 </template>
@@ -31,6 +31,8 @@
 <script>
   import desktopImage from '~/assets/images/party-desktop.jpeg';
   import mobileImage from '~/assets/images/party-mobile.jpeg';
+
+  import { DISCORD_INVITE_URL } from '~/config/app';
 
   import GENERAL from '~/data/general';
 
@@ -41,6 +43,7 @@
         desktopImage,
         mobileImage,
         characterVersion: GENERAL.currentCharacterVersion,
+        discordLink: DISCORD_INVITE_URL,
       };
     },
     setup() {

@@ -1,7 +1,18 @@
 <template lang="pug">
-  .hero.mx-auto.h-screen.relative(class="md:h-min")
-    img.object-cover.w-full.h-full(:src="smallImage" class="md:hidden")
-    img.object-cover.w-full.h-full(:src="largeImage" class="hidden md:block")
+  .hero.mx-auto.relative.w-full
+    .hero__image.w-full.h-screen.overflow-hidden(class="md:h-min")
+      img.object-cover.w-full.h-full(
+        :src="smallImage"
+        class="md:hidden"
+        height="1280"
+        width="720"
+      )
+      img.object-cover.w-full.h-full(
+        :src="largeImage"
+        class="hidden md:block"
+        height="1200"
+        width="675"
+      )
     slot
 </template>
 
@@ -28,11 +39,18 @@
         return this.mq.smMinus ? this.smallImage : this.largeImage;
       },
     },
+    mounted() {
+      console.log(this.largeImage);
+    },
   };
 </script>
 
 <style lang="scss" scoped>
-  .hero {
-    max-width: 1200px;
+  @use '~/styles/media.scss';
+
+  .hero__image {
+    @include media.desktop-up {
+      height: 60vh;
+    }
   }
 </style>

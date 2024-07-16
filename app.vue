@@ -8,6 +8,7 @@
     Transition(name="slide-fade-top")
       NavTopbar(v-if="$route.name !== 'index'")
     NuxtPage
+    NavFooter
     BasicToast
 </template>
 
@@ -50,7 +51,8 @@
     h6 &,
     p &,
     a &,
-    button & {
+    button &,
+    li & {
       vertical-align: middle;
     }
   }
