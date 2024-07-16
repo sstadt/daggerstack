@@ -2,12 +2,8 @@
   BasicCard(title="Gold")
     .flex.justify-center
       .mt-6(class="lg:flex max-md:space-y-2")
-        .flex.space-x-2.items-center(
-          class="lg:flex-col lg:items-start"
-        )
-          h3.uppercase.text-sm.text-center.font-bold(
-            class="max-md:w-20 max-md:text-right lg:ml-10"
-          ) handfuls
+        .flex.flex-col.items-start.space-x-2
+          h3.uppercase.text-sm.font-bold.ml-10 handfuls
           .flex.items-center
             BasicButton.flex.mr-1(
               size="xs"
@@ -21,12 +17,8 @@
               :max="maxHandfuls"
               class="py-1.5 pl-1.5"
             )
-        .flex.space-x-2.items-center(
-          class="lg:flex-col lg:items-start"
-        )
-          h3.uppercase.text-sm.text-center.font-bold(
-            class="max-md:w-20 max-md:text-right lg:ml-10"
-          ) bags
+        .flex.flex-col.items-start.space-x-2
+          h3.uppercase.text-sm.font-bold.ml-10 bags
           .flex.items-center
             BasicButton.flex.mr-1(
               size="xs"
@@ -40,13 +32,9 @@
               :max="maxBags"
               class="py-1.5 pl-1.5"
             )
-        .flex.space-x-2.items-center(
-          class="lg:flex-col lg:items-start"
-        )
-          h3.uppercase.text-sm.text-center.font-bold.text-right(
-            class="max-md:w-20 lg:ml-2"
-          ) chest
-          .flex
+        .flex.flex-col.items-start(class="lg:space-x-2")
+          h3.uppercase.text-sm.font-bold.ml-10(class="lg:ml-0") chest
+          .flex.ml-10
             InputCheckboxCounter.bg-amber-500.pr-01(
               :key="`${key}-chest`"
               v-model="chest"
