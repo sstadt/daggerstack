@@ -5,24 +5,40 @@
         .flex.space-x-2.items-center(
           class="lg:flex-col lg:items-start"
         )
-          h3.uppercase.text-sm.text-center.font-bold.text-right(
-            class="max-md:w-20 lg:ml-2"
+          h3.uppercase.text-sm.text-center.font-bold(
+            class="max-md:w-20 max-md:text-right lg:ml-10"
           ) handfuls
-          .flex
-            InputCheckboxCounter.bg-amber-300.p-1.pr-0(
+          .flex.items-center
+            BasicButton.flex.mr-1(
+              size="xs"
+              :disabled="handful < 1 && bag < 1 && this.chest < 1"
+              @click="decrement('handful')"
+            )
+              NuxtIcon(name="minus")
+            InputCheckboxCounter.bg-amber-300.pr-1(
+              :key="`${key}-handful`"
               v-model="handful"
               :max="maxHandfuls"
+              class="py-1.5 pl-1.5"
             )
         .flex.space-x-2.items-center(
           class="lg:flex-col lg:items-start"
         )
-          h3.uppercase.text-sm.text-center.font-bold.text-right(
-            class="max-md:w-20 lg:ml-2"
+          h3.uppercase.text-sm.text-center.font-bold(
+            class="max-md:w-20 max-md:text-right lg:ml-10"
           ) bags
-          .flex
-            InputCheckboxCounter.bg-amber-400.p-1.pr-0(
+          .flex.items-center
+            BasicButton.flex.mr-1(
+              size="xs"
+              :disabled="bag < 1 && chest < 1"
+              @click="decrement('bag')"
+            )
+              NuxtIcon(name="minus")
+            InputCheckboxCounter.bg-amber-400.pr-1(
+              :key="`${key}-bag`"
               v-model="bag"
               :max="maxBags"
+              class="py-1.5 pl-1.5"
             )
         .flex.space-x-2.items-center(
           class="lg:flex-col lg:items-start"
@@ -31,9 +47,11 @@
             class="max-md:w-20 lg:ml-2"
           ) chest
           .flex
-            InputCheckboxCounter.bg-amber-500.p-1.pr-0(
+            InputCheckboxCounter.bg-amber-500.pr-01(
+              :key="`${key}-chest`"
               v-model="chest"
               :max="maxChests"
+              class="py-1.5 pl-1.5"
             )
 </template>
 
@@ -41,6 +59,7 @@
   import { useCharactersStore } from '~/stores/characters';
 
   import GENERAL from '~/data/general';
+  import { debounce, uuidv4 } from '~/helpers/utility';
 
   export default {
     name: 'SheetGold',
@@ -52,6 +71,7 @@
     },
     data() {
       return {
+        key: uuidv4(),
         handful: this.character.inventory.gold.handful,
         maxHandfuls: GENERAL.gold.maxHandfuls,
         bag: this.character.inventory.gold.bag,
@@ -66,26 +86,58 @@
       return { charactersStore };
     },
     methods: {
-      updateGold() {
+      decrement(type) {
+        if (type === 'handful') {
+          if (this.handful > 0) {
+            this.handful = this.handful - 1;
+          } else if (this.handful < 1 && this.bag > 0) {
+            this.bag = this.bag - 1;
+            this.handful = this.maxHandfuls - 1;
+          } else if (this.handful < 1 && this.bag < 1 && this.chest > 0) {
+            this.handful = this.maxHandfuls - 1;
+            this.bag = this.maxBags - 1;
+            this.chest = this.chest - 1;
+          }
+        } else if (type === 'bag') {
+          if (this.bag > 0) {
+            this.bag = this.bag - 1;
+          } else if (this.bag < 1 && this.chest > 0) {
+            this.chest = this.chest - 1;
+            this.bag = this.maxBags - 1;
+          }
+        }
+      },
+      updateGold: debounce(function () {
         const gold = {
           handful: this.handful,
           bag: this.bag,
           chest: this.chest,
         };
 
+        this.key = uuidv4();
         this.character.inventory.gold = gold;
         this.charactersStore.saveCharacter(this.character);
-      },
+      }, 100),
     },
     watch: {
       handful(newVal, oldVal) {
-        if (newVal !== oldVal && newVal <= this.maxHandfuls) {
-          this.updateGold();
+        if (newVal !== oldVal) {
+          if (newVal < this.maxHandfuls) {
+            this.updateGold();
+          } else {
+            this.handful = 0;
+            this.bag = this.bag + 1;
+          }
         }
       },
       bag(newVal, oldVal) {
-        if (newVal !== oldVal && newVal <= this.maxBags) {
-          this.updateGold();
+        if (this.chest < this.maxChests) {
+          if (newVal >= this.maxBags && this.chest < this.maxChests) {
+            this.bag = 0;
+            this.chest = this.chest + 1;
+          } else if (newVal !== oldVal) {
+            this.updateGold();
+          }
         }
       },
       chest(newVal, oldVal) {
