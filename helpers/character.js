@@ -250,7 +250,7 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
     ? WEAPONS.items.find((w) => w.name === character.equipment.secondaryWeapon.name)
     : null;
   const burden = respectBurden(character) && character.equipment
-    ? primaryWeapon.burden + secondaryWeapon.burden
+    ? (primaryWeapon?.burden || 0) + (secondaryWeapon?.burden || 0)
     : 0;
   const subclasses = character.subclass
     ? character.subclass.map((characterSubclass) => {

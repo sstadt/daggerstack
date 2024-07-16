@@ -10,7 +10,9 @@
         :style="domainsStyle"
       )
         NuxtIcon(v-for="domain in domains" :name="domain")
-      h1.font-bold.text-4xl.uppercase.truncate {{ character.name }} <span v-if="mq.mdPlus">({{ character.pronouns }})</span>
+      h1.font-bold.text-4xl.uppercase.truncate(
+        v-resize-text="{ ratio: 1.5, maxFontSize: '36px' }"
+      ) {{ character.name }} <span v-if="mq.mdPlus">({{ character.pronouns }})</span>
       p.sheet-header__details.text-slate-300.flex
         span.text-lg Level {{ character.level }} {{ classLabel }}
         span.ml-auto(v-if="mq.sm") {{ character.pronouns }}
