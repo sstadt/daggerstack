@@ -15,18 +15,18 @@
 
 <script>
   // Weapons expect (one per line):
-  // Name       | trait   | range | damage | damage type | Burden     | Feature  | Tier
-  // Broadsword | Agility | Melee | d8     | (Phy)       | One-Handed | Reliable | 0
+  // Name       | trait   | range | damage | damage type | Burden     | Feature
+  // Broadsword | Agility | Melee | d8     | (Phy)       | One-Handed | Reliable
 
   // Armor expects (one per line):
-  // Name           | Score | Feature  | Tier
-  // Gambeson Armor | 2     | Flexible | 0
+  // Name           | Score | Feature
+  // Gambeson Armor | 2     | Flexible
 
   export default {
     name: 'Dev',
     asyncData({ isDev, redirect }) {
       if (!isDev) {
-        redirect({ name: '/' });
+        redirect('/');
       }
     },
     data() {

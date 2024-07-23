@@ -49,7 +49,6 @@
   import CLASSES from '~/data/classes';
 
   import { ucFirst, titleCase } from '~/helpers/string';
-  import { clone } from '~/helpers/utility';
 
   export default {
     name: 'SheetHeader',
