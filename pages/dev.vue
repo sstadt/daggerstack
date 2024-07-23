@@ -2,7 +2,7 @@
   .max-w-5xl.container.flex.space-x-2.py-6
     .flex-shrink-0(class="w-4/5")
       .space-y-2
-        InputSelect(v-model="slot" :options="slots" required)
+        InputSelect(v-model="slot" :options="slots" label="slot" required)
         InputCounter(v-model="tier" :min="0" :max="3" label="Tier")
         .flex.space-x-2
           BasicButton(@click="parseWeapons") Parse Weapons

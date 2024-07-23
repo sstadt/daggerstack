@@ -4,14 +4,14 @@
       :class="{ 'container': mq.lgPlus }"
       @click="openDrawer"
     )
-      .sheet-header__domain-icons.flex.absolute.opacity-20.pointer-events-none(
+      .sheet-header__domain-icons.flex.absolute.opacity-20.pointer-events-none.-translate-y-8(
         class="left-1/2 -translate-x-1/2 md:left-auto md:right-0 md:translate-x-0 md:-translate-y-8 lg:-translate-x-1/2 lg:translate-y-0"
         :class="domainsClass"
         :style="domainsStyle"
       )
         NuxtIcon(v-for="domain in domains" :name="domain")
       h1.font-bold.text-4xl.uppercase.truncate(
-        v-resize-text="{ ratio: 1.5, maxFontSize: '36px' }"
+        v-resize-text="{ ratio: 0.8, maxFontSize: '36px' }"
       ) {{ character.name }} <span v-if="mq.mdPlus">({{ character.pronouns }})</span>
       p.sheet-header__details.text-slate-300.flex
         span.text-lg Level {{ character.level }} {{ classLabel }}

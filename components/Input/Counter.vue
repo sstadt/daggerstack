@@ -1,18 +1,23 @@
 <template lang="pug">
-  .flex
-    label.text-xl.mr-4(v-if="label") {{ label }}
-    .input--counter.flex.items-center.space-x-2
-      BasicButton.flex(
-        size="xs"
+  .input--counter.inline-block
+    label.uppercase.font-bold.text-slate-500(
+      v-if="label"
+      :class="{ 'sr-only': hideLabel }"
+    ) {{ label }}
+    .flex.items-stretch.divide-x.divide-slate-150.border.bg-slate-100
+      button.flex.justify-center.items-center.px-3.transition-colors.text-violet-800(
+        class="hover:bg-violet-800 hover:text-white"
+        :class="{ 'opacity-30 pointer-events-none': decrementDisabled }"
         :disabled="decrementDisabled"
         @click="decrement"
       )
         NuxtIcon(name="minus")
-      p.text-xl.font-bold
+      p.px-3.py-2.text-xl
         span(v-if="modifier") +
         | {{ modelValue }}
-      BasicButton.flex(
-        size="xs"
+      button.flex.justify-center.items-center.px-3.transition-colors.text-violet-800(
+        class="hover:bg-violet-800 hover:text-white"
+        :class="{ 'opacity-30 pointer-events-none': incrementDisabled }"
         :disabled="incrementDisabled"
         @click="increment"
       )
