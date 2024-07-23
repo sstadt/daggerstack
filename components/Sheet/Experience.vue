@@ -5,20 +5,25 @@
     )
       p {{ experience.name }}
       p +{{ experience.score }}
-    InputCheckboxCounter.pt-4(
+    InputCheckboxCounter.py-4(
       label="hope"
       helper-text="Spend hope to use experience or help an ally"
       v-model="hope"
       :max="maxHope"
     )
+    p(v-if="baseClass")
+      strong {{ ucFirst(character.baseClass) }}'s Hope:
+      |  {{ baseClass.hopeAbility }}
 </template>
 
 <script>
   import { useCharactersStore } from '~/stores/characters';
 
   import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
+  import { ucFirst } from '~/helpers/string';
 
   import GENERAL from '~/data/general';
+  import CLASSES from '~/data/classes';
 
   export default {
     name: 'SheetExperience',
@@ -39,6 +44,11 @@
       return { charactersStore };
     },
     computed: {
+      baseClass() {
+        return this.character.baseClass
+          ? CLASSES[this.character.baseClass]
+          : null;
+      },
       maxHope() {
         const base = GENERAL.maxHope;
         const modifiers = this.character.companion.name
@@ -73,6 +83,9 @@
           return experience;
         });
       },
+    },
+    methods: {
+      ucFirst,
     },
     watch: {
       hope(newVal, oldVal) {

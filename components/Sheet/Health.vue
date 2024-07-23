@@ -1,18 +1,19 @@
 <template lang="pug">
   BasicCard.sheet-health(:title="mq.lgPlus ? 'Health' : null")
     .flex.flex-col.items-center.space-y-6.mt-4
-      .flex.items-center.justify-center(class="lg:mt-4")
+      .flex.items-center.justify-center.pb-2(class="lg:mt-4")
         .flex.flex-col.justify-center
-          p.p-4.bg-black.font-bold.text-white.text-center.text-sm.rounded.relative
+          p.px-4.py-3.bg-black.font-bold.text-white.text-center.text-sm.rounded.relative
             span.uppercase Minor
             span.threshold__helper-text.text-slate-500.text-xs.whitespace-nowrap.text-center.absolute(
               class="-translate-x-1/2 translate-y-full bottom-0 left-1/2"
             ) Mark 1 HP
         template(v-for="(threshold, index) in thresholds")
-          p.threshold-value.relative.border-y.border-black.text-lg.py-1.px-2.pl-3.text-center
-            | {{ threshold.score }}
+          p.threshold-value.relative.border-y.border-black.text-lg.text-center(
+            class="px-2.5"
+          ) {{ threshold.score }}
           .flex.flex-col.justify-center
-            p.p-4.pl-7.bg-black.font-bold.text-white.text-center.text-sm.rounded.relative
+            p.px-4.py-3.pl-6.bg-black.font-bold.text-white.text-center.text-sm.rounded.relative
               span.uppercase {{ threshold.name }}
               span.threshold__helper-text.text-slate-500.text-xs.whitespace-nowrap.text-center.absolute(
                 class="-translate-x-1/2 translate-y-full bottom-0 left-1/2"
@@ -163,9 +164,9 @@
     display: block;
     width: 0;
     height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 10px solid black;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid black;
     z-index: 2;
   }
 
@@ -179,9 +180,9 @@
     display: block;
     width: 0;
     height: 0;
-    border-top: 18px solid transparent;
-    border-bottom: 18px solid transparent;
-    border-left: 18px solid white;
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    border-left: 14px solid white;
     z-index: 1;
   }
 
