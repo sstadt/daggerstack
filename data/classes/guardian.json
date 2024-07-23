@@ -88,10 +88,10 @@
         "max": 1
       },
       {
-        "id": "tier-1-minorThreshold",
-        "description": "Increase your Minor Damage Threshold by +1",
+        "id": "tier-1-domainCard",
+        "description": "Choose an additional Domain Card at your level or lower (up to Level 4)",
         "increase": {
-          "minorDamageThreshold": 1
+          "domainCards": 1
         },
         "max": 1
       },
@@ -110,20 +110,6 @@
           "severeDamageThreshold": 1
         },
         "max": 2
-      }
-    ],
-    "entry": [
-      {
-        "description": "Take an additional Experience",
-        "increase": {
-          "newExperience": 1
-        }
-      },
-      {
-        "description": "Your Proficiency increases by +1",
-        "increase": {
-          "proficiency": 1
-        }
       }
     ],
     "always": [
@@ -172,15 +158,15 @@
         "max": 1
       },
       {
-        "id": "tier-2-proficiency",
-        "description": "Increase your Proficiency by +1",
+        "id": "tier-2-domainCard",
+        "description": "Choose an additional Domain Card at your level or lower (up to Level 7)",
         "increase": {
-          "proficiency": 1
+          "domainCards": 1
         },
         "max": 1
       },
       {
-        "id": "tier-2-evasion",
+        "id": "tier-2-armor-evasion",
         "description": "Permanently add two Armor Slots or add +1 to your Evasion",
         "increase": {
           "armorSlot": 2,
@@ -190,9 +176,8 @@
       },
       {
         "id": "tier-2-majorThreshold",
-        "description": "Increase your Minor or Major Damage Threshold by +1",
+        "description": "Increase your Major Damage Threshold by +1",
         "increase": {
-          "minorDamageThreshold": 1,
           "majorDamageThreshold": 1
         },
         "max": 2
@@ -214,26 +199,22 @@
         "max": 1
       },
       {
+        "id": "tier-2-proficiency",
+        "description": "Increase your Proficiency by +1",
+        "increase": {
+          "proficiency": 1
+        },
+        "cost": 2,
+        "max": 2
+      },
+      {
         "id": "tier-2-multiclass",
         "description": "Multiclass: Choose an additional class for your character. This will disable the subclass option for this tier and the multiclass option for all other tiers.",
         "increase": {
           "multiclass": 1
         },
+        "cost": 2,
         "max": 2
-      }
-    ],
-    "entry": [
-      {
-        "description": "Take an additional Experience",
-        "increase": {
-          "newExperience": 1
-        }
-      },
-      {
-        "description": "Your Proficiency increases by +1",
-        "increase": {
-          "proficiency": 1
-        }
       }
     ],
     "always": [
@@ -288,38 +269,37 @@
         "max": 1
       },
       {
-        "id": "tier-3-proficiency",
-        "description": "Increase your Proficiency by +1",
+        "id": "tier-3-domainCard",
+        "description": "Choose an additional Domain Card at your level or lower",
         "increase": {
-          "proficiency": 1
+          "domainCards": 1
         },
         "max": 1
       },
       {
-        "id": "tier-3-evasion",
+        "id": "tier-3-armor-evasion",
         "description": "Permanently add one Armor Slots or add +1 to your Evasion",
         "increase": {
           "armorSlot": 1,
           "evasion": 1
         },
-        "max": 2
+        "max": 1
       },
       {
         "id": "tier-3-majorThreshold",
-        "description": "Increase your Minor or Major Damage Threshold by +1",
+        "description": "Increase your Major Damage Threshold by +2",
         "increase": {
-          "minorDamageThreshold": 1,
-          "majorDamageThreshold": 1
+          "majorDamageThreshold": 2
         },
         "max": 2
       },
       {
         "id": "tier-3-severeThreshold",
-        "description": "Increase your Severe Damage Threshold by +2",
+        "description": "Increase your Severe Damage Threshold by +4",
         "increase": {
-          "severeDamageThreshold": 2
+          "severeDamageThreshold": 4
         },
-        "max": 1
+        "max": 2
       },
       {
         "id": "tier-3-subclass",
@@ -330,26 +310,22 @@
         "max": 1
       },
       {
+        "id": "tier-3-proficiency",
+        "description": "Increase your Proficiency by +1",
+        "increase": {
+          "proficiency": 1
+        },
+        "cost": 2,
+        "max": 2
+      },
+      {
         "id": "tier-3-multiclass",
         "description": "Multiclass: Choose an additional class for your character. This will disable the subclass option for this tier and the multiclass option for all other tiers.",
         "increase": {
           "multiclass": 1
         },
+        "cost": 2,
         "max": 2
-      }
-    ],
-    "entry": [
-      {
-        "description": "Take an additional Experience",
-        "increase": {
-          "newExperience": 1
-        }
-      },
-      {
-        "description": "Your Proficiency increases by +1",
-        "increase": {
-          "proficiency": 1
-        }
       }
     ],
     "always": [
