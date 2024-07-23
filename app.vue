@@ -1,5 +1,5 @@
 <template lang="pug">
-  .app
+  .app.min-h-screen.flex.flex-col
     Head
       Meta(
         name="viewport"
@@ -8,7 +8,7 @@
     Transition(name="slide-fade-top")
       NavTopbar(v-if="$route.name !== 'index'")
     NuxtPage
-    NavFooter
+    NavFooter.mt-auto
     BasicToast
 </template>
 

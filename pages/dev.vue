@@ -3,6 +3,7 @@
     .flex-shrink-0(class="w-4/5")
       .space-y-2
         InputSelect(v-model="slot" :options="slots" required)
+        InputCounter(v-model="tier" :min="0" :max="3" label="Tier")
         .flex.space-x-2
           BasicButton(@click="parseWeapons") Parse Weapons
           BasicButton(@click="parseArmor") Parse Armor
@@ -23,6 +24,11 @@
 
   export default {
     name: 'Dev',
+    asyncData({ isDev, redirect }) {
+      if (!isDev) {
+        redirect({ name: '/' });
+      }
+    },
     data() {
       return {
         input: '',
@@ -32,6 +38,7 @@
           { label: 'Primary', value: 'primary' },
           { label: 'Secondary', value: 'secondary' },
         ],
+        tier: 0,
       };
     },
     setup() {
@@ -55,7 +62,6 @@
             damageType,
             hands,
             feature,
-            tier,
           ] = line.split(' | ');
 
           output.push({
@@ -65,7 +71,7 @@
             range,
             damage,
             damageType: damageType.toLowerCase().includes('phy') ? 'physical' : 'magical',
-            tier: parseInt(tier, 10),
+            tier: parseInt(this.tier, 10),
             burden: hands === 'One-Handed' ? 1 : 2,
             feature: feature === '-' ? null : {
               name: feature.toLowerCase(),
@@ -89,13 +95,12 @@
             name,
             score,
             feature,
-            tier,
           ] = line.split(' | ');
 
           output.push({
             name,
             score: parseInt(score, 10),
-            tier: parseInt(tier, 10),
+            tier: parseInt(this.tier, 10),
             feature: feature === '-' ? null : {
               name: feature.toLowerCase(),
               label: feature,

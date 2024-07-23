@@ -17,6 +17,9 @@ export default defineNuxtConfig({
     '~/plugins/vue3-touch-events',
     '~/plugins/vue3-mq',
   ],
+  ignore: [
+    process.env.ENVIROMENT === 'production' ? 'pages/dev' : '',
+  ],
   modules: [
     'nuxt-icons',
     'nuxt-swiper',
