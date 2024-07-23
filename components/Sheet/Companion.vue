@@ -117,7 +117,7 @@
           experiences.push({
             id: uuidv4(),
             name: null,
-            score: i === 0 ? 2 : 1,
+            score: 2,
           });
         }
       }

@@ -678,7 +678,7 @@
         }
       },
       saveNewTierOptions() {
-        this.addExperience = { id: uuidv4(), score: 1, name: this.newExperience };
+        this.addExperience = { id: uuidv4(), score: 2, name: this.newExperience };
         this.$nextTick(() => this.generateChoicesData());
       },
       saveTierOptions() {

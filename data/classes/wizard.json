@@ -4,7 +4,7 @@
     "major": 7,
     "severe": 12
   },
-  "startingEvasion": 8,
+  "startingEvasion": 10,
   "suggestedTraits": {
     "agility": -1, "strength": 0, "finesse": 0,
     "instinct": 1, "presence": 1, "knowledge": 2

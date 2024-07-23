@@ -21,8 +21,8 @@
         .flex
           InputCounter.mr-2(
             v-model="experience2Score"
-            :min="1"
-            :max="1 + remainingExperience"
+            :min="2"
+            :max="2 + remainingExperience"
             modifier
           )
           InputText.flex-grow(
@@ -110,8 +110,8 @@
       remainingExperience() {
         const totalExperience = this.experience1Score + this.experience2Score;
 
-        // 3 total is base for all characters, so we need to zero that out
-        return 3 - totalExperience + this.bonusExperience;
+        // 4 total is base for all characters, so we need to zero that out
+        return 4 - totalExperience + this.bonusExperience;
       },
     },
     methods: {
