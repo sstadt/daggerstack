@@ -57,7 +57,7 @@
           p {{ evasion }}
         .flex.space-x-2.justify-between.text-xl.py-4.border-b
           p Damage Threshold
-          p {{ threshold.minor }} / {{ threshold.major }} / {{ threshold.severe }}
+          p {{ threshold.major }} / {{ threshold.severe }}
         .flex.space-x-2.justify-between.text-xl.pt-4
           p Hope
           p 2
@@ -194,11 +194,10 @@
       threshold() {
         return this.classData
           ? {
-              minor: this.classData.startingThreshold.minor,
               major: this.classData.startingThreshold.major,
               severe: this.classData.startingThreshold.severe,
             }
-          : { minor: 0, major: 0, severe: 0 };
+          : { major: 0, severe: 0 };
       },
     },
     methods: {

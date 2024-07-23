@@ -1,7 +1,6 @@
 {
   "domains": ["grace", "codex"],
   "startingThreshold": {
-    "minor": 3,
     "major": 8,
     "severe": 13
   },

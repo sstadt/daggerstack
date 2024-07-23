@@ -56,7 +56,6 @@ export const newCharacter = () => {
       slots: 6,
     },
     threshold: {
-      minor: null,
       major: null,
       severe: null,
     },

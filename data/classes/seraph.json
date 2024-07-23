@@ -1,7 +1,6 @@
 {
   "domains": ["splendor", "valor"],
   "startingThreshold": {
-    "minor": 5,
     "major": 10,
     "severe": 15
   },

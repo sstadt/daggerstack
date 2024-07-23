@@ -31,17 +31,14 @@
     {
       "name": "Stalwart",
       "foundation": {
-        "minorDamageThreshold": 1,
         "majorDamageThreshold": 1,
         "severeDamageThreshold": 1
       },
       "specialization": {
-        "minorDamageThreshold": 2,
         "majorDamageThreshold": 2,
         "severeDamageThreshold": 2
       },
       "mastery": {
-        "minorDamageThreshold": 3,
         "majorDamageThreshold": 3,
         "severeDamageThreshold": 3
       }

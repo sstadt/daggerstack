@@ -654,10 +654,6 @@
           case 'proficiency':
             return `Your Proficiency increases by +${choice.value}`;
 
-          // minor threshold
-          case 'minorDamageThreshold':
-            return `Your Minor Damage Threshold increases by +${choice.value}`;
-
           // major threshold
           case 'majorDamageThreshold':
             return `Your Major Damage Threshold increases by +${choice.value}`;

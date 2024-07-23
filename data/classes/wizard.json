@@ -1,7 +1,6 @@
 {
   "domains": ["codex", "splendor"],
   "startingThreshold": {
-    "minor": 2,
     "major": 7,
     "severe": 12
   },

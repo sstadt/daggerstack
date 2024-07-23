@@ -7,7 +7,6 @@ export default {
   armorSlot: 'Armor Slot',
   armorScore: 'Armor Score',
   evasion: 'Evasion',
-  minorDamageThreshold: 'Minor Damage Threshold',
   majorDamageThreshold: 'Major Damage Threshold',
   severeDamageThreshold: 'Severe Damage Threshold',
   newExperience: 'New Experience',

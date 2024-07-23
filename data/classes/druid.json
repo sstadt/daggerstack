@@ -1,7 +1,6 @@
 {
   "domains": ["sage", "arcana"],
   "startingThreshold": {
-    "minor": 3,
     "major": 8,
     "severe": 13
   },
@@ -157,7 +156,6 @@
               "name": "Hollow Bones",
               "description": "You reduce your Damage Thresholds by -2 in this form.",
               "modify": {
-                "minorDamageThreshold": -2,
                 "majorDamageThreshold": -2,
                 "severesDamageThreshold": -2
               }
@@ -189,7 +187,6 @@
               "name": "Hollow Bones",
               "description": "You increase your Damage Thresholds by +2 in this form.",
               "modify": {
-                "minorDamageThreshold": 2,
                 "majorDamageThreshold": 2,
                 "severesDamageThreshold": 2
               }
