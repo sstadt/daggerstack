@@ -1,5 +1,6 @@
 {
   "domains": ["splendor", "valor"],
+  "hopeAbility": "Spend three Hope and either reroll a Prayer Die or refresh one of your used Prayer Dice.",
   "startingThreshold": {
     "major": 10,
     "severe": 15

@@ -1,5 +1,6 @@
 {
   "domains": ["grace", "codex"],
+  "hopeAbility": "When you or an ally Close to you makes a Presence roll and either succeeds with Fear or fails, spend three Hope to negate that roll's consequences by intervening.",
   "startingThreshold": {
     "major": 8,
     "severe": 13

@@ -2,13 +2,21 @@
   BasicCard.sheet-health(:title="mq.lgPlus ? 'Health' : null")
     .flex.flex-col.items-center.space-y-6.mt-4
       .flex.items-center.justify-center(class="lg:mt-4")
+        .flex.flex-col.justify-center
+          p.p-4.bg-black.font-bold.text-white.text-center.text-sm.rounded.relative
+            span.uppercase Minor
+            span.threshold__helper-text.text-slate-500.text-xs.whitespace-nowrap.text-center.absolute(
+              class="-translate-x-1/2 translate-y-full bottom-0 left-1/2"
+            ) Mark 1 HP
         template(v-for="(threshold, index) in thresholds")
-          p.relative.border.border-black.rounded.text-lg.py-1.pr-1.w-12.text-center
+          p.threshold-value.relative.border-y.border-black.text-lg.py-1.px-2.pl-3.text-center
             | {{ threshold.score }}
-            span.threshold__helper-text.absolute.text-slate-500.text-xs.whitespace-nowrap
-              | {{ index + 1 }} HP
-          p.threshold-name.relative.py-1.text-xs.text-white.bg-black.uppercase.font-bold(class="pr-1.5")
-            | {{ threshold.name }}
+          .flex.flex-col.justify-center
+            p.p-4.pl-7.bg-black.font-bold.text-white.text-center.text-sm.rounded.relative
+              span.uppercase {{ threshold.name }}
+              span.threshold__helper-text.text-slate-500.text-xs.whitespace-nowrap.text-center.absolute(
+                class="-translate-x-1/2 translate-y-full bottom-0 left-1/2"
+              ) Mark {{ index + 2 }} HP
       .hit-points
         h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0 HP
         InputCheckboxCounter(v-model="currentHealth" :max="maxHealth" :enabled="healthSlots")
@@ -145,24 +153,41 @@
 </script>
 
 <style lang="scss" scoped>
-  .threshold-name::after {
+  .threshold-value::after {
     content: "";
     pointer-events: none;
     position: absolute;
     top: 50%;
-    left: 0;
-    transform: translate(-100%, -50%);
+    right: 0;
+    transform: translate(100%, -50%);
     display: block;
     width: 0;
     height: 0;
-    border-top: 12px solid transparent;
-    border-bottom: 12px solid transparent;
-    border-right: 12px solid black;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid black;
+    z-index: 2;
   }
 
-  .threshold__helper-text {
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
+  .threshold-value::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(100%, -50%);
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 18px solid transparent;
+    border-bottom: 18px solid transparent;
+    border-left: 18px solid white;
+    z-index: 1;
   }
+
+  // .threshold__helper-text {
+  //   bottom: -20px;
+  //   left: 50%;
+  //   transform: translateX(-50%);
+  // }
 </style>

@@ -1,5 +1,6 @@
 {
   "domains": ["valor", "blade"],
+  "hopeAbility": "Spend three Hope and clear up to three armor slots.",
   "startingThreshold": {
     "major": 9,
     "severe": 18

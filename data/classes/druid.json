@@ -1,5 +1,6 @@
 {
   "domains": ["sage", "arcana"],
+  "hopeAbility": "Spend three Hope while in Beastform to increase your damage thresholds by +3 until you drop the form.",
   "startingThreshold": {
     "major": 8,
     "severe": 13

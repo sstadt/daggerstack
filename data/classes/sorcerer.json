@@ -1,5 +1,6 @@
 {
   "domains": ["arcana", "midnight"],
+  "hopeAbility": "Spend three Hope after a Spellcast Roll to double the result of your Hope Roll.",
   "startingThreshold": {
     "major": 8,
     "severe": 13

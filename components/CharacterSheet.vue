@@ -49,11 +49,11 @@
     .max-w-5xl.container.pb-16(v-else)
       SheetStatistics(:character="character" :key="`${key}-statistics`")
       .flex.space-x-12
-        .space-y-12(class="w-1/3")
+        .space-y-12(class="w-5/12")
           SheetHealth(:character="character" :key="`${key}-health`")
           SheetExperience(:character="character" :key="`${key}-experience`")
           SheetClassFeature(:character="character")
-        .space-y-6(class="w-2/3")
+        .space-y-6(class="w-7/12")
           .flex.space-x-6
             button.uppercase.text-sm.font-bold.transition-colors.border-b-2.text-slate-400(
               v-for="(tab, index) in tabs"

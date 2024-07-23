@@ -1,5 +1,6 @@
 {
   "domains": ["bone", "sage"],
+  "hopeAbility": "Spend three Hope and increase your Evasion by +1 until your nest short rest.",
   "startingThreshold": {
     "major": 9,
     "severe": 14

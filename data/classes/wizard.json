@@ -1,5 +1,6 @@
 {
   "domains": ["codex", "splendor"],
+  "hopeAbility": "Spend three Hope instead of marking your last Hit Point.",
   "startingThreshold": {
     "major": 7,
     "severe": 12

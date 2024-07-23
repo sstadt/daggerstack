@@ -1,5 +1,6 @@
 {
   "domains": ["midnight", "grace"],
+  "hopeAbility": "Spend three Hope to increase your Sneak Attack damage. Until your next short rest, you add 3d6 instead of 1d6 to each Sneak Attack damage roll.",
   "startingThreshold": {
     "major": 9,
     "severe": 14

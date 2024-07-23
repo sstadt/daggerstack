@@ -1,5 +1,6 @@
 {
   "domains": ["blade", "bone"],
+  "hopeAbility": "Spend three Hope to reroll any number of your damage dice on an attack.",
   "startingThreshold": {
     "major": 10,
     "severe": 15
