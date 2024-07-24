@@ -3,7 +3,7 @@
   "items": [
     {
       "name": "Gambeson Armor",
-      "score": 2,
+      "score": 3,
       "tier": 0,
       "feature": {
         "name": "flexible",
@@ -22,7 +22,7 @@
     },
     {
       "name": "Chainmail Armor",
-      "score": 6,
+      "score": 5,
       "tier": 0,
       "feature": {
         "name": "heavy",
@@ -35,7 +35,7 @@
     },
     {
       "name": "Full Plate Armor",
-      "score": 8,
+      "score": 6,
       "tier": 0,
       "feature": {
         "name": "very heavy",
@@ -49,7 +49,7 @@
     },
     {
       "name": "Improved Gambeson Armor",
-      "score": 3,
+      "score": 4,
       "tier": 1,
       "feature": {
         "name": "flexible",
@@ -68,7 +68,7 @@
     },
     {
       "name": "Improved Chainmail Armor",
-      "score": 7,
+      "score": 6,
       "tier": 1,
       "feature": {
         "name": "heavy",
@@ -81,7 +81,7 @@
     },
     {
       "name": "Improved Full Plate Armor",
-      "score": 9,
+      "score": 7,
       "tier": 1,
       "feature": {
         "name": "very heavy",
@@ -161,7 +161,7 @@
     },
     {
       "name": "Advanced Gambeson Armor",
-      "score": 4,
+      "score": 5,
       "tier": 2,
       "feature": {
         "name": "flexible",
@@ -180,18 +180,20 @@
     },
     {
       "name": "Advanced Chainmail Armor",
-      "score": 8,
+      "score": 7,
       "tier": 2,
       "feature": {
         "name": "heavy",
         "label": "Heavy",
-        "description": "",
-        "modify": {}
+        "description": "-1 to Evasion",
+        "modify": {
+          "evasion": -1
+        }
       }
     },
     {
       "name": "Advanced Full Plate Armor",
-      "score": 10,
+      "score": 8,
       "tier": 2,
       "feature": {
         "name": "very heavy",
@@ -259,7 +261,7 @@
       }
     },
     {
-      "name": "Body Runes",
+      "name": "Runes of Fortification",
       "score": 10,
       "tier": 2,
       "feature": {
@@ -271,7 +273,7 @@
     },
     {
       "name": "Legendary Gambeson Armor",
-      "score": 6,
+      "score": 7,
       "tier": 3,
       "feature": {
         "name": "flexible",
@@ -290,7 +292,7 @@
     },
     {
       "name": "Legendary Chainmail Armor",
-      "score": 10,
+      "score": 9,
       "tier": 3,
       "feature": {
         "name": "heavy",
@@ -303,7 +305,7 @@
     },
     {
       "name": "Legendary Full Plate Armor",
-      "score": 12,
+      "score": 10,
       "tier": 3,
       "feature": {
         "name": "very heavy",
