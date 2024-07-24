@@ -54,7 +54,7 @@
                         :min="existingChoices[tier - 1][index]"
                         :max="upgrade.max"
                         :enabled="getChoicesAvailable(tier, index, upgrade)"
-                        :increment="upgrade.increase.multiclass ? 2 : 1"
+                        :increment="upgrade.cost ? upgrade.cost : 1"
                       )
                     .flex-grow.space-y-2
                       p {{ upgrade.description }}
@@ -251,10 +251,16 @@
         return !this.showNewTierOptions && !this.acceptTierChoices && this.loaded;
       },
       tierSelectionsFull() {
-        return Boolean(
-          this.choicesMade.length === 2 ||
-          this.choicesMade.find((choice) => choice.type === 'multiclass')
-        );
+        if (this.choicesMade.length === 2) return true;
+
+        const [ firstChoice ] = this.choicesMade;
+
+        if (!firstChoice) return false;
+
+        const [ _, tier ] = firstChoice.id.split('-');
+        const upgrade = this.levelingData[`tier${tier}`].upgrades.find((u) => u.id === firstChoice.id);
+
+        return upgrade.cost > 1;
       },
       showConfirmLevel() {
         return this.acceptTierChoices && this.loaded;
@@ -359,20 +365,25 @@
                   }
                 // single option upgrades
                 } else if (upgradeOptions.length === 1) {
-                  selections.push(newUpgrade({
-                    id: upgrade.id,
-                    level: this.newLevel,
-                    type: firstOption,
-                    value: upgrade.increase[firstOption],
-                  }));
-                // choice upgrades
-                } else if (upgradeOptions.length > 1) {
-                  if (this.tierOptionSelections[tierIndex][choiceIndex][choice - 1]) {
+                  // short circuit if this is already in the selections (used for items that cost both upgrade points)
+                  if (!selections.find((selection) => selection.id === upgrade.id)) {
                     selections.push(newUpgrade({
                       id: upgrade.id,
                       level: this.newLevel,
-                      type: this.tierOptionSelections[tierIndex][choiceIndex][choice - 1],
+                      type: firstOption,
                       value: upgrade.increase[firstOption],
+                    }));
+                  }
+                // choice upgrades
+                } else if (upgradeOptions.length > 1) {
+                  if (this.tierOptionSelections[tierIndex][choiceIndex][choice - 1]) {
+                    const type = this.tierOptionSelections[tierIndex][choiceIndex][choice - 1];
+
+                    selections.push(newUpgrade({
+                      id: upgrade.id,
+                      level: this.newLevel,
+                      type,
+                      value: upgrade.increase[type],
                     }));
                   }
                 }
@@ -492,6 +503,15 @@
           if (sameTierMulticlass) return 0;
         }
 
+        // additional upgrades that cost more than 1 point (i.e. proficiency)
+        if (upgrade.cost && upgrade.cost > 1) {
+          const purchasedUpgrade = this.character.levelSelections.find((selection) => {
+            return selection.id === upgrade.id;
+          });
+
+          if (purchasedUpgrade || this.choicesRemaining < 2) return 0;
+        }
+
         // for all other selections, we only need to check against number of leveling selections
         // NOTE: returning 0 here prevents this option from being selectable when leveling up
         return this.tierEnabled[tier]
@@ -541,7 +561,7 @@
 
         this.levelingData.tier2.upgrades
           .forEach((upgrade) => {
-            const numExisting = upgrade.id === 'tier-2-multiclass' && this.character.levelSelections.find((s) => s.id === upgrade.id)
+            const numExisting = upgrade.cost > 1 && this.character.levelSelections.find((s) => s.id === upgrade.id)
               ? 2
               : this.character.levelSelections.filter((s) => s.id === upgrade.id).length;
             const options = getOptionsByUpgrade(upgrade, this.character);
@@ -566,7 +586,7 @@
 
         this.levelingData.tier3.upgrades
           .forEach((upgrade) => {
-            const numExisting = upgrade.id === 'tier-3-multiclass' && this.character.levelSelections.find((s) => s.id === upgrade.id)
+            const numExisting = upgrade.cost > 1 && this.character.levelSelections.find((s) => s.id === upgrade.id)
               ? 2
               : this.character.levelSelections.filter((s) => s.id === upgrade.id).length;
             const options = getOptionsByUpgrade(upgrade, this.character);
@@ -661,6 +681,13 @@
           // severe threshold
           case 'severeDamageThreshold':
             return `Your Severe Damage Threshold increases by +${choice.value}`;
+
+          case 'domainCards':
+            const [ _, tier ] = choice.id.split('-');
+            const upgrade = this.levelingData[`tier${tier}`].upgrades
+              .find((u) => u.id === choice.id);
+
+            return upgrade.description;
 
           // subclass
           case 'subclass':
