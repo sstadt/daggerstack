@@ -1451,7 +1451,7 @@
       }
     },
     {
-      "name": "Body Runes",
+      "name": "Runes of Ruination",
       "slot": "primary",
       "trait": "Knowledge",
       "range": "Very Close",
@@ -1804,7 +1804,7 @@
       "feature": {
         "name": "serrated",
         "label": "Serrated",
-        "description": "Any 1's rolled on the damage dice count as 11 points of damage",
+        "description": "Any 1's rolled on the damage dice count as 10 points of damage",
         "modify": {}
       }
     },
