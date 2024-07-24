@@ -31,7 +31,7 @@
     ]
   },
   {
-    "name": "Daemon",
+    "name": "Inferis",
     "description": "Those of the Daemon ancestry are the humanoid descendants of the Fallen Gods, who possess sharp canines, pointed ears, and horns that come in a variety of styles",
     "features": [
       {
@@ -54,7 +54,7 @@
       },
       {
         "name": "Thick Skin",
-        "description": "Add half the value of your proficiency to your Minot Threshold (rounded up)."
+        "description": "When taking minor damage, roll **1d6**. On a **5+**, you take no damage instead."
       }
     ]
   },
@@ -71,7 +71,7 @@
       },
       {
         "name": "Reach",
-        "description": "Treat any weapon, ability, or spell that has Melee range as though it has very close range instead."
+        "description": "Treat any weapon, feature, ability, or spell that has Melee range as though it has very close range instead."
       }
     ]
   },
@@ -112,7 +112,7 @@
     "features": [
       {
         "name": "Sturdy",
-        "description": "When you use armor, roll a number of **d6** equal to the armor slots you should mark. For every result of **6**, don't mark an armor slot."
+        "description": "When you have one hit point remaining, your armor score is doubled."
       },
       {
         "name": "Tusks",
@@ -145,15 +145,16 @@
     ],
     "features": [
       {
-        "name": "Elemental Breath",
-        "description": "Choose an element for your breath (ice, fire, electricity, etc.). You can use this breath weapon against a target or group of targets within Very Close range, treating it as an Instinct weapon that deals **d8** magic damage using your Proficiency."
-      },
-      {
         "name": "Scales",
         "description": "Your natural scales act as protection, increasing your Armor Score by +1.",
         "modify": {
-          "armorScore": 1
+          "majorDamageThreshold": 1,
+          "severeDamageThreshold": 1
         }
+      },
+      {
+        "name": "Elemental Breath",
+        "description": "Choose an element for your breath (ice, fire, electricity, etc.). You can use this breath weapon against a target or group of targets within Very Close range, treating it as an Instinct weapon that deals **d8** magic damage using your Proficiency."
       }
     ]
   },
@@ -163,7 +164,7 @@
     "features": [
       {
         "name": "Feline Instinct",
-        "description": "When you make an Agility roll, you can mark a **Sress** to reroll your Hope Die. You must take the new result."
+        "description": "When you make an Agility roll, you can mark a **Stress** to reroll your Hope Die. You must take the new result."
       },
       {
         "name": "Retracting Claws",
