@@ -22,10 +22,6 @@
         type: String,
         default: null,
       },
-      expand: {
-        type: Boolean,
-        default: false,
-      },
     },
   };
 </script>

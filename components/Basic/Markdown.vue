@@ -22,9 +22,27 @@
       },
     },
     setup() {
-      const markdown = new MarkdownIt().use(MarkdownItAttrs);
+      const markdown = new MarkdownIt().use(MarkdownItAttrs, {
+        allowedAttributes: ['id', 'class'],
+      });
 
       return { markdown };
     },
   };
 </script>
+
+<style lang="scss" scoped>
+  .md {
+    &:deep(ul) {
+      display: block;
+      list-style: disc outside none;
+      margin: 1em 0;
+      padding: 0 0 0 15px;
+    }
+
+    &:deep(li) {
+      display: list-item;
+      padding-left: 6px;
+    }
+  }
+</style>

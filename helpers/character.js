@@ -182,6 +182,19 @@ export const newUpgrade = ({ id, level, type, value, options }) => {
 };
 
 /**
+ * Determine the current tier of a character
+ *
+ * @param {Object} character The character to find tier for
+ * @returns The tier the character currently is, Integer from 1 to 4
+ */
+export const getCharacterTier = (character) => {
+  if (character.level > 7) return 4;
+  if (character.level > 4) return 3;
+  if (character.level > 1) return 2;
+  return 1;
+};
+
+/**
  * Determine if a character should respect burden when calculating equipment
  * bonuses
  *

@@ -43,12 +43,12 @@
     },
     {
       "name": "Beastform",
-      "description": "Mark a Stress to transform into a magical creature of your level or lower from the Beastform list. While transformed, you can't use your equipment or cast any spells, but you gain the features, attack trait, and armor score of the creature. You can drop out of this form at any time. When you do, your used armor slots remain marked.\n\nIf you mark your last Hit Point or Stress Point, this form automatically drops."
+      "description": "Mark a Stress to transform into a magical creature of your level or lower from the Beastform list. While transformed, you can't use your weapons or cast any spells, but you gain the features, attack trait, and evasion bonus of the creature. You can drop out of this form at any time. When in Beastform, your armor becomes part of your body and you mark armor slots as usual; when you drop out of Beastform, those marked armor slots remain marked.\n\nIf you mark your last Hit Point or Stress, this form automatically drops."
     }
   ],
   "alternateForms": [
     {
-      "level": 1,
+      "tier": 1,
       "forms": [
         {
           "name": "Agile Scout",
@@ -61,7 +61,6 @@
           "knowledge": 0,
           "attack": "d4 (phy)",
           "evasion": 2,
-          "armor": 3,
           "features": [
             {
               "name": "Take advantage on",
@@ -78,6 +77,54 @@
           ]
         },
         {
+          "name": "Household Friend",
+          "examples": ["Dog", "Cat", "Rabbit"],
+          "agility": 0,
+          "strength": 0,
+          "finesse": 0,
+          "instinct": 1,
+          "presence": 0,
+          "knowledge": 0,
+          "attack": "d6 (phy)",
+          "evasion": 2,
+          "features": [
+            {
+              "name": "Take advantage on",
+              "description": "Climb, Locate, Protect"
+            },
+            {
+              "name": "Companion",
+              "description": "When you assist another PC, the advantage die you roll is a **d8**"
+            }
+          ]
+        },
+        {
+          "name": "Nimble Grazer",
+          "examples": ["Deer", "Goat", "Gazelle"],
+          "agility": 1,
+          "strength": 0,
+          "finesse": 0,
+          "instinct": 0,
+          "presence": 0,
+          "knowledge": 0,
+          "attack": "d6 (phy)",
+          "evasion": 3,
+          "features": [
+            {
+              "name": "Take advantage on",
+              "description": "Leap, Sneak, Sprint"
+            },
+            {
+              "name": "Elusive Prey",
+              "description": "When you would be hit by an attack, you may mark Stress and roll 1d4. Add the result to your Evasion for this attack."
+            },
+            {
+              "name": "Fragile",
+              "description": "When you take Major Damage or greater, you drop Beastform."
+            }
+          ]
+        },
+        {
           "name": "Pack Predator",
           "examples": ["Wolf", "Coyote", "Hyena"],
           "agility": 0,
@@ -86,9 +133,8 @@
           "instinct": 0,
           "presence": 0,
           "knowledge": 0,
-          "attack": "d8 (phy)",
+          "attack": "d8+2 (phy)",
           "evasion": 1,
-          "armor": 4,
           "features": [
             {
               "name": "Take advantage on",
@@ -97,6 +143,10 @@
             {
               "name": "Pack Hunting",
               "description": "When you make an attack on the same target as an ally right before you, add an additional **d8** to your damage dice pool."
+            },
+            {
+              "name": "Hobbling Strike",
+              "description": "When you hit with a melee attack, you may mark a Stress to make the target temporarily Vulnerable."
             }
           ]
         },
@@ -111,7 +161,6 @@
           "knowledge": 0,
           "attack": "d4 (phy)",
           "evasion": 2,
-          "armor": 2,
           "features": [
             {
               "name": "Take advantage on",
@@ -126,40 +175,61 @@
               "description": "When you take Major Damage or greater, you drop Beastform."
             }
           ]
-        }
-      ]
-    },
-    {
-      "level": 2,
-      "forms": [
+        },
         {
-          "name": "Winged Beast",
-          "examples": ["Raven", "Hawk", "Owl"],
+          "name": "Stalking Arachnid",
+          "examples": ["Tarantula", "Wolf Spider"],
           "agility": 0,
           "strength": 0,
           "finesse": 1,
           "instinct": 0,
           "presence": 0,
           "knowledge": 0,
-          "attack": "d4 (phy)",
-          "evasion": 3,
-          "armor": 3,
+          "attack": "d6+1 (phy)",
+          "evasion": 2,
           "features": [
             {
               "name": "Take advantage on",
-              "description": "Locate, Dodge, Deceive"
+              "description": "Attack, Climb, Sneak"
             },
             {
-              "name": "Bird's Eye View",
-              "description": "You can fly at will while in this form. When you are flying and look down at the landscape below in an attempt to understand a situation better, make an action roll. On a success, you gain new, useful information here. Take a **d6** bonus die you may use or give to an ally to add to their action roll when acting on this information."
+              "name": "Webslinger",
+              "description": "You have the ability to create strong web material that can be useful in both adventuring and battle. It is resilient enough to support a single creature. You may make a target within Close range Restrained by making a successful Finesse roll against them."
             },
             {
-              "name": "Hollow Bones",
-              "description": "You reduce your Damage Thresholds by -2 in this form.",
-              "modify": {
-                "majorDamageThreshold": -2,
-                "severesDamageThreshold": -2
-              }
+              "name": "Venomous Bite",
+              "description": "When you hit with a melee attack, the target becomes temporarily Envenomated. An Envenomated creature takes 1d10 phy direct damage each time they act. This condition cannot stack."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "forms": [
+        {
+          "name": "Armored Sentinel",
+          "examples": ["Armadillo", "Pangolin", "Turtle"],
+          "agility": 0,
+          "strength": 1,
+          "finesse": 0,
+          "instinct": 0,
+          "presence": 0,
+          "knowledge": 0,
+          "attack": "d8+2 (phy)",
+          "evasion": 1,
+          "features": [
+            {
+              "name": "Take advantage on",
+              "description": "Dig, Protect, Locate"
+            },
+            {
+              "name": "Armored Shell",
+              "description": "You have resistance to physical damage. You may also mark an armor slot to tuck into your armor. If you do, physical damage is also reduced by your armor score (after being halved), but you can't perform any other action except moving without leaving this form."
+            },
+            {
+              "name": "Cannon Ball",
+              "description": "You can mark stress to be thrown or launched at an opponent. An ally makes an attack roll with Agility or Strength against a target within Close range. On a success, deal **d12+2** damage using the thrower's proficiency. If there is another enemy very close to the target, on a success you can also spend a Hope to ricochet off the first enemy and hit the second for half damage."
             }
           ]
         },
@@ -172,9 +242,8 @@
           "instinct": 0,
           "presence": 0,
           "knowledge": 0,
-          "attack": "d10 (phy)",
-          "evasion": 0,
-          "armor": 6,
+          "attack": "d10+4 (phy)",
+          "evasion": 3,
           "features": [
             {
               "name": "Take advantage on",
@@ -182,10 +251,10 @@
             },
             {
               "name": "Rampage",
-              "description": "When you are rolling damage from an attack, for every 6 you roll you may roll another **d6** and add it to your damage roll. Before making an Attack roll, you can take a Stress to gain +1 Proficiency to the attack."
+              "description": "When you are rolling damage from an attack, for every 1 you roll you may roll another **d10** and add it to your damage roll. Before making an Attack roll, you can mark a Stress to gain +1 Proficiency to the attack."
             },
             {
-              "name": "Hollow Bones",
+              "name": "Thick Hide",
               "description": "You increase your Damage Thresholds by +2 in this form.",
               "modify": {
                 "majorDamageThreshold": 2,
@@ -193,12 +262,172 @@
               }
             }
           ]
+        },
+        {
+          "name": "Mighty Strider",
+          "examples": ["Camel", "Horse", "Zebra"],
+          "agility": 1,
+          "strength": 0,
+          "finesse": 0,
+          "instinct": 0,
+          "presence": 0,
+          "knowledge": 0,
+          "attack": "d8+1 (phy)",
+          "evasion": 2,
+          "features": [
+            {
+              "name": "Take advantage on",
+              "description": "Leap, Navigate, Sprint"
+            },
+            {
+              "name": "Carrier",
+              "description": "You can carry up to 2 willing allies with you when you move."
+            },
+            {
+              "name": "Trample",
+              "description": "You may mark a Stress to move up to Close range in a straight line and make a melee attack against every target you pass in that movement. Each target hit takes d8+1 (phy) damage using your proficiency and is knocked down, becoming temporarily Vulnerable."
+            }
+          ]
+        },
+        {
+          "name": "Striking Serpent",
+          "examples": ["Viper", "Cobra", "Rattlesnake"],
+          "agility": 0,
+          "strength": 0,
+          "finesse": 1,
+          "instinct": 0,
+          "presence": 0,
+          "knowledge": 0,
+          "attack": "d8+4 (phy)",
+          "evasion": 2,
+          "features": [
+            {
+              "name": "Take advantage on",
+              "description": "Attack, Climb, Deceive"
+            },
+            {
+              "name": "Venomous Strike",
+              "description": "Strike out at any targets within Very Close range. Any you are successful against are temporarily Envenomated. An Envenomated creature takes 1d10 phy direct damage each time they act. This condition cannot stack."
+            }
+          ]
+        },
+        {
+          "name": "Pouncing Predator",
+          "examples": ["Cheetach", "Lion", "Panther"],
+          "agility": 0,
+          "strength": 0,
+          "finesse": 0,
+          "instinct": 1,
+          "presence": 0,
+          "knowledge": 0,
+          "attack": "d8+6 (phy)",
+          "evasion": 3,
+          "features": [
+            {
+              "name": "Take advantage on",
+              "description": "Attack, Climb, Sneak"
+            },
+            {
+              "name": "Fleet",
+              "description": "You can spend Hope to move anywhere within far range without needing to make a check."
+            },
+            {
+              "name": "Takedown",
+              "description": "Mark a Stress to move into melee range with a target and make a basic attack against them. On a success, take +2 proficiency on the damage and cause the target to mark Stress."
+            }
+          ]
+        },
+        {
+          "name": "Winged Beast",
+          "examples": ["Raven", "Hawk", "Owl"],
+          "agility": 0,
+          "strength": 0,
+          "finesse": 1,
+          "instinct": 0,
+          "presence": 0,
+          "knowledge": 0,
+          "attack": "d4+2 (phy)",
+          "evasion": 3,
+          "features": [
+            {
+              "name": "Take advantage on",
+              "description": "Deceive, Locate, Scare"
+            },
+            {
+              "name": "Bird's Eye View",
+              "description": "You can fly at will in this form. When you are flying and look down at the landscape below in an attempt to understand a situation better, make an action roll. On a success, you gain new, useful information here. Take advantage when you or an ally make a roll to act on this information."
+            },
+            {
+              "name": "Hollow Bones",
+              "description": "You reduce your Damage Thresholds by -2 in this form.",
+              "modify": {
+                "majorDamageThreshold": -2,
+                "severeDamageThreshold": -2
+              }
+            }
+          ]
         }
       ]
     },
     {
-      "level": 5,
+      "tier": 3,
       "forms": [
+        {
+          "name": "Great Predator",
+          "examples": ["Dire Wolf", "Sabretooth Tiger", "Raptor"],
+          "agility": 0,
+          "strength": 2,
+          "finesse": 0,
+          "instinct": 0,
+          "presence": 0,
+          "knowledge": 0,
+          "attack": "d12+8 (phy)",
+          "evasion": 2,
+          "features": [
+            {
+              "name": "Take advantage on",
+              "description": "Attack, Sneak, Sprint"
+            },
+            {
+              "name": "Vicious Maul",
+              "description": "When you successfully attack a creature, you can spend a Hope to add +1 to your Proficiency for the attack and make the target temporarily Vulnerable."
+            },
+            {
+              "name": "Carrier",
+              "description": "You are able to carry up to 2 willing allies with you when you move."
+            }
+          ]
+        },
+        {
+          "name": "Mighty Lizard",
+          "examples": ["Alligator", "Crocodile", "Gila Monster"],
+          "agility": 0,
+          "strength": 0,
+          "finesse": 0,
+          "instinct": 2,
+          "presence": 0,
+          "knowledge": 0,
+          "attack": "d10+7 (phy)",
+          "evasion": 1,
+          "features": [
+            {
+              "name": "Take advantage on",
+              "description": "Attack, Track, Sneak"
+            },
+            {
+              "name": "Snapping Strike",
+              "description": "When you hit an opponent with a melee attack, you may spend a Hope to hold that opponent in place with your jaws and make them Restrained and Vulnerable."
+            },
+            {
+              "name": "Physical Defense",
+              "description": "Increase yoru damage thresholds by +3.",
+              "modify": {
+                "majorDamageThreshold": 3,
+                "severeDamageThreshold": 3
+              }
+            }
+          ]
+        },
         {
           "name": "Great Winged Beast",
           "examples": ["Giant Eagle", "Falcon"],
@@ -208,68 +437,34 @@
           "instinct": 0,
           "presence": 0,
           "knowledge": 0,
-          "attack": "d8 (phy)",
+          "attack": "d8+6 (phy)",
           "evasion": 3,
-          "armor": 5,
           "features": [
             {
               "name": "Take advantage on",
-              "description": "Locate, Dodge, Deceive"
+              "description": "Locate, Deceive, Distract"
             },
             {
               "name": "Bird's Eye View",
-              "description": "You can fly at will while in this form. When you are flying and look down at the landscape below in an attempt to understand a situation better, make an action roll. On a success, you gain new, useful information here. Take a **d6** bonus die you may use or give to an ally to add to their action roll when acting on this information."
+              "description": "You can fly at will while in this form. When you are flying and look down at the landscape below in an attempt to understand a situation better, make an action roll. On a success, you gain new, useful information here. Take advantage when you or an ally make a roll to act on this information."
             },
             {
               "name": "Carrier",
-              "description": "You are able to carry 1-2 people and still maintain flight."
+              "description": "You are able to carry up to 2 willing allies with you when you move."
             }
           ]
         },
         {
-          "name": "Speedy Beast",
-          "examples": ["Panther", "Antelope", "Horse"],
-          "agility": 2,
-          "strength": 0,
-          "finesse": 0,
-          "instinct": 0,
-          "presence": 0,
-          "knowledge": 0,
-          "attack": "d8 (phy)",
-          "evasion": 4,
-          "armor": 6,
-          "features": [
-            {
-              "name": "Take advantage on",
-              "description": "Sprint, Dodge, Leap"
-            },
-            {
-              "name": "Charging Speed",
-              "description": "You can move Very Far without having to roll. If you successfully attack a creature after moving Far or more, you can add **2d8** physical damage to the attack."
-            },
-            {
-              "name": "Carrier",
-              "description": "You are able to carry 1-2 people and still maintain speed."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "level": 7,
-      "forms": [
-        {
           "name": "Aquatic Predator",
-          "examples": ["Chark", "Orca"],
+          "examples": ["Dolphin", "Shark", "Orca"],
           "agility": 2,
           "strength": 0,
           "finesse": 0,
           "instinct": 0,
           "presence": 0,
           "knowledge": 0,
-          "attack": "d10 (phy)",
+          "attack": "d10+6 (phy)",
           "evasion": 4,
-          "armor": 5,
           "features": [
             {
               "name": "Take advantage on",
@@ -286,36 +481,41 @@
           ]
         },
         {
-          "name": "Great Predator",
-          "examples": ["Dire Wolf", "Sabretooth Tiger", "Raptor"],
+          "name": "Legendary Beast",
+          "upgradeTier": [1],
+          "damageBonus": 6,
+          "bestTrait": 1,
+          "evasion": 2,
+          "features": [
+            {
+              "name": "Evolved",
+              "description": "Pick a Tier 1 Beastform option and become a larger, more powerful version of that creature. Retain all traits and features, save for the following bonuses:\n\n- Add +6 to your damage rolls in this form.\n\n- Add +1 to the trait increased by this form\n\n- Increase the evasion bonus by +2"
+            }
+          ]
+        },
+        {
+          "name": "Legendary Hybrid",
+          "examples": ["Griffon", "Sphinx"],
           "agility": 0,
           "strength": 2,
           "finesse": 0,
           "instinct": 0,
           "presence": 0,
           "knowledge": 0,
-          "attack": "d12 (phy)",
-          "evasion": 2,
-          "armor": 8,
+          "attack": "d10+8 (phy)",
+          "evasion": 3,
+          "hybrid": 2,
           "features": [
             {
-              "name": "Take advantage on",
-              "description": "Track, Attack, Sneak, Sprint"
-            },
-            {
-              "name": "Vicious Maul",
-              "description": "When you successfully attack a creature, you can spend a Hope to make them temporarily Vulnerable."
-            },
-            {
-              "name": "Carrier",
-              "description": "You are able to carry 1-2 people and still maintain speed."
+              "name": "Hybrid",
+              "description": "Choose any two Beastform options from Tiers 1-3. Take their features and advantages."
             }
           ]
         }
       ]
     },
     {
-      "level": 9,
+      "tier": 4,
       "forms": [
         {
           "name": "Massive Behemoth",
@@ -326,21 +526,139 @@
           "instinct": 0,
           "presence": 0,
           "knowledge": 0,
-          "attack": "d10 (phy)",
+          "attack": "d12+12 (phy)",
           "evasion": 1,
-          "armor": 10,
           "features": [
             {
               "name": "Take advantage on",
-              "description": "Protect, Scare, Damage Terrain"
+              "description": "Locate, Protect, Scare, Sprint"
             },
             {
               "name": "Trample",
-              "description": "You can spend a Hope to move up to Far range in a straight line over smaller creatures and make a melee attack roll. All creatures you passed over who your roll successfully hits take damage."
+              "description": "You can spend a Hope to move up to Far range in a straight line and make a melee attack roll against all creatures you would collide with. Any you are successful against take **d8+10** (phy) damage using your proficiency."
+            },
+            {
+              "name": "Undaunted",
+              "description": "Raise all your damage thresholds by +2.",
+              "modify": {
+                "majorDamageThreashold": 2,
+                "severeDamageThreshold": 2
+              }
             },
             {
               "name": "Mighty Carrier",
-              "description": "You are able to carry 1-4 people and still maintain speed."
+              "description": "You are able to carry up to 4 willing allies with you when you move."
+            }
+          ]
+        },
+        {
+          "name": "Terrible Lizard",
+          "examples": ["Tyrannosaurus", "Brachiosaurus"],
+          "agility": 0,
+          "strength": 3,
+          "finesse": 0,
+          "instinct": 0,
+          "presence": 0,
+          "knowledge": 0,
+          "attack": "d12+10 (phy)",
+          "evasion": 2,
+          "features": [
+            {
+              "name": "Take advantage on",
+              "description": "Attack, Deceive, Scare, Track"
+            },
+            {
+              "name": "Devastating Strikes",
+              "description": "When you deal Severe damage to a target with a melee attack, mark a Stress to make them mark +1 HP."
+            },
+            {
+              "name": "Massive Stride",
+              "description": "ou may move up to a Far distance without rolling and may ignore most rough terrain due to your size."
+            }
+          ]
+        },
+        {
+          "name": "Mythic Aerial Hunter",
+          "examples": ["Dragon", "Pterodactyl", "Roc", "Wyvern"],
+          "agility": 0,
+          "strength": 0,
+          "finesse": 3,
+          "instinct": 0,
+          "presence": 0,
+          "knowledge": 0,
+          "attack": "d10+11 (phy)",
+          "evasion": 4,
+          "features": [
+            {
+              "name": "Take advantage on",
+              "description": "Attack, Deceive, Navigate, Locate"
+            },
+            {
+              "name": "Deadly Raptor",
+              "description": "You can fly at will while in this form and move up to Far range during an action. When you move at least Close range before making an attack and succeed, you may re-roll all damage dice that roll below your Proficiency, taking the new result."
+            },
+            {
+              "name": "Carrier",
+              "description": "You may carry up to 3 willing allies with you when you move."
+            }
+          ]
+        },
+        {
+          "name": "Epic Aquatic Beast",
+          "examples": ["Whale", "Giant Squid"],
+          "agility": 3,
+          "strength": 0,
+          "finesse": 0,
+          "instinct": 0,
+          "presence": 0,
+          "knowledge": 0,
+          "attack": "d10+10 (phy)",
+          "evasion": 3,
+          "features": [
+            {
+              "name": "Take advantage on",
+              "description": "Locate, Procect, Scare, Track"
+            },
+            {
+              "name": "Ocean Master",
+              "description": "You can breathe and move naturally underwater. When you succeed on a Melee attack, you may grapple the target and make them temporarily Restrained."
+            },
+            {
+              "name": "Unyielding",
+              "description": "When you should mark armor slots, roll 1d6 per armor slot marked. For each 5+, don't mark it."
+            }
+          ]
+        },
+        {
+          "name": "Mythic Beast",
+          "upgradeTier": [1, 2],
+          "damageDie": 1,
+          "damageBonus": 9,
+          "bestTrait": 2,
+          "evasion": 3,
+          "features": [
+            {
+              "name": "Evolved",
+              "description": "Pick a Tier 1 or Tier 2 Beastform option and become a larger, more powerful version of that creature. Retain all traits and features, save for the following bonuses:\n\n- Increaseyourdamagediebyonesize(d6becomesd8,d8 becomes d10, etc.)\n\n- Add +9 to your damage rolls in this form.\n\n- Add +2 to the trait increased by this form\n\n- Increase the evasion bonus by +3"
+            }
+          ]
+        },
+        {
+          "name": "Mythic Hybrid",
+          "examples": ["Chimera", "Manticore", "Cockatrice"],
+          "agility": 0,
+          "strength": 3,
+          "finesse": 0,
+          "instinct": 0,
+          "presence": 0,
+          "knowledge": 0,
+          "attack": "d12 (phy)",
+          "evasion": 2,
+          "hybrid": 3,
+          "features": [
+            {
+              "name": "Hybrid",
+              "description": "Choose any three Beastform options from Tiers 1-3. Take their features and advantages."
             }
           ]
         }

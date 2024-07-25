@@ -26,7 +26,6 @@ export const useSheetStore = defineStore('sheet', {
     },
     saveSetting(updates) {
       if (process.client) {
-        console.log('>>> saveSettings', updates);
         this.settings = Object.assign(this.settings, updates);
         localStorage.setItem(LS_KEY_SETTINGS, JSON.stringify(this.settings));
       }
