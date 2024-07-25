@@ -51,10 +51,19 @@
         template(v-for="form in upgradeForms")
           template(v-if="form?.name === selectedUpgradeForm")
             SheetShapeshiftPreview(:form="form" hide-name)
-            BasicButton(size="sm" @click="selectUpgradedForm(form)") Confirm
+            BasicButton(size="sm" @click="selectUpgradedForm(form)") Beast Form !!
       //- hybrid selection
-      .px-8(v-else-if="showHybridSelection")
-        p hybrid selection
+      .px-8.space-y-6(v-else-if="showHybridSelection")
+        template(v-for="(selection, index) in selectedHybridForms")
+          InputSelect(
+            v-model="selectedHybridForms[index]"
+            :options="hybridFormOptions[index]"
+          )
+        BasicButton(size="sm" @click="selectHybridForms") Beast Form !!
+        BasicMarkdown(
+          v-for="feature in selectedHybridFormFeatures"
+          :source="`**${feature.name}**: ${feature.description}`"
+        )
     //- form selection
     .space-y-6(v-else-if="settingsLoaded")
       .flex.justify-center.items-center.space-x-4.shrink-0
@@ -101,7 +110,7 @@
     getCharacterTier,
   } from '~/helpers/character';
   import { clone } from '~/helpers/utility';
-  import { createSelectOptions } from '~/helpers/array';
+  import { createSelectOptions, uniqueElements } from '~/helpers/array';
 
   export default {
     name: 'SheetShapeshift',
@@ -115,9 +124,10 @@
       return {
         traits: [ ...GENERAL.traits ],
         selectedForm: null,
-        upgradedForm: null,
         selectedUpgradeForm: '',
+        upgradedForm: null,
         selectedHybridForms: [],
+        currentHybridForms: [],
         currentArmor: this.character.armor.current,
         maxArmor: GENERAL.maxArmorSlots,
         settingsLoaded: false,
@@ -134,6 +144,8 @@
     mounted() {
       this.currentTierTab = this.forms.length - 1;
       this.selectedForm = this.sheetStore.settings.selectedForm;
+      this.upgradedForm = this.sheetStore.settings.upgradedForm;
+      this.selectedHybridForms = this.sheetStore.settings.selectedHybridForms;
       this.settingsLoaded = true;
     },
     computed: {
@@ -149,7 +161,7 @@
         }
 
         // hybrid shapeshift form
-        if (this.selectedForm?.hybrid && this.selectedHybridForms.length === this.selectedForm.hybrid) {
+        if (this.selectedForm?.hybrid && this.currentHybridForms.length === this.selectedForm.hybrid) {
           return true;
         }
 
@@ -180,7 +192,60 @@
         return createSelectOptions(this.upgradeForms.map((form) => form.name));
       },
       showHybridSelection() {
-        return Boolean(this.selectedForm?.hybrid) && this.selectedHybridForms.length === this.selectedForm.hybrid;
+        return Number.isInteger(this.selectedForm?.hybrid) &&
+          this.currentHybridForms.length < this.selectedForm.hybrid;
+      },
+      hybridForms() {
+        if (!this.selectedForm?.hybrid) return [];
+
+        const hybridForms = [];
+
+        this.forms.forEach((formList) => {
+          if (!this.selectedForm.hybridTier.includes(formList.tier)) return;
+
+          formList.forms.forEach((form) => {
+            if (!form.upgradeTier && !form.hybrid) {
+              hybridForms.push(clone({ ...form }));
+            }
+          });
+        });
+
+        return hybridForms;
+      },
+      hybridFormOptions() {
+        if (!this.selectedForm.hybrid) return [];
+
+        const options = [];
+
+        for (let i = 0, j = this.selectedForm.hybrid; i < j; i++) {
+          options.push(createSelectOptions(this.hybridForms.map((form) => form.name)));
+        }
+
+        return options;
+      },
+      selectedHybridFormFeatures() {
+        const features = [];
+        const formData = this.selectedHybridForms.map((formName) => {
+          return this.hybridForms.find((form) => form.name === formName);
+        });
+        let advantage = [];
+
+        formData.forEach((form) => {
+          form.features.forEach((feature) => {
+            if (feature.name === 'Take advantage on') {
+              advantage = advantage.concat(feature.description.split(', '));
+            } else {
+              features.push(feature);
+            }
+          });
+        });
+
+        features.unshift({
+          name: 'Take advantage on',
+          description: uniqueElements(advantage).join(', '),
+        });
+
+        return features;
       },
       characterTier() {
         return getCharacterTier(this.character);
@@ -289,7 +354,16 @@
     },
     methods: {
       shapeshift(form) {
-        this.selectedForm = clone(form);
+        if (form?.hybrid) {
+          this.selectedHybridForms = [];
+
+          // add an empty option for each hybrid selection dropdown
+          for (let i = 0; i < form.hybrid; i++) {
+            this.selectedHybridForms.push('');
+          }
+        }
+
+        this.selectedForm = form;
       },
       next() {
         this.swiper.slideTo(Math.min(this.currentTierTab + 1, this.forms.length));
@@ -306,6 +380,9 @@
       selectUpgradedForm(form) {
         this.upgradedForm = clone(form);
       },
+      selectHybridForms() {
+        console.log('>>> confirm');
+      },
     },
     watch: {
       currentArmor(newVal, oldVal) {
@@ -317,6 +394,21 @@
       selectedForm(newVal, oldVal) {
         if (this.settingsLoaded && newVal !== oldVal) {
           this.sheetStore.saveSetting({ selectedForm: newVal });
+
+          if (newVal === null) {
+            this.upgradedForm = null;
+            this.currentHybridForms = [];
+          }
+        }
+      },
+      upgradedForm(newVal, oldVal) {
+        if (this.settingsLoaded && newVal !== oldVal) {
+          this.sheetStore.saveSetting({ upgradedForm: newVal });
+        }
+      },
+      selectedHybridForms(newVal, oldVal) {
+        if (this.settingsLoaded && JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+          this.sheetStore.saveSetting({ selectedHybridForms: newVal });
         }
       },
     },

@@ -59,3 +59,9 @@ export const joinWithAnd = (arr) => {
 
   return arr[0];
 };
+
+export const uniqueElements = (arr) => {
+  return arr.filter((value, index) => {
+    return arr.indexOf(value) === index;
+  });
+};

@@ -7,6 +7,8 @@ const LS_KEY_SETTINGS = 'ds_sheet_settings';
 const defaultSettings = {
   levelingFanfare: true,
   selectedForm: null,
+  upgradedForm: null,
+  selectedHybridForms: [],
   key: uuidv4(),
 };
 

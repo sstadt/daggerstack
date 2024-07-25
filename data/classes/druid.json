@@ -505,6 +505,7 @@
           "attack": "d10+8 (phy)",
           "evasion": 3,
           "hybrid": 2,
+          "hybridTier": [1, 2, 3],
           "features": [
             {
               "name": "Hybrid",
@@ -655,10 +656,11 @@
           "attack": "d12 (phy)",
           "evasion": 2,
           "hybrid": 3,
+          "hybridTier": [1, 2, 3, 4],
           "features": [
             {
               "name": "Hybrid",
-              "description": "Choose any three Beastform options from Tiers 1-3. Take their features and advantages."
+              "description": "Choose any three Beastform options. Take their features and advantages."
             }
           ]
         }
