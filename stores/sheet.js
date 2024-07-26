@@ -8,7 +8,7 @@ const defaultSettings = {
   levelingFanfare: true,
   selectedForm: null,
   upgradedForm: null,
-  selectedHybridForms: [],
+  currentHybridForms: [],
   key: uuidv4(),
 };
 
