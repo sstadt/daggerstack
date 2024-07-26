@@ -255,10 +255,10 @@ export const calculateModifiers = (features, attribute) => {
  * @returns An array of features
  */
 export const getFeaturesByAttribute = (character, attribute, options = {}) => {
-  const primaryWeapon = character.equipment.primaryWeapon.name
+  const primaryWeapon = character.equipment?.primaryWeapon?.name
     ? WEAPONS.items.find((w) => w.name === character.equipment.primaryWeapon.name)
     : null;
-  const secondaryWeapon = character.equipment.secondaryWeapon.name
+  const secondaryWeapon = character.equipment?.secondaryWeapon?.name
     ? WEAPONS.items.find((w) => w.name === character.equipment.secondaryWeapon.name)
     : null;
   const burden = respectBurden(character) && character.equipment
