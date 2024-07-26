@@ -3,9 +3,13 @@
     Head
       Title Daggerstack.com - Character Builder
     CharacterBuilder(v-if="dataLoaded")
+    .flex.flex-col.items-center.justify-center.h-full-minus-topbar(v-else)
+      BasicLoader
 </template>
 
 <script>
+  import { mapState } from 'pinia';
+
   export default {
     name: 'BuilderPage',
     data() {
@@ -23,7 +27,17 @@
         this.builderStore.newCharacter();
       }
 
-      this.dataLoaded = true;
+      if (this.loaded) this.dataLoaded = true;
+    },
+    computed: {
+      ...mapState(useUserStore, ['loaded']),
+    },
+    watch: {
+      loaded(newVal, oldVal) {
+        if (newVal !== oldVal && newVal === true) {
+          this.dataLoaded = true;
+        }
+      },
     },
   };
 </script>
