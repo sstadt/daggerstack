@@ -35,5 +35,6 @@
   "maxLongRestOptions": 2,
   "traits": ["agility", "strength", "finesse", "instinct", "presence", "knowledge"],
   "spellcasters": ["bard", "druid", "ranger", "rogue", "seraph", "sorcerer", "wizard"],
+  "dice": ["d4", "d6", "d8", "d10", "d12", "d20"],
   "maxInventoryWeapons": 2
 }

@@ -14,74 +14,79 @@
             NuxtIcon(name="back")
         p.text-center.text-slate-500(v-if="formExamples.length > 0") {{ formExamples.join(', ') }}, etc.
       Transition(name="fade" mode="out-in")
-        div(v-if="showShapeshiftStats")
-          .px-3.flex.items-center
-            TraitDisplay.px-2(
-              title="evasion"
-              class="w-1/3"
-              :score="characterEvasion"
-            )
-            .w-px.h-20.mx-2.bg-slate-300
-            TraitDisplay.px-2(
-              title="armor"
-              class="w-1/3"
-              :score="characterArmor"
-            )
-            .flex.items-start.justify-center.flex-grow
-              InputCheckboxCounter.grid.grid-cols-3.grid-rows-3.gap-1(
-                v-model="currentArmor"
-                :max="maxArmor"
-                :enabled="armorSlots"
+        div(
+          v-if="showShapeshiftStats"
+          class="md:flex lg:block lg:space-x-0"
+        )
+          div(class="md:w-1/2 lg:w-full")
+            .px-3.flex.items-center
+              TraitDisplay.px-2(
+                title="evasion"
+                class="w-1/3"
+                :score="characterEvasion"
               )
-          .h-px.bg-slate-300.mx-auto.mt-5.mb-8(v-if="mq.mdMinus" class="w-4/5")
-          .px-6.grid.gap-6.grid-cols-3.mb-8(
-            class="lg:flex lg:space-x-0 lg:mt-8 lg:px-0 lg:scale-90"
-          )
-            TraitDisplay(
-              title="agility"
-              :score="characterAgility"
-              helper-text="Sprint, Leap, Maneuver"
-              modifier
-            )
-            TraitDisplay(
-              title="strength"
-              :score="characterStrength"
-              helper-text="Lift, Smash, Grapple"
-              modifier
-            )
-            TraitDisplay(
-              title="finesse"
-              :score="characterFinesse"
-              helper-text="Control, Hide, Tinker"
-              modifier
-            )
-            TraitDisplay(
-              title="instinct"
-              :score="characterInstinct"
-              helper-text="Perceive, Sense, Navigate"
-              modifier
-            )
-            TraitDisplay(
-              title="presence"
-              :score="characterPresence"
-              helper-text="Charm, Perform, Deceive"
-              modifier
-            )
-            TraitDisplay(
-              title="knowledge"
-              :score="characterKnowledge"
-              helper-text="Recall, Analyze, Comprehend"
-              modifier
-            )
-          BasicCard(title="Features")
-            .space-y-4.pt-4
-              .flex.space-x-2.justify-between.text-xl(v-if="primaryTrait")
-                p <strong>Attack:</strong> {{ ucFirst(primaryTrait) }} Melee {{ formAttack }}
-              .space-y-4
-                BasicMarkdown.text-xl(
-                  v-for="feature in formFeatures"
-                  :source="`**${feature.name}**: ${feature.description}`"
+              .w-px.h-20.mx-2.bg-slate-300
+              TraitDisplay.px-2(
+                title="armor"
+                class="w-1/3"
+                :score="characterArmor"
+              )
+              .flex.items-start.justify-center.flex-grow(class="lg:hidden")
+                InputCheckboxCounter.grid.grid-cols-3.grid-rows-3.gap-1(
+                  v-model="currentArmor"
+                  :max="maxArmor"
+                  :enabled="armorSlots"
                 )
+            .h-px.bg-slate-300.mx-auto.mt-5.mb-8(v-if="mq.mdMinus" class="w-4/5")
+            .px-6.grid.gap-6.grid-cols-3.mb-8(
+              class="lg:flex lg:space-x-0 lg:mt-8 lg:px-0 lg:scale-90"
+            )
+              TraitDisplay(
+                title="agility"
+                :score="characterAgility"
+                helper-text="Sprint, Leap, Maneuver"
+                modifier
+              )
+              TraitDisplay(
+                title="strength"
+                :score="characterStrength"
+                helper-text="Lift, Smash, Grapple"
+                modifier
+              )
+              TraitDisplay(
+                title="finesse"
+                :score="characterFinesse"
+                helper-text="Control, Hide, Tinker"
+                modifier
+              )
+              TraitDisplay(
+                title="instinct"
+                :score="characterInstinct"
+                helper-text="Perceive, Sense, Navigate"
+                modifier
+              )
+              TraitDisplay(
+                title="presence"
+                :score="characterPresence"
+                helper-text="Charm, Perform, Deceive"
+                modifier
+              )
+              TraitDisplay(
+                title="knowledge"
+                :score="characterKnowledge"
+                helper-text="Recall, Analyze, Comprehend"
+                modifier
+              )
+          div(class="md:w-1/2 lg:w-full")
+            BasicCard(title="Features")
+              .space-y-4.pt-4
+                .flex.space-x-2.justify-between.text-xl(v-if="primaryTrait")
+                  p <strong>Attack:</strong> {{ ucFirst(primaryTrait) }} {{ formAttack }}
+                .space-y-4
+                  BasicMarkdown.text-xl(
+                    v-for="feature in formFeatures"
+                    :source="`**${feature.name}**: ${feature.description}`"
+                  )
         //- upgrade selection
         .px-8.space-y-6(v-else-if="showUpgradeSelection")
           InputSelect(
@@ -400,7 +405,9 @@
           ? this.selectedForm.bestTrait + this.upgradedForm.agility
           : this.selectedForm.agility;
 
-        return base + formBonus + calculateModifiers(features, 'agility');
+        return Number.isInteger(formBonus)
+          ? base + formBonus + calculateModifiers(features, 'agility')
+          : base + calculateModifiers(features, 'agility');
       },
       characterStrength() {
         const base = this.character.strength.score;
@@ -409,7 +416,9 @@
           ? this.selectedForm.bestTrait + this.upgradedForm.strength
           : this.selectedForm.strength;
 
-        return base + formBonus + calculateModifiers(features, 'strength');
+        return Number.isInteger(formBonus)
+          ? base + formBonus + calculateModifiers(features, 'strength')
+          : base + calculateModifiers(features, 'strength');
       },
       characterFinesse() {
         const base = this.character.finesse.score;
@@ -418,7 +427,9 @@
           ? this.selectedForm.bestTrait + this.upgradedForm.finesse
           : this.selectedForm.finesse;
 
-        return base + formBonus + calculateModifiers(features, 'finesse');
+        return Number.isInteger(formBonus)
+          ? base + formBonus + calculateModifiers(features, 'finesse')
+          : base + calculateModifiers(features, 'finesse');
       },
       characterInstinct() {
         const base = this.character.instinct.score;
@@ -427,7 +438,9 @@
           ? this.selectedForm.bestTrait + this.upgradedForm.instinct
           : this.selectedForm.instinct;
 
-        return base + formBonus + calculateModifiers(features, 'instinct');
+        return Number.isInteger(formBonus)
+          ? base + formBonus + calculateModifiers(features, 'instinct')
+          : base + calculateModifiers(features, 'instinct');
       },
       characterPresence() {
         const base = this.character.presence.score;
@@ -436,7 +449,9 @@
           ? this.selectedForm.bestTrait + this.upgradedForm.presence
           : this.selectedForm.presence;
 
-        return base + formBonus + calculateModifiers(features, 'presence');
+        return Number.isInteger(formBonus)
+          ? base + formBonus + calculateModifiers(features, 'presence')
+          : base + calculateModifiers(features, 'presence');
       },
       characterKnowledge() {
         const base = this.character.knowledge.score;
@@ -445,18 +460,25 @@
           ? this.selectedForm.bestTrait + this.upgradedForm.knowledge
           : this.selectedForm.knowledge;
 
-        return base + formBonus + calculateModifiers(features, 'knowledge');
+        return Number.isInteger(formBonus)
+          ? base + formBonus + calculateModifiers(features, 'knowledge')
+          : base + calculateModifiers(features, 'knowledge');
       },
       formAttack() {
         if (this.upgradedForm) {
+          const range = this.upgradedForm.range;
           const [ dice, type ] = this.upgradedForm.attack.split(' ');
           const [ die, modStr ] = dice.split('+');
           const modVal = modStr ? parseInt(modStr, 10) : 0;
+          const currentDieIndex = GENERAL.dice.indexOf(die);
+          const damageDie = Number.isInteger(this.selectedForm.damageDie)
+            ? GENERAL.dice[Math.min(currentDieIndex + this.selectedForm.damageDie, GENERAL.dice.length - 1)]
+            : die;
 
-          return `${die}+${modVal + this.selectedForm.damageBonus} ${type}`;
+          return `${range} ${damageDie}+${modVal + this.selectedForm.damageBonus} ${type}`;
         }
 
-        return this.selectedForm.attack;
+        return `${this.selectedForm.range} ${this.selectedForm.attack}`;
       },
       formFeatures() {
         if (this.upgradedForm) return [ ...this.upgradedForm.features ];

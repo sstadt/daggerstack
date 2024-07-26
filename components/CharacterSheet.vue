@@ -15,19 +15,19 @@
     transition(v-if="mq.mdMinus" :name="transition" mode="out-in")
       .space-y-16.pb-4.py-8(
         v-if="currentPage === 'attributes'"
-        class="md:space-y-0 md:flex"
+        class="md:space-y-0 md:space-x-6 md:px-6 md:flex"
       )
         .space-y-16(class="md:w-1/2")
           SheetStatistics(:character="character" :key="`${key}-statistics`")
           SheetExperience(:character="character" :key="`${key}-experience`")
         div(class="md:w-1/2")
           SheetClassFeature(:character="character")
-      .space-y-8.pb-4.py-8(v-else-if="currentPage === 'equipment'")
+      .space-y-8.pb-4.py-8(v-else-if="currentPage === 'equipment'" class="md:space-x-6 md:px-6")
         SheetWeapons(:character="character")
         SheetArmor(:character="character")
       .space-y-8.pb-4.py-8(
         v-else-if="currentPage === 'inventory' || mq.md && currentPage === 'equipment'"
-        class="md:space-y-0 md:flex"
+        class="md:space-y-0 md:flex md:space-x-6 md:px-6"
       )
         .space-y-8(v-if="mq.md" class="md:w-1/2")
           SheetWeapons(:character="character")
@@ -37,13 +37,13 @@
           SheetInventory(:character="character")
       .space-y-8.pb-4.py-8(
         v-else-if="currentPage === 'background'"
-        class="md:space-y-0 md:flex"
+        class="md:space-y-0 md:flex md:space-x-6 md:px-6"
       )
         SheetBackground(:character="character" class="md:w-1/2")
         SheetConnections(:character="character" class="md:w-1/2")
-      .space-y-8.pb-4.py-8(v-else-if="currentPage === 'shapeshift'")
+      .space-y-8.pb-4.py-8(v-else-if="currentPage === 'shapeshift'" class="md:px-6")
         SheetShapeshift(:character="character")
-      .space-y-8.pb-4.py-8(v-else-if="currentPage === 'companion'")
+      .space-y-8.pb-4.py-8(v-else-if="currentPage === 'companion'" class="md:px-6")
         SheetCompanion(:character="character" :key="`${key}-companion`")
     //- Desktop Sheet
     .max-w-5xl.container.pb-16(v-else)

@@ -7,7 +7,7 @@
         template(v-for="trait in traits")
           span(v-if="form[trait] > 0")
             span(v-if="form[trait] > 0") +
-            span {{ form[trait] }} {{ ucFirst(trait) }} {{ form.attack }}
+            span {{ form[trait] }} {{ ucFirst(trait) }} {{ form.range }} {{ form.attack }}
         span Evasion: {{ form.evasion }}
     BasicMarkdown(
       v-for="feature in form.features"
