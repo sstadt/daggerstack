@@ -1,5 +1,5 @@
 <template lang="pug">
-  button.button.text-lg.rounded-md.uppercase.font-bold.border.transition-all(
+  button.button.text-lg.uppercase.font-bold.border.transition-all(
     class="hover:shadow-md active:shadow-md"
     :class="buttonClass"
     :type="type"
@@ -30,6 +30,13 @@
           return ['primary', 'secondary'].includes(value);
         },
       },
+      rounded: {
+        type: String,
+        default: 'all',
+        validator(value) {
+          return ['all', 'left', 'right'].includes(value);
+        },
+      },
       icon: {
         type: Boolean,
         default: false,
@@ -46,12 +53,15 @@
           'text-xs py-1 px-1.5': this.size === 'xs' && !this.icon,
           'text-sm p-1': this.size === 'xs' && this.icon,
           'text-sm py-1 px-4': this.size === 'sm' && !this.icon,
-          'px-2 py-1.5': this.size === 'sm' && this.icon,
+          'px-2.5 py-1': this.size === 'sm' && this.icon,
           'py-4 px-6 text-lg': this.size === 'md',
           'py-5 px-7 text-xl': this.size === 'lg',
           'text-white bg-violet-800 border-violet-900 hover:bg-violet-950 focus:bg-violet-950': this.priority === 'primary',
           'bg-slate-100 border-slate-300 hover:bg-slate-300 focus:bg-slate-300': this.priority === 'secondary',
           'opacity-30': this.disabled,
+          'rounded-md': this.rounded === 'all',
+          'rounded-r-md': this.rounded === 'right',
+          'rounded-l-md': this.rounded === 'left',
         };
       },
     },

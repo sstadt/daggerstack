@@ -86,6 +86,7 @@ export const newCharacter = () => {
     background: [],
     connection: [],
     levelSelections: [],
+    buffs: [],
     companion: {
       name: null,
       species: null,
@@ -178,6 +179,19 @@ export const newUpgrade = ({ id, level, type, value, options }) => {
     type, // upgrade type string
     value, // primary option selected
     options, // additional options; Array || Object
+  };
+};
+
+export const newBuff = (buff = {}) => {
+  const defaults = {
+    stat: '',
+    score: 1,
+  };
+  const options = Object.assign({}, defaults, buff);
+
+  return {
+    stat: options.stat,
+    score: options.score,
   };
 };
 

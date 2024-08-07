@@ -30,12 +30,14 @@
         transition.my-12(:name="transition" mode="out-in")
           .space-y-6.mt-2(v-if="tabs[currentIndex].icon === 'health'")
             SheetHealth.mt-2(:character="character" :key="`${key}-health`")
+          .space-y-6.mt-2(v-else-if="tabs[currentIndex].icon === 'buff'")
+            SheetStatusEffects(:character="character")
           .space-y-6.mt-2(v-else-if="tabs[currentIndex].icon === 'campfire'")
             SheetRest.mt-2(:character="character" @rest-complete="closeDrawer")
           .space-y-6(v-else-if="tabs[currentIndex].icon === 'persona'")
             SheetDescription.mt-2(:character="character")
-            .flex.justify-center.pt-10(v-if="character.level < 10")
-              BasicButton(@click="levelUp") Level Up
+            .p-8(v-if="character.level < 10")
+              BasicButton.w-full(@click="levelUp") Level Up
           .space-y-6.mt-2(v-else-if="tabs[currentIndex].icon === 'background'")
             SheetBackground(:character="character")
             SheetConnections(:character="character")
@@ -81,6 +83,7 @@
         }
 
         tabs.push({ title: 'Rest', icon: 'campfire' });
+        tabs.push({ title: 'Status Effects', icon: 'buff' });
         tabs.push({ title: 'Persona', icon: 'persona' });
 
         if (this.mq.lgPlus) {

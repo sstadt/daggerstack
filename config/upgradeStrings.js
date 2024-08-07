@@ -1,5 +1,15 @@
 
+import { ucFirst } from '~/helpers/string';
+import GENERAL from '~/data/general';
+
+let traits = {};
+
+GENERAL.traits.forEach((trait) => {
+  traits[trait] = ucFirst(trait);
+});
+
 export default {
+  ...traits,
   healthSlot: 'Hit Point',
   stressSlot: 'Stress',
   hopeSlot: 'Hope Slot',
