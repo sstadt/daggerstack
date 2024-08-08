@@ -6,7 +6,7 @@
     )
       | {{ label }}
       span(v-if="required") *
-    input.px-4.py-2.text-xl.outline-0(
+    input.px-4.py-2.text-xl.outline-0.w-full(
       :type="type"
       :class="inputClass"
       :value="modelValue"

@@ -7,25 +7,25 @@
           p.text-center.mb-2.px-6.text-sm.text-slate-500 Describe two experiences, that make sense for your background, in a word or phrase
           p.text-center.mb-2.px-6.text-sm.text-slate-500(v-if="bonusExperience > 0") Your character also has {{ bonusExperience }} extra experience to allocate as you choose!
         .flex
-          InputCounter.mr-2(
+          InputCounter.mr-2.shrink-0(
             v-model="experience1Score"
             :min="2"
             :max="2 + remainingExperience"
             modifier
           )
-          InputText.flex-grow(
+          InputText.grow(
             v-model="experience1"
             :errors="v$.experience1.$errors"
             required
           )
         .flex
-          InputCounter.mr-2(
+          InputCounter.mr-2.shrink-0(
             v-model="experience2Score"
             :min="2"
             :max="2 + remainingExperience"
             modifier
           )
-          InputText.flex-grow(
+          InputText(
             v-model="experience2"
             :errors="v$.experience2.$errors"
             required
