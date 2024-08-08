@@ -77,8 +77,13 @@
                 })
                 .reduce((acc, curr) => acc + curr.modify.experience, 0)
             : 0;
+          const buffs = this.character.buffs
+            ? this.character.buffs
+                .filter((buff) => (buff.enabled && buff.modify[`experience-${experience.id}`]))
+                .reduce((acc, curr) => acc + curr.modify[`experience-${experience.id}`], 0)
+            : 0;
 
-          experience.score = experience.score + bonus + itemBonus;
+          experience.score = experience.score + bonus + itemBonus + buffs;
 
           return experience;
         });

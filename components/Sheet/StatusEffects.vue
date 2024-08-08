@@ -7,6 +7,7 @@
             v-for="(buff, index) in buffs"
             :key="buff.id"
             :buff="buff"
+            :character="character"
             @remove="removeBuff(index)"
             @save="(updatedBuff) => saveBuff(index, updatedBuff)"
           )
@@ -40,7 +41,7 @@
       addStatusEffect() {
         this.buffs.push({
           id: uuidv4(),
-          title: '',
+          name: '',
           enabled: false,
           modify: {},
         });

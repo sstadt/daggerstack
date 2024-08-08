@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 
 const LOCALSTORAGE_KEY = 'ds_character_list';
-const DEBOUNCE_DELAY = 5000;
+const DEBOUNCE_DELAY = 3000;
 
 export const useCharactersStore = defineStore('characters', {
   state: () => {
@@ -29,37 +29,6 @@ export const useCharactersStore = defineStore('characters', {
       } else {
         this.characterList = [ ...data ];
         this.hydrated = true;
-      }
-
-      return;
-    },
-    async loadLocalCharacters() {
-      const userStore = useUserStore();
-      const toastStore = useToastStore();
-
-      // TODO: deprecate this after converting outstanding characters
-      if (process.client) {
-        const localList = localStorage.getItem(LOCALSTORAGE_KEY);
-
-        if (localList) {
-          const converted = JSON.parse(localList)
-            .map((character) => {
-              delete character.id;
-              return character;
-            });
-
-          const { data, error } = await userStore.supabase
-            .from('characters')
-            .insert(converted)
-            .select();
-
-          if (error) {
-            toastStore.postMessage({ body: error.message });
-          } else {
-            localStorage.removeItem(LOCALSTORAGE_KEY);
-            this.characterList = [ ...data ];
-          }
-        }
       }
 
       return;

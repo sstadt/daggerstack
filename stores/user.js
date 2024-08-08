@@ -19,7 +19,6 @@ export const useUserStore = defineStore('user', {
       if (user) {
         this.user = user;
         await charactersStore.hydrate();
-        await charactersStore.loadLocalCharacters();
       }
 
       this.loaded = true;

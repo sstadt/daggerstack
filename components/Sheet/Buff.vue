@@ -3,18 +3,18 @@
     .flex.items-center.justify-between
       InputToggle(
         v-model="enabled"
-        :label="`Enable ${title}`"
+        :label="`Enable ${name}`"
         hide-label
       )
       p.text-xl.mx-3.h-full
         Transition(name="fade" mode="out-in")
-          span(v-if="!expanded") {{ title }}
+          span(v-if="!expanded") {{ name }}
           span.text-slate-400(v-else) editing...
       button.pl-3.text-xl.ml-auto(@click="toggle")
         NuxtIcon(:name="expanded ? 'times' : 'edit'")
     Transition(name="slide-fade-right")
       .pt-2.space-y-2(v-if="expanded")
-        InputText(v-model="title")
+        InputText(v-model="name")
         TransitionGroup(name="slide-fade-right")
           .flex.space-x-2.items-center(v-for="(mod, index) in modify" :key="index")
             InputSelect(
@@ -71,6 +71,7 @@
     'companionEvasion',
     'primaryMeleeDamage',
     'newExperience',
+    'hopeSlot',
   ];
 
   const newBuff = (buff = {}) => {
@@ -89,6 +90,10 @@
   export default {
     name: 'SheetBuff',
     props: {
+      character: {
+        type: Object,
+        required: true,
+      },
       buff: {
         type: Object,
         required: true,
@@ -101,14 +106,21 @@
         : [ newBuff() ];
 
       return {
-        title: this.buff.title,
+        name: this.buff.name,
         enabled: this.buff.enabled,
         modify,
-        expanded: this.buff.title === '',
+        expanded: this.buff.name === '',
       };
     },
     computed: {
       upgradeOptions() {
+        const experienceOptions = this.character.experience.map((experience) => {
+          return {
+            label: `${experience.name} (experience)`,
+            value: `experience-${experience.id}`,
+          }
+        });
+
         return Object.keys(upgradeStrings)
           .filter((key) => !blacklist.includes(key))
           .map((key) => {
@@ -116,10 +128,11 @@
               label: upgradeStrings[key],
               value: key,
             };
-          });
+          })
+          .concat(experienceOptions);
       },
       saveDisabled() {
-        if (this.title === '') return true;
+        if (this.name === '') return true;
 
         return this.modify.filter((mod) => mod.stat !== '').length === 0;
       },
@@ -140,7 +153,7 @@
       save() {
         const buff = {
           id: this.buff.id,
-          title: this.title,
+          name: this.name,
           enabled: this.enabled,
           modify: {},
         };
