@@ -182,18 +182,6 @@ export const newUpgrade = ({ id, level, type, value, options }) => {
   };
 };
 
-export const newBuff = (buff = {}) => {
-  const defaults = {
-    stat: '',
-    score: 1,
-  };
-  const options = Object.assign({}, defaults, buff);
-
-  return {
-    stat: options.stat,
-    score: options.score,
-  };
-};
 
 /**
  * Determine the current tier of a character
@@ -270,10 +258,10 @@ export const calculateModifiers = (features, attribute) => {
  */
 export const getFeaturesByAttribute = (character, attribute, options = {}) => {
   const primaryWeapon = character.equipment?.primaryWeapon?.name
-    ? WEAPONS.items.find((w) => w.name === character.equipment.primaryWeapon.name)
+    ? getWeapon(character.equipment.primaryWeapon.name)
     : null;
   const secondaryWeapon = character.equipment?.secondaryWeapon?.name
-    ? WEAPONS.items.find((w) => w.name === character.equipment.secondaryWeapon.name)
+    ? getWeapon(character.equipment.secondaryWeapon.name)
     : null;
   const burden = respectBurden(character) && character.equipment
     ? (primaryWeapon?.burden || 0) + (secondaryWeapon?.burden || 0)
@@ -287,8 +275,9 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
     ? COMMUNITY.find((community) => character.community === community.name)
     : null;
   const ancestry = character.ancestry
-    ? character.ancestry
-        .map((ancestryName) => ANCESTRY.find((ancestry) => ancestry.name === ancestryName))
+    ? character.ancestry.map((ancestryName) => {
+        return ANCESTRY.find((ancestry) => ancestry.name === ancestryName);
+      })
     : null;
   const features = [];
 

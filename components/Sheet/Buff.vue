@@ -6,7 +6,7 @@
         :label="`Enable ${title}`"
         hide-label
       )
-      p.text-2xl.mx-3.h-full
+      p.text-xl.mx-3.h-full
         Transition(name="fade" mode="out-in")
           span(v-if="!expanded") {{ title }}
           span.text-slate-400(v-else) editing...
@@ -63,7 +63,6 @@
 
 <script>
   import upgradeStrings from '~/config/upgradeStrings';
-  import { newBuff } from '~/helpers/character';
 
   const blacklist = [
     'experience', // todo, handle this later, separately
@@ -73,6 +72,19 @@
     'primaryMeleeDamage',
     'newExperience',
   ];
+
+  const newBuff = (buff = {}) => {
+    const defaults = {
+      stat: '',
+      score: 1,
+    };
+    const options = Object.assign({}, defaults, buff);
+
+    return {
+      stat: options.stat,
+      score: options.score,
+    };
+  };
 
   export default {
     name: 'SheetBuff',
@@ -92,7 +104,7 @@
         title: this.buff.title,
         enabled: this.buff.enabled,
         modify,
-        expanded: this.buff.name === '',
+        expanded: this.buff.title === '',
       };
     },
     computed: {
@@ -129,6 +141,7 @@
         const buff = {
           id: this.buff.id,
           title: this.title,
+          enabled: this.enabled,
           modify: {},
         };
 
@@ -139,6 +152,14 @@
         });
 
         this.$emit('save', buff);
+        this.expanded = false;
+      },
+    },
+    watch: {
+      enabled(newVal, oldVal) {
+        if (newVal !== oldVal) {
+          this.save();
+        }
       },
     },
   };

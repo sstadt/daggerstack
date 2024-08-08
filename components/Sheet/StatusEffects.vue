@@ -2,12 +2,14 @@
   BasicCard
     .space-y-6
       .divide-y
-        SheetBuff(
-          v-for="(buff, index) in buffs"
-          :buff="buff"
-          @remove="removeBuff(index)"
-          @save="saveBuff"
-        )
+        TransitionGroup(name="slide-fade-right")
+          SheetBuff(
+            v-for="(buff, index) in buffs"
+            :key="buff.id"
+            :buff="buff"
+            @remove="removeBuff(index)"
+            @save="(updatedBuff) => saveBuff(index, updatedBuff)"
+          )
       .flex.justify-end
         BasicButton(priority="secondary" size="sm" @click="addStatusEffect")
           | Add Effect
@@ -26,14 +28,13 @@
     },
     data() {
       return {
-        // buffs: [ ...this.character.buffs ],
-        buffs: [
-          { id: 1, title: 'finesse', enabled: false, modify: { finesse: 1 } },
-          { id: 2, title: 'armor slot', enabled: false, modify: { armorSlot: 2} },
-          { id: 4, title: 'multiple', enabled: false, modify: { strength: 3, agility: 1 } },
-          { id: 5, title: 'empty', enabled: false, modify: {} },
-        ],
+        buffs: [ ...this.character.buffs ],
       };
+    },
+    setup() {
+      const charactersStore = useCharactersStore();
+
+      return { charactersStore };
     },
     methods: {
       addStatusEffect() {
@@ -45,10 +46,18 @@
         });
       },
       removeBuff(index) {
-        console.log('>>> remove buff at index', index);
+        this.buffs.splice(index, 1);
+
+        this.saveStatusEffects();
       },
-      saveBuff(buff) {
-        console.log('>>> save buff', buff);
+      saveBuff(index, buff) {
+        this.buffs.splice(index, 1, buff);
+
+        this.saveStatusEffects();
+      },
+      saveStatusEffects() {
+        this.character.buffs = [ ...this.buffs ];
+        this.charactersStore.saveCharacter(this.character);
       },
     },
   };
