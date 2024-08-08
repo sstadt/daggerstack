@@ -25,15 +25,15 @@
             :class="{ 'opacity-30': currentTierTab === 0 }"
             @click="prev"
           )
-            span.sr-only Tier {{ Math.max(currentTierTab, 1) }}
+            span.sr-only Previous
             NuxtIcon(name="chevron-left")
-          h3.text-xl.font-bold.uppercase Tier {{ currentTierTab + 1 }}
+          h3.text-xl.font-bold.uppercase {{ tierTabLabels[currentTierTab] }}
           button.flex.text-xl(
             :disabled="currentTierTab >= 2"
             :class="{ 'opacity-30': currentTierTab >= 2 }"
             @click="next"
           )
-            span.sr-only Tier {{ Math.min(currentTierTab + 2, 3) }}
+            span.sr-only Next
             NuxtIcon(name="chevron-right")
         .shrink-0(v-if="tierChoices.length > 0")
           Swiper.tier-carousel(
@@ -202,6 +202,7 @@
         selectedNewSubclass: firstSubclassOption,
         selectedDomain: firstDomainOption,
         selectedSubclass: firstSubclass,
+        tierTabLabels: ['Level 2-4', 'Level 5-7', 'Level 8-10'],
       };
     },
     computed: {
