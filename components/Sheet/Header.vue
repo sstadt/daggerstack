@@ -28,9 +28,7 @@
             span.sr-only {{ tab.title }}
             NuxtIcon.tab-icon(:name="tab.icon")
         transition.my-12(:name="transition" mode="out-in")
-          .space-y-6.mt-2(v-if="tabs[currentIndex].icon === 'health'")
-            SheetHealth.mt-2(:character="character" :key="`${key}-health`")
-          .space-y-6.mt-2(v-else-if="tabs[currentIndex].icon === 'buff'")
+          .space-y-6.mt-2(v-if="tabs[currentIndex].icon === 'buff'")
             SheetStatusEffects(:character="character")
           .space-y-6.mt-2(v-else-if="tabs[currentIndex].icon === 'campfire'")
             SheetRest.mt-2(:character="character" @rest-complete="closeDrawer")
@@ -77,10 +75,6 @@
       ...mapState(useSheetStore, ['key']),
       tabs() {
         const tabs = [];
-
-        if (this.mq.mdMinus) {
-          tabs.push({ title: 'Hit Points & Stress', icon: 'health' });
-        }
 
         tabs.push({ title: 'Rest', icon: 'campfire' });
         tabs.push({ title: 'Status Effects', icon: 'buff' });

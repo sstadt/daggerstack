@@ -1,11 +1,9 @@
 <template lang="pug">
-  BasicCard.sheet-health(:title="mq.lgPlus ? 'Health' : null")
-    .flex.flex-col.items-center.space-y-6.mt-4
+  BasicCard.sheet-health(title="Health")
+    .flex.flex-col.items-center.space-y-6.mt-8
       .flex.items-center.justify-center.pb-2(class="lg:mt-4")
         .flex.flex-col.justify-center
-          p.px-3.bg-black.font-bold.text-white.text-center.text-xs.rounded.relative(
-            class="py-2.5 lg:px-4 lg:py-3 lg:text-sm"
-          )
+          p.px-4.py-3.text-sm.bg-black.font-bold.text-white.text-center.rounded.relative
             span.uppercase Minor
             span.threshold__helper-text.text-slate-500.text-xs.whitespace-nowrap.text-center.absolute(
               class="-translate-x-1/2 translate-y-full bottom-0 left-1/2"
@@ -15,9 +13,7 @@
             class="px-2.5"
           ) {{ threshold.score }}
           .flex.flex-col.justify-center
-            p.px-3.pl-5.bg-black.font-bold.text-white.text-center.text-xs.rounded.relative(
-              class="py-2.5 lg:px-4 lg:py-3 lg:pl-6 lg:text-sm"
-            )
+            p.pr-4.py-3.pl-6.text-sm.bg-black.font-bold.text-white.text-center.rounded.relative
               span.uppercase {{ threshold.name }}
               span.threshold__helper-text.text-slate-500.text-xs.whitespace-nowrap.text-center.absolute(
                 class="-translate-x-1/2 translate-y-full bottom-0 left-1/2"
@@ -189,10 +185,4 @@
     border-left: 14px solid white;
     z-index: 1;
   }
-
-  // .threshold__helper-text {
-  //   bottom: -20px;
-  //   left: 50%;
-  //   transform: translateX(-50%);
-  // }
 </style>

@@ -1,15 +1,15 @@
 <template lang="pug">
   BasicDrawer(:title="statisticLabel" ref="drawer")
     .divide-y(v-if="list.length > 0")
-      p.py-2.px-4.text-xl(v-for="item in list")
+      p.py-2.px-6.text-xl(v-for="item in list")
         | {{ item.name }}:
         |  <span v-if="item.bonus > 0">+</span>{{ item.bonus }}
-    .pt-20.px-4(v-else)
+    .pt-20.px-6(v-else)
       p.text-3xl.text-slate-600.text-center No bonuses currently apply to this statistic
     div(v-if="secondaryStatistic")
-      p.px-4.py-4.text-xl.uppercase.font-bold {{ secondaryStatisticLabel }}
+      p.px-6.py-4.text-xl.uppercase.font-bold {{ secondaryStatisticLabel }}
       .divide-y(v-if="secondaryList.length > 0")
-        p.py-2.px-4.text-xl(v-for="item in secondaryList")
+        p.py-2.px-6.text-xl(v-for="item in secondaryList")
           | {{ item.name }}:
           |  <span v-if="item.bonus > 0">+</span>{{ item.bonus }}
 
