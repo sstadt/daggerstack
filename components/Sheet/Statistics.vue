@@ -5,12 +5,14 @@
         title="evasion"
         class="w-1/3"
         :score="characterEvasion"
+        @click="showBonuses('evasion')"
       )
       .w-px.h-20.mx-2.bg-slate-300(v-if="mq.mdMinus")
       TraitDisplay(
         title="armor"
         class="w-1/3"
         :score="characterArmor"
+        @click="showBonuses('armorScore', 'armorSlots')"
       )
       .flex.items-start.justify-center.ml-1(class="md:ml-4 lg:ml-2")
         InputCheckboxCounter.grid.grid-cols-3.grid-rows-3.gap-1(
@@ -28,6 +30,7 @@
         helper-text="Sprint, Leap, Maneuver"
         :upgraded="character.agility.upgraded"
         modifier
+        @click="showBonuses('agility')"
       )
       TraitDisplay(
         title="strength"
@@ -35,6 +38,7 @@
         helper-text="Lift, Smash, Grapple"
         :upgraded="character.strength.upgraded"
         modifier
+        @click="showBonuses('strength')"
       )
       TraitDisplay(
         title="finesse"
@@ -42,6 +46,7 @@
         helper-text="Control, Hide, Tinker"
         :upgraded="character.finesse.upgraded"
         modifier
+        @click="showBonuses('finesse')"
       )
       TraitDisplay(
         title="instinct"
@@ -49,6 +54,7 @@
         helper-text="Perceive, Sense, Navigate"
         :upgraded="character.instinct.upgraded"
         modifier
+        @click="showBonuses('instinct')"
       )
       TraitDisplay(
         title="presence"
@@ -56,6 +62,7 @@
         helper-text="Charm, Perform, Deceive"
         :upgraded="character.presence.upgraded"
         modifier
+        @click="showBonuses('presence')"
       )
       TraitDisplay(
         title="knowledge"
@@ -63,7 +70,15 @@
         helper-text="Recall, Analyze, Comprehend"
         :upgraded="character.knowledge.upgraded"
         modifier
+        @click="showBonuses('knowledge')"
       )
+    SheetBonuses(
+      ref="bonuses"
+      :statistic="selectedTrait"
+      :bonuses="selectedBonuses"
+      :secondary-statistic="selectedSecondaryTrait"
+      :secondary-bonuses="selectedSecondaryBonuses"
+    )
 </template>
 
 <script>
@@ -85,6 +100,8 @@
       return {
         currentArmor: this.character.armor.current,
         maxArmor: GENERAL.maxArmorSlots,
+        selectedTrait: 'agility',
+        selectedSecondaryTrait: null,
       };
     },
     setup() {
@@ -93,59 +110,83 @@
       return { charactersStore };
     },
     computed: {
+      armorSlotBonuses() {
+        return getFeaturesByAttribute(this.character, 'armorSlot');
+      },
       armorSlots() {
-        const base = this.character.armor.slots;
-        const modifiers = getFeaturesByAttribute(this.character, 'armorSlot');
-
-        return base + calculateModifiers(modifiers, 'armorSlot');
+        return this.character.armor.slots +
+          calculateModifiers(this.armorSlotBonuses, 'armorSlot');
+      },
+      evasionBonuses() {
+        return getFeaturesByAttribute(this.character, 'evasion');
       },
       characterEvasion() {
-        const base = this.character.evasion;
-        const modifiers = getFeaturesByAttribute(this.character, 'evasion');
-
-        return base + calculateModifiers(modifiers, 'evasion');
+        return this.character.evasion +
+          calculateModifiers(this.evasionBonuses, 'evasion');
+      },
+      armorScoreBonuses() {
+        return getFeaturesByAttribute(this.character, 'armorScore');
       },
       characterArmor() {
-        const base = 0;
-        const features = getFeaturesByAttribute(this.character, 'armorScore');
-
-        return base + calculateModifiers(features, 'armorScore');
+        return 0 +
+          calculateModifiers(this.armorScoreBonuses, 'armorScore');
+      },
+      agilityBonuses() {
+        return getFeaturesByAttribute(this.character, 'agility');
       },
       characterAgility() {
-        const base = this.character.agility.score;
-        const features = getFeaturesByAttribute(this.character, 'agility');
-
-        return base + calculateModifiers(features, 'agility');
+        return this.character.agility.score +
+          calculateModifiers(this.agilityBonuses, 'agility');
+      },
+      strengthBonuses() {
+        return getFeaturesByAttribute(this.character, 'strength');
       },
       characterStrength() {
-        const base = this.character.strength.score;
-        const features = getFeaturesByAttribute(this.character, 'strength');
-
-        return base + calculateModifiers(features, 'strength');
+        return this.character.strength.score +
+          calculateModifiers(this.strengthBonuses, 'strength');
+      },
+      finesseBonuses() {
+        return getFeaturesByAttribute(this.character, 'finesse');
       },
       characterFinesse() {
-        const base = this.character.finesse.score;
-        const features = getFeaturesByAttribute(this.character, 'finesse');
-
-        return base + calculateModifiers(features, 'finesse');
+        return this.character.finesse.score +
+          calculateModifiers(this.finesseBonuses, 'finesse');
+      },
+      instinctBonuses() {
+        return getFeaturesByAttribute(this.character, 'instinct');
       },
       characterInstinct() {
-        const base = this.character.instinct.score;
-        const features = getFeaturesByAttribute(this.character, 'instinct');
-
-        return base + calculateModifiers(features, 'instinct');
+        return this.character.instinct.score +
+          calculateModifiers(this.instinctBonuses, 'instinct');
+      },
+      presenceBonuses() {
+        return getFeaturesByAttribute(this.character, 'presence');
       },
       characterPresence() {
-        const base = this.character.presence.score;
-        const features = getFeaturesByAttribute(this.character, 'presence');
-
-        return base + calculateModifiers(features, 'presence');
+        return this.character.presence.score +
+          calculateModifiers(this.presenceBonuses, 'presence');
+      },
+      knowledgeBonuses() {
+        return getFeaturesByAttribute(this.character, 'knowledge');
       },
       characterKnowledge() {
-        const base = this.character.knowledge.score;
-        const features = getFeaturesByAttribute(this.character, 'knowledge');
-
-        return base + calculateModifiers(features, 'knowledge');
+        return this.character.knowledge.score +
+          calculateModifiers(this.knowledgeBonuses, 'knowledge');
+      },
+      selectedBonuses() {
+        return this[`${this.selectedTrait}Bonuses`];
+      },
+      selectedSecondaryBonuses() {
+        return this[`${this.selectedSecondaryTrait}Bonuses`] || [];
+      },
+    },
+    methods: {
+      showBonuses(trait) {
+        this.selectedTrait = trait;
+        this.selectedSecondaryTrait = trait === 'armorScore' ? 'armorSlot' : null;
+        this.$nextTick(() => {
+          this.$refs.bonuses.open();
+        });
       },
     },
     watch: {
