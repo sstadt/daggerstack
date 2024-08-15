@@ -174,10 +174,14 @@
           calculateModifiers(this.knowledgeBonuses, 'knowledge');
       },
       selectedBonuses() {
-        return this[`${this.selectedTrait}Bonuses`];
+        return this.selectedTrait
+          ? this[`${this.selectedTrait}Bonuses`]
+          : [];
       },
       selectedSecondaryBonuses() {
-        return this[`${this.selectedSecondaryTrait}Bonuses`] || [];
+        return this.selectedSecondaryTrait
+          ? this[`${this.selectedSecondaryTrait}Bonuses`]
+          : [];
       },
     },
     methods: {

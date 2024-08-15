@@ -9,8 +9,9 @@
               class="-translate-x-1/2 translate-y-full bottom-0 left-1/2"
             ) Mark 1 HP
         template(v-for="(threshold, index) in thresholds")
-          p.threshold-value.relative.border-y.border-black.text-lg.text-center(
+          button.threshold-value.relative.border-y.border-black.text-lg.text-center(
             class="px-2.5"
+            @click="showBonuses(`${threshold.name}DamageThreshold`)"
           ) {{ threshold.score }}
           .flex.flex-col.justify-center
             p.pr-4.py-3.pl-6.text-sm.bg-black.font-bold.text-white.text-center.rounded.relative
@@ -19,11 +20,16 @@
                 class="-translate-x-1/2 translate-y-full bottom-0 left-1/2"
               ) Mark {{ index + 2 }} HP
       .hit-points
-        h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0 HP
+        h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0(@click="showBonuses('healthSlot')") HP
         InputCheckboxCounter(v-model="currentHealth" :max="maxHealth" :enabled="healthSlots")
       .stress
-        h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0 stress
+        h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0(@click="showBonuses('stressSlot')") stress
         InputCheckboxCounter(v-model="currentStress" :max="maxStress" :enabled="stressSlots")
+    SheetBonuses(
+      ref="bonuses"
+      :statistic="selectedTrait"
+      :bonuses="selectedBonuses"
+    )
 </template>
 
 <script>
@@ -48,6 +54,7 @@
         maxHealth: GENERAL.maxHitPoints,
         currentStress: this.character.stress.current,
         maxStress: GENERAL.maxStress,
+        selectedTrait: 'majorDamageThreshold',
       };
     },
     setup() {
@@ -73,7 +80,8 @@
         // num levels between 8 and 10
         return Math.max(Math.min(this.character.level - 7, 3), 0);
       },
-      majorThresholdTierModifiers() {
+      majorDamageThresholdBonuses() {
+        const bonuses = getFeaturesByAttribute(this.character, 'majorDamageThreshold');
         const tier1Always = this.baseClass.tier1.always.find((m) => m.increase.majorDamageThreshold);
         const tier1Modifier = tier1Always
           ? tier1Always.increase.majorDamageThreshold * this.tier1Levels
@@ -87,9 +95,41 @@
           ? tier3Always.increase.majorDamageThreshold * this.tier3Levels
           : 0;
 
-        return tier1Modifier + tier2Modifier + tier3Modifier;
+        if (tier1Modifier > 0) {
+          bonuses.push({
+            name: 'Level 2-4',
+            modify: {
+              majorDamageThreshold: tier1Modifier,
+            },
+          });
+        }
+
+        if (tier2Modifier > 0) {
+          bonuses.push({
+            name: 'Level 5-7',
+            modify: {
+              majorDamageThreshold: tier2Modifier,
+            },
+          });
+        }
+
+        if (tier3Modifier > 0) {
+          bonuses.push({
+            name: 'Level 8-10',
+            modify: {
+              majorDamageThreshold: tier3Modifier,
+            },
+          });
+        }
+
+        return bonuses;
       },
-      severeThresholdTierModifiers() {
+      majorThreshold() {
+        return this.baseClass.startingThreshold.major +
+          calculateModifiers(this.majorDamageThresholdBonuses, 'majorDamageThreshold');
+      },
+      severeDamageThresholdBonuses() {
+        const bonuses = getFeaturesByAttribute(this.character, 'severeDamageThreshold');
         const tier1Always = this.baseClass.tier1.always.find((m) => m.increase.severeDamageThreshold);
         const tier1Modifier = tier1Always
           ? tier1Always.increase.severeDamageThreshold * this.tier1Levels
@@ -103,19 +143,38 @@
           ? tier3Always.increase.severeDamageThreshold * this.tier3Levels
           : 0;
 
-        return tier1Modifier + tier2Modifier + tier3Modifier;
-      },
-      majorThreshold() {
-        const base = this.baseClass.startingThreshold.major;
-        const modifiers = getFeaturesByAttribute(this.character, 'majorDamageThreshold');
+        if (tier1Modifier > 0) {
+          bonuses.push({
+            name: 'Level 2-4',
+            modify: {
+              severeDamageThreshold: tier1Modifier,
+            },
+          });
+        }
 
-        return base + this.majorThresholdTierModifiers + calculateModifiers(modifiers, 'majorDamageThreshold');
+        if (tier2Modifier > 0) {
+          bonuses.push({
+            name: 'Level 5-7',
+            modify: {
+              severeDamageThreshold: tier2Modifier,
+            },
+          });
+        }
+
+        if (tier3Modifier > 0) {
+          bonuses.push({
+            name: 'Level 8-10',
+            modify: {
+              severeDamageThreshold: tier3Modifier,
+            },
+          });
+        }
+
+        return bonuses;
       },
       severeThreshold() {
-        const base = this.baseClass.startingThreshold.severe;
-        const modifiers = getFeaturesByAttribute(this.character, 'severeDamageThreshold');
-
-        return base + this.severeThresholdTierModifiers + calculateModifiers(modifiers, 'severeDamageThreshold');
+        return this.baseClass.startingThreshold.severe +
+          calculateModifiers(this.severeDamageThresholdBonuses, 'severeDamageThreshold');
       },
       thresholds() {
         return [
@@ -123,17 +182,32 @@
           { name: 'severe', score: this.severeThreshold },
         ];
       },
+      healthSlotBonuses() {
+        return getFeaturesByAttribute(this.character, 'healthSlot');
+      },
       healthSlots() {
-        const base = this.character.health.slots;
-        const modifiers = getFeaturesByAttribute(this.character, 'healthSlot');
-
-        return base + calculateModifiers(modifiers, 'healthSlot');
+        return this.character.health.slots +
+          calculateModifiers(this.healthSlotBonuses, 'healthSlot');
+      },
+      stressSlotBonuses() {
+        return getFeaturesByAttribute(this.character, 'stressSlot');
       },
       stressSlots() {
-        const base = this.character.health.slots;
-        const modifiers = getFeaturesByAttribute(this.character, 'stressSlot');
-
-        return base + calculateModifiers(modifiers, 'stressSlot');
+        return this.character.health.slots +
+          calculateModifiers(this.stressSlotBonuses, 'stressSlot');
+      },
+      selectedBonuses() {
+        return this.selectedTrait
+          ? this[`${this.selectedTrait}Bonuses`]
+          : [];
+      },
+    },
+    methods: {
+      showBonuses(trait) {
+        this.selectedTrait = trait;
+        this.$nextTick(() => {
+          this.$refs.bonuses.open();
+        });
       },
     },
     watch: {

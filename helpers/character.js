@@ -283,14 +283,14 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
 
   // weapons
   if (primaryWeapon) {
-    if (primaryWeapon.feature && primaryWeapon.feature.modify && primaryWeapon.feature.modify[attribute]) {
+    if (primaryWeapon?.feature?.modify && primaryWeapon.feature.modify[attribute]) {
       features.push({ ...primaryWeapon.feature });
     }
   }
 
   // verify we are not carrying too much before including secondary weapon feature
   if (burden < 3 && secondaryWeapon) {
-    if (secondaryWeapon.feature && secondaryWeapon.feature.modify && secondaryWeapon.feature.modify[attribute]) {
+    if (secondaryWeapon?.feature?.modify && secondaryWeapon.feature.modify[attribute]) {
       features.push({ ...secondaryWeapon.feature });
     }
   }
@@ -300,7 +300,6 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
     character.inventory.items
       .filter((i) => i.modify && i.modify[attribute])
       .forEach((item) => {
-        console.log(item);
         features.push({
           name: item.name,
           modify: { ...item.modify },
@@ -309,7 +308,7 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
   }
 
   // armor
-  if (character.equipment?.armor?.name) {
+  if (character.equipment?.armor?.name && attribute === 'armorScore') {
     const armor = ARMOR.items.find((a) => a.name === character.equipment.armor.name);
     const armorScore = options.exclude && options.exclude.includes('armorScore')
       ? 0
@@ -336,13 +335,15 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
       }).length;
 
       // add foundation for every subclass
-      features.push({
-        name: `${subclass} (foundation)`,
-        modify: { ...subclassData.foundation },
-      });
+      if (subclassData.foundation[attribute]) {
+        features.push({
+          name: `${subclass} (foundation)`,
+          modify: { ...subclassData.foundation },
+        });
+      }
 
       // add specialization for applicable
-      if (numUpgrades > 0) {
+      if (numUpgrades > 0 && subclassData.specialization[attribute]) {
         features.push({
           name: `${subclass} (specialization)`,
           modify: { ...subclassData.specialization },
@@ -350,7 +351,7 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
       }
 
       // add mastery for applicable
-      if (numUpgrades > 1) {
+      if (numUpgrades > 1 && subclassData.mastery[attribute]) {
         features.push({
           name: `${subclass} (mastery)`,
           modify: { ...subclassData.mastery },
@@ -392,7 +393,7 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
       Array.isArray(selection.options) && selection.options.includes(attribute)
     ) {
       const feature = {
-        name: `Level ${selection.level}`,
+        name: `Level ${selection.level} (selection)`,
         modify: {},
       };
 
