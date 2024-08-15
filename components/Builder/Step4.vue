@@ -36,7 +36,7 @@
           @click="openPicker(armorType)"
         ) Select Armor
       .flex.justify-between.items-center
-        NuxtLink(to="/") Finish Later
+        NuxtLink(to="/character") Finish Later
         BasicButton.block(type="submit") Next
     BasicDrawer(ref="equipmentPicker" :title="pickerTitle")
       InventoryEquipmentPicker(

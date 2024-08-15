@@ -52,7 +52,7 @@
           required
         )
       .flex.justify-between.items-center
-        NuxtLink(to="/") Finish Later
+        NuxtLink(to="/character") Finish Later
         BasicButton.block(type="submit") Next
 </template>
 

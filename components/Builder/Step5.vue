@@ -26,7 +26,7 @@
       h2.text-center.text-2xl.font-black.uppercase Domain Cards
       p.text-center.mb-2.text-sm.text-slate-500 Choose two cards from the level one {{ ucFirst(domain1) }} and {{ ucFirst(domain2) }} domain decks.
     .flex.justify-between.items-center
-      NuxtLink(to="/") Finish Later
+      NuxtLink(to="/character") Finish Later
       BasicButton.block(type="submit") Next
 </template>
 

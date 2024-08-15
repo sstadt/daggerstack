@@ -61,9 +61,9 @@
     font-family: "Cinzel Decorative", serif;
   }
 
-  .h-full-minus-topbar {
-    // account for the topbar
-    height: calc(100vh - 38px);
+  .h-full-minus-nav {
+    // account for the topbar and footer
+    min-height: calc(100vh - (38px + 56px));
   }
 
   .link {

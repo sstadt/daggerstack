@@ -62,7 +62,7 @@
           p Hope
           p 2
       .flex.justify-between.items-center
-        NuxtLink(to="/") Finish Later
+        NuxtLink(to="/character") Finish Later
         BasicButton.block.ml-auto(type="submit") Next
 </template>
 

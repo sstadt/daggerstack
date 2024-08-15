@@ -3,7 +3,7 @@
     Head
       Title Daggerstack.com - Character Builder
     CharacterBuilder(v-if="dataLoaded")
-    .flex.flex-col.items-center.justify-center.h-full-minus-topbar(v-else)
+    .flex.flex-col.items-center.justify-center.h-full-minus-nav(v-else)
       BasicLoader
 </template>
 

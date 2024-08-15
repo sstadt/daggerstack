@@ -1,25 +1,31 @@
 <template lang="pug">
-  .flex.flex-col.h-full-minus-topbar
-    .flex.flex-col.flex-grow.overflow-y-auto
+  .flex.flex-col.h-full-minus-nav
+    .flex.flex-col.flex-grow(:class="{ 'container': mq.lgPlus }")
+      h1.text-3xl.py-6.uppercase(:class="titleClass") Characters
       Transition(name="fade" mode="out-in")
         .flex.items-center.justify-center.flex-grow(v-if="!hydrated")
           BasicLoader
-        ul.flex-shrink-0.overflow-hidden(v-else-if="characterList.length > 0")
+        TransitionGroup.flex-shrink-0.overflow-hidden(
+          v-else-if="characterList.length > 0"
+          name="slide-fade-left"
+          tag="ul"
+        )
           li(
             v-for="(character, index) in characterList"
             :class="{ 'border-t': index !== 0 }"
+            :key="character.id"
           )
             CharacterLink(:character="character" @delete="deleteCharacter(character)")
         .flex.items-center.justify-center.flex-grow(v-else)
           p.text-4xl.text-center You don't have any characters.... yet!
-    Transition(name="slide-fade-bottom")
-      .flex.flex-col(v-if="hydrated && characterList.length < 10")
-        NuxtLink(to="/builder")
-          BasicButton.rounded-none.w-full(v-if="character?.baseClass")
-            | {{ characterLabel }}
-        NuxtLink(:to="{ name: 'builder', query: { new: true } }")
-          BasicButton.rounded-none.w-full
-            | New Character
+      Transition(name="slide-fade-bottom")
+        .flex.flex-col.py-6.mt-auto(v-if="hydrated && characterList.length < 10")
+          NuxtLink(to="/builder")
+            BasicButton.rounded-none.w-full(v-if="character?.baseClass" class="lg:rounded-t")
+              | {{ characterLabel }}
+          NuxtLink(:to="{ name: 'builder', query: { new: true } }")
+            BasicButton.rounded-none.w-full(:class="newCharacterButtonClass" priority="secondary")
+              | New Character
     DialogConfirm(ref="confirm" @cancel="cancelDelete" @confirm="confirmDelete")
 </template>
 
@@ -31,6 +37,7 @@
 
   export default {
     name: 'CharacterSelect',
+    inject: ['mq'],
     setup() {
       const builderStore = useBuilderStore();
       const charactersStore = useCharactersStore();
@@ -42,7 +49,7 @@
       };
     },
     computed: {
-      ...mapState(useUserStore, ['user']),
+      ...mapState(useUserStore, ['user', 'loaded']),
       ...mapState(useBuilderStore, ['character']),
       ...mapState(useCharactersStore, ['characterList', 'hydrated']),
       characterLabel() {
@@ -50,11 +57,18 @@
           ? `Resume ${this.character.baseClass}`
           : 'Resume Character';
       },
-    },
-    mounted() {
-      if (!this.user) {
-        this.$router.push('/');
-      }
+      titleClass() {
+        return {
+          'px-6 border-b': this.mq.mdMinus,
+          'py-12': this.mq.lgPlus,
+        };
+      },
+      newCharacterButtonClass() {
+        return {
+          'lg:rounded-b': this.character?.baseClass,
+          'lg:rounded': !this.character?.baseClass,
+        };
+      },
     },
     methods: {
       createNewCharacter(clearBuilder) {
@@ -72,6 +86,13 @@
         this.activeDeleteId = character.id;
         this.$refs.confirm
           .ask(`Are you sure you want to delete ${character.name}? This cannot be undone`);
+      },
+    },
+    watch: {
+      loaded(newVal, oldVal) {
+        if (newVal && !oldVal && !user) {
+          this.$router.push('/');
+        }
       },
     },
   };

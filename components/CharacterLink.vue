@@ -5,7 +5,7 @@
   )
     NuxtLink.block.text-3xl.p-6.w-full.text-left.transition-all(
       v-if="isValid"
-      class="hover:bg-slate-200 focus:bg-slate-200"
+      class="hover:bg-slate-200 focus:bg-slate-200 lg:px-0"
       :to="`/character/${character.id}`"
     ) {{ character.name }}
     .flex.flex-col.p-6.w-full.text-left.transition-all(v-else)
@@ -15,11 +15,11 @@
         span This character is not compatible with the current ruleset and cannot be loaded
     transition(name="slide-fade-left")
       button.text-white.bg-red-600.flex.justify-center.items-center.p-4.h-auto(
-        v-if="controlsVisible"
+        v-if="controlsVisible || mq.lgPlus"
         type="button"
         @click="deleteCharacter"
       )
-        NuxtIcon.text-4xl(name="explode")
+        NuxtIcon.text-4xl(name="trash")
 </template>
 
 <script>
@@ -27,6 +27,7 @@
 
   export default {
     name: 'CharacterLink',
+    inject: ['mq'],
     props: {
       character: {
         type: Object,

@@ -8,7 +8,7 @@
           NuxtIcon.ml-1.align-middle(name="edit")
         InputTextarea(v-model="question.answer" :limit="2000")
       .flex.justify-between.items-center
-        NuxtLink(to="/") Finish Later
+        NuxtLink(to="/character") Finish Later
         BasicButton.block(@click="next" :disabled="completedQuestions.length < 1") Finish
     DialogPrompt(ref="prompt" @confirm="saveQuestion")
 </template>
