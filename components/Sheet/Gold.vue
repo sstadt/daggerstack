@@ -11,7 +11,7 @@
               @click="decrement('handful')"
             )
               NuxtIcon(name="minus")
-            InputCheckboxCounter.bg-amber-300.pr-1(
+            InputCheckboxCounter.bg-amber-300.pr-1.flex-nowrap(
               :key="`${key}-handful`"
               v-model="handful"
               :max="maxHandfuls"
@@ -26,7 +26,7 @@
               @click="decrement('bag')"
             )
               NuxtIcon(name="minus")
-            InputCheckboxCounter.bg-amber-400.pr-1(
+            InputCheckboxCounter.bg-amber-400.pr-1.flex-nowrap(
               :key="`${key}-bag`"
               v-model="bag"
               :max="maxBags"
