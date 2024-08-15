@@ -20,7 +20,7 @@
         .space-y-16(class="md:w-1/2")
           SheetStatistics(:character="character" :key="`${key}-statistics`")
           SheetHealth(:character="character" :key="`${key}-health`")
-        div(class="md:w-1/2")
+        .space-y-16(class="md:w-1/2")
           SheetExperience(:character="character" :key="`${key}-experience`")
           SheetClassFeature(:character="character")
       .space-y-8.pb-4.py-8(v-else-if="currentPage === 'equipment'" class="md:space-x-6 md:px-6")

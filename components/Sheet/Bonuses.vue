@@ -12,11 +12,11 @@
         p.py-2.px-6.text-xl(v-for="item in secondaryList")
           | {{ item.name }}:
           |  <span v-if="item.bonus > 0">+</span>{{ item.bonus }}
-
 </template>
 
 <script>
   import upgradeStrings from '~/config/upgradeStrings';
+  import { titleCase } from '~/helpers/string';
 
   const validUpgrades = Object.keys(upgradeStrings);
 
@@ -34,6 +34,10 @@
           return validUpgrades.includes(value);
         },
       },
+      title: {
+        type: String,
+        default: null,
+      },
       secondaryStatistic: {
         type: String,
         default: null,
@@ -48,7 +52,9 @@
     },
     computed: {
       statisticLabel() {
-        return upgradeStrings[this.statistic];
+        return this.title
+          ? `${titleCase(this.title)} (${this.statistic})`
+          : upgradeStrings[this.statistic];
       },
       secondaryStatisticLabel() {
         return upgradeStrings[this.secondaryStatistic];
