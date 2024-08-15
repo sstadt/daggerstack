@@ -97,7 +97,7 @@
 
         if (tier1Modifier > 0) {
           bonuses.push({
-            name: 'Level 2-4',
+            name: 'Level 2-4 (auto)',
             modify: {
               majorDamageThreshold: tier1Modifier,
             },
@@ -106,7 +106,7 @@
 
         if (tier2Modifier > 0) {
           bonuses.push({
-            name: 'Level 5-7',
+            name: 'Level 5-7 (auto)',
             modify: {
               majorDamageThreshold: tier2Modifier,
             },
@@ -115,7 +115,7 @@
 
         if (tier3Modifier > 0) {
           bonuses.push({
-            name: 'Level 8-10',
+            name: 'Level 8-10 (auto)',
             modify: {
               majorDamageThreshold: tier3Modifier,
             },

@@ -1,6 +1,6 @@
 <template lang="pug">
   BasicCard(title="Active Weapons")
-    .flex.justify-center.mt-2.mb-4
+    .flex.justify-center.mt-2.mb-4(@click="showBonuses")
       h3.uppercase.text-sm.font-bold.mr-4 Proficiency
       InputCheckbox(
         v-for="n in 6"
@@ -40,6 +40,11 @@
         priority="secondary"
         @click="openPicker(secondaryWeaponType)"
       ) Select Weapon
+    SheetBonuses(
+      ref="bonuses"
+      statistic="proficiency"
+      :bonuses="proficiencyBonuses"
+    )
     BasicDrawer(ref="equipmentPicker" title="Weapons")
       InventoryEquipmentPicker(
         :type="pickerType"
@@ -84,6 +89,7 @@
         secondaryWeaponType: SECONDARY_WEAPON_TYPE,
         activeSlot: null,
         pickerType: PRIMARY_WEAPON_TYPE,
+        baseProficiency: 1,
       };
     },
     setup() {
@@ -92,14 +98,34 @@
       return { charactersStore };
     },
     computed: {
-      baseProficiency() {
-        // base of 1 proficiency + 1 for each tier
-        return Math.floor((this.character.level + 1) / 3) + 1;
+      proficiencyBonuses() {
+        const bonuses = getFeaturesByAttribute(this.character, 'proficiency');
+
+        if (this.character.level > 1) {
+          bonuses.push({
+            name: 'Level 2 (auto)',
+            modify: { proficiency: 1 },
+          });
+        }
+
+        if (this.character.level > 4) {
+          bonuses.push({
+            name: 'Level 5 (auto)',
+            modify: { proficiency: 1 },
+          });
+        }
+
+        if (this.character.level > 7) {
+          bonuses.push({
+            name: 'Level 8 (auto)',
+            modify: { proficiency: 1 },
+          });
+        }
+
+        return bonuses;
       },
       proficiency() {
-        const modifiers = getFeaturesByAttribute(this.character, 'proficiency');
-
-        return this.baseProficiency + calculateModifiers(modifiers, 'proficiency');
+        return this.baseProficiency + calculateModifiers(this.proficiencyBonuses, 'proficiency');
       },
       primaryWeapon() {
         return this.character.equipment.primaryWeapon.name
@@ -120,6 +146,9 @@
     },
     methods: {
       getWeapon,
+      showBonuses() {
+        this.$refs.bonuses.open();
+      },
       openPicker(weaponType) {
         this.pickerType = weaponType === PRIMARY_WEAPON_TYPE
           ? PRIMARY_WEAPON_TYPE
