@@ -34,7 +34,7 @@
         InputText(v-if="characterItem.custom" label="name" v-model="itemName")
         h2.text-2xl.font-bold.uppercase(v-else :class="titleClass") {{ characterItem.name }}
         InputCounter.justify-between(
-          v-if="!item.charge && !item.attach"
+          v-if="!item.charge && !item.attach && !item.relic"
           :key="`${key}-editor`"
           label="Quantity"
           v-model="itemQuantity"
