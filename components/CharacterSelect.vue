@@ -1,7 +1,7 @@
 <template lang="pug">
   .flex.flex-col.h-full-minus-nav
-    .flex.flex-col.flex-grow(:class="{ 'container': mq.lgPlus }")
-      h1.text-3xl.py-6.uppercase(:class="titleClass") Characters
+    .flex.flex-col.flex-grow(:class="{ 'container max-w-5xl': mq.lgPlus }")
+      h1.text-3xl.py-6.uppercase.font-bold(:class="titleClass") Characters
       Transition(name="fade" mode="out-in")
         .flex.items-center.justify-center.flex-grow(v-if="!hydrated")
           BasicLoader
