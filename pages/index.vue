@@ -8,7 +8,7 @@
       image-alt="Adventuring party walking down the path with the sun setting over mountains in the background"
     )
       .bg-white.w-full.px-8.pt-8.pb-6.text-center.absolute(
-        class="top-12 left-1/2 -translate-x-1/2 md:top-auto md:left-auto md:translate-x-0"
+        class="top-12 left-1/2 -translate-x-1/2 md:top-auto md:left-auto md:translate-x-0 md:relative"
       )
         .space-y-4
           .space-y-2

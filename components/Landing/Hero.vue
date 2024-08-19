@@ -1,6 +1,6 @@
 <template lang="pug">
   .hero.mx-auto.relative.w-full
-    .hero__image.w-full.h-screen.overflow-hidden(class="md:h-min")
+    .hero__image.w-full.overflow-hidden(class="md:h-min")
       img.object-cover.w-full.h-full(
         :src="smallImage"
         class="md:hidden"
@@ -34,14 +34,6 @@
         required: true,
       },
     },
-    computed: {
-      currentImage() {
-        return this.mq.smMinus ? this.smallImage : this.largeImage;
-      },
-    },
-    mounted() {
-      console.log(this.largeImage);
-    },
   };
 </script>
 
@@ -49,8 +41,10 @@
   @use '~/styles/media.scss';
 
   .hero__image {
-    @include media.desktop-up {
-      height: 60vh;
+    height: 100vh;
+
+    @include media.tablet-up {
+      max-height: 60vh;
     }
   }
 </style>
