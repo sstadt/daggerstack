@@ -49,6 +49,7 @@
   import CLASSES from '~/data/classes';
 
   import { ucFirst, titleCase } from '~/helpers/string';
+  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
 
   export default {
     name: 'SheetHeader',
@@ -128,8 +129,14 @@
           'font-size': this.domains.length < 3 ? '180px' : '150px',
         };
       },
+      healthSlots() {
+        const healthSlotBonuses = getFeaturesByAttribute(this.character, 'healthSlot');
+
+        return this.character.health.slots +
+          calculateModifiers(healthSlotBonuses, 'healthSlot');
+      },
       healthPercent() {
-        return (1 - (this.character.health.current / this.character.health.slots)).toFixed(2);
+        return (1 - (this.character.health.current / this.healthSlots)).toFixed(2);
       },
       headerClass() {
         return {
