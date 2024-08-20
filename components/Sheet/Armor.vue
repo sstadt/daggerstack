@@ -27,7 +27,7 @@
   import ARMOR from '~/data/armor';
 
   import { useCharactersStore } from '~/stores/characters';
-  import { newArmor } from '~/helpers/character';
+  import { newArmor } from '~/helpers/constructors';
 
   import {
     ARMOR_TYPE,

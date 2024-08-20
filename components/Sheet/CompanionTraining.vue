@@ -29,7 +29,8 @@
 </template>
 
 <script>
-  import { getOptionsByUpgrade, newUpgrade } from '~/helpers/character';
+  import { newUpgrade } from '~/helpers/constructors';
+  import { getOptionsByUpgrade } from '~/helpers/character';
 
   import COMPANION from '~/data/companion';
 

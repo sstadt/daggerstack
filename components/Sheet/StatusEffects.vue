@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import { uuidv4 } from '~/helpers/utility';
+  import { newStatusEffect } from '~/helpers/constructors';
 
   export default {
     name: 'SheetStatusEffects',
@@ -39,12 +39,7 @@
     },
     methods: {
       addStatusEffect() {
-        this.buffs.push({
-          id: uuidv4(),
-          name: '',
-          enabled: false,
-          modify: {},
-        });
+        this.buffs.push(newStatusEffect());
       },
       removeBuff(index) {
         this.buffs.splice(index, 1);

@@ -12,9 +12,10 @@ export const uuidv4 = () => {
 
 /**
  * Limit the frequenscy with which a function can fire
- * @param {function} func      Function to debounce
- * @param {integer}  wait      Debounce duration in milliseconds
- * @param {boolean}  immediate Call function immediately
+ *
+ * @param {function} func Function to debounce
+ * @param {integer} wait Debounce duration in milliseconds
+ * @param {boolean} immediate Call function immediately
  */
 export const debounce = (func, wait = 300, immediate = false) => {
   let timeout;
@@ -38,6 +39,7 @@ export const debounce = (func, wait = 300, immediate = false) => {
 
 /**
  * Clone an array or object
+ *
  * @param {Object} obj The structure to clone
  * @returns The cloned object, detached from previous pointer
  */

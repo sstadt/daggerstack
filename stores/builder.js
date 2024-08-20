@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-import { newCharacter } from '~/helpers/character';
+import { newCharacter } from '~/helpers/constructors';
 import { deepMerge } from '~/helpers/object';
 
 const LS_KEY_CHARACTER = 'ds_builder_character';
@@ -52,19 +52,5 @@ export const useBuilderStore = defineStore('builder', {
         localStorage.setItem(LS_KEY_CHARACTER, JSON.stringify(this.character));
       }
     },
-    // async createCharacter(updates = null) {
-    //   const characterStore = useCharactersStore();
-    //   const character = updates
-    //     ? deepMerge(this.character, updates)
-    //     : { ...this.character };
-
-    //   await characterStore.saveCharacter(character);
-    //   this.close();
-    //   this.character = {};
-
-    //   if (process.client) {
-    //     localStorage.setItem(LS_KEY_CHARACTER, JSON.stringify(this.character));
-    //   }
-    // },
   },
 });

@@ -154,7 +154,8 @@
   import confetti from 'canvas-confetti';
 
   import { uuidv4 } from '~/helpers/utility';
-  import { getOptionsByUpgrade, newUpgrade } from '~/helpers/character';
+  import { newUpgrade } from '~/helpers/constructors';
+  import { getOptionsByUpgrade } from '~/helpers/character';
   import { createSelectOptions } from '~/helpers/array';
   import { titleCase } from '~/helpers/string';
 

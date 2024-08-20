@@ -60,8 +60,9 @@
   import WEAPONS from '~/data/weapons';
 
   import { useCharactersStore } from '~/stores/characters';
+
+  import { newWeapon } from '~/helpers/constructors';
   import {
-    newWeapon,
     getWeapon,
     calculateModifiers,
     getFeaturesByAttribute,

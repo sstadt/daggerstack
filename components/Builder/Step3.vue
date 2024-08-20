@@ -37,7 +37,7 @@
   import CLASSES from '~/data/classes';
 
   import { createSelectOptions } from '~/helpers/array';
-  import { newItem } from '~/helpers/character';
+  import { newItem } from '~/helpers/constructors';
 
   import { useBuilderStore } from '~/stores/builder';
 

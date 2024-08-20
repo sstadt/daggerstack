@@ -50,12 +50,8 @@
 <script>
   import { useBuilderStore } from '~/stores/builder';
 
-  import {
-    newWeapon,
-    getWeapon,
-    newArmor,
-    getArmor,
-  } from '~/helpers/character';
+  import { newWeapon, newArmor } from '~/helpers/constructors';
+  import { getWeapon, getArmor } from '~/helpers/character';
 
   import {
     PRIMARY_WEAPON_TYPE,

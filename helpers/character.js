@@ -1,8 +1,6 @@
 
-import { uuidv4 } from '~/helpers/utility';
 import upgradeStrings from '~/config/upgradeStrings';
 
-import GENERAL from '~/data/general';
 import SUBCLASSES from '~/data/subclasses';
 import WEAPONS from '~/data/weapons';
 import ARMOR from '~/data/armor';
@@ -15,173 +13,32 @@ for (const [key] of Object.entries(SUBCLASSES)) {
   allSubclasses = allSubclasses.concat(SUBCLASSES[key]);
 }
 
-export const newCharacter = () => {
-  return {
-    version: GENERAL.currentCharacterVersion,
-    name: '',
-    pronouns: '',
-    description: '',
-    baseClass: '',
-    subclass: [],
-    community: '',
-    ancestry: [],
-    level: 1,
-    agility: {
-      score: '',
-      upgraded: false,
-    },
-    strength: {
-      score: '',
-      upgraded: false,
-    },
-    finesse: {
-      score: '',
-      upgraded: false,
-    },
-    instinct: {
-      score: '',
-      upgraded: false,
-    },
-    presence: {
-      score: '',
-      upgraded: false,
-    },
-    knowledge: {
-      score: '',
-      upgraded: false,
-    },
-    evasion: null,
-    armor: {
-      current: 0,
-      slots: 6,
-    },
-    threshold: {
-      major: null,
-      severe: null,
-    },
-    health: {
-      current: 0,
-      slots: 6,
-    },
-    stress: {
-      current: 0,
-      slots: 6,
-    },
-    hope: 2,
-    equipment: {
-      primaryWeapon: newWeapon(),
-      secondaryWeapon: newWeapon(),
-      armor: newArmor(),
-    },
-    inventory: {
-      items: [],
-      gold: {
-        handful: 1,
-        bag: 0,
-        chest: 0,
-      },
-      weapons: [],
-    },
-    experience: [],
-    background: [],
-    connection: [],
-    levelSelections: [],
-    buffs: [],
-    companion: {
-      name: null,
-      species: null,
-      traits: [],
-      evasion: 10,
-      stress: {
-        current: 0,
-        slots: 3,
-      },
-      experience: [],
-      levelSelections: []
-    },
-  };
-};
-
-export const newWeapon = (weapon = {}) => {
-  const defaults = {
-    id: uuidv4(),
-    name: null,
-    notes: '',
-    attachment: null,
-  };
-  const options = Object.assign({}, defaults, weapon);
-
-  return {
-    id: options.id,
-    name: options.name,
-    notes: options.notes,
-    attachment: options.attachment,
-  };
-};
-
+/**
+ * Get a weapon's statistics from game data
+ *
+ * @param {String} name The name of the weapon
+ * @returns The matchign weapon
+ */
 export const getWeapon = (name) =>
   WEAPONS.items.find((weapon) => weapon.name === name);
 
-export const newArmor = (armor = {}) => {
-  const defaults = {
-    id: uuidv4(),
-    name: null,
-    notes: '',
-    attachment: null,
-  };
-  const options = Object.assign({}, defaults, armor);
-
-  return {
-    id: options.id,
-    name: options.name,
-    notes: options.notes,
-    attachment: options.attachment,
-  };
-};
-
+/**
+ * Get armor statistics from game data
+ *
+ * @param {String} name The name of the armor
+ * @returns The matching armor
+ */
 export const getArmor = (name) =>
   ARMOR.items.find((armor) => armor.name === name);
 
-export const newItem = (item = {}) => {
-  const defaults = {
-    id: uuidv4(),
-    name: null,
-    chargesUsed: 0,
-    notes: '',
-    attachment: null,
-    custom: false,
-    quantity: 1,
-    modify: {},
-    options: {},
-  };
-  const options = Object.assign({}, defaults, item);
-
-  return {
-    id: options.id,
-    name: options.name,
-    chargesUsed: options.chargesUsed,
-    notes: options.notes,
-    attachment: options.attachment,
-    custom: options.custom,
-    quantity: options.quantity,
-    modify: { ...options.modify },
-    options: { ...options.options },
-  };
-};
-
+/**
+ * Get an item's statistics from game data
+ *
+ * @param {String} name The name of the item
+ * @returns The matching item
+ */
 export const getItem = (name) =>
   ITEMS.items.find((item) => item.name === name);
-
-export const newUpgrade = ({ id, level, type, value, options }) => {
-  return {
-    id, // must match the ID in the class leveling data
-    level, // level upgrade was acquired
-    type, // upgrade type string
-    value, // primary option selected
-    options, // additional options; Array || Object
-  };
-};
-
 
 /**
  * Determine the current tier of a character

@@ -43,7 +43,7 @@
   import GENERAL from '~/data/general';
   import WEAPONS from '~/data/weapons';
 
-  import { newWeapon } from '~/helpers/character';
+  import { newWeapon } from '~/helpers/constructors';
 
   import { useCharactersStore } from '~/stores/characters';
 

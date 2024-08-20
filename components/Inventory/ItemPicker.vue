@@ -20,7 +20,7 @@
 
 <script>
   import ITEMS from '~/data/items';
-  import { newItem } from '~/helpers/character';
+  import { newItem } from '~/helpers/constructors';
   import { uuidv4 } from '~/helpers/utility';
 
   export default {
