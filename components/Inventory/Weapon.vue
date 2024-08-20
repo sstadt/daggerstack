@@ -6,7 +6,12 @@
         NuxtIcon(v-if="showMainHand" name="left-hand")
         NuxtIcon(v-if="showOffhand" name="right-hand")
     .flex.justify-between
-      p {{ weapon.trait }} {{ weapon.range }}
+      p
+        NuxtIcon.text-amber-600.mr-1(
+          v-if="weapon.trait.toLowerCase() === recommendedTrait"
+          name="recommended"
+        )
+        | {{ weapon.trait }} {{ weapon.range }}
       p
         | {{ damageDice }}
         span(
@@ -43,6 +48,10 @@
       },
       character: {
         type: Object,
+        default: null,
+      },
+      recommendedTrait: {
+        type: String,
         default: null,
       },
     },
@@ -87,9 +96,9 @@
       },
       titleClass() {
         return {
-          'text-blue-600': this.weapon.tier === 1,
-          'text-purple-700': this.weapon.tier === 2,
-          'text-orange-600': this.weapon.tier === 3,
+          'text-blue-600': this.weapon.tier === 2,
+          'text-purple-700': this.weapon.tier === 3,
+          'text-orange-600': this.weapon.tier === 4,
         };
       },
     },

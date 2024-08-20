@@ -4,7 +4,7 @@
     {
       "name": "Gambeson Armor",
       "score": 3,
-      "tier": 0,
+      "tier": 1,
       "feature": {
         "name": "flexible",
         "label": "Flexible",
@@ -17,13 +17,13 @@
     {
       "name": "Leather Armor",
       "score": 4,
-      "tier": 0,
+      "tier": 1,
       "feature": null
     },
     {
       "name": "Chainmail Armor",
       "score": 5,
-      "tier": 0,
+      "tier": 1,
       "feature": {
         "name": "heavy",
         "label": "Heavy",
@@ -36,7 +36,7 @@
     {
       "name": "Full Plate Armor",
       "score": 6,
-      "tier": 0,
+      "tier": 1,
       "feature": {
         "name": "very heavy",
         "label": "Very Heavy",
@@ -50,7 +50,7 @@
     {
       "name": "Improved Gambeson Armor",
       "score": 4,
-      "tier": 1,
+      "tier": 2,
       "feature": {
         "name": "flexible",
         "label": "Flexible",
@@ -63,13 +63,13 @@
     {
       "name": "Improved Leather Armor",
       "score": 5,
-      "tier": 1,
+      "tier": 2,
       "feature": null
     },
     {
       "name": "Improved Chainmail Armor",
       "score": 6,
-      "tier": 1,
+      "tier": 2,
       "feature": {
         "name": "heavy",
         "label": "Heavy",
@@ -82,7 +82,7 @@
     {
       "name": "Improved Full Plate Armor",
       "score": 7,
-      "tier": 1,
+      "tier": 2,
       "feature": {
         "name": "very heavy",
         "label": "Very Heavy",
@@ -96,7 +96,7 @@
     {
       "name": "Elundrian Chain Armor",
       "score": 2,
-      "tier": 1,
+      "tier": 2,
       "feature": {
         "name": "reinforced",
         "label": "Reinforced",
@@ -107,7 +107,7 @@
     {
       "name": "Harrowbone Armor",
       "score": 5,
-      "tier": 1,
+      "tier": 2,
       "feature": {
         "name": "resistant",
         "label": "Resistant",
@@ -118,7 +118,7 @@
     {
       "name": "Irontree Breastplate Armor",
       "score": 5,
-      "tier": 1,
+      "tier": 2,
       "feature": {
         "name": "sturdy",
         "label": "Sturdy",
@@ -129,7 +129,7 @@
     {
       "name": "Runetan Shield",
       "score": 5,
-      "tier": 1,
+      "tier": 2,
       "feature": {
         "name": "warded",
         "label": "Warded",
@@ -140,7 +140,7 @@
     {
       "name": "Tyris Soft Armor",
       "score": 5,
-      "tier": 1,
+      "tier": 2,
       "feature": {
         "name": "quiet",
         "label": "Quiet",
@@ -151,7 +151,7 @@
     {
       "name": "Rosewild Armor",
       "score": 6,
-      "tier": 1,
+      "tier": 2,
       "feature": {
         "name": "hopeful",
         "label": "Hopeful",
@@ -162,7 +162,7 @@
     {
       "name": "Advanced Gambeson Armor",
       "score": 5,
-      "tier": 2,
+      "tier": 3,
       "feature": {
         "name": "flexible",
         "label": "Flexible",
@@ -175,13 +175,13 @@
     {
       "name": "Advanced Leather Armor",
       "score": 6,
-      "tier": 2,
+      "tier": 3,
       "feature": null
     },
     {
       "name": "Advanced Chainmail Armor",
       "score": 7,
-      "tier": 2,
+      "tier": 3,
       "feature": {
         "name": "heavy",
         "label": "Heavy",
@@ -194,7 +194,7 @@
     {
       "name": "Advanced Full Plate Armor",
       "score": 8,
-      "tier": 2,
+      "tier": 3,
       "feature": {
         "name": "very heavy",
         "label": "Very Heavy",
@@ -208,7 +208,7 @@
     {
       "name": "Bellamoi Fine Armor",
       "score": 6,
-      "tier": 2,
+      "tier": 3,
       "feature": {
         "name": "gilded",
         "label": "Gilded",
@@ -219,7 +219,7 @@
     {
       "name": "Dragonscale Armor",
       "score": 6,
-      "tier": 2,
+      "tier": 3,
       "feature": {
         "name": "impenetrable",
         "label": "Impenetrable",
@@ -230,7 +230,7 @@
     {
       "name": "Spiked Armor Plating",
       "score": 6,
-      "tier": 2,
+      "tier": 3,
       "feature": {
         "name": "sharp",
         "label": "Sharp",
@@ -241,7 +241,7 @@
     {
       "name": "Bladefare Armor",
       "score": 9,
-      "tier": 2,
+      "tier": 3,
       "feature": {
         "name": "physical",
         "label": "Physical",
@@ -252,7 +252,7 @@
     {
       "name": "Monett's Cloak",
       "score": 9,
-      "tier": 2,
+      "tier": 3,
       "feature": {
         "name": "magic",
         "label": "Magic",
@@ -263,7 +263,7 @@
     {
       "name": "Runes of Fortification",
       "score": 10,
-      "tier": 2,
+      "tier": 3,
       "feature": {
         "name": "painful",
         "label": "Painful",
@@ -274,7 +274,7 @@
     {
       "name": "Legendary Gambeson Armor",
       "score": 7,
-      "tier": 3,
+      "tier": 4,
       "feature": {
         "name": "flexible",
         "label": "Flexible",
@@ -287,13 +287,13 @@
     {
       "name": "Legendary Leather Armor",
       "score": 8,
-      "tier": 3,
+      "tier": 4,
       "feature": null
     },
     {
       "name": "Legendary Chainmail Armor",
       "score": 9,
-      "tier": 3,
+      "tier": 4,
       "feature": {
         "name": "heavy",
         "label": "Heavy",
@@ -306,7 +306,7 @@
     {
       "name": "Legendary Full Plate Armor",
       "score": 10,
-      "tier": 3,
+      "tier": 4,
       "feature": {
         "name": "very heavy",
         "label": "Very Heavy",
@@ -320,7 +320,7 @@
     {
       "name": "Dunamis Silkchain",
       "score": 5,
-      "tier": 3,
+      "tier": 4,
       "feature": {
         "name": "timeslowing",
         "label": "Timeslowing",
@@ -331,7 +331,7 @@
     {
       "name": "Channeling Armor",
       "score": 7,
-      "tier": 3,
+      "tier": 4,
       "feature": {
         "name": "channeling",
         "label": "Channeling",
@@ -342,7 +342,7 @@
     {
       "name": "Emberwoven Armor",
       "score": 8,
-      "tier": 3,
+      "tier": 4,
       "feature": {
         "name": "burning",
         "label": "Burning",
@@ -353,7 +353,7 @@
     {
       "name": "Full Reinforced Armor",
       "score": 8,
-      "tier": 3,
+      "tier": 4,
       "feature": {
         "name": "variable",
         "label": "Variable",
@@ -364,7 +364,7 @@
     {
       "name": "Veritas Opal Armor",
       "score": 8,
-      "tier": 3,
+      "tier": 4,
       "feature": {
         "name": "truthseeking",
         "label": "Truthseeking",
@@ -375,7 +375,7 @@
     {
       "name": "Savior Chainmail",
       "score": 15,
-      "tier": 3,
+      "tier": 4,
       "feature": {
         "name": "difficult",
         "label": "Difficult",

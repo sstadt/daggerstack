@@ -26,15 +26,10 @@
       h3.text-xl.font-black.uppercase Available Items
       .flex.space-x-6
         InputFilter(
+          v-if="!startingOnly"
           v-model="selectedTiers"
           label="tier"
-          :options="[0, 1, 2, 3]"
-        )
-        InputFilter(
-          v-if="type === allWeaponsType"
-          v-model="selectedType"
-          label="slot"
-          :options="['primary', 'secondary']"
+          :options="[1, 2, 3, 4]"
         )
     .divide-y
       button.w-full.text-left.p-4(
@@ -42,7 +37,12 @@
         class="focus:bg-slate-100"
         @click="$emit('select', { item: item.name })"
       )
-        InventoryWeapon(v-if="isWeaponType" :weapon="item" :type="type")
+        InventoryWeapon(
+          v-if="isWeaponType"
+          :weapon="item"
+          :type="type"
+          :recommended-trait="bestTrait"
+        )
         InventoryArmor(v-else :armor="item")
 </template>
 
@@ -128,7 +128,7 @@
       };
     },
     computed: {
-      bestStatistic() {
+      bestTrait() {
         const [ best ] = GENERAL.traits
           .map((trait) => ({ name: trait, score: this.character[trait].score }))
           .sort((a, b) => {
@@ -203,7 +203,7 @@
         return this.type === this.allWeaponsType;
       },
       sortedItems() {
-        const tiers = this.startingOnly ? [0] : this.selectedTiers;
+        const tiers = this.startingOnly ? [1] : this.selectedTiers;
 
         return this.itemList
           .filter((item) => {
@@ -222,11 +222,11 @@
             const aTrait = a.trait.toLowerCase();
             const bTrait = b.trait.toLowerCase();
 
-            if (aTrait === this.bestStatistic && bTrait !== this.bestStatistic) {
+            if (aTrait === this.bestTrait && bTrait !== this.bestTrait) {
               return -1;
             }
 
-            if (aTrait !== this.bestStatistic && bTrait === this.bestStatistic) {
+            if (aTrait !== this.bestTrait && bTrait === this.bestTrait) {
               return 1;
             }
 

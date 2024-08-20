@@ -40,9 +40,9 @@
       },
       titleClass() {
         return {
-          'text-blue-600': this.armor.tier === 1,
-          'text-purple-700': this.armor.tier === 2,
-          'text-orange-600': this.armor.tier === 3,
+          'text-blue-600': this.armor.tier === 2,
+          'text-purple-700': this.armor.tier === 3,
+          'text-orange-600': this.armor.tier === 4,
         };
       },
     },

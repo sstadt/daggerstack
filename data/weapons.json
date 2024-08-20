@@ -8,7 +8,7 @@
       "range": "Melee",
       "damage": "d8",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": {
         "name": "reliable",
@@ -24,7 +24,7 @@
       "range": "Melee",
       "damage": "d8+3",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 2,
       "feature": null
     },
@@ -35,7 +35,7 @@
       "range": "Melee",
       "damage": "d8+1",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": null
     },
@@ -46,7 +46,7 @@
       "range": "Melee",
       "damage": "d10+3",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 2,
       "feature": null
     },
@@ -57,7 +57,7 @@
       "range": "Melee",
       "damage": "d10+3",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 2,
       "feature": {
         "name": "massive",
@@ -75,7 +75,7 @@
       "range": "Melee",
       "damage": "d12+3",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 2,
       "feature": {
         "name": "heavy",
@@ -93,7 +93,7 @@
       "range": "Melee",
       "damage": "d8+1",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": null
     },
@@ -104,7 +104,7 @@
       "range": "Melee",
       "damage": "d10+3",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 2,
       "feature": null
     },
@@ -115,7 +115,7 @@
       "range": "Melee",
       "damage": "d8+1",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": null
     },
@@ -126,7 +126,7 @@
       "range": "Melee",
       "damage": "d8",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": {
         "name": "quick",
@@ -142,7 +142,7 @@
       "range": "Very Close",
       "damage": "d8+2",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 2,
       "feature": null
     },
@@ -153,7 +153,7 @@
       "range": "Very Close",
       "damage": "d8+2",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 2,
       "feature": null
     },
@@ -164,7 +164,7 @@
       "range": "Far",
       "damage": "d6+3",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 2,
       "feature": null
     },
@@ -175,7 +175,7 @@
       "range": "Far",
       "damage": "d6+1",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": null
     },
@@ -186,7 +186,7 @@
       "range": "Very Far",
       "damage": "d6+3",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 2,
       "feature": {
         "name": "cumbersome",
@@ -204,7 +204,7 @@
       "range": "Melee",
       "damage": "d10+1",
       "damageType": "magical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": null
     },
@@ -215,7 +215,7 @@
       "range": "Melee",
       "damage": "d10+3",
       "damageType": "magical",
-      "tier": 0,
+      "tier": 1,
       "burden": 2,
       "feature": null
     },
@@ -226,7 +226,7 @@
       "range": "Very Close",
       "damage": "d10+12",
       "damageType": "magical",
-      "tier": 0,
+      "tier": 1,
       "burden": 2,
       "feature": null
     },
@@ -237,7 +237,7 @@
       "range": "Very Close",
       "damage": "d10",
       "damageType": "magical",
-      "tier": 0,
+      "tier": 1,
       "burden": 2,
       "feature": null
     },
@@ -248,7 +248,7 @@
       "range": "Close",
       "damage": "d8+1",
       "damageType": "magical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": null
     },
@@ -259,7 +259,7 @@
       "range": "Close",
       "damage": "d8+1",
       "damageType": "magical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": null
     },
@@ -270,7 +270,7 @@
       "range": "Far",
       "damage": "d6+3",
       "damageType": "magical",
-      "tier": 0,
+      "tier": 1,
       "burden": 2,
       "feature": null
     },
@@ -281,7 +281,7 @@
       "range": "Far",
       "damage": "d6",
       "damageType": "magical",
-      "tier": 0,
+      "tier": 1,
       "burden": 2,
       "feature": {
         "name": "versatile",
@@ -297,7 +297,7 @@
       "range": "Far",
       "damage": "d6+1",
       "damageType": "magical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": null
     },
@@ -308,7 +308,7 @@
       "range": "Very Far",
       "damage": "d6",
       "damageType": "magical",
-      "tier": 0,
+      "tier": 1,
       "burden": 2,
       "feature": {
         "name": "powerful",
@@ -324,7 +324,7 @@
       "range": "Melee",
       "damage": "d8+3",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "reliable",
@@ -340,7 +340,7 @@
       "range": "Melee",
       "damage": "d8+6",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": null
     },
@@ -351,7 +351,7 @@
       "range": "Melee",
       "damage": "d10+4",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": null
     },
@@ -362,7 +362,7 @@
       "range": "Melee",
       "damage": "d10+6",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": null
     },
@@ -373,7 +373,7 @@
       "range": "Melee",
       "damage": "d10+6",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": {
         "name": "massive",
@@ -391,7 +391,7 @@
       "range": "Melee",
       "damage": "d12+6",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": {
         "name": "heavy",
@@ -409,7 +409,7 @@
       "range": "Melee",
       "damage": "d8+4",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": null
     },
@@ -420,7 +420,7 @@
       "range": "Melee",
       "damage": "d10+6",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": null
     },
@@ -431,7 +431,7 @@
       "range": "Melee",
       "damage": "d8+4",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": null
     },
@@ -442,7 +442,7 @@
       "range": "Melee",
       "damage": "d8+3",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "quick",
@@ -458,7 +458,7 @@
       "range": "Very Close",
       "damage": "d8+5",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": null
     },
@@ -469,7 +469,7 @@
       "range": "Very Close",
       "damage": "d8+5",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": null
     },
@@ -480,7 +480,7 @@
       "range": "Far",
       "damage": "d6+6",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": null
     },
@@ -491,7 +491,7 @@
       "range": "Far",
       "damage": "d6+4",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": null
     },
@@ -520,7 +520,7 @@
       "range": "Melee",
       "damage": "d10+4",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "powerful",
@@ -536,7 +536,7 @@
       "range": "Melee",
       "damage": "d10+6",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": {
         "name": "brutal",
@@ -552,7 +552,7 @@
       "range": "Melee",
       "damage": "d8+3",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "deadly",
@@ -568,7 +568,7 @@
       "range": "Very Close",
       "damage": "d8+3",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "quick",
@@ -584,7 +584,7 @@
       "range": "Very Close",
       "damage": "d8+4",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": {
         "name": "scary",
@@ -600,7 +600,7 @@
       "range": "Very Close",
       "damage": "d8+5",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": {
         "name": "reliable",
@@ -616,7 +616,7 @@
       "range": "Far",
       "damage": "d6+6",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": {
         "name": "powerful",
@@ -632,7 +632,7 @@
       "range": "Far",
       "damage": "d6+6",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "reloading",
@@ -648,7 +648,7 @@
       "range": "Very Far",
       "damage": "d6+5",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": {
         "name": "reliable",
@@ -664,7 +664,7 @@
       "range": "Melee",
       "damage": "d10+4",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": null
     },
@@ -675,7 +675,7 @@
       "range": "Melee",
       "damage": "d10+6",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": null
     },
@@ -686,7 +686,7 @@
       "range": "Very Close",
       "damage": "d10+5",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": null
     },
@@ -697,7 +697,7 @@
       "range": "Very Close",
       "damage": "d10+3",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": null
     },
@@ -708,7 +708,7 @@
       "range": "Close",
       "damage": "d8+4",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": null
     },
@@ -719,7 +719,7 @@
       "range": "Close",
       "damage": "d8+4",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": null
     },
@@ -730,7 +730,7 @@
       "range": "Far",
       "damage": "d6+6",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": null
     },
@@ -741,7 +741,7 @@
       "range": "Far",
       "damage": "d6+3",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": {
         "name": "versatile",
@@ -757,7 +757,7 @@
       "range": "Far",
       "damage": "d6+4",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": null
     },
@@ -768,7 +768,7 @@
       "range": "Very Far",
       "damage": "d6+3",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": {
         "name": "powerful",
@@ -784,7 +784,7 @@
       "range": "Melee",
       "damage": "d12+4",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "pompous",
@@ -800,7 +800,7 @@
       "range": "Melee",
       "damage": "d10+4",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": {
         "name": "versatile",
@@ -816,7 +816,7 @@
       "range": "Melee",
       "damage": "d8+4",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "scary",
@@ -832,7 +832,7 @@
       "range": "Melee",
       "damage": "d8+6",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": {
         "name": "eruptive",
@@ -848,7 +848,7 @@
       "range": "Far",
       "damage": "d6+4",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": {
         "name": "brutal",
@@ -864,7 +864,7 @@
       "range": "Far",
       "damage": "d6+4",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": {
         "name": "powerful",
@@ -880,7 +880,7 @@
       "range": "Far",
       "damage": "d6+3",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "invigorating",
@@ -896,7 +896,7 @@
       "range": "Far",
       "damage": "d6+4",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "persuasive",
@@ -912,7 +912,7 @@
       "range": "Far",
       "damage": "d6+4",
       "damageType": "magical",
-      "tier": 1,
+      "tier": 2,
       "burden": 2,
       "feature": {
         "name": "reliable",
@@ -928,7 +928,7 @@
       "range": "Melee",
       "damage": "d8+6",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "reliable",
@@ -944,7 +944,7 @@
       "range": "Melee",
       "damage": "d8+9",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": null
     },
@@ -955,7 +955,7 @@
       "range": "Melee",
       "damage": "d8+7",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": null
     },
@@ -966,7 +966,7 @@
       "range": "Melee",
       "damage": "d10+9",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": null
     },
@@ -977,7 +977,7 @@
       "range": "Melee",
       "damage": "d10+9",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": {
         "name": "massive",
@@ -995,7 +995,7 @@
       "range": "Melee",
       "damage": "d12+9",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": {
         "name": "heavy",
@@ -1013,7 +1013,7 @@
       "range": "Melee",
       "damage": "d8+7",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": null
     },
@@ -1024,7 +1024,7 @@
       "range": "Melee",
       "damage": "d10+9",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": null
     },
@@ -1035,7 +1035,7 @@
       "range": "Melee",
       "damage": "d8+7",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": null
     },
@@ -1046,7 +1046,7 @@
       "range": "Melee",
       "damage": "d8+6",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "quick",
@@ -1062,7 +1062,7 @@
       "range": "Very Close",
       "damage": "d8+8",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": null
     },
@@ -1073,7 +1073,7 @@
       "range": "Very Close",
       "damage": "d8+8",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": null
     },
@@ -1084,7 +1084,7 @@
       "range": "Far",
       "damage": "d6+9",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": null
     },
@@ -1095,7 +1095,7 @@
       "range": "Far",
       "damage": "d6+7",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": null
     },
@@ -1106,7 +1106,7 @@
       "range": "Very Far",
       "damage": "d6+9",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": {
         "name": "cumbersome",
@@ -1124,7 +1124,7 @@
       "range": "Melee",
       "damage": "d8+5",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "sharpwing",
@@ -1140,7 +1140,7 @@
       "range": "Melee",
       "damage": "d12+7",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": {
         "name": "dense",
@@ -1159,7 +1159,7 @@
       "range": "Melee",
       "damage": "d10+7",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": {
         "name": "devastating",
@@ -1175,7 +1175,7 @@
       "range": "Melee",
       "damage": "d10+7",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": {
         "name": "protective",
@@ -1193,7 +1193,7 @@
       "range": "Melee",
       "damage": "d10+5",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "dueling",
@@ -1209,7 +1209,7 @@
       "range": "Melee",
       "damage": "d10+7",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "retractable",
@@ -1225,7 +1225,7 @@
       "range": "Very Close",
       "damage": "d10+8",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": {
         "name": "powerful",
@@ -1241,7 +1241,7 @@
       "range": "Close",
       "damage": "d10+7",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": {
         "name": "brutal",
@@ -1257,7 +1257,7 @@
       "range": "Very Far",
       "damage": "d6+7",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": {
         "name": "versatile",
@@ -1273,7 +1273,7 @@
       "range": "Very Far",
       "damage": "d6+6",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "reloading",
@@ -1289,7 +1289,7 @@
       "range": "Melee",
       "damage": "d10+7",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": null
     },
@@ -1300,7 +1300,7 @@
       "range": "Melee",
       "damage": "d10+9",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": null
     },
@@ -1311,7 +1311,7 @@
       "range": "Very Close",
       "damage": "d10+8",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": null
     },
@@ -1322,7 +1322,7 @@
       "range": "Very Close",
       "damage": "d10+6",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": null
     },
@@ -1333,7 +1333,7 @@
       "range": "Close",
       "damage": "d8+7",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": null
     },
@@ -1344,7 +1344,7 @@
       "range": "Close",
       "damage": "d8+7",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": null
     },
@@ -1355,7 +1355,7 @@
       "range": "Far",
       "damage": "d6+9",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": null
     },
@@ -1366,7 +1366,7 @@
       "range": "Far",
       "damage": "d6+6",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": {
         "name": "versatile",
@@ -1382,7 +1382,7 @@
       "range": "Far",
       "damage": "d6+7",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": null
     },
@@ -1393,7 +1393,7 @@
       "range": "Very Far",
       "damage": "d6+6",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": {
         "name": "powerful",
@@ -1409,7 +1409,7 @@
       "range": "Melee",
       "damage": "d10+8",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": {
         "name": "lucky",
@@ -1425,7 +1425,7 @@
       "range": "Melee",
       "damage": "d10+6",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "healing",
@@ -1441,7 +1441,7 @@
       "range": "Melee",
       "damage": "d10+7",
       "damageType": "any",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "otherworldly",
@@ -1457,7 +1457,7 @@
       "range": "Very Close",
       "damage": "d20+4",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "painful",
@@ -1473,7 +1473,7 @@
       "range": "Close",
       "damage": "d10+5",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "timebender",
@@ -1489,7 +1489,7 @@
       "range": "Far",
       "damage": "d6+7",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": {
         "name": "self-correcting",
@@ -1505,7 +1505,7 @@
       "range": "Far",
       "damage": "d6+7",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 2,
       "feature": {
         "name": "burn",
@@ -1521,7 +1521,7 @@
       "range": "Far",
       "damage": "d6+7",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "powerful",
@@ -1537,7 +1537,7 @@
       "range": "Very Far",
       "damage": "d6+6",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "reloading",
@@ -1553,7 +1553,7 @@
       "range": "Melee",
       "damage": "d8+9",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "reliable",
@@ -1569,7 +1569,7 @@
       "range": "Melee",
       "damage": "d8+12",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": null
     },
@@ -1580,7 +1580,7 @@
       "range": "Melee",
       "damage": "d8+10",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": null
     },
@@ -1591,7 +1591,7 @@
       "range": "Melee",
       "damage": "d10+12",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": null
     },
@@ -1602,7 +1602,7 @@
       "range": "Melee",
       "damage": "d10+12",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "massive",
@@ -1620,7 +1620,7 @@
       "range": "Melee",
       "damage": "d12+12",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "heavy",
@@ -1638,7 +1638,7 @@
       "range": "Melee",
       "damage": "d8+10",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": null
     },
@@ -1649,7 +1649,7 @@
       "range": "Melee",
       "damage": "d10+12",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": null
     },
@@ -1660,7 +1660,7 @@
       "range": "Melee",
       "damage": "d8+10",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": null
     },
@@ -1671,7 +1671,7 @@
       "range": "Melee",
       "damage": "d8+9",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "quick",
@@ -1687,7 +1687,7 @@
       "range": "Very Close",
       "damage": "d8+11",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": null
     },
@@ -1698,7 +1698,7 @@
       "range": "Very Close",
       "damage": "d8+11",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": null
     },
@@ -1709,7 +1709,7 @@
       "range": "Far",
       "damage": "d6+12",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": null
     },
@@ -1720,7 +1720,7 @@
       "range": "Far",
       "damage": "d6+10",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": null
     },
@@ -1731,7 +1731,7 @@
       "range": "Very Far",
       "damage": "d6+12",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "cumbersome",
@@ -1749,7 +1749,7 @@
       "range": "Melee",
       "damage": "d10+9",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "quick",
@@ -1765,7 +1765,7 @@
       "range": "Melee",
       "damage": "d10+11",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "concussive",
@@ -1781,7 +1781,7 @@
       "range": "Melee",
       "damage": "d12+13",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "destructive",
@@ -1799,7 +1799,7 @@
       "range": "Melee",
       "damage": "d8+9",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "serrated",
@@ -1815,7 +1815,7 @@
       "range": "Very Close",
       "damage": "d8+10",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "long",
@@ -1831,7 +1831,7 @@
       "range": "Close",
       "damage": "d8+9",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "grappling",
@@ -1847,7 +1847,7 @@
       "range": "Far",
       "damage": "d6+11",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "bouncing",
@@ -1863,7 +1863,7 @@
       "range": "Far",
       "damage": "d6+11",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "reliable",
@@ -1879,7 +1879,7 @@
       "range": "Very Far",
       "damage": "d6+12",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "reloading",
@@ -1895,7 +1895,7 @@
       "range": "Melee",
       "damage": "d10+10",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": null
     },
@@ -1906,7 +1906,7 @@
       "range": "Melee",
       "damage": "d10+12",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": null
     },
@@ -1917,7 +1917,7 @@
       "range": "Very Close",
       "damage": "d10+11",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": null
     },
@@ -1928,7 +1928,7 @@
       "range": "Very Close",
       "damage": "d10+9",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": null
     },
@@ -1939,7 +1939,7 @@
       "range": "Close",
       "damage": "d8+10",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": null
     },
@@ -1950,7 +1950,7 @@
       "range": "Close",
       "damage": "d8+10",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": null
     },
@@ -1961,7 +1961,7 @@
       "range": "Far",
       "damage": "d8+12",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": null
     },
@@ -1972,7 +1972,7 @@
       "range": "Far",
       "damage": "d6+9",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "versatile",
@@ -1988,7 +1988,7 @@
       "range": "Far",
       "damage": "d6+10",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": null
     },
@@ -1999,7 +1999,7 @@
       "range": "Very Far",
       "damage": "d6+9",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "powerful",
@@ -2015,7 +2015,7 @@
       "range": "Melee",
       "damage": "d10+11",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "penetrating",
@@ -2031,7 +2031,7 @@
       "range": "Melee",
       "damage": "d10+9",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "lifestealing",
@@ -2047,7 +2047,7 @@
       "range": "Melee",
       "damage": "d10+9",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "greedy",
@@ -2063,7 +2063,7 @@
       "range": "Close",
       "damage": "d8+9",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "powerful",
@@ -2079,7 +2079,7 @@
       "range": "Far",
       "damage": "d20+7",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "painful",
@@ -2095,7 +2095,7 @@
       "range": "Far",
       "damage": "d6+13",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "reliable",
@@ -2111,7 +2111,7 @@
       "range": "Far",
       "damage": "d8+13",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "timebender",
@@ -2129,7 +2129,7 @@
       "range": "Very Far",
       "damage": "d6+13",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "reloading",
@@ -2145,7 +2145,7 @@
       "range": "Very Far",
       "damage": "d6+9",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 2,
       "feature": {
         "name": "bonded",
@@ -2161,7 +2161,7 @@
       "range": "Melee",
       "damage": "d8",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": {
         "name": "paired",
@@ -2179,7 +2179,7 @@
       "range": "Melee",
       "damage": "d4",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": {
         "name": "protective",
@@ -2197,7 +2197,7 @@
       "range": "Melee",
       "damage": "d6",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": {
         "name": "barrier",
@@ -2216,7 +2216,7 @@
       "range": "Melee",
       "damage": "d8",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": {
         "name": "paired",
@@ -2234,7 +2234,7 @@
       "range": "Very Close",
       "damage": "d6",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": {
         "name": "whipcrack",
@@ -2250,7 +2250,7 @@
       "range": "Close",
       "damage": "d6",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": {
         "name": "hook",
@@ -2266,7 +2266,7 @@
       "range": "Far",
       "damage": "d6+1",
       "damageType": "physical",
-      "tier": 0,
+      "tier": 1,
       "burden": 1,
       "feature": null
     },
@@ -2277,7 +2277,7 @@
       "range": "Melee",
       "damage": "d8+2",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "paired",
@@ -2295,7 +2295,7 @@
       "range": "Melee",
       "damage": "d4+2",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "protective",
@@ -2313,7 +2313,7 @@
       "range": "Melee",
       "damage": "d6+2",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "barrier",
@@ -2332,7 +2332,7 @@
       "range": "Melee",
       "damage": "d8+2",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "paired",
@@ -2350,7 +2350,7 @@
       "range": "Very Close",
       "damage": "d6+2",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "whipcrack",
@@ -2366,7 +2366,7 @@
       "range": "Close",
       "damage": "d6+2",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "hook",
@@ -2382,7 +2382,7 @@
       "range": "Far",
       "damage": "d6+3",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": null
     },
@@ -2393,7 +2393,7 @@
       "range": "Melee",
       "damage": "d6+2",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "double duty",
@@ -2412,7 +2412,7 @@
       "range": "Melee",
       "damage": "d6+2",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": {
         "name": "parry",
@@ -2428,7 +2428,7 @@
       "range": "Close",
       "damage": "d6+4",
       "damageType": "physical",
-      "tier": 1,
+      "tier": 2,
       "burden": 1,
       "feature": null
     },
@@ -2439,7 +2439,7 @@
       "range": "Melee",
       "damage": "d8+4",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "paired",
@@ -2457,7 +2457,7 @@
       "range": "Melee",
       "damage": "d4+4",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "protective",
@@ -2475,7 +2475,7 @@
       "range": "Melee",
       "damage": "d6+4",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "barrier",
@@ -2494,7 +2494,7 @@
       "range": "Melee",
       "damage": "d8+4",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "paired",
@@ -2512,7 +2512,7 @@
       "range": "Very Close",
       "damage": "d6+4",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "whipcrack",
@@ -2528,7 +2528,7 @@
       "range": "Close",
       "damage": "d6+4",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "hook",
@@ -2544,7 +2544,7 @@
       "range": "Far",
       "damage": "d6+4",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": null
     },
@@ -2555,7 +2555,7 @@
       "range": "Melee",
       "damage": "d4+4",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "deflecting",
@@ -2571,7 +2571,7 @@
       "range": "Close",
       "damage": "d6+4",
       "damageType": "magical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "charged attack",
@@ -2587,7 +2587,7 @@
       "range": "Very Far",
       "damage": "d6+4",
       "damageType": "physical",
-      "tier": 2,
+      "tier": 3,
       "burden": 1,
       "feature": {
         "name": "versatile",
@@ -2603,7 +2603,7 @@
       "range": "Melee",
       "damage": "d8+6",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "paired",
@@ -2621,7 +2621,7 @@
       "range": "Melee",
       "damage": "d4+6",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "protective",
@@ -2639,7 +2639,7 @@
       "range": "Melee",
       "damage": "d4+6",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "barrier",
@@ -2658,7 +2658,7 @@
       "range": "Melee",
       "damage": "d8+6",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "paired",
@@ -2676,7 +2676,7 @@
       "range": "Very Close",
       "damage": "d6+6",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "whipcrack",
@@ -2692,7 +2692,7 @@
       "range": "Close",
       "damage": "d6+6",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "hook",
@@ -2708,7 +2708,7 @@
       "range": "Far",
       "damage": "d6+7",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": null
     },
@@ -2719,7 +2719,7 @@
       "range": "Melee",
       "damage": "d4+6",
       "damageType": "physical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "sheltering",
@@ -2735,7 +2735,7 @@
       "range": "Melee",
       "damage": "d6+6",
       "damageType": "magical",
-      "tier": 3,
+      "tier": 4,
       "burden": 1,
       "feature": {
         "name": "doubled up",
