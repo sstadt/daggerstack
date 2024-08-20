@@ -1,55 +1,54 @@
 <template lang="pug">
   .max-w-5xl.container.p-8
     form(@submit.prevent="next").space-y-8
-      .space-2-y
-        h2.text-center.text-2xl.font-black.uppercase Basic Traits
-        button.text-center.mb-2.text-sm.text-slate-500(
-          type="button"
-          @click="setSuggestedTraits"
-        ) {{ suggestedTraitsLabel }}
-      .grid.grid-cols-3.gap-4
-        TraitSelect(
-          label="agility"
-          :options="agilityOptions"
-          v-model="agility"
-          :errors="v$.agility.$errors"
-          helper-text="Sprint, Leap, Maneuver"
-        )
-        TraitSelect(
-          label="strength"
-          :options="strengthOptions"
-          v-model="strength"
-          :errors="v$.strength.$errors"
-          helper-text="Lift, Smash, Grapple"
-        )
-        TraitSelect(
-          label="finesse"
-          :options="finesseOptions"
-          v-model="finesse"
-          :errors="v$.finesse.$errors"
-          helper-text="Control, Hide, Tinker"
-        )
-        TraitSelect(
-          label="instinct"
-          :options="instinctOptions"
-          v-model="instinct"
-          :errors="v$.instinct.$errors"
-          helper-text="Perceive, Sense, Navigate"
-        )
-        TraitSelect(
-          label="presence"
-          :options="presenceOptions"
-          v-model="presence"
-          :errors="v$.presence.$errors"
-          helper-text="Charm, Perform, Deceive"
-        )
-        TraitSelect(
-          label="knowledge"
-          :options="knowledgeOptions"
-          v-model="knowledge"
-          :errors="v$.knowledge.$errors"
-          helper-text="Recall, Analyze, Comprehend"
-        )
+      .space-y-4
+        h2.text-center.text-2xl.font-black.uppercase.relative
+          | Basic Traits
+        .grid.grid-cols-3.gap-4
+          TraitSelect(
+            label="agility"
+            :options="agilityOptions"
+            v-model="agility"
+            :errors="v$.agility.$errors"
+            helper-text="Sprint, Leap, Maneuver"
+          )
+          TraitSelect(
+            label="strength"
+            :options="strengthOptions"
+            v-model="strength"
+            :errors="v$.strength.$errors"
+            helper-text="Lift, Smash, Grapple"
+          )
+          TraitSelect(
+            label="finesse"
+            :options="finesseOptions"
+            v-model="finesse"
+            :errors="v$.finesse.$errors"
+            helper-text="Control, Hide, Tinker"
+          )
+          TraitSelect(
+            label="instinct"
+            :options="instinctOptions"
+            v-model="instinct"
+            :errors="v$.instinct.$errors"
+            helper-text="Perceive, Sense, Navigate"
+          )
+          TraitSelect(
+            label="presence"
+            :options="presenceOptions"
+            v-model="presence"
+            :errors="v$.presence.$errors"
+            helper-text="Charm, Perform, Deceive"
+          )
+          TraitSelect(
+            label="knowledge"
+            :options="knowledgeOptions"
+            v-model="knowledge"
+            :errors="v$.knowledge.$errors"
+            helper-text="Recall, Analyze, Comprehend"
+          )
+        .text-right
+          BasicButton(size="sm" priority="secondary" @click="setSuggestedTraits") Use Suggested
       .space-2-y
         h2.text-center.text-2xl.font-black.uppercase Additional Traits
         .flex.space-x-2.justify-between.text-xl.py-4.border-b
