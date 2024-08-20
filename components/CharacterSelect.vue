@@ -90,7 +90,7 @@
     },
     watch: {
       loaded(newVal, oldVal) {
-        if (newVal && !oldVal && !user) {
+        if (newVal && !oldVal && !this.user) {
           this.$router.push('/');
         }
       },
