@@ -71,10 +71,5 @@
         this.$emit('update:modelValue', $event.target.value);
       },
     },
-    // watch: {
-    //   modelValue() {
-    //     this.resize();
-    //   },
-    // },
   };
 </script>

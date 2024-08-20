@@ -21,10 +21,43 @@
               ) Mark {{ index + 2 }} HP
       .hit-points
         h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0(@click="showBonuses('healthSlot')") HP
-        InputCheckboxCounter(v-model="currentHealth" :max="maxHealth" :enabled="healthSlots")
+        .relative
+          InputCheckboxCounter(v-model="currentHealth" :max="maxHealth" :enabled="healthSlots")
+          Transition(name="fade")
+            button.absolute.text-2xl.-translate-x-full(
+              class="-left-1.5 top-1/2 -translate-y-1/2"
+              v-if="outOfHitPoints"
+              @click="openDeathMoves"
+            )
+              span.sr-only Death Moves
+              NuxtIcon(name="skull")
       .stress
         h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0(@click="showBonuses('stressSlot')") stress
         InputCheckboxCounter(v-model="currentStress" :max="maxStress" :enabled="stressSlots")
+    BasicDrawer(ref="death" title="Death Moves")
+      div
+        BasicAccordion(
+          id="glory"
+          title="Blaze of Glory"
+          start-open
+          :active-accordion="activeAccordion"
+          @open="setActiveAccordion"
+        )
+          .px-6.py-4 foo
+        BasicAccordion(
+          id="avoid"
+          title="Avoid Death and Face the Consequences"
+          :active-accordion="activeAccordion"
+          @open="setActiveAccordion"
+        )
+          .px-6.py-4 bar
+        BasicAccordion(
+          id="risk"
+          title="Risk it All"
+          :active-accordion="activeAccordion"
+          @open="setActiveAccordion"
+        )
+          .px-6.py-4 baz
     SheetBonuses(
       ref="bonuses"
       :statistic="selectedTrait"
@@ -55,6 +88,7 @@
         currentStress: this.character.stress.current,
         maxStress: GENERAL.maxStress,
         selectedTrait: 'majorDamageThreshold',
+        activeAccordion: 'glory',
       };
     },
     setup() {
@@ -189,6 +223,9 @@
         return this.character.health.slots +
           calculateModifiers(this.healthSlotBonuses, 'healthSlot');
       },
+      outOfHitPoints() {
+        return this.character.health.current === this.healthSlots;
+      },
       stressSlotBonuses() {
         return getFeaturesByAttribute(this.character, 'stressSlot');
       },
@@ -209,12 +246,24 @@
           this.$refs.bonuses.open();
         });
       },
+      openDeathMoves() {
+        this.$refs.death.open();
+      },
+      setActiveAccordion(id) {
+        this.activeAccordion = id;
+      },
     },
     watch: {
       currentHealth(newVal, oldVal) {
         if (newVal !== oldVal) {
           this.character.health.current = newVal;
           this.charactersStore.saveCharacter(this.character);
+
+          this.$nextTick(() => {
+            if (this.outOfHitPoints) {
+              this.openDeathMoves();
+            }
+          });
         }
       },
       currentStress(newVal, oldVal) {
