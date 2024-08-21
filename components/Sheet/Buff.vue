@@ -157,6 +157,7 @@
           id: this.buff.id,
           name: this.name,
           enabled: this.enabled,
+          scar: this.buff.scar,
           modify: {},
         };
 
