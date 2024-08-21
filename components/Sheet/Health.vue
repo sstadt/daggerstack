@@ -22,7 +22,11 @@
       .hit-points
         h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0(@click="showBonuses('healthSlot')") HP
         .relative
-          InputCheckboxCounter(v-model="currentHealth" :max="maxHealth" :enabled="healthSlots")
+          InputCheckboxCounter(
+            v-model="currentHealth"
+            :max="maxHealth"
+            :enabled="healthSlots"
+          )
           Transition(name="fade")
             button.absolute.text-2xl.-translate-x-full(
               class="-left-1.5 top-1/2 -translate-y-1/2"
@@ -33,9 +37,14 @@
               NuxtIcon(name="skull")
       .stress
         h3.text-lg.font-bold.uppercase.w-20.flex-shrink-0(@click="showBonuses('stressSlot')") stress
-        InputCheckboxCounter(v-model="currentStress" :max="maxStress" :enabled="stressSlots")
-    BasicDrawer(ref="death" title="Death Moves")
-      div
+        InputCheckboxCounter(
+          v-model="currentStress"
+          :max="maxStress"
+          :enabled="stressSlots"
+        )
+    //- Death Moves
+    BasicDrawer(ref="death" title="Death Moves" @close="refresh")
+      .divide-y.border-t.border-b
         BasicAccordion(
           id="glory"
           title="Blaze of Glory"
@@ -43,21 +52,80 @@
           :active-accordion="activeAccordion"
           @open="setActiveAccordion"
         )
-          .px-6.py-4 foo
+          .px-6.py-4.space-y-2
+            h2.sr-only Go Out in a Blaze of Glory
+            p <strong>Take any action.</strong> It is automatically considered a critical success.
+            p <strong>You Die</strong>
         BasicAccordion(
           id="avoid"
-          title="Avoid Death and Face the Consequences"
+          title="Avoid Death"
           :active-accordion="activeAccordion"
           @open="setActiveAccordion"
         )
-          .px-6.py-4 bar
+          .px-6.pt-4.pb-10.space-y-2
+            h2.sr-only Avoid Death
+            p.uppercase.text-xl.font-bold Drop unconscious and reroll fear die
+            p <strong>If it is less than or equal to your level ({{ character.level }})</strong>, take a scar. This will permanently reduce your available hope slots by 1.
+            p <strong>You cannot perform any further actions</strong> unless your Hit Points are restored, or you take a long rest.
+            p <strong>If you lose access to your last hope slot</strong>, it is time to end you character's journey.
+            .flex.justify-between.items-end
+              InputText(
+                label="Scar Description"
+                placeholder="5\" slash over left eye"
+                v-model="scarDescription"
+              )
+              button.u-inline-button.bg-slate-100.px-4(
+                type="button"
+                :disabled="scarDescription === ''"
+                @click="addScar"
+              )
+                | Apply
+                span.sr-only Hope Result
         BasicAccordion(
           id="risk"
           title="Risk it All"
           :active-accordion="activeAccordion"
           @open="setActiveAccordion"
         )
-          .px-6.py-4 baz
+          .px-6.pt-4.pb-2.space-y-2
+            h2.sr-only Risk it All
+            div
+              p.uppercase.text-xl.font-bold Roll Duality dice
+              p Then do one of the following...
+            .divide-y
+              .py-4.space-y-2
+                h3.uppercase.font-bold.text-lg Roll With Hope
+                p Clear a number of HP or stress slots, in any desired combination, equal to your hope die
+                .flex.justify-between
+                  InputCounter(
+                    label="Hit Points"
+                    v-model="hitPointsRefresh"
+                    :max="character.health.current"
+                  )
+                  InputCounter(
+                    label="Stress"
+                    v-model="stressRefresh"
+                    :max="character.stress.current"
+                  )
+                  button.u-inline-button.bg-slate-100.px-4(
+                    type="button"
+                    @click="riskHope"
+                  )
+                    | Apply
+                    span.sr-only Hope Result
+              .py-4.space-y-2
+                h3.uppercase.font-bold.text-lg Roll With Fear
+                p You Die
+              .flex.justify-between.py-4.items-end
+                .space-y-2
+                  h3.uppercase.font-bold.text-lg Critical Success
+                  p Clear all HP and stress slots
+                button.u-inline-button.bg-slate-100.px-4(
+                  type="button"
+                  @click="riskCrit"
+                )
+                  | Apply
+                  span.sr-only Critical Success
     SheetBonuses(
       ref="bonuses"
       :statistic="selectedTrait"
@@ -71,6 +139,7 @@
 
   import GENERAL from '~/data/general';
   import CLASSES from '~/data/classes';
+  import { newStatusEffect } from '~/helpers/constructors';
 
   export default {
     name: 'SheetHealth',
@@ -89,12 +158,16 @@
         maxStress: GENERAL.maxStress,
         selectedTrait: 'majorDamageThreshold',
         activeAccordion: 'glory',
+        scarDescription: '',
+        hitPointsRefresh: 0,
+        stressRefresh: 0,
       };
     },
     setup() {
       const charactersStore = useCharactersStore();
+      const sheetStore = useSheetStore();
 
-      return { charactersStore };
+      return { charactersStore, sheetStore };
     },
     computed: {
       baseClass() {
@@ -251,6 +324,35 @@
       },
       setActiveAccordion(id) {
         this.activeAccordion = id;
+      },
+      riskHope() {
+        this.character.health.current = Math.max(0, this.character.health.current - this.hitPointsRefresh);
+        this.character.stress.current = Math.max(0, this.character.stress.current - this.stressRefresh);
+        this.charactersStore.saveCharacter(this.character);
+        this.$refs.death.close();
+      },
+      riskCrit() {
+        this.character.health.current = 0;
+        this.character.stress.current = 0;
+        this.charactersStore.saveCharacter(this.character);
+        this.$refs.death.close();
+      },
+      addScar() {
+        const scar = newStatusEffect({
+          name: this.scarDescription,
+          enabled: true,
+          scar: true,
+          modify: {
+            hopeSlot: -1,
+          },
+        });
+
+        this.character.buffs.push(scar);
+        this.charactersStore.saveCharacter(this.character);
+        this.$refs.death.close();
+      },
+      refresh() {
+        this.sheetStore.refreshCharacterSheet();
       },
     },
     watch: {

@@ -5,7 +5,7 @@
       :class="{ 'sr-only': hideLabel }"
     ) {{ label }}
     .flex.items-stretch.divide-x.divide-slate-150.border.bg-slate-100
-      button.flex.justify-center.items-center.px-3.transition-colors.text-violet-800(
+      button.flex.justify-center.items-center.px-3.transition-colors.text-sm.text-violet-800(
         class="hover:bg-violet-800 hover:text-white"
         :class="{ 'opacity-30 pointer-events-none': decrementDisabled }"
         :disabled="decrementDisabled"
@@ -15,7 +15,7 @@
       p.px-3.py-2.text-xl
         span(v-if="modifier") +
         | {{ modelValue }}
-      button.flex.justify-center.items-center.px-3.transition-colors.text-violet-800(
+      button.flex.justify-center.items-center.px-3.transition-colors.text-sm.text-violet-800(
         class="hover:bg-violet-800 hover:text-white"
         :class="{ 'opacity-30 pointer-events-none': incrementDisabled }"
         :disabled="incrementDisabled"

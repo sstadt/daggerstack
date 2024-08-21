@@ -10,7 +10,8 @@
       label="hope"
       helper-text="Spend hope to use experience or help an ally"
       v-model="hope"
-      :max="maxHope"
+      :enabled="maxHope"
+      :max="Math.max(maxHope, baseMaxHope)"
     )
     p(v-if="baseClass")
       strong {{ ucFirst(character.baseClass) }}'s Hope:
@@ -43,6 +44,7 @@
     data() {
       return {
         hope: this.character.hope,
+        baseMaxHope: GENERAL.maxHope,
         selectedBonusesIndex: 0,
       };
     },
@@ -57,13 +59,15 @@
           ? CLASSES[this.character.baseClass]
           : null;
       },
-      maxHope() {
-        const base = GENERAL.maxHope;
-        const modifiers = this.character.companion.name
+      hopeModifiers() {
+        const characterModifiers = getFeaturesByAttribute(this.character, 'hopeSlot');
+        const companionModifiers = this.character.companion.name
           ? getFeaturesByAttribute(this.character.companion, 'hopeSlot')
           : [];
-
-        return base + calculateModifiers(modifiers, 'hopeSlot');
+        return characterModifiers.concat(companionModifiers);
+      },
+      maxHope() {
+        return this.baseMaxHope + calculateModifiers(this.hopeModifiers, 'hopeSlot');
       },
       experienceBonuses() {
         return this.character.experience.map((exp) => {

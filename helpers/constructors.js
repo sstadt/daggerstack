@@ -212,6 +212,7 @@ export const newStatusEffect = (buff = {}) => {
   const defaults = {
     name: '',
     enabled: false,
+    scar: false,
     modify: {},
   };
   const options = Object.assign({}, defaults, buff);
@@ -220,6 +221,7 @@ export const newStatusEffect = (buff = {}) => {
     id: uuidv4(),
     name: options.name,
     enabled: options.enabled,
+    scar: options.scar,
     modify: { ...options.modify },
   };
 };

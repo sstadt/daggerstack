@@ -1,6 +1,7 @@
 <template lang="pug">
   p.alert.px-4.py-3.rounded.border(:class="alertClass")
-    BasicMarkdown(:source="message")
+    BasicMarkdown(v-if="message" :source="message")
+    slot(v-else)
 </template>
 
 <script>
@@ -9,7 +10,7 @@
     props: {
       message: {
         type: String,
-        required: true,
+        default: null,
       },
       type: {
         type: String,

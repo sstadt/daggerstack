@@ -1,6 +1,6 @@
 <template lang="pug">
   .accordion
-    button.py-2.border-b.text-xl.font-bold.w-full(@click="toggle") {{ title }}
+    button.text-left.py-4.px-6.text-xl.font-bold.w-full(@click="toggle") {{ title }}
     .overflow-hidden(
       ref="content"
       :class="contentClass"

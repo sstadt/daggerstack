@@ -260,14 +260,16 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
   });
 
   // buffs
-  character.buffs.forEach((buff) => {
-    if (buff.enabled && buff.modify[attribute]) {
-      const feature = { ...buff };
+  if (character.buffs) {
+    character.buffs.forEach((buff) => {
+      if (buff.enabled && buff.modify.hasOwnProperty(attribute)) {
+        const feature = { ...buff };
 
-      feature.name = `${buff.name} (status effect)`;
-      features.push(feature);
-    }
-  });
+        feature.name = `${buff.name} (status effect)`;
+        features.push(feature);
+      }
+    });
+  }
 
   return features;
 };

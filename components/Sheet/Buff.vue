@@ -15,32 +15,34 @@
     Transition(name="slide-fade-right")
       .pt-2.space-y-2(v-if="expanded")
         InputText(v-model="name")
-        TransitionGroup(name="slide-fade-right")
-          .flex.space-x-2.items-center(v-for="(mod, index) in modify" :key="index")
-            InputSelect(
-              label="Upgrade"
-              v-model="modify[index].stat"
-              :options="upgradeOptions"
-              hide-label
-            )
-            InputCounter(
-              label="Modifier"
-              v-model="modify[index].score"
-              hide-label
-              :min="-20"
-              :max="20"
-            )
-            button.text-2xl.py-2(
-              :disabled="modify.length < 2"
-              :class="{ 'opacity-40': modify.length < 2 }"
-              @click="removeModifier(index)"
-            )
-              span.sr-only Remove Modifier
-              NuxtIcon(name="trash")
+        p.text-right(v-if="buff.scar") Hope Slot {{ buff.modify.hopeSlot }} (scar)
+        div(v-else)
+          TransitionGroup(name="slide-fade-right")
+            .flex.space-x-2.items-center(v-for="(mod, index) in modify" :key="index")
+              InputSelect(
+                label="Upgrade"
+                v-model="modify[index].stat"
+                :options="upgradeOptions"
+                hide-label
+              )
+              InputCounter(
+                label="Modifier"
+                v-model="modify[index].score"
+                hide-label
+                :min="-20"
+                :max="20"
+              )
+              button.text-2xl.py-2(
+                :disabled="modify.length < 2"
+                :class="{ 'opacity-40': modify.length < 2 }"
+                @click="removeModifier(index)"
+              )
+                span.sr-only Remove Modifier
+                NuxtIcon(name="trash")
         .flex.justify-between
-          BasicButton(priority="secondary" size="sm" icon @click="addModifier")
+          BasicButton(v-if="!buff.scar" priority="secondary" size="sm" icon @click="addModifier")
             NuxtIcon(name="plus")
-          .flex
+          .flex.ml-auto
             BasicButton(
               priority="secondary"
               size="sm"
