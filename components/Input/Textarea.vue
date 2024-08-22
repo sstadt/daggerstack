@@ -1,5 +1,5 @@
 <template lang="pug">
-  .input--textarea.flex.flex-col(:class="wrapperClasses")
+  .input--textarea.flex.flex-col(:class="wrapperClass")
     label.uppercase.font-bold.text-slate-500(
       v-if="label"
       :class="{ 'sr-only': hideLabel }"
@@ -14,7 +14,10 @@
       @keypress="keyPress"
       @keyup="resize"
     )
-    textarea.px-4.py-2.text-xl.h-0.opacity-0.m-0.pointer-events-none(ref="shadow" :value="modelValue")
+    textarea.px-4.py-2.text-xl.h-0.opacity-0.m-0.pointer-events-none(
+      ref="$shadow"
+      :value="modelValue"
+    )
     .flex.justify-between.font-bold
       transition(name="slide-fade-left")
         p.text-red-400(v-if="firstError") {{ firstError.$message }}
@@ -22,54 +25,103 @@
 </template>
 
 <script>
-  import Text from '~/components/Input/Text';
-
   export default {
     name: 'InputTextarea',
-    extends: Text,
-    props: {
-      limit: {
-        type: Number,
-        default: null,
-      },
-    },
-    data() {
-      return {
-        height: 0,
-      };
-    },
-    mounted() {
-      this.resize();
-    },
-    computed: {
-      characterCount() {
-        return this.modelValue.length;
-      },
-      inputStyle() {
-        return {
-          height: `${this.height}px`,
-        };
-      },
-    },
-    methods: {
-      resize() {
-        this.height = this.$refs.shadow.scrollHeight;
-      },
-      keyPress($event) {
-        if (this.limit !== null && this.characterCount >= this.limit) {
-          $event.preventDefault();
-
-          if (this.characterCount >= this.limit) {
-            this.$emit(
-              'update:modelValue',
-              $event.target.value.substring(0, this.limit),
-            );
-          }
-        }
-      },
-      inputHandler($event) {
-        this.$emit('update:modelValue', $event.target.value);
-      },
-    },
   };
+</script>
+
+<script setup>
+  const emit = defineEmits(['update:modelValue']);
+
+  const props = defineProps({
+    modelValue: {},
+    label: {
+      type: String,
+      default: null,
+    },
+    hideLabel: {
+      type: Boolean,
+      default: false,
+    },
+    name: {
+      type: String,
+      default: null,
+    },
+    placeholder: {
+      type: String,
+      default: '',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    required: {
+      type: Boolean,
+      default: false,
+    },
+    errors: {
+      type: Array,
+      default: [],
+    },
+    limit: {
+      type: Number,
+      default: null,
+    },
+  });
+
+  const height = ref(0);
+  const $shadow = ref(null);
+
+  const characterCount = computed(() => {
+    return props.modelValue.length;
+  });
+
+  const wrapperClass = computed(() => {
+    return {
+      'disabled': props.disabled,
+    };
+  });
+
+  const inputClass = computed(() => {
+    return {
+      'bg-slate-100 focus:bg-slate-200': props.errors.length === 0,
+      'bg-red-100 focus:bg-red-200': props.errors.length > 0,
+    };
+  });
+
+  const inputStyle = computed(() => {
+    return {
+      height: `${height.value}px`,
+    };
+  });
+
+  const firstError = computed(() => {
+    const [firstError] = props.errors;
+    return firstError;
+  });
+
+  const resize = () => {
+    height.value = $shadow.value.scrollHeight;
+  };
+
+  const keyPress = ($event) => {
+    if (props.limit !== null && characterCount.value >= props.limit) {
+      $event.preventDefault();
+
+      if (characterCount.value >= props.limit) {
+        emit(
+          'update:modelValue',
+          $event.target.value.substring(0, props.limit),
+        );
+      }
+    }
+  };
+
+  const inputHandler = ($event) => {
+    emit('update:modelValue', $event.target.value);
+  };
+
+  onMounted(() => {
+    resize();
+  });
 </script>

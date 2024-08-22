@@ -2,7 +2,7 @@
   .accordion
     button.text-left.py-4.px-6.text-xl.font-bold.w-full(@click="toggle") {{ title }}
     .overflow-hidden(
-      ref="content"
+      ref="$content"
       :class="contentClass"
       :style="contentStyle"
     )
@@ -12,90 +12,97 @@
 <script>
   export default {
     name: 'BasicAccordion',
-    props: {
-      id: {
-        type: String,
-        default: null,
-      },
-      activeAccordion: {
-        type: String,
-        default: null,
-      },
-      title: {
-        type: String,
-        required: true,
-      },
-      startOpen: {
-        type: Boolean,
-        default: false,
-      },
-    },
-    data() {
-      return {
-        scrollHeight: 0,
-        isOpen: this.startOpen,
-        mounted: false,
-      };
-    },
-    computed: {
-      contentClass() {
-        return {
-          'transition-all': this.mounted,
-          'opacity-100': this.isOpen,
-          'opacity-0 pointer-events-none': !this.isOpen,
-        };
-      },
-      contentStyle() {
-        return {
-          height: `${this.scrollHeight}px`,
-        };
-      },
-    },
-    mounted() {
-      if (this.startOpen) {
-        this.setOpenState();
-      }
-
-      this.$nextTick(() => {
-        this.mounted = true;
-      });
-    },
-    methods: {
-      open() {
-        this.isOpen = true;
-      },
-      setOpenState() {
-        this.scrollHeight = this.$refs.content.scrollHeight;
-        this.$emit('open', this.id);
-      },
-      close() {
-        this.isOpen = false;
-      },
-      setCloseState() {
-        this.scrollHeight = 0;
-        this.$emit('close', this.id);
-      },
-      toggle() {
-        this.isOpen = !this.isOpen;
-      },
-    },
-    watch: {
-      isOpen(newVal) {
-        if (newVal === true) {
-          this.setOpenState();
-        } else {
-          this.setCloseState();
-        }
-      },
-      activeAccordion(newVal) {
-        if (this.id) {
-          if (newVal === this.id && !this.isOpen) {
-            this.isOpen = true;
-          } else if (newVal !== this.id && this.isOpen) {
-            this.isOpen = false;
-          }
-        }
-      },
-    },
   };
+</script>
+
+<script setup>
+  const emit = defineEmits(['open', 'close']);
+
+  const props = defineProps({
+    id: {
+      type: String,
+      default: null,
+    },
+    activeAccordion: {
+      type: String,
+      default: null,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    startOpen: {
+      type: Boolean,
+      default: false,
+    },
+  });
+
+  const scrollHeight = ref(0);
+  const isOpen = ref(props.startOpen);
+  const mounted = ref(false);
+  const $content = ref(null);
+
+  const contentClass = computed(() => {
+    return {
+      'transition-all': mounted.value,
+      'opacity-100': isOpen.value,
+      'opacity-0 pointer-events-none': !isOpen.value,
+    };
+  });
+
+  const contentStyle = computed(() => {
+    return {
+      height: `${scrollHeight.value}px`,
+    };
+  });
+
+  const open = () => {
+    isOpen.value = true;
+  };
+
+  const setOpenState = () => {
+    scrollHeight.value = $content.value.scrollHeight;
+    emit('open', props.id);
+  };
+
+  const close = () => {
+    isOpen.value = false;
+  };
+
+  const setCloseState = () => {
+    scrollHeight.value = 0;
+    emit('close', props.id);
+  };
+
+  const toggle = () => {
+    isOpen.value = !isOpen.value;
+  };
+
+  onMounted(() => {
+    if (props.startOpen) {
+      setOpenState();
+    }
+
+    nextTick().then(() => {
+      mounted.value = true;
+    });
+  });
+
+  watch(isOpen, (newVal) => {
+    if (newVal === true) {
+      setOpenState();
+    } else {
+      setCloseState();
+    }
+  });
+
+  watch(() => props.activeAccordion, (newVal) => {
+    if (props.id) {
+      if (newVal === props.id && !isOpen.value) {
+        isOpen.value = true;
+      } else if (newVal !== props.id && isOpen.value) {
+        isOpen.value = false;
+      }
+    }
+  });
 </script>

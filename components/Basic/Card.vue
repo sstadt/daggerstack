@@ -12,16 +12,19 @@
 
 <script>
   export default {
-    name: 'Card',
-    props: {
-      title: {
-        type: String,
-        default: null,
-      },
-      subtitle: {
-        type: String,
-        default: null,
-      },
-    },
+    name: 'BasicCard',
   };
+</script>
+
+<script setup>
+  const props = defineProps({
+    title: {
+      type: String,
+      default: null,
+    },
+    subtitle: {
+      type: String,
+      default: null,
+    },
+  });
 </script>

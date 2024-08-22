@@ -7,33 +7,37 @@
 </template>
 
 <script>
-  import zxcvbn from 'zxcvbn';
-
   export default {
     name: 'AuthPasswordStrength',
-    props: {
-      password: {
-        type: String,
-        required: true,
-      },
-    },
-    computed: {
-      strength() {
-        return zxcvbn(this.password).score;
-      },
-      indicatorStyle() {
-        return {
-          width: `${Math.min(this.strength * 25, 100)}%`,
-        };
-      },
-      indicatorClass() {
-        return {
-          'bg-red-700': this.strength < 2,
-          'bg-amber-600': this.strength === 2,
-          'bg-yellow-400': this.strength === 3,
-          'bg-green-600': this.strength > 3,
-        };
-      },
-    }
   };
+</script>
+
+<script setup>
+  import zxcvbn from 'zxcvbn';
+
+  const props = defineProps({
+    password: {
+      type: String,
+      required: true,
+    },
+  });
+
+  const strength = computed(() => {
+    return zxcvbn(props.password).score;
+  });
+
+  const indicatorStyle = computed(() => {
+    return {
+      width: `${Math.min(strength.value * 25, 100)}%`,
+    };
+  });
+
+  const indicatorClass = computed(() => {
+    return {
+      'bg-red-700': strength.value < 2,
+      'bg-amber-600': strength.value === 2,
+      'bg-yellow-400': strength.value === 3,
+      'bg-green-600': strength.value > 3,
+    };
+  });
 </script>
