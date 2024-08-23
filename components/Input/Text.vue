@@ -25,6 +25,12 @@
 </script>
 
 <script setup>
+  const {
+    useWrapperClass,
+    useInputClass,
+    useFirstError,
+  } = useInput();
+
   const props = defineProps({
     modelValue: {},
     label: {
@@ -65,23 +71,7 @@
     },
   });
 
-  const wrapperClass = computed(() => {
-    return {
-      'disabled': props.disabled,
-    };
-  });
-
-  const inputClass = computed(() => {
-    return {
-      'bg-slate-100 focus:bg-slate-200': props.errors.length === 0,
-      'bg-red-100 focus:bg-red-200': props.errors.length > 0,
-      'border': !props.passwordStrength,
-      'border-t border-x': props.passwordStrength,
-    };
-  });
-
-  const firstError = computed(() => {
-    const [firstError] = props.errors;
-    return firstError;
-  });
+  const wrapperClass = useWrapperClass(props.disabled);
+  const inputClass = useInputClass(props.errors, props.passwordStrength);
+  const firstError = useFirstError(props.errors);
 </script>

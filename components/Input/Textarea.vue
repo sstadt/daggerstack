@@ -31,6 +31,11 @@
 </script>
 
 <script setup>
+  const {
+    useWrapperClass,
+    useInputClass,
+    useFirstError,
+  } = useInput();
   const emit = defineEmits(['update:modelValue']);
 
   const props = defineProps({
@@ -72,32 +77,18 @@
   const height = ref(0);
   const $shadow = ref(null);
 
+  const wrapperClass = useWrapperClass(props.disabled);
+  const inputClass = useInputClass(props.errors);
+  const firstError = useFirstError(props.errors);
+
   const characterCount = computed(() => {
     return props.modelValue.length;
-  });
-
-  const wrapperClass = computed(() => {
-    return {
-      'disabled': props.disabled,
-    };
-  });
-
-  const inputClass = computed(() => {
-    return {
-      'bg-slate-100 focus:bg-slate-200': props.errors.length === 0,
-      'bg-red-100 focus:bg-red-200': props.errors.length > 0,
-    };
   });
 
   const inputStyle = computed(() => {
     return {
       height: `${height.value}px`,
     };
-  });
-
-  const firstError = computed(() => {
-    const [firstError] = props.errors;
-    return firstError;
   });
 
   const resize = () => {
