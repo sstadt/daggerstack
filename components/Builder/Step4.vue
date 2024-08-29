@@ -62,22 +62,20 @@
   export default {
     name: 'BuilderStep4',
     data() {
-      const isNewCharacter = !this.builderStore.character.id;
-
       return {
         activeType: null,
         primaryWeaponType: PRIMARY_WEAPON_TYPE,
         secondaryWeaponType: SECONDARY_WEAPON_TYPE,
         armorType: ARMOR_TYPE,
-        primaryWeapon: isNewCharacter
-          ? newWeapon()
-          : { ...this.builderStore.character.equipment.primaryWeapon },
-        secondaryWeapon: isNewCharacter
-          ? newWeapon()
-          : { ...this.builderStore.character.equipment.secondaryWeapon },
-        armor: isNewCharacter
-          ? newArmor()
-          : { ...this.builderStore.character.equipment.armor },
+        primaryWeapon: this.builderStore.character.equipment.primaryWeapon.name
+          ? { ...this.builderStore.character.equipment.primaryWeapon }
+          : newWeapon(),
+        secondaryWeapon: this.builderStore.character.equipment.secondaryWeapon.name
+          ? { ...this.builderStore.character.equipment.secondaryWeapon }
+          : newWeapon(),
+        armor: this.builderStore.character.equipment.armor.name
+          ? { ...this.builderStore.character.equipment.armor }
+          : newArmor(),
       };
     },
     computed: {

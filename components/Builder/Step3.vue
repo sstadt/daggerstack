@@ -46,7 +46,7 @@
     data() {
       const classData = CLASSES[this.builderStore.baseClass];
       const existingItems = [ ...this.builderStore.character.inventory.items ];
-      const spellbook = existingItems.find((i) => i.name.toLowerCase().includes('spellbook'));
+      const spellbook = existingItems.find((i) => i.notes.toLowerCase().includes('spellbook'));
       const existingGeneralItem = existingItems.find((i) => GENERAL.startingGear.choose.includes(i.name));
       const [ firstGeneralItem ] = GENERAL.startingGear.choose;
       const existingClassItem = existingItems.find((i) => classData.startingGear.choose.includes(i.name));
