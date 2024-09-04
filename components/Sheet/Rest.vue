@@ -98,7 +98,7 @@
           @click="shortRest"
         ) Take Short Rest
       //- long rest
-      .space-y-4.px-8(v-else-if="currentTab === 1")
+      .space-y-4(v-else-if="currentTab === 1")
         p.text-sm.text-center You may swap out any number of domain cards in your Loadout for any cards in your Vault. Then, choose two options below.
         .space-y-2
           .flex.space-x-2
@@ -189,6 +189,12 @@
 </template>
 
 <script>
+  export default {
+    name: 'SheetRest',
+  };
+</script>
+
+<script setup>
   import { useCharactersStore } from '~/stores/characters';
   import { useSheetStore } from '~/stores/sheet';
   import { useToastStore } from '~/stores/toast';
@@ -196,200 +202,199 @@
 
   import GENERAL from '~/data/general';
 
-  export default {
-    name: 'SheetRest',
-    props: {
-      character: {
-        type: Object,
-        required: true,
-      },
+  const emit = defineEmits(['rest-complete']);
+
+  const props = defineProps({
+    character: {
+      type: Object,
+      required: true,
     },
-    data() {
-      return {
-        targetOptions: [{ label: 'self', value: 'self' }, { label: 'ally', value: 'ally' }],
-        currentTab: 0,
-        shortTendWounds: 0,
-        shortClearStress: 0,
-        shortRepairArmor: 0,
-        shortPrepare: 0,
-        healWounds: [0, 0],
-        healStress: [0, 0],
-        healArmor: [0, 0],
-        shortTendWoundsTarget: ['self', 'self'],
-        shortRepairArmorTarget: ['self', 'self'],
-        shortPrepareTarget: ['self', 'self'],
-        longTendWounds: 0,
-        longClearStress: 0,
-        longRepairArmor: 0,
-        longPrepare: 0,
-        longProject: 0,
-        longTendWoundsTarget: ['self', 'ally'],
-        longRepairArmorTarget: ['self', 'ally'],
-        longPrepareTarget: ['self', 'self'],
-      };
-    },
-    setup() {
-      const charactersStore = useCharactersStore();
-      const sheetStore = useSheetStore();
-      const toastStore = useToastStore();
+  });
 
-      return { charactersStore, sheetStore, toastStore };
-    },
-    computed: {
-      shortRestOptionsSelected() {
-        return this.shortTendWounds +
-          this.shortClearStress +
-          this.shortRepairArmor +
-          this.shortPrepare;
-      },
-      shortOptionsRemaining() {
-        return Math.max(0, GENERAL.maxShortRestOptions - this.shortRestOptionsSelected);
-      },
-      longRestOptionsSelected() {
-        return this.longTendWounds +
-          this.longClearStress +
-          this.longRepairArmor +
-          this.longPrepare +
-          this.longProject;
-      },
-      longOptionsRemaining() {
-        return Math.max(0, GENERAL.maxLongRestOptions - this.longRestOptionsSelected);
-      },
-    },
-    methods: {
-      rollDice,
-      setTab(index) {
-        this.currentTab = index;
-      },
-      shortRest() {
-        let restoreHitPoints = 0;
-        let restoreStress = 0;
-        let restoreArmor = 0;
-        let addHope = 0;
-        const characterUpdates = [];
+  const charactersStore = useCharactersStore();
+  const sheetStore = useSheetStore();
+  const toastStore = useToastStore();
 
-        // hit points
-        for (let i = 0, j = this.shortTendWounds; i < j; i++) {
-          if (this.healWounds[i] === 0) {
-            this.healWounds[i] = rollDice('1d4').total;
-          }
+  const targetOptions = ref([{ label: 'self', value: 'self' }, { label: 'ally', value: 'ally' }]);
+  const currentTab = ref(0);
+  const shortTendWounds = ref(0);
+  const shortClearStress = ref(0);
+  const shortRepairArmor = ref(0);
+  const shortPrepare = ref(0);
+  const healWounds = ref([0, 0]);
+  const healStress = ref([0, 0]);
+  const healArmor = ref([0, 0]);
+  const shortTendWoundsTarget = ref(['self', 'self']);
+  const shortRepairArmorTarget = ref(['self', 'self']);
+  const shortPrepareTarget = ref(['self', 'self']);
+  const longTendWounds = ref(0);
+  const longClearStress = ref(0);
+  const longRepairArmor = ref(0);
+  const longPrepare = ref(0);
+  const longProject = ref(0);
+  const longTendWoundsTarget = ref(['self', 'ally']);
+  const longRepairArmorTarget = ref(['self', 'ally']);
+  const longPrepareTarget = ref(['self', 'self']);
 
-          if (this.shortTendWoundsTarget[i] === 'self') {
-            restoreHitPoints += this.healWounds[i];
-          }
-        }
+  const shortRestOptionsSelected = computed(() => {
+    return shortTendWounds.value +
+      shortClearStress.value +
+      shortRepairArmor.value +
+      shortPrepare.value;
+  });
 
-        if (restoreHitPoints > 0) {
-          this.character.health.current =
-            Math.max(this.character.health.current - restoreHitPoints, 0);
-          characterUpdates.push(`Cleared ${restoreHitPoints} Hit Points`);
-        }
+  const shortOptionsRemaining = computed(() => {
+    return Math.max(0, GENERAL.maxShortRestOptions - shortRestOptionsSelected.value);
+  });
 
-        // stress
-        for (let i = 0, j = this.shortClearStress; i < j; i++) {
-          if (this.healStress[i] === 0) this.healStress[i] = rollDice('1d4').total;
-          restoreStress += this.healStress[i];
-        }
+  const longRestOptionsSelected = computed(() => {
+    return longTendWounds.value +
+      longClearStress.value +
+      longRepairArmor.value +
+      longPrepare.value +
+      longProject.value;
+  });
 
-        if (restoreStress > 0) {
-          this.character.stress.current =
-            Math.max(this.character.stress.current - restoreStress, 0);
-          characterUpdates.push(`Cleared ${restoreStress} Stress`);
+  const longOptionsRemaining = computed(() => {
+    return Math.max(0, GENERAL.maxLongRestOptions - longRestOptionsSelected.value);
+  });
 
-          if (this.character.companion.name) {
-            this.character.companion.stress.current =
-              Math.max(this.character.companion.stress.current - restoreHitPoints, 0);
-            characterUpdates.push(`Cleared ${restoreStress} Companion Stress`);
-          }
-        }
+  const setTab = (index) => {
+    currentTab.value = index;
+  };
 
-        // armor
-        for (let i = 0, j = this.shortRepairArmor; i < j; i++) {
-          if (this.healArmor[i] === 0) {
-            this.healArmor[i] = rollDice('1d4').total;
-          }
+  const shortRest = () => {
+    let restoreHitPoints = 0;
+    let restoreStress = 0;
+    let restoreArmor = 0;
+    let addHope = 0;
+    const characterUpdates = [];
 
-          if (this.shortRepairArmorTarget[i] === 'self') {
-            restoreArmor += this.healArmor[i];
-          }
-        }
+    // hit points
+    for (let i = 0; i < shortTendWounds.value; i++) {
+      if (healWounds.value[i] === 0) {
+        healWounds.value[i] = rollDice('1d4').total;
+      }
 
-        if (restoreArmor > 0) {
-          this.character.armor.current =
-            Math.max(this.character.armor.current - restoreArmor, 0);
-          characterUpdates.push(`Repaired ${restoreArmor} Armor Slots`);
-        }
+      if (shortTendWoundsTarget.value[i] === 'self') {
+        restoreHitPoints += healWounds.value[i];
+      }
+    }
 
-        // hope
-        for (let i = 0, j = this.shortPrepare; i < j; i++) {
-          const hope = this.shortPrepareTarget[i] === 'self' ? 1 : 2;
-          addHope += hope;
-        }
+    if (restoreHitPoints > 0) {
+      props.character.health.current =
+        Math.max(props.character.health.current - restoreHitPoints, 0);
+      characterUpdates.push(`Cleared ${restoreHitPoints} Hit Points`);
+    }
 
-        if (addHope > 0) {
-          this.character.hope = Math.min(this.character.hope + addHope, GENERAL.maxHope);
-          characterUpdates.push(`Added ${addHope} Hope`);
-        }
+    // stress
+    for (let i = 0; i < shortClearStress.value; i++) {
+      if (healStress.value[i] === 0) healStress.value[i] = rollDice('1d4').total;
+      restoreStress += healStress.value[i];
+    }
 
-        // save character
-        if (characterUpdates.length > 0) {
-          this.charactersStore.saveCharacter(this.character);
-          this.sheetStore.refreshCharacterSheet();
-          this.toastStore.postMessage({ body: `Short rest taken!\n\n- ${characterUpdates.join('\n\n- ')}` });
-        }
+    if (restoreStress > 0) {
+      props.character.stress.current =
+        Math.max(props.character.stress.current - restoreStress, 0);
+      characterUpdates.push(`Cleared ${restoreStress} Stress`);
 
-        this.$emit('rest-complete', 'short');
-      },
-      longRest() {
-        let addHope = 0;
-        const characterUpdates = [];
+      if (props.character.companion.name) {
+        props.character.companion.stress.current =
+          Math.max(props.character.companion.stress.current - restoreStress, 0);
+        characterUpdates.push(`Cleared ${restoreStress} Companion Stress`);
+      }
+    }
 
-        // health
-        for (let i = 0, j = this.longTendWounds; i < j; i++) {
-          if (this.longTendWoundsTarget[i] === 'self') {
-            this.character.health.current = 0;
-            characterUpdates.push('Cleared all Hit Points');
-            break;
-          }
-        }
+    // armor
+    for (let i = 0; i < shortRepairArmor.value; i++) {
+      if (healArmor.value[i] === 0) {
+        healArmor.value[i] = rollDice('1d4').total;
+      }
 
-        // stress
-        if (this.longClearStress > 0) {
-          this.character.stress.current = 0;
-          this.character.companion.stress.current = 0;
-          characterUpdates.push('Cleared all Stress');
-        }
+      if (shortRepairArmorTarget.value[i] === 'self') {
+        restoreArmor += healArmor.value[i];
+      }
+    }
 
-        // armor
-        for (let i = 0, j = this.longRepairArmor; i < j; i++) {
-          if (this.longRepairArmorTarget[i] === 'self') {
-            this.character.armor.current = 0;
-            characterUpdates.push('Fully repaired Armor');
-            break;
-          }
-        }
+    if (restoreArmor > 0) {
+      props.character.armor.current =
+        Math.max(props.character.armor.current - restoreArmor, 0);
+      characterUpdates.push(`Repaired ${restoreArmor} Armor Slots`);
+    }
 
-        // hope
-        for (let i = 0, j = this.longPrepare; i < j; i++) {
-          let additionalHope = this.longPrepareTarget[i] === 'self' ? 1 : 2;
-          addHope += additionalHope;
-        }
+    // hope
+    for (let i = 0; i < shortPrepare.value; i++) {
+      const hope = shortPrepareTarget.value[i] === 'self' ? 1 : 2;
+      addHope += hope;
+    }
 
-        if (addHope > 0) {
-          this.character.hope = Math.min(this.character.hope + addHope, GENERAL.maxHope);
-          characterUpdates.push(`Added ${addHope} Hope`);
-        }
+    if (addHope > 0) {
+      props.character.hope = Math.min(props.character.hope + addHope, GENERAL.maxHope);
+      characterUpdates.push(`Added ${addHope} Hope`);
+    }
 
-        // save character
-        if (characterUpdates.length > 0) {
-          this.charactersStore.saveCharacter(this.character);
-          this.sheetStore.refreshCharacterSheet();
-          this.toastStore.postMessage({ body: `Long rest taken!\n\n- ${characterUpdates.join('\n\n- ')}` });
-        }
+    // save character
+    if (characterUpdates.length > 0) {
+      charactersStore.saveCharacter(props.character);
+      sheetStore.refreshCharacterSheet();
+      toastStore.postMessage({
+        body: `Short rest taken!\n\n- ${characterUpdates.join('\n\n- ')}`,
+      });
+    }
 
-        this.$emit('rest-complete', 'long');
-      },
-    },
+    emit('rest-complete', 'short');
+  };
+
+  const longRest = () => {
+    let addHope = 0;
+    const characterUpdates = [];
+
+    // health
+    for (let i = 0; i < longTendWounds.value; i++) {
+      if (longTendWoundsTarget.value[i] === 'self') {
+        props.character.health.current = 0;
+        characterUpdates.push('Cleared all Hit Points');
+        break;
+      }
+    }
+
+    // stress
+    if (longClearStress.value > 0) {
+      props.character.stress.current = 0;
+      props.character.companion.stress.current = 0;
+      characterUpdates.push('Cleared all Stress');
+    }
+
+    // armor
+    for (let i = 0; i < longRepairArmor.value; i++) {
+      if (longRepairArmorTarget.value[i] === 'self') {
+        props.character.armor.current = 0;
+        characterUpdates.push('Fully repaired Armor');
+        break;
+      }
+    }
+
+    // hope
+    for (let i = 0; i < longPrepare.value; i++) {
+      let additionalHope = longPrepareTarget.value[i] === 'self' ? 1 : 2;
+      addHope += additionalHope;
+    }
+
+    if (addHope > 0) {
+      props.character.hope = Math.min(props.character.hope + addHope, GENERAL.maxHope);
+      characterUpdates.push(`Added ${addHope} Hope`);
+    }
+
+    // save character
+    if (characterUpdates.length > 0) {
+      charactersStore.saveCharacter(props.character);
+      sheetStore.refreshCharacterSheet();
+      toastStore.postMessage({
+        body: `Long rest taken!\n\n- ${characterUpdates.join('\n\n- ')}`,
+      });
+    }
+
+    emit('rest-complete', 'long');
   };
 </script>
 

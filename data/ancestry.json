@@ -85,7 +85,15 @@
       },
       {
         "name": "Celestial Trance",
-        "description": "During a rest, you can drop into a trance and make an extra downtime move."
+        "description": "During a rest, you can drop into a trance and make an extra downtime move.",
+        "longRest": {
+          "always": {
+            "stressSlot": "all"
+          },
+          "optional": {
+            "healthSlot": "all"
+          }
+        }
       }
     ]
   },
