@@ -2,18 +2,14 @@
   BasicCard
     .flex.justify-center.space-x-8.mb-4
       button.py-2.border-b.transition-colors(
+        v-for="tab in tabs"
         type="button"
-        :class="{ 'border-b-black': currentTab === 0 }"
-        @click="setTab(0)"
-      ) Short Rest
-      button.py-2.border-b.transition-colors(
-        type="button"
-        :class="{ 'border-b-black': currentTab === 1 }"
-        @click="setTab(1)"
-      ) Long Rest
-    transition(name="fade" mode="out-in")
+        :class="{ 'border-b-black': activeTab.id === tab.id }"
+        @click="setTab(tab)"
+      ) {{ tab.name }}
+    transition(:name="tabTransition" mode="out-in")
       //- short rest
-      .space-y-4(v-if="currentTab === 0")
+      .space-y-4(v-if="activeTab.id === 'short-rest'")
         p.text-sm.text-center You may swap out any number of domain cards in your Loadout for any cards in your Vault. Then, choose two options below.
         .space-y-2
           .flex.space-x-2
@@ -98,7 +94,7 @@
           @click="shortRest"
         ) Take Short Rest
       //- long rest
-      .space-y-4(v-else-if="currentTab === 1")
+      .space-y-4(v-else-if="activeTab.id === 'long-rest'")
         p.text-sm.text-center You may swap out any number of domain cards in your Loadout for any cards in your Vault. Then, choose two options below.
         .space-y-2
           .flex.space-x-2
@@ -195,9 +191,6 @@
 </script>
 
 <script setup>
-  import { useCharactersStore } from '~/stores/characters';
-  import { useSheetStore } from '~/stores/sheet';
-  import { useToastStore } from '~/stores/toast';
   import { rollDice } from '~/helpers/dice';
 
   import GENERAL from '~/data/general';
@@ -215,8 +208,18 @@
   const sheetStore = useSheetStore();
   const toastStore = useToastStore();
 
+  const tabs = [
+    { id: 'short-rest', name: 'Short Rest' },
+    { id: 'long-rest', name: 'Long Rest' },
+  ];
+
+  const {
+    activeTab,
+    tabTransition,
+    setTab,
+  } = useTabs(tabs);
+
   const targetOptions = ref([{ label: 'self', value: 'self' }, { label: 'ally', value: 'ally' }]);
-  const currentTab = ref(0);
   const shortTendWounds = ref(0);
   const shortClearStress = ref(0);
   const shortRepairArmor = ref(0);
@@ -258,10 +261,6 @@
   const longOptionsRemaining = computed(() => {
     return Math.max(0, GENERAL.maxLongRestOptions - longRestOptionsSelected.value);
   });
-
-  const setTab = (index) => {
-    currentTab.value = index;
-  };
 
   const shortRest = () => {
     let restoreHitPoints = 0;
