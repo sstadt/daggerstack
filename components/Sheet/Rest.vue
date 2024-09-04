@@ -89,6 +89,7 @@
                     :options="targetOptions"
                     required
                   )
+        p(v-if="shortRestItems.length > 0") Regain charges for: {{ shortRestItems.map((i) => i.name).join(', ') }}
         BasicButton.w-full(
           :disabled="shortRestOptionsSelected < maxShortRestActions"
           @click="shortRest"
@@ -178,6 +179,7 @@
             div
               p.font-bold Work on a Project
               p.text-sm Establish or continue work on a project. The GM might ask for a roll to determine how much to tick down on the completion track.
+        p(v-if="longRestItems.length > 0") Regain charges for: {{ longRestItems.map((i) => i.name).join(', ') }}
         BasicButton.w-full(
           @click="longRest"
           :disabled="longRestOptionsSelected < maxLongRestActions"
@@ -194,6 +196,7 @@
   import { rollDice } from '~/helpers/dice';
 
   import GENERAL from '~/data/general';
+  import ITEMS from '~/data/items';
   import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
 
   const emit = defineEmits(['rest-complete']);
@@ -298,6 +301,38 @@
     };
   });
 
+  const shortRestItems = computed(() => {
+    return props.character.inventory.items
+      .filter((item) => item.chargesUsed > 0) // items with charges used
+      .map((item) => {
+        const itemData = ITEMS.items.find((data) => data.name === item.name);
+
+        return {
+          id: item.id,
+          name: item.name,
+          recharge: itemData.charge?.recharge?.on,
+          quantity: itemData.charge?.recharge?.quantity,
+        };
+      }) // make a data object with only the needed info
+      .filter((item) => item.recharge === 'shortRest'); // short rest only
+  });
+
+  const longRestItems = computed(() => {
+    return props.character.inventory.items
+      .filter((item) => item.chargesUsed > 0) // items with charges used
+      .map((item) => {
+        const itemData = ITEMS.items.find((data) => data.name === item.name);
+
+        return {
+          id: item.id,
+          name: item.name,
+          recharge: itemData.charge?.recharge?.on,
+          quantity: itemData.charge?.recharge?.quantity,
+        };
+      }) // make a data object with only the needed info
+      .filter((item) => item.recharge === 'longRest'); // short rest only
+  });
+
   const shortRest = () => {
     let restoreHitPoints = 0;
     let restoreStress = 0;
@@ -368,7 +403,18 @@
       characterUpdates.push(`Added ${addHope} Hope`);
     }
 
-    // todo: item charges
+    // item charges
+    if (shortRestItems.value.length > 0) {
+      characterUpdates.push(`Recharged items: ${shortRestItems.value.map((i) => i.name).join(', ')}`);
+
+      shortRestItems.value.forEach((itemData) => {
+        const itemIndex = props.character.inventory.items.findIndex((item) => item.id === itemData.id);
+        const characterItem = { ...props.character.inventory.items[itemIndex] };
+
+        characterItem.chargesUsed = Math.max(0, characterItem.chargesUsed - itemData.quantity);
+        props.character.inventory.items.splice(itemIndex, 1, characterItem);
+      });
+    }
 
     // save character
     if (characterUpdates.length > 0) {
@@ -422,7 +468,18 @@
       characterUpdates.push(`Added ${addHope} Hope`);
     }
 
-    // todo: item charges
+    // item charges
+    if (longRestItems.value.length > 0) {
+      characterUpdates.push(`Recharged items: ${longRestItems.value.map((i) => i.name).join(', ')}`);
+
+      longRestItems.value.forEach((itemData) => {
+        const itemIndex = props.character.inventory.items.findIndex((item) => item.id === itemData.id);
+        const characterItem = { ...props.character.inventory.items[itemIndex] };
+
+        characterItem.chargesUsed = Math.max(0, characterItem.chargesUsed - itemData.quantity);
+        props.character.inventory.items.splice(itemIndex, 1, characterItem);
+      });
+    }
 
     // save character
     if (characterUpdates.length > 0) {

@@ -24,18 +24,18 @@
           SheetExperience(:character="character" :key="`${key}-experience`")
           SheetClassFeature(:character="character")
       .space-y-8.pb-4.py-8(v-else-if="currentPage === 'equipment'" class="md:space-x-6 md:px-6")
-        SheetWeapons(:character="character")
-        SheetArmor(:character="character")
+        SheetWeapons(:character="character" :key="`${key}-equipped-weapons`")
+        SheetArmor(:character="character" :key="`${key}-equipped-armor`")
       .space-y-8.pb-4.py-8(
         v-else-if="currentPage === 'inventory' || mq.md && currentPage === 'equipment'"
         class="md:space-y-0 md:flex md:space-x-6 md:px-6"
       )
         .space-y-8(v-if="mq.md" class="md:w-1/2")
-          SheetWeapons(:character="character")
-          SheetArmor(:character="character")
+          SheetWeapons(:character="character" :key="`${key}-weapons`")
+          SheetArmor(:character="character" :key="`${key}-armor`")
         .space-y-8(class="md:w-1/2")
           SheetGold(:character="character")
-          SheetInventory(:character="character")
+          SheetInventory(:character="character" :key="`${key}-inventory`")
       .space-y-8.pb-4.py-8(
         v-else-if="currentPage === 'background'"
         class="md:space-y-0 md:flex md:space-x-6 md:px-6"
@@ -63,11 +63,11 @@
             ) {{ tab }}
           Transition(:name="transition" mode="out-in")
             .space-y-12(v-if="currentTab === 'equipment'")
-              SheetWeapons(:character="character")
-              SheetArmor(:character="character")
+              SheetWeapons(:character="character" :key="`${key}-equipped-weapons`")
+              SheetArmor(:character="character" :key="`${key}-equipped-armor`")
             .space-y-12(v-else-if="currentTab === 'inventory'")
               SheetGold(:character="character")
-              SheetInventory(:character="character")
+              SheetInventory(:character="character" :key="`${key}-inventory`")
             .space-y-12(v-else-if="currentTab === 'shapeshift'")
               SheetShapeshift(v-if="baseClass.alternateForms" :character="character")
             .space-y-12(v-else-if="currentTab === 'companion'")
