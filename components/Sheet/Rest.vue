@@ -213,11 +213,7 @@
     { id: 'long-rest', name: 'Long Rest' },
   ];
 
-  const {
-    activeTab,
-    tabTransition,
-    setTab,
-  } = useTabs(tabs);
+  const { activeTab, tabTransition, setTab } = useTabs(tabs);
 
   const targetOptions = ref([{ label: 'self', value: 'self' }, { label: 'ally', value: 'ally' }]);
   const shortTendWounds = ref(0);
@@ -332,6 +328,8 @@
       characterUpdates.push(`Added ${addHope} Hope`);
     }
 
+    // todo: item charges
+
     // save character
     if (characterUpdates.length > 0) {
       charactersStore.saveCharacter(props.character);
@@ -383,6 +381,8 @@
       props.character.hope = Math.min(props.character.hope + addHope, GENERAL.maxHope);
       characterUpdates.push(`Added ${addHope} Hope`);
     }
+
+    // todo: item charges
 
     // save character
     if (characterUpdates.length > 0) {
