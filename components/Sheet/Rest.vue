@@ -13,10 +13,10 @@
         p.text-sm.text-center You may swap out any number of domain cards in your Loadout for any cards in your Vault. Then, choose two options below.
         .space-y-2
           .flex.space-x-2
-            .rest__checkbox-wrapper.mt-1
+            .mt-1(:style="shortRestCheckboxWrapperStyle")
               InputCheckboxCounter.justify-end(
                 v-model="shortTendWounds"
-                :max="2"
+                :max="maxShortRestActions"
                 :enabled="shortTendWounds + shortOptionsRemaining"
               )
             div
@@ -34,10 +34,10 @@
                   InputCounter(v-model="healWounds[n - 1]" :min="0" :max="4")
         .space-y-2
           .flex.space-x-2
-            .rest__checkbox-wrapper.mt-1.rest-checkboxes
+            .mt-1.rest-checkboxes(:style="shortRestCheckboxWrapperStyle")
               InputCheckboxCounter.justify-end(
                 v-model="shortClearStress"
-                :max="2"
+                :max="maxShortRestActions"
                 :enabled="shortClearStress + shortOptionsRemaining"
               )
             div
@@ -50,10 +50,10 @@
                   InputCounter(v-model="healStress[n - 1]" :min="0" :max="4")
         .space-y-2
           .flex.space-x-2
-            .rest__checkbox-wrapper.mt-1
+            .mt-1(:style="shortRestCheckboxWrapperStyle")
               InputCheckboxCounter.justify-end(
                 v-model="shortRepairArmor"
-                :max="2"
+                :max="maxShortRestActions"
                 :enabled="shortRepairArmor + shortOptionsRemaining"
               )
             div
@@ -71,10 +71,10 @@
                   InputCounter(v-model="healArmor[n - 1]" :min="0" :max="4")
         .space-y-2
           .flex.space-x-2
-            .rest__checkbox-wrapper.mt-1
+            .mt-1(:style="shortRestCheckboxWrapperStyle")
               InputCheckboxCounter.justify-end(
                 v-model="shortPrepare"
-                :max="2"
+                :max="maxShortRestActions"
                 :enabled="shortPrepare + shortOptionsRemaining"
               )
             div
@@ -90,7 +90,7 @@
                     required
                   )
         BasicButton.w-full(
-          :disabled="shortRestOptionsSelected < 2"
+          :disabled="shortRestOptionsSelected < maxShortRestActions"
           @click="shortRest"
         ) Take Short Rest
       //- long rest
@@ -98,10 +98,10 @@
         p.text-sm.text-center You may swap out any number of domain cards in your Loadout for any cards in your Vault. Then, choose two options below.
         .space-y-2
           .flex.space-x-2
-            .rest__checkbox-wrapper.mt-1
+            .mt-1(:style="longRestCheckboxWrapperStyle")
               InputCheckboxCounter.justify-end(
                 v-model="longTendWounds"
-                :max="2"
+                :max="maxLongRestActions"
                 :enabled="longTendWounds + longOptionsRemaining"
               )
             div
@@ -118,10 +118,10 @@
                   )
         .space-y-2
           .flex.space-x-2
-            .rest__checkbox-wrapper.mt-1.rest-checkboxes
+            .mt-1.rest-checkboxes(:style="longRestCheckboxWrapperStyle")
               InputCheckboxCounter.justify-end(
                 v-model="longClearStress"
-                :max="2"
+                :max="maxLongRestActions"
                 :enabled="longClearStress + longOptionsRemaining"
               )
             div
@@ -129,10 +129,10 @@
               p.text-sm Describe how you blow off steam or pull yourself together, and clear all stress.
         .space-y-2
           .flex.space-x-2
-            .rest__checkbox-wrapper.mt-1
+            .mt-1(:style="longRestCheckboxWrapperStyle")
               InputCheckboxCounter.justify-end(
                 v-model="longRepairArmor"
-                :max="2"
+                :max="maxLongRestActions"
                 :enabled="longRepairArmor + longOptionsRemaining"
               )
             div
@@ -149,10 +149,10 @@
                   )
         .space-y-2
           .flex.space-x-2
-            .rest__checkbox-wrapper.mt-1
+            .mt-1(:style="longRestCheckboxWrapperStyle")
               InputCheckboxCounter.justify-end(
                 v-model="longPrepare"
-                :max="2"
+                :max="maxLongRestActions"
                 :enabled="longPrepare + longOptionsRemaining"
               )
             div
@@ -169,10 +169,10 @@
                   )
         .space-y-2
           .flex.space-x-2
-            .rest__checkbox-wrapper.mt-1
+            .mt-1(:style="longRestCheckboxWrapperStyle")
               InputCheckboxCounter.justify-end(
                 v-model="longProject"
-                :max="2"
+                :max="maxLongRestActions"
                 :enabled="longProject + longOptionsRemaining"
               )
             div
@@ -180,7 +180,7 @@
               p.text-sm Establish or continue work on a project. The GM might ask for a roll to determine how much to tick down on the completion track.
         BasicButton.w-full(
           @click="longRest"
-          :disabled="longRestOptionsSelected < 2"
+          :disabled="longRestOptionsSelected < maxLongRestActions"
         ) Take Long Rest
 </template>
 
@@ -194,6 +194,7 @@
   import { rollDice } from '~/helpers/dice';
 
   import GENERAL from '~/data/general';
+  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
 
   const emit = defineEmits(['rest-complete']);
 
@@ -212,8 +213,35 @@
     { id: 'short-rest', name: 'Short Rest' },
     { id: 'long-rest', name: 'Long Rest' },
   ];
-
   const { activeTab, tabTransition, setTab } = useTabs(tabs);
+
+  const maxShortRestActions = GENERAL.maxShortRestOptions + calculateModifiers(
+    getFeaturesByAttribute(props.character, 'shortRestAction'),
+    'shortRestAction'
+  );
+  const shortSelectionOptions = {
+    quantity: maxShortRestActions,
+    selfOnly: true,
+  };
+
+  const maxLongRestActions = GENERAL.maxLongRestOptions + calculateModifiers(
+    getFeaturesByAttribute(props.character, 'longRestAction'),
+    'longRestAction'
+  );
+  const longSelectionOptions = {
+    quantity: maxLongRestActions,
+    selfOnly: false,
+  };
+
+  const getInitialSelections = ({ quantity = 2, selfOnly = true }) => {
+    const selections = [];
+
+    for (let i = 0; i < quantity; i++) {
+      selections.push(i > 0 && selfOnly !== true ? 'ally' : 'self');
+    }
+
+    return selections;
+  };
 
   const targetOptions = ref([{ label: 'self', value: 'self' }, { label: 'ally', value: 'ally' }]);
   const shortTendWounds = ref(0);
@@ -223,17 +251,17 @@
   const healWounds = ref([0, 0]);
   const healStress = ref([0, 0]);
   const healArmor = ref([0, 0]);
-  const shortTendWoundsTarget = ref(['self', 'self']);
-  const shortRepairArmorTarget = ref(['self', 'self']);
-  const shortPrepareTarget = ref(['self', 'self']);
+  const shortTendWoundsTarget = ref(getInitialSelections(shortSelectionOptions));
+  const shortRepairArmorTarget = ref(getInitialSelections(shortSelectionOptions));
+  const shortPrepareTarget = ref(getInitialSelections(shortSelectionOptions));
   const longTendWounds = ref(0);
   const longClearStress = ref(0);
   const longRepairArmor = ref(0);
   const longPrepare = ref(0);
   const longProject = ref(0);
-  const longTendWoundsTarget = ref(['self', 'ally']);
-  const longRepairArmorTarget = ref(['self', 'ally']);
-  const longPrepareTarget = ref(['self', 'self']);
+  const longTendWoundsTarget = ref(getInitialSelections(longSelectionOptions));
+  const longRepairArmorTarget = ref(getInitialSelections(longSelectionOptions));
+  const longPrepareTarget = ref(getInitialSelections({ quantity: maxLongRestActions, selfOnly: true }));
 
   const shortRestOptionsSelected = computed(() => {
     return shortTendWounds.value +
@@ -243,7 +271,7 @@
   });
 
   const shortOptionsRemaining = computed(() => {
-    return Math.max(0, GENERAL.maxShortRestOptions - shortRestOptionsSelected.value);
+    return Math.max(0, maxShortRestActions - shortRestOptionsSelected.value);
   });
 
   const longRestOptionsSelected = computed(() => {
@@ -255,7 +283,19 @@
   });
 
   const longOptionsRemaining = computed(() => {
-    return Math.max(0, GENERAL.maxLongRestOptions - longRestOptionsSelected.value);
+    return Math.max(0, maxLongRestActions - longRestOptionsSelected.value);
+  });
+
+  const shortRestCheckboxWrapperStyle = computed(() => {
+    return {
+      'min-width': `${24 * maxShortRestActions}px`,
+    };
+  });
+
+  const longRestCheckboxWrapperStyle = computed(() => {
+    return {
+      'min-width': `${24 * maxLongRestActions}px`,
+    };
   });
 
   const shortRest = () => {
@@ -396,9 +436,3 @@
     emit('rest-complete', 'long');
   };
 </script>
-
-<style lang="scss" scoped>
-  .rest__checkbox-wrapper {
-    min-width: 48px;
-  }
-</style>
