@@ -12,7 +12,10 @@
       },
       {
         "name": "Efficient",
-        "description": "When you take a short rest, you can substitute a long rest move for one of your short rest moves."
+        "description": "When you take a short rest, you can substitute a long rest move for one of your short rest moves.",
+        "modify": {
+          "longRestActionOnShortRest": 1
+        }
       }
     ]
   },

@@ -89,6 +89,17 @@
                     :options="targetOptions"
                     required
                   )
+        .space-y-2(v-if="maxLongActionsOnShortRest > 0")
+          .flex.space-x-2
+            .mt-1(:style="shortRestCheckboxWrapperStyle")
+              InputCheckboxCounter.justify-end(
+                v-model="shortProject"
+                :max="maxLongActionsOnShortRest"
+                :enabled="shortProject + shortOptionsRemaining"
+              )
+            div
+              p.font-bold Work on a Project
+              p.text-sm Establish or continue work on a project. The GM might ask for a roll to determine how much to tick down on the completion track.
         p(v-if="shortRestItems.length > 0") Regain charges for: {{ shortRestItems.map((i) => i.name).join(', ') }}
         BasicButton.w-full(
           :disabled="shortRestOptionsSelected < maxShortRestActions"
@@ -222,14 +233,18 @@
     getFeaturesByAttribute(props.character, 'shortRestAction'),
     'shortRestAction'
   );
+  const maxLongActionsOnShortRest = calculateModifiers(
+    getFeaturesByAttribute(props.character, 'longRestActionOnShortRest'),
+    'longRestActionOnShortRest'
+  );
   const shortSelectionOptions = {
     quantity: maxShortRestActions,
     selfOnly: true,
   };
 
   const maxLongRestActions = GENERAL.maxLongRestOptions + calculateModifiers(
-    getFeaturesByAttribute(props.character, 'longRestAction'),
-    'longRestAction'
+    getFeaturesByAttribute(props.character, 'longRestActionOnShortRest'),
+    'longRestActionOnShortRest'
   );
   const longSelectionOptions = {
     quantity: maxLongRestActions,
@@ -251,6 +266,7 @@
   const shortClearStress = ref(0);
   const shortRepairArmor = ref(0);
   const shortPrepare = ref(0);
+  const shortProject = ref(0);
   const healWounds = ref([0, 0]);
   const healStress = ref([0, 0]);
   const healArmor = ref([0, 0]);
@@ -270,7 +286,8 @@
     return shortTendWounds.value +
       shortClearStress.value +
       shortRepairArmor.value +
-      shortPrepare.value;
+      shortPrepare.value +
+      shortProject.value;
   });
 
   const shortOptionsRemaining = computed(() => {

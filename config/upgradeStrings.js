@@ -25,4 +25,7 @@ export default {
   companionDamage: 'Attack Damage',
   companionEvasion: 'Companion Evasion',
   primaryMeleeDamage: 'Primary Weapon Melee Damage',
+  shortRestAction: 'Short Rest Action',
+  longRestAction: 'Long Rest Action',
+  longRestActionOnShortRest: 'Long Rest Action on Short Rest',
 };
