@@ -3,11 +3,14 @@
     {
       "name": "Premium Bedroll",
       "description": "During any rests, you always automatically clear 1 stress.",
-      "onRest": {
-        "all": {
-          "modify": {
-            "stress": -1
-          }
+      "onShortRest": {
+        "resource": {
+          "stress": -1
+        }
+      },
+      "onLongRest": {
+        "resource": {
+          "stress": -1
         }
       }
     },

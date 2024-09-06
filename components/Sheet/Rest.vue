@@ -100,7 +100,7 @@
             div
               p.font-bold Work on a Project
               p.text-sm Establish or continue work on a project. The GM might ask for a roll to determine how much to tick down on the completion track.
-        p(v-if="shortRestItems.length > 0") Regain charges for: {{ shortRestItems.map((i) => i.name).join(', ') }}
+        p(v-if="shortRestChargeItems.length > 0") Regain charges for: {{ shortRestChargeItems.map((i) => i.name).join(', ') }}
         BasicButton.w-full(
           :disabled="shortRestOptionsSelected < maxShortRestActions"
           @click="shortRest"
@@ -190,7 +190,7 @@
             div
               p.font-bold Work on a Project
               p.text-sm Establish or continue work on a project. The GM might ask for a roll to determine how much to tick down on the completion track.
-        p(v-if="longRestItems.length > 0") Regain charges for: {{ longRestItems.map((i) => i.name).join(', ') }}
+        p(v-if="longRestChargeItems.length > 0") Regain charges for: {{ longRestChargeItems.map((i) => i.name).join(', ') }}
         BasicButton.w-full(
           @click="longRest"
           :disabled="longRestOptionsSelected < maxLongRestActions"
@@ -318,33 +318,46 @@
     };
   });
 
-  const shortRestItems = computed(() => {
+  const itemData = computed(() => {
+    return props.character.inventory.items
+      .map((item) => ITEMS.items.find((data) => data.name === item.name))
+      .filter((item) => item?.name);
+  });
+
+  const resourceItems = computed(() => {
+    return itemData.value.filter((item, index, arr) => {
+      return arr.indexOf((i) => i.name === item.name) === index &&
+        item.onShortRest?.resource || item.onLongRest?.resource
+    });
+  });
+
+  const shortRestChargeItems = computed(() => {
     return props.character.inventory.items
       .filter((item) => item.chargesUsed > 0) // items with charges used
       .map((item) => {
-        const itemData = ITEMS.items.find((data) => data.name === item.name);
+        const data = itemData.find((d) => d.name === item.name);
 
         return {
           id: item.id,
           name: item.name,
-          recharge: itemData.charge?.recharge?.on,
-          quantity: itemData.charge?.recharge?.quantity,
+          recharge: data.charge?.recharge?.on,
+          quantity: data.charge?.recharge?.quantity,
         };
       }) // make a data object with only the needed info
       .filter((item) => item.recharge === 'shortRest'); // short rest only
   });
 
-  const longRestItems = computed(() => {
+  const longRestChargeItems = computed(() => {
     return props.character.inventory.items
       .filter((item) => item.chargesUsed > 0) // items with charges used
       .map((item) => {
-        const itemData = ITEMS.items.find((data) => data.name === item.name);
+        const data = itemData.find((d) => d.name === item.name);
 
         return {
           id: item.id,
           name: item.name,
-          recharge: itemData.charge?.recharge?.on,
-          quantity: itemData.charge?.recharge?.quantity,
+          recharge: data.charge?.recharge?.on,
+          quantity: data.charge?.recharge?.quantity,
         };
       }) // make a data object with only the needed info
       .filter((item) => item.recharge === 'longRest'); // short rest only
@@ -421,10 +434,10 @@
     }
 
     // item charges
-    if (shortRestItems.value.length > 0) {
-      characterUpdates.push(`Recharged items: ${shortRestItems.value.map((i) => i.name).join(', ')}`);
+    if (shortRestChargeItems.value.length > 0) {
+      characterUpdates.push(`Recharged items: ${shortRestChargeItems.value.map((i) => i.name).join(', ')}`);
 
-      shortRestItems.value.forEach((itemData) => {
+      shortRestChargeItems.value.forEach((itemData) => {
         const itemIndex = props.character.inventory.items.findIndex((item) => item.id === itemData.id);
         const characterItem = { ...props.character.inventory.items[itemIndex] };
 
@@ -432,6 +445,19 @@
         props.character.inventory.items.splice(itemIndex, 1, characterItem);
       });
     }
+
+    // resource items
+    resourceItems.value.forEach(({ onShortRest }) => {
+      if (onShortRest?.resource?.stress) {
+        props.character.stress.current =
+          Math.max(0, props.character.stress.current + onShortRest.resource.stress);
+      }
+
+      if (onShortRest?.resource?.health) {
+        props.character.health.current =
+          Math.max(0, props.character.health.current + onShortRest.resource.health);
+      }
+    });
 
     // save character
     if (characterUpdates.length > 0) {
@@ -486,10 +512,10 @@
     }
 
     // item charges
-    if (longRestItems.value.length > 0) {
-      characterUpdates.push(`Recharged items: ${longRestItems.value.map((i) => i.name).join(', ')}`);
+    if (longRestChargeItems.value.length > 0) {
+      characterUpdates.push(`Recharged items: ${longRestChargeItems.value.map((i) => i.name).join(', ')}`);
 
-      longRestItems.value.forEach((itemData) => {
+      longRestChargeItems.value.forEach((itemData) => {
         const itemIndex = props.character.inventory.items.findIndex((item) => item.id === itemData.id);
         const characterItem = { ...props.character.inventory.items[itemIndex] };
 
@@ -497,6 +523,19 @@
         props.character.inventory.items.splice(itemIndex, 1, characterItem);
       });
     }
+
+    // resource items
+    resourceItems.value.forEach(({ onLongRest }) => {
+      if (onLongRest?.resource?.stress) {
+        props.character.stress.current =
+          Math.max(0, props.character.stress.current + onLongRest.resource.stress);
+      }
+
+      if (onLongRest?.resource?.health) {
+        props.character.health.current =
+          Math.max(0, props.character.health.current + onLongRest.resource.health);
+      }
+    });
 
     // save character
     if (characterUpdates.length > 0) {
