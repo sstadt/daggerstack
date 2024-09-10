@@ -112,30 +112,22 @@
     {
       "name": "Minor Stamina Potion Recipe",
       "description": "During downtime, spend one of your downtime moves and a handful of gold to craft a Minor Stamina Potion.",
-      "onRest": {
-        "all": {
-          "downtime": {
-            "craft": "Minor Stamina Potion",
-            "description": "Craft a Minor Stamina Potion",
-            "cost": {
-              "goldHandful": 1
-            }
-          }
+      "downtime": {
+        "craft": "Minor Stamina Potion",
+        "description": "Craft a Minor Stamina Potion",
+        "cost": {
+          "goldHandful": 1
         }
       }
     },
     {
       "name": "Minor Health Potion Recipe",
       "description": "During downtime, spend one of your downtime moves and a handful of gold to craft a Minor Health Potion.",
-      "onRest": {
-        "all": {
-          "downtime": {
-            "craft": "Minor Health Potion",
-            "description": "Craft a Minor Health Potion",
-            "cost": {
-              "goldHandful": 1
-            }
-          }
+      "downtime": {
+        "craft": "Minor Health Potion",
+        "description": "Craft a Minor Health Potion",
+        "cost": {
+          "goldHandful": 1
         }
       }
     },
@@ -166,15 +158,11 @@
     {
       "name": "Vial of Darksmoke Recipe",
       "description": "During downtime, spend one of your downtime moves and mark a stress to craft a Vial of Darksmoke.",
-      "onRest": {
-        "all": {
-          "downtime": {
-            "craft": "Minor Stamina Potion",
-            "description": "Craft a Minor Stamina Potion",
-            "cost": {
-              "stress": 1
-            }
-          }
+      "downtime": {
+        "craft": "Vial of Darksmoke",
+        "description": "Craft a Vial of Darksmoke",
+        "cost": {
+          "stress": 1
         }
       }
     },
