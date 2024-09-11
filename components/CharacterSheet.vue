@@ -34,7 +34,7 @@
           SheetWeapons(:character="character" :key="`${key}-weapons`")
           SheetArmor(:character="character" :key="`${key}-armor`")
         .space-y-8(class="md:w-1/2")
-          SheetGold(:character="character")
+          SheetGold(:character="character" :key="`${key}-gold`")
           SheetInventory(:character="character" :key="`${key}-inventory`")
       .space-y-8.pb-4.py-8(
         v-else-if="currentPage === 'background'"
@@ -66,7 +66,7 @@
               SheetWeapons(:character="character" :key="`${key}-equipped-weapons`")
               SheetArmor(:character="character" :key="`${key}-equipped-armor`")
             .space-y-12(v-else-if="currentTab === 'inventory'")
-              SheetGold(:character="character")
+              SheetGold(:character="character" :key="`${key}-gold`")
               SheetInventory(:character="character" :key="`${key}-inventory`")
             .space-y-12(v-else-if="currentTab === 'shapeshift'")
               SheetShapeshift(v-if="baseClass.alternateForms" :character="character")

@@ -100,19 +100,18 @@
             div
               p.font-bold Work on a Project
               p.text-sm Establish or continue work on a project. The GM might ask for a roll to determine how much to tick down on the completion track.
-        .space-y-4(v-if="craftingRecipes.length > 0")
-          .space-y-2(v-for="(recipe, index) in craftingRecipes")
+        .space-y-4(v-if="craftingSelections.length > 0")
+          .space-y-2(v-for="(_, index) in craftingSelections")
             .flex.space-x-2
               .mt-1(:style="shortRestCheckboxWrapperStyle")
                 InputCheckboxCounter.justify-end(
                   v-model="craftingSelections[index]"
                   :max="maxShortRestActions"
-                  :enabled="craftingSelections[index] + Math.min(shortOptionsRemaining, resourcesAvailable[recipe.resource.type])"
+                  :enabled="Math.min(craftingSelections[index] + shortOptionsRemaining, resourcesAvailable[craftingRecipes[index].resource.type])"
                 )
               div
-                p.font-bold Craft {{ recipe.item }}
-                p {{ craftingSelections[index] }}
-                p.text-sm.text-cyan-700 Cost: {{ recipe.resource.cost }} {{ resourceStrings[recipe.resource.type] }}
+                p.font-bold Craft {{ craftingRecipes[index].item }}
+                p.text-sm.text-cyan-700 Cost: {{ craftingRecipes[index].resource.cost }} {{ resourceStrings[craftingRecipes[index].resource.type] }}
         p(v-if="shortRestChargeItems.length > 0") Regain charges for: {{ shortRestChargeItems.map((i) => i.name).join(', ') }}
         BasicButton.w-full(
           :disabled="shortRestOptionsSelected < maxShortRestActions"
@@ -203,6 +202,18 @@
             div
               p.font-bold Work on a Project
               p.text-sm Establish or continue work on a project. The GM might ask for a roll to determine how much to tick down on the completion track.
+        .space-y-4(v-if="craftingSelections.length > 0")
+          .space-y-2(v-for="(_, index) in craftingSelections")
+            .flex.space-x-2
+              .mt-1(:style="shortRestCheckboxWrapperStyle")
+                InputCheckboxCounter.justify-end(
+                  v-model="craftingSelections[index]"
+                  :max="maxShortRestActions"
+                  :enabled="Math.min(craftingSelections[index] + shortOptionsRemaining, resourcesAvailable[craftingRecipes[index].resource.type])"
+                )
+              div
+                p.font-bold Craft {{ craftingRecipes[index].item }}
+                p.text-sm.text-cyan-700 Cost: {{ craftingRecipes[index].resource.cost }} {{ resourceStrings[craftingRecipes[index].resource.type] }}
         p(v-if="longRestChargeItems.length > 0") Regain charges for: {{ longRestChargeItems.map((i) => i.name).join(', ') }}
         BasicButton.w-full(
           @click="longRest"
@@ -223,6 +234,7 @@
   import ITEMS from '~/data/items';
   import resourceStrings from '~/config/resourceStrings';
   import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
+  import { newItem } from '~/helpers/constructors';
 
   const emit = defineEmits(['rest-complete']);
 
@@ -443,11 +455,82 @@
       .filter((item) => item.recharge === 'longRest'); // short rest only
   });
 
+  const craftedItems = computed(() => {
+    const items = [];
+
+    craftingSelections.value.forEach((selection, index) => {
+      if (selection > 0) {
+        const recipe = craftingRecipes.value[index];
+
+        items.push(newItem({
+          name: recipe.item,
+          quantity: selection,
+        }));
+      }
+    });
+
+    return items;
+  });
+
   onMounted(() => {
     craftingRecipes.value.forEach((recipe) => {
       craftingSelections.value.push(0);
     });
   });
+
+  const addCraftedItems = () => {
+    const updates = [];
+
+    craftedItems.value.forEach((item) => {
+      const recipeData = craftingRecipes.value.find((r) => r.item === item.name);
+
+      if (!recipeData) return;
+
+      // deduct cost
+      switch (recipeData.resource.type) {
+        case 'health':
+          props.character.health.current =
+            props.character.health.current + (item.quantity * recipeData.resource.cost);
+          break;
+
+        case 'stress':
+          props.character.stress.current =
+            props.character.stress.current + (item.quantity * recipeData.resource.cost);
+          break;
+
+        case 'goldHandful':
+          props.character.inventory.gold.handful =
+            props.character.inventory.gold.handful - (item.quantity * recipeData.resource.cost);
+          break;
+
+        case 'goldBag':
+          props.character.inventory.gold.bag =
+            props.character.inventory.gold.bag - (item.quantity * recipeData.resource.cost);
+          break;
+
+        case 'goldChest':
+          props.character.inventory.gold.chest =
+            props.character.inventory.gold.chest - (item.quantity * recipeData.resource.cost);
+          break;
+      }
+
+      // add item
+      const currentItemIndex = props.character.inventory.items
+        .findIndex((i) => i.name === item.name);
+
+      if (currentItemIndex < 0) {
+        // add item
+        props.character.inventory.items.push(item);
+      } else {
+        // update item
+        props.character.inventory.items[currentItemIndex].quantity += item.quantity;
+      }
+
+      updates.push(`Crafted ${item.quantity}x ${item.name}`);
+    });
+
+    return updates;
+  };
 
   const shortRest = () => {
     let restoreHitPoints = 0;
@@ -545,14 +628,18 @@
       }
     });
 
+    // item crafting
+    const craftUpdates = addCraftedItems();
+    const allUpdates = characterUpdates.concat(craftUpdates);
+
     // save character
-    // if (characterUpdates.length > 0) {
-    //   charactersStore.saveCharacter(props.character);
-    //   sheetStore.refreshCharacterSheet();
-    //   toastStore.postMessage({
-    //     body: `Short rest taken!\n\n- ${characterUpdates.join('\n\n- ')}`,
-    //   });
-    // }
+    if (allUpdates.length > 0) {
+      charactersStore.saveCharacter(props.character);
+      sheetStore.refreshCharacterSheet();
+      toastStore.postMessage({
+        body: `Short rest taken!\n\n- ${allUpdates.join('\n\n- ')}`,
+      });
+    }
 
     emit('rest-complete', 'short');
   };
@@ -623,14 +710,18 @@
       }
     });
 
+    // item crafting
+    const craftUpdates = addCraftedItems();
+    const allUpdates = characterUpdates.concat(craftUpdates);
+
     // save character
-    // if (characterUpdates.length > 0) {
-    //   charactersStore.saveCharacter(props.character);
-    //   sheetStore.refreshCharacterSheet();
-    //   toastStore.postMessage({
-    //     body: `Long rest taken!\n\n- ${characterUpdates.join('\n\n- ')}`,
-    //   });
-    // }
+    if (allUpdates.length > 0) {
+      charactersStore.saveCharacter(props.character);
+      sheetStore.refreshCharacterSheet();
+      toastStore.postMessage({
+        body: `Long rest taken!\n\n- ${allUpdates.join('\n\n- ')}`,
+      });
+    }
 
     emit('rest-complete', 'long');
   };

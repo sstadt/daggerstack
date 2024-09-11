@@ -19,8 +19,6 @@
 </script>
 
 <script setup>
-  import { defineExpose } from 'vue';
-
   const {
     isOpen,
     useDrawerClass,
