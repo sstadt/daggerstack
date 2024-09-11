@@ -375,7 +375,14 @@
     },
     {
       "name": "Mythic Dust Recipe",
-      "description": "During downtime, spend one of your downtime moves and a bag of gold to craft Mythic Dust."
+      "description": "During downtime, spend one of your downtime moves and a bag of gold to craft Mythic Dust.",
+      "downtime": {
+        "craft": "Mythic Dust",
+        "description": "Craft a Mythic Dust",
+        "cost": {
+          "goldBag": 1
+        }
+      }
     },
     {
       "name": "Shard of Memory",

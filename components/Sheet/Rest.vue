@@ -100,6 +100,19 @@
             div
               p.font-bold Work on a Project
               p.text-sm Establish or continue work on a project. The GM might ask for a roll to determine how much to tick down on the completion track.
+        .space-y-4(v-if="craftingRecipes.length > 0")
+          .space-y-2(v-for="(recipe, index) in craftingRecipes")
+            .flex.space-x-2
+              .mt-1(:style="shortRestCheckboxWrapperStyle")
+                InputCheckboxCounter.justify-end(
+                  v-model="craftingSelections[index]"
+                  :max="maxShortRestActions"
+                  :enabled="craftingSelections[index] + Math.min(shortOptionsRemaining, resourcesAvailable[recipe.resource.type])"
+                )
+              div
+                p.font-bold Craft {{ recipe.item }}
+                p {{ craftingSelections[index] }}
+                p.text-sm.text-cyan-700 Cost: {{ recipe.resource.cost }} {{ resourceStrings[recipe.resource.type] }}
         p(v-if="shortRestChargeItems.length > 0") Regain charges for: {{ shortRestChargeItems.map((i) => i.name).join(', ') }}
         BasicButton.w-full(
           :disabled="shortRestOptionsSelected < maxShortRestActions"
@@ -208,6 +221,7 @@
 
   import GENERAL from '~/data/general';
   import ITEMS from '~/data/items';
+  import resourceStrings from '~/config/resourceStrings';
   import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
 
   const emit = defineEmits(['rest-complete']);
@@ -281,13 +295,15 @@
   const longTendWoundsTarget = ref(getInitialSelections(longSelectionOptions));
   const longRepairArmorTarget = ref(getInitialSelections(longSelectionOptions));
   const longPrepareTarget = ref(getInitialSelections({ quantity: maxLongRestActions, selfOnly: true }));
+  const craftingSelections = ref([]);
 
   const shortRestOptionsSelected = computed(() => {
     return shortTendWounds.value +
       shortClearStress.value +
       shortRepairArmor.value +
       shortPrepare.value +
-      shortProject.value;
+      shortProject.value +
+      craftingActionsSelected.value;
   });
 
   const shortOptionsRemaining = computed(() => {
@@ -299,7 +315,8 @@
       longClearStress.value +
       longRepairArmor.value +
       longPrepare.value +
-      longProject.value;
+      longProject.value +
+      craftingActionsSelected.value;
   });
 
   const longOptionsRemaining = computed(() => {
@@ -329,6 +346,69 @@
       return arr.indexOf((i) => i.name === item.name) === index &&
         item.onShortRest?.resource || item.onLongRest?.resource
     });
+  });
+
+  const healthSlots = computed(() => {
+    return props.character.health.slots +
+      calculateModifiers(
+        getFeaturesByAttribute(props.character, 'healthSlot'),
+        'healthSlot',
+      );
+  });
+
+  const stressSlots = computed(() => {
+    return props.character.health.slots +
+      calculateModifiers(
+        getFeaturesByAttribute(props.character, 'stressSlot'),
+        'stressSlot',
+      );
+  });
+
+  const resourcesUsed = computed(() => {
+    function getUsedResources(type) {
+      return craftingRecipes.value
+        .filter((recipe) => recipe.resource.type === type && recipe.selected > 0)
+        .reduce((curr, acc) => acc + curr?.selected, 0);
+    };
+
+    return {
+      health: getUsedResources('health'),
+      stress: getUsedResources('stress'),
+      goldHandful: getUsedResources('goldHandful'),
+      goldBag: getUsedResources('goldBag'),
+      goldChest: getUsedResources('goldChest'),
+    };
+  });
+
+  const resourcesAvailable = computed(() => {
+    return {
+      health: Math.max(0, healthSlots.value - props.character.health.current - resourcesUsed.value.health),
+      stress: Math.max(0, stressSlots.value - props.character.stress.current - resourcesUsed.value.stress),
+      goldHandful: Math.max(0, props.character.inventory.gold.handful - resourcesUsed.value.goldHandful),
+      goldBag: Math.max(0, props.character.inventory.gold.bag - resourcesUsed.value.goldBag),
+      goldChest: Math.max(0, props.character.inventory.gold.chest - resourcesUsed.value.goldChest),
+    };
+  });
+
+  const craftingRecipes = computed(() => {
+    return itemData.value
+      .filter((data) => data.downtime?.craft)
+      .map(({ downtime }) => {
+        const [ costType ] = Object.keys(downtime.cost);
+
+        return {
+          selected: 0,
+          item: downtime.craft,
+          resource: {
+            type: costType,
+            cost: downtime.cost[costType],
+          },
+        };
+      });
+  });
+
+  const craftingActionsSelected = computed(() => {
+    return craftingSelections.value.reduce((curr, acc) => curr + acc, 0);
   });
 
   const shortRestChargeItems = computed(() => {
@@ -361,6 +441,12 @@
         };
       }) // make a data object with only the needed info
       .filter((item) => item.recharge === 'longRest'); // short rest only
+  });
+
+  onMounted(() => {
+    craftingRecipes.value.forEach((recipe) => {
+      craftingSelections.value.push(0);
+    });
   });
 
   const shortRest = () => {
@@ -460,13 +546,13 @@
     });
 
     // save character
-    if (characterUpdates.length > 0) {
-      charactersStore.saveCharacter(props.character);
-      sheetStore.refreshCharacterSheet();
-      toastStore.postMessage({
-        body: `Short rest taken!\n\n- ${characterUpdates.join('\n\n- ')}`,
-      });
-    }
+    // if (characterUpdates.length > 0) {
+    //   charactersStore.saveCharacter(props.character);
+    //   sheetStore.refreshCharacterSheet();
+    //   toastStore.postMessage({
+    //     body: `Short rest taken!\n\n- ${characterUpdates.join('\n\n- ')}`,
+    //   });
+    // }
 
     emit('rest-complete', 'short');
   };
@@ -538,13 +624,13 @@
     });
 
     // save character
-    if (characterUpdates.length > 0) {
-      charactersStore.saveCharacter(props.character);
-      sheetStore.refreshCharacterSheet();
-      toastStore.postMessage({
-        body: `Long rest taken!\n\n- ${characterUpdates.join('\n\n- ')}`,
-      });
-    }
+    // if (characterUpdates.length > 0) {
+    //   charactersStore.saveCharacter(props.character);
+    //   sheetStore.refreshCharacterSheet();
+    //   toastStore.postMessage({
+    //     body: `Long rest taken!\n\n- ${characterUpdates.join('\n\n- ')}`,
+    //   });
+    // }
 
     emit('rest-complete', 'long');
   };
