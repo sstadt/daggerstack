@@ -19,7 +19,7 @@
         button.w-full.text-left.p-4(
           v-for="weapon in inventoryWeapons"
           class="focus:bg-slate-100"
-          @click="$emit('select', { item: weapon.name, fromInventory: true })"
+          @click="selectItem({ item: weapon.name, fromInventory: true })"
         )
           InventoryWeapon(:weapon="weapon" :type="type")
     .sticky.p-4.top-0.bg-white.shadow.space-y-1
@@ -35,7 +35,7 @@
       button.w-full.text-left.p-4(
         v-for="item in sortedItems"
         class="focus:bg-slate-100"
-        @click="$emit('select', { item: item.name })"
+        @click="selectItem({ item: item.name })"
       )
         InventoryWeapon(
           v-if="isWeaponType"
@@ -47,11 +47,16 @@
 </template>
 
 <script>
+  export default {
+    name: 'InventoryEquipmentPicker',
+  };
+</script>
+
+<script setup>
   import GENERAL from '~/data/general';
   import WEAPONS from '~/data/weapons';
   import ARMOR from '~/data/armor';
 
-  import { respectBurden } from '~/helpers/character';
   import { REMOVE_EQUIPPED_ITEM } from '~/config/events';
   import {
     ALL_WEAPON_TYPE,
@@ -64,183 +69,176 @@
     SLOT_ARMOR,
   } from '~/config/equipmentPicker';
 
-  export default {
-    name: 'InventoryEquipmentPicker',
-    props: {
-      type: {
-        type: String,
-        validator(val) {
-          return [
-            ALL_WEAPON_TYPE,
-            PRIMARY_WEAPON_TYPE,
-            SECONDARY_WEAPON_TYPE,
-            ARMOR_TYPE,
-          ].includes(val);
-        },
-      },
-      activeSlot: {
-        type: String,
-        default: null,
-        validator(val) {
-          return [
-            null,
-            SLOT_INVENTORY_WEAPON,
-            SLOT_PRIMARY_WEAPON,
-            SLOT_SECONDARY_WEAPON,
-            SLOT_ARMOR,
-          ].includes(val);
-        },
-      },
-      activeIndex: {
-        type: Number,
-        default: -1,
-      },
-      includeInventory: {
-        type: Boolean,
-        default: false,
-      },
-      character: {
-        type: Object,
-        required: true,
-      },
-      startingOnly: {
-        type: Boolean,
-        default: false,
-      },
-    },
-    data() {
-      const selectedTiers = [];
+  const emit = defineEmits([ REMOVE_EQUIPPED_ITEM, 'select' ]);
 
-      if (this.character.level > 1) {
-        selectedTiers.push(1);
-      } else if (this.character.level > 4) {
-        selectedTiers.push(2);
-      } if (this.character.level > 7) {
-        selectedTiers.push(3);
-      } else {
-        selectedTiers.push(0);
-      }
-
-      return {
-        selectedTiers,
-        selectedType: ['primary'],
-        allWeaponsType: ALL_WEAPON_TYPE,
-      };
-    },
-    computed: {
-      bestTrait() {
-        const [ best ] = GENERAL.traits
-          .map((trait) => ({ name: trait, score: this.character[trait].score }))
-          .sort((a, b) => {
-            if (a.score < b.score) return 1;
-            if (b.score < a.score) return -1;
-            return 0;
-          });
-
-        return best.name;
-      },
-      isCaster() {
-        return GENERAL.spellcasters.includes(this.character.baseClass);
-      },
-      equippedItem() {
-        if (!this.activeSlot) return null;
-
-        switch (this.activeSlot) {
-          case SLOT_INVENTORY_WEAPON:
-            return this.activeIndex > -1 && this.character.inventory.weapons[this.activeIndex]
-              ? WEAPONS.items.find((w) => {
-                  return w.name === this.character.inventory.weapons[this.activeIndex].name;
-                })
-              : null;
-          case SLOT_PRIMARY_WEAPON:
-            return this.character.equipment.primaryWeapon.name
-              ? WEAPONS.items.find((w) => w.name === this.character.equipment.primaryWeapon.name)
-              : null;
-          case SLOT_SECONDARY_WEAPON:
-            return this.character.equipment.secondaryWeapon.name
-              ? WEAPONS.items.find((w) => w.name === this.character.equipment.secondaryWeapon.name)
-              : null;
-          case SLOT_ARMOR:
-            return this.character.equipment.armor.name
-              ? ARMOR.items.find((w) => w.name === this.character.equipment.armor.name)
-              : null;
-        }
-
-        return null;
-      },
-      isWeaponType() {
+  const props = defineProps({
+    type: {
+      type: String,
+      validator(val) {
         return [
           ALL_WEAPON_TYPE,
           PRIMARY_WEAPON_TYPE,
           SECONDARY_WEAPON_TYPE,
-        ].includes(this.type);
-      },
-      inventoryWeapons() {
-        return this.character.inventory.weapons
-          .map((w) => WEAPONS.items.find((weapon) => weapon.name === w.name))
-          .filter((w) => this.type.includes(w.slot));
-      },
-      itemList() {
-        if (this.type === ALL_WEAPON_TYPE) {
-          return [ ...WEAPONS.items ];
-        }
-
-        if (this.type === PRIMARY_WEAPON_TYPE) {
-          return WEAPONS.items.filter((item) => item.slot === 'primary');
-        }
-
-        if (this.type === SECONDARY_WEAPON_TYPE) {
-          return WEAPONS.items.filter((item) => item.slot === 'secondary');
-        }
-
-        if (this.type === ARMOR_TYPE) {
-          return [ ...ARMOR.items ];
-        }
-
-        return [];
-      },
-      showingAllWeapons() {
-        return this.type === this.allWeaponsType;
-      },
-      sortedItems() {
-        const tiers = this.startingOnly ? [1] : this.selectedTiers;
-
-        return this.itemList
-          .filter((item) => {
-            const matchesTierFilter = tiers.includes(item.tier);
-            // TODO: make a "show unavailable" toggle to bypass this
-            const matchesMagicFilter = item.damageType !== 'magical' || this.isCaster;
-            const matchesTypeFilter = !this.showingAllWeapons || this.selectedType.includes(item.slot);
-
-            return matchesTierFilter &&
-              matchesMagicFilter &&
-              matchesTypeFilter;
-          })
-          .sort((a, b) => {
-            if (!a.trait || !b.trait) return 0;
-
-            const aTrait = a.trait.toLowerCase();
-            const bTrait = b.trait.toLowerCase();
-
-            if (aTrait === this.bestTrait && bTrait !== this.bestTrait) {
-              return -1;
-            }
-
-            if (aTrait !== this.bestTrait && bTrait === this.bestTrait) {
-              return 1;
-            }
-
-            return 0;
-          });
-      },
-      respectBurden() {
-        return respectBurden(this.character);
+          ARMOR_TYPE,
+        ].includes(val);
       },
     },
-    methods: {
-      removeItem() {
-        this.$emit(REMOVE_EQUIPPED_ITEM);
+    activeSlot: {
+      type: String,
+      default: null,
+      validator(val) {
+        return [
+          null,
+          SLOT_INVENTORY_WEAPON,
+          SLOT_PRIMARY_WEAPON,
+          SLOT_SECONDARY_WEAPON,
+          SLOT_ARMOR,
+        ].includes(val);
       },
     },
+    activeIndex: {
+      type: Number,
+      default: -1,
+    },
+    includeInventory: {
+      type: Boolean,
+      default: false,
+    },
+    character: {
+      type: Object,
+      required: true,
+    },
+    startingOnly: {
+      type: Boolean,
+      default: false,
+    },
+  });
+
+  const selectedTiers = ref([1]);
+
+  if (props.character.level > 4) selectedTiers.value.push(2);
+  if (props.character.level > 7) selectedTiers.value.push(3);
+
+  const selectedType = ref(['primary']);
+
+  const bestTrait = computed(() => {
+    const [ best ] = GENERAL.traits
+      .map((trait) => ({ name: trait, score: props.character[trait].score }))
+      .sort((a, b) => {
+        if (a.score < b.score) return 1;
+        if (b.score < a.score) return -1;
+        return 0;
+      });
+
+    return best.name;
+  });
+
+  const isCaster = computed(() => {
+    return GENERAL.spellcasters.includes(props.character.baseClass);
+  });
+
+  const equippedItem = computed(() => {
+    if (!props.activeSlot) return null;
+
+    switch (props.activeSlot) {
+      case SLOT_INVENTORY_WEAPON:
+        return props.activeIndex > -1 && props.character.inventory.weapons[props.activeIndex]
+          ? WEAPONS.items.find((w) => {
+              return w.name === props.character.inventory.weapons[props.activeIndex].name;
+            })
+          : null;
+      case SLOT_PRIMARY_WEAPON:
+        return props.character.equipment.primaryWeapon.name
+          ? WEAPONS.items.find((w) => w.name === props.character.equipment.primaryWeapon.name)
+          : null;
+      case SLOT_SECONDARY_WEAPON:
+        return props.character.equipment.secondaryWeapon.name
+          ? WEAPONS.items.find((w) => w.name === props.character.equipment.secondaryWeapon.name)
+          : null;
+      case SLOT_ARMOR:
+        return props.character.equipment.armor.name
+          ? ARMOR.items.find((w) => w.name === props.character.equipment.armor.name)
+          : null;
+    }
+
+    return null;
+  });
+
+  const isWeaponType = computed(() => {
+    return [
+      ALL_WEAPON_TYPE,
+      PRIMARY_WEAPON_TYPE,
+      SECONDARY_WEAPON_TYPE,
+    ].includes(props.type);
+  });
+
+  const inventoryWeapons = computed(() => {
+    return props.character.inventory.weapons
+      .map((w) => WEAPONS.items.find((weapon) => weapon.name === w.name))
+      .filter((w) => props.type.includes(w?.slot));
+  });
+
+  const itemList = computed(() => {
+    if (props.type === ALL_WEAPON_TYPE) {
+      return [ ...WEAPONS.items ];
+    }
+
+    if (props.type === PRIMARY_WEAPON_TYPE) {
+      return WEAPONS.items.filter((item) => item.slot === 'primary');
+    }
+
+    if (props.type === SECONDARY_WEAPON_TYPE) {
+      return WEAPONS.items.filter((item) => item.slot === 'secondary');
+    }
+
+    if (props.type === ARMOR_TYPE) {
+      return [ ...ARMOR.items ];
+    }
+
+    return [];
+  });
+
+  const showingAllWeapons = computed(() => {
+    return props.type === ALL_WEAPON_TYPE;
+  });
+
+  const sortedItems = computed(() => {
+    const tiers = props.startingOnly ? [1] : selectedTiers.value;
+
+    return itemList.value
+      .filter((item) => {
+        const matchesTierFilter = tiers.includes(item.tier);
+        // TODO: make a "show unavailable" toggle to bypass this
+        const matchesMagicFilter = item.damageType !== 'magical' || isCaster.value;
+        const matchesTypeFilter = !showingAllWeapons.value || selectedType.value.includes(item.slot);
+
+        return matchesTierFilter &&
+          matchesMagicFilter &&
+          matchesTypeFilter;
+      })
+      .sort((a, b) => {
+        if (!a.trait || !b.trait) return 0;
+
+        const aTrait = a.trait.toLowerCase();
+        const bTrait = b.trait.toLowerCase();
+
+        if (aTrait === bestTrait.value && bTrait !== bestTrait.value) {
+          return -1;
+        }
+
+        if (aTrait !== bestTrait.value && bTrait === bestTrait.value) {
+          return 1;
+        }
+
+        return 0;
+      });
+  });
+
+  const selectItem = (data) => {
+    emit('select', data);
+  };
+
+  const removeItem = () => {
+    emit(REMOVE_EQUIPPED_ITEM);
   };
 </script>

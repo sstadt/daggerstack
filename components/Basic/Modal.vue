@@ -1,5 +1,5 @@
 <template lang="pug">
-  .modal.fixed.top-0.left-0.w-full.h-full.z-40(:class="drawerClasses")
+  .modal.fixed.top-0.left-0.w-full.h-full.z-40(:class="drawerClass")
     transition(name="slide-fade-bottom" appear)
       .flex.flex-col.h-full.relative.bg-white.h-full.w-full.ml-auto.overflow-y-auto.shadow(
         v-if="isOpen"
@@ -13,10 +13,29 @@
 </template>
 
 <script>
-  import Drawer from '~/components/Basic/Drawer';
-
   export default {
     name: 'BasicModal',
-    extends: Drawer,
   };
+</script>
+
+<script setup>
+  import { defineExpose } from 'vue';
+
+  const {
+    isOpen,
+    useDrawerClass,
+    open,
+    close,
+  } = useModal();
+
+  const props = defineProps({
+    title: {
+      type: String,
+      default: null,
+    },
+  });
+
+  const drawerClass = useDrawerClass();
+
+  defineExpose({ open, close });
 </script>

@@ -1,5 +1,5 @@
 <template lang="pug">
-  .drawer.fixed.top-0.left-0.w-full.h-full.z-20(:class="drawerClasses")
+  .drawer.fixed.top-0.left-0.w-full.h-full.z-20(:class="drawerClass")
     transition(name="fade" appear)
       .drawer__overlay.absolute.w-full.h-full.bg-black.opacity-30(v-if="isOpen" @click="close")
     transition(name="off-canvas-right" appear @after-leave="$emit('close')")
@@ -19,33 +19,29 @@
 <script>
   export default {
     name: 'BasicDrawer',
-    props: {
-      title: {
-        type: String,
-        default: null,
-      },
-    },
-    data() {
-      return {
-        isOpen: false,
-      };
-    },
-    computed: {
-      drawerClasses() {
-        return {
-          'pointer-events-none': !this.isOpen,
-        };
-      },
-    },
-    methods: {
-      open() {
-        this.isOpen = true;
-      },
-      close() {
-        this.isOpen = false;
-      },
-    },
   };
+</script>
+
+<script setup>
+  import { defineExpose } from 'vue';
+
+  const {
+    isOpen,
+    useDrawerClass,
+    open,
+    close,
+  } = useModal();
+
+  const props = defineProps({
+    title: {
+      type: String,
+      default: null,
+    },
+  });
+
+  const drawerClass = useDrawerClass();
+
+  defineExpose({ open, close });
 </script>
 
 <style lang="scss" scoped>

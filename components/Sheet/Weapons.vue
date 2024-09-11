@@ -28,11 +28,11 @@
           :weapon="getWeapon(secondaryWeapon.name)"
           :character-weapon="character.equipment.secondaryWeapon"
           :character="character"
-          :class="{ 'opacity-20 pointer-events-none': respectBurden && isPrimaryTwoHanded }"
+          :class="{ 'opacity-20 pointer-events-none': shouldRespectBurden && isPrimaryTwoHanded }"
           @click="openPicker(secondaryWeaponType)"
         )
         .absolute.transform.text-2xl.text-red-600.uppercase.w-full.text-center.font-black(
-          v-if="respectBurden && isPrimaryTwoHanded"
+          v-if="shouldRespectBurden && isPrimaryTwoHanded"
           class="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         ) No free hands
       BasicButton.mx-auto.block(
@@ -57,9 +57,13 @@
 </template>
 
 <script>
-  import WEAPONS from '~/data/weapons';
+  export default {
+    name: 'SheetWeapons',
+  };
+</script>
 
-  import { useCharactersStore } from '~/stores/characters';
+<script setup>
+  import WEAPONS from '~/data/weapons';
 
   import { newWeapon } from '~/helpers/constructors';
   import {
@@ -76,140 +80,138 @@
     SLOT_SECONDARY_WEAPON,
   } from '~/config/equipmentPicker';
 
-  export default {
-    name: 'SheetWeapons',
-    props: {
-      character: {
-        type: Object,
-        required: true,
-      },
+  const charactersStore = useCharactersStore();
+
+  const primaryWeaponType = ref(PRIMARY_WEAPON_TYPE);
+  const secondaryWeaponType = ref(SECONDARY_WEAPON_TYPE);
+  const activeSlot = ref(null);
+  const pickerType = ref(PRIMARY_WEAPON_TYPE);
+  const baseProficiency = ref(1);
+  const equipmentPicker = ref(null);
+  const bonuses = ref(null);
+
+  const props = defineProps({
+    character: {
+      type: Object,
+      required: true,
     },
-    data() {
-      return {
-        primaryWeaponType: PRIMARY_WEAPON_TYPE,
-        secondaryWeaponType: SECONDARY_WEAPON_TYPE,
-        activeSlot: null,
-        pickerType: PRIMARY_WEAPON_TYPE,
-        baseProficiency: 1,
-      };
-    },
-    setup() {
-      const charactersStore = useCharactersStore();
+  });
 
-      return { charactersStore };
-    },
-    computed: {
-      proficiencyBonuses() {
-        const bonuses = getFeaturesByAttribute(this.character, 'proficiency');
+  const proficiencyBonuses = computed(() => {
+    const bonuses = getFeaturesByAttribute(props.character, 'proficiency');
 
-        if (this.character.level > 1) {
-          bonuses.push({
-            name: 'Level 2 (auto)',
-            modify: { proficiency: 1 },
-          });
-        }
+    if (props.character.level > 1) {
+      bonuses.push({
+        name: 'Level 2 (auto)',
+        modify: { proficiency: 1 },
+      });
+    }
 
-        if (this.character.level > 4) {
-          bonuses.push({
-            name: 'Level 5 (auto)',
-            modify: { proficiency: 1 },
-          });
-        }
+    if (props.character.level > 4) {
+      bonuses.push({
+        name: 'Level 5 (auto)',
+        modify: { proficiency: 1 },
+      });
+    }
 
-        if (this.character.level > 7) {
-          bonuses.push({
-            name: 'Level 8 (auto)',
-            modify: { proficiency: 1 },
-          });
-        }
+    if (props.character.level > 7) {
+      bonuses.push({
+        name: 'Level 8 (auto)',
+        modify: { proficiency: 1 },
+      });
+    }
 
-        return bonuses;
-      },
-      proficiency() {
-        return this.baseProficiency + calculateModifiers(this.proficiencyBonuses, 'proficiency');
-      },
-      primaryWeapon() {
-        return this.character.equipment.primaryWeapon.name
-          ? WEAPONS.items.find((weapon) => this.character.equipment.primaryWeapon.name === weapon.name)
-          : null;
-      },
-      secondaryWeapon() {
-        return this.character.equipment.secondaryWeapon.name
-          ? WEAPONS.items.find((weapon) => this.character.equipment.secondaryWeapon.name === weapon.name)
-          : null;
-      },
-      isPrimaryTwoHanded() {
-        return this.primaryWeapon.burden > 1;
-      },
-      respectBurden() {
-        return respectBurden(this.character);
-      },
-    },
-    methods: {
-      getWeapon,
-      showBonuses() {
-        this.$refs.bonuses.open();
-      },
-      openPicker(weaponType) {
-        this.pickerType = weaponType === PRIMARY_WEAPON_TYPE
-          ? PRIMARY_WEAPON_TYPE
-          : SECONDARY_WEAPON_TYPE;
-        this.activeSlot = weaponType === PRIMARY_WEAPON_TYPE
-          ? SLOT_PRIMARY_WEAPON
-          : SLOT_SECONDARY_WEAPON;
+    return bonuses;
+  });
 
-        this.$refs.equipmentPicker.open();
-      },
-      selectItem({ item, fromInventory = false }) {
-        let weaponUpdated = false;
+  const proficiency = computed(() => {
+    return baseProficiency.value + calculateModifiers(proficiencyBonuses.value, 'proficiency');
+  });
 
-        // swap from inventory
-        if (fromInventory === true) {
-          const inventoryIndex = this.character.inventory.weapons.findIndex((w) => w.name === item);
-          const inventoryWeapon = { ...this.character.inventory.weapons[inventoryIndex] };
-          const currentWeapon = this.activeSlot === SLOT_PRIMARY_WEAPON
-            ? { ...this.character.equipment.primaryWeapon }
-            : { ...this.character.equipment.secondaryWeapon };
+  const primaryWeapon = computed(() => {
+    return props.character.equipment.primaryWeapon.name
+      ? WEAPONS.items.find((weapon) => props.character.equipment.primaryWeapon.name === weapon.name)
+      : null;
+  });
 
-          this.character.equipment[this.activeSlot] = inventoryWeapon;
-          this.character.inventory.weapons.splice(inventoryIndex, 1, currentWeapon);
-          weaponUpdated = true;
+  const secondaryWeapon = computed(() => {
+    return props.character.equipment.secondaryWeapon.name
+      ? WEAPONS.items.find((weapon) => props.character.equipment.secondaryWeapon.name === weapon.name)
+      : null;
+  });
 
-        // new primary weapon
-        } else if (this.activeSlot === SLOT_PRIMARY_WEAPON) {
-          this.character.equipment.primaryWeapon = newWeapon({ name: item });
-          weaponUpdated = true;
+  const isPrimaryTwoHanded = computed(() => {
+    return primaryWeapon.value?.burden > 1;
+  });
 
-        // new secondary weapon
-        } else if (this.activeSlot === SLOT_SECONDARY_WEAPON) {
-          this.character.equipment.secondaryWeapon = newWeapon({ name: item });
-          weaponUpdated = true;
-        }
+  const shouldRespectBurden = computed(() => {
+    return respectBurden(props.character);
+  });
 
-        if (weaponUpdated) {
-          this.charactersStore.saveCharacter(this.character);
-        }
+  const showBonuses = () => {
+    bonuses.open();
+  };
 
-        this.$refs.equipmentPicker.close();
-      },
-      removeEquippedItem() {
-        let itemRemoved = false;
+  const openPicker = (weaponType) => {
+    pickerType.value = weaponType === PRIMARY_WEAPON_TYPE
+      ? PRIMARY_WEAPON_TYPE
+      : SECONDARY_WEAPON_TYPE;
+    activeSlot.value = weaponType === PRIMARY_WEAPON_TYPE
+      ? SLOT_PRIMARY_WEAPON
+      : SLOT_SECONDARY_WEAPON;
 
-        if (this.activeSlot === SLOT_PRIMARY_WEAPON) {
-          this.character.equipment.primaryWeapon = newWeapon();
-          itemRemoved = true;
-        }
+    equipmentPicker.value.open();
+  };
 
-        if (this.activeSlot === SLOT_SECONDARY_WEAPON) {
-          this.character.equipment.secondaryWeapon = newWeapon();
-          itemRemoved = true;
-        }
+  const selectItem = ({ item, fromInventory = false }) => {
+    let weaponUpdated = false;
 
-        if (itemRemoved) {
-          this.charactersStore.saveCharacter(this.character);
-          this.$refs.equipmentPicker.close();
-        }
-      },
-    },
+    // swap from inventory
+    if (fromInventory === true) {
+      const inventoryIndex = props.character.inventory.weapons.findIndex((w) => w.name === item);
+      const inventoryWeapon = { ...props.character.inventory.weapons[inventoryIndex] };
+      const currentWeapon = activeSlot.value === SLOT_PRIMARY_WEAPON
+        ? { ...props.character.equipment.primaryWeapon }
+        : { ...props.character.equipment.secondaryWeapon };
+
+      props.character.equipment[activeSlot.value] = inventoryWeapon;
+      props.character.inventory.weapons.splice(inventoryIndex, 1, currentWeapon);
+      weaponUpdated = true;
+
+    // new primary weapon
+    } else if (activeSlot.value === SLOT_PRIMARY_WEAPON) {
+      props.character.equipment.primaryWeapon = newWeapon({ name: item });
+      weaponUpdated = true;
+
+    // new secondary weapon
+    } else if (activeSlot.value === SLOT_SECONDARY_WEAPON) {
+      props.character.equipment.secondaryWeapon = newWeapon({ name: item });
+      weaponUpdated = true;
+    }
+
+    if (weaponUpdated) {
+      charactersStore.saveCharacter(props.character);
+    }
+
+    equipmentPicker.value.close();
+  };
+
+  const removeEquippedItem = () => {
+    let itemRemoved = false;
+
+    if (activeSlot.value === SLOT_PRIMARY_WEAPON) {
+      props.character.equipment.primaryWeapon = newWeapon();
+      itemRemoved = true;
+    }
+
+    if (activeSlot.value === SLOT_SECONDARY_WEAPON) {
+      props.character.equipment.secondaryWeapon = newWeapon();
+      itemRemoved = true;
+    }
+
+    if (itemRemoved) {
+      charactersStore.saveCharacter(props.character);
+      equipmentPicker.value.close();
+    }
   };
 </script>
