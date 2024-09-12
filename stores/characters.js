@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 
-const LOCALSTORAGE_KEY = 'ds_character_list';
+import migrate from '~/helpers/migrate';
+
 const DEBOUNCE_DELAY = 3000;
 
 export const useCharactersStore = defineStore('characters', {
@@ -27,9 +28,41 @@ export const useCharactersStore = defineStore('characters', {
       if (error) {
         toastStore.postMessage({ body: error.message });
       } else {
+        const migratedCharacters = migrate(data);
+
+        if (migratedCharacters.length > 0) {
+          toastStore.postMessage({
+            body: 'Migrating your character to the latest version of the character sheet...',
+          });
+
+          this.migrateCharacters(migratedCharacters);
+
+          return;
+        }
+
         this.characterList = [ ...data ];
         this.hydrated = true;
       }
+
+      return;
+    },
+    async migrateCharacters(characters) {
+      const userStore = useUserStore();
+      const toastStore = useToastStore();
+
+      for (let i = 0, j = characters.length; i < j; i++) {
+        let { error } = await userStore.supabase
+          .from('characters')
+          .update(characters[i])
+          .eq('id', characters[i].id);
+
+        if (error) {
+          toastStore.postMessage({ body: error.message });
+        }
+      }
+
+      // grab fresh data
+      this.hydrate();
 
       return;
     },
@@ -46,6 +79,8 @@ export const useCharactersStore = defineStore('characters', {
       } else {
         toastStore.postMessage({ body: 'Character not found' });
       }
+
+      return;
     },
     async createCharacter(character) {
       const userStore = useUserStore();
@@ -85,6 +120,8 @@ export const useCharactersStore = defineStore('characters', {
       }
 
       this.savingCharacter = false;
+
+      return;
     },
     async deleteCharacter(characterId) {
       const userStore = useUserStore();
@@ -103,6 +140,8 @@ export const useCharactersStore = defineStore('characters', {
           toastStore.postMessage({ body: error.message });
         }
       }
+
+      return;
     },
   },
   debounce: {

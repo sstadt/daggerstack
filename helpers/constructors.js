@@ -69,11 +69,7 @@ export const newCharacter = () => {
     },
     inventory: {
       items: [],
-      gold: {
-        handful: 1,
-        bag: 0,
-        chest: 0,
-      },
+      gold: 1,
       weapons: [],
     },
     experience: [],

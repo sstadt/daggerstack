@@ -58,13 +58,25 @@
       },
     },
     data() {
+      const handfulsPerBag = GENERAL.gold.handfulsPerBag;
+      const handfulsPerChest = GENERAL.gold.handfulsPerBag * GENERAL.gold.bagsPerChest;
+      const chest = Math.max(Math.floor(this.character.inventory.gold / handfulsPerChest), 0);
+      const bag = Math.max(
+        Math.floor((this.character.inventory.gold - (chest * handfulsPerChest)) / handfulsPerBag),
+        0,
+      );
+      const handful = Math.max(
+        (this.character.inventory.gold - ((chest * handfulsPerChest) + (bag * handfulsPerBag))),
+        0,
+      );
+
       return {
         key: uuidv4(),
-        handful: this.character.inventory.gold.handful,
+        handful,
+        bag,
+        chest,
         maxHandfuls: GENERAL.gold.maxHandfuls,
-        bag: this.character.inventory.gold.bag,
         maxBags: GENERAL.gold.maxBags,
-        chest: this.character.inventory.gold.chest,
         maxChests: GENERAL.gold.maxChests,
       };
     },
@@ -104,7 +116,7 @@
 
         this.key = uuidv4();
         this.character.inventory.gold = gold;
-        this.charactersStore.saveCharacter(this.character);
+        // this.charactersStore.saveCharacter(this.character);
       }, 100),
     },
     watch: {

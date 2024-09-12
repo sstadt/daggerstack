@@ -24,7 +24,9 @@
   "gold": {
     "maxHandfuls": 9,
     "maxBags": 9,
-    "maxChests": 1
+    "maxChests": 1,
+    "handfulsPerBag": 9,
+    "bagsPerChest": 9
   },
   "maxHope": 6,
   "maxHitPoints": 12,

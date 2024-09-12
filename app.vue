@@ -15,22 +15,18 @@
 <script>
   export default {
     name: 'App',
-    setup() {
-      const builderStore = useBuilderStore();
-      const charactersStore = useCharactersStore();
-      const userStore = useUserStore();
-
-      return {
-        builderStore,
-        charactersStore,
-        userStore,
-      };
-    },
-    async mounted() {
-      this.userStore.init();
-      this.builderStore.loadSavedCharacter();
-    },
   };
+</script>
+
+<script setup>
+  const builderStore = useBuilderStore();
+  const charactersStore = useCharactersStore();
+  const userStore = useUserStore();
+
+  onMounted(() => {
+    userStore.init();
+    builderStore.loadSavedCharacter();
+  });
 </script>
 
 <style lang="scss">
