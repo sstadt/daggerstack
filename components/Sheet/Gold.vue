@@ -7,7 +7,7 @@
           .flex.items-center
             BasicButton.flex.mr-1(
               size="xs"
-              :disabled="handful < 1 && bag < 1 && this.chest < 1"
+              :disabled="character.inventory.gold < 1"
               @click="decrement('handful')"
             )
               NuxtIcon(name="minus")
@@ -22,7 +22,7 @@
           .flex.items-center
             BasicButton.flex.mr-1(
               size="xs"
-              :disabled="bag < 1 && chest < 1"
+              :disabled="character.inventory.gold < handfulsPerBag"
               @click="decrement('bag')"
             )
               NuxtIcon(name="minus")
@@ -44,107 +44,116 @@
 </template>
 
 <script>
-  import { useCharactersStore } from '~/stores/characters';
+  export default {
+    name: 'SheetGold',
+  };
+</script>
 
+<script setup>
   import GENERAL from '~/data/general';
   import { debounce, uuidv4 } from '~/helpers/utility';
 
-  export default {
-    name: 'SheetGold',
-    props: {
-      character: {
-        type: Object,
-        required: true,
-      },
-    },
-    data() {
-      const handfulsPerBag = GENERAL.gold.handfulsPerBag;
-      const handfulsPerChest = GENERAL.gold.handfulsPerBag * GENERAL.gold.bagsPerChest;
-      const chest = Math.max(Math.floor(this.character.inventory.gold / handfulsPerChest), 0);
-      const bag = Math.max(
-        Math.floor((this.character.inventory.gold - (chest * handfulsPerChest)) / handfulsPerBag),
-        0,
-      );
-      const handful = Math.max(
-        (this.character.inventory.gold - ((chest * handfulsPerChest) + (bag * handfulsPerBag))),
-        0,
-      );
+  const charactersStore = useCharactersStore();
 
-      return {
-        key: uuidv4(),
-        handful,
-        bag,
-        chest,
-        maxHandfuls: GENERAL.gold.maxHandfuls,
-        maxBags: GENERAL.gold.maxBags,
-        maxChests: GENERAL.gold.maxChests,
-      };
+  const props = defineProps({
+    character: {
+      type: Object,
+      required: true,
     },
-    setup() {
-      const charactersStore = useCharactersStore();
+  });
 
-      return { charactersStore };
-    },
-    methods: {
-      decrement(type) {
-        if (type === 'handful') {
-          if (this.handful > 0) {
-            this.handful = this.handful - 1;
-          } else if (this.handful < 1 && this.bag > 0) {
-            this.bag = this.bag - 1;
-            this.handful = this.maxHandfuls - 1;
-          } else if (this.handful < 1 && this.bag < 1 && this.chest > 0) {
-            this.handful = this.maxHandfuls - 1;
-            this.bag = this.maxBags - 1;
-            this.chest = this.chest - 1;
-          }
-        } else if (type === 'bag') {
-          if (this.bag > 0) {
-            this.bag = this.bag - 1;
-          } else if (this.bag < 1 && this.chest > 0) {
-            this.chest = this.chest - 1;
-            this.bag = this.maxBags - 1;
-          }
-        }
-      },
-      updateGold: debounce(function () {
-        const gold = {
-          handful: this.handful,
-          bag: this.bag,
-          chest: this.chest,
-        };
+  const key = ref(uuidv4());
+  const handful = ref(0);
+  const bag = ref(0);
+  const chest = ref(0);
+  const maxHandfuls = ref(GENERAL.gold.maxHandfuls);
+  const maxBags = ref(GENERAL.gold.maxBags);
+  const maxChests = ref(GENERAL.gold.maxChests);
+  const handfulsPerBag = ref(GENERAL.gold.handfulsPerBag);
+  const refreshing = ref(false);
 
-        this.key = uuidv4();
-        this.character.inventory.gold = gold;
-        // this.charactersStore.saveCharacter(this.character);
-      }, 100),
-    },
-    watch: {
-      handful(newVal, oldVal) {
-        if (newVal !== oldVal) {
-          if (newVal < this.maxHandfuls) {
-            this.updateGold();
-          } else {
-            this.handful = 0;
-            this.bag = this.bag + 1;
-          }
-        }
-      },
-      bag(newVal, oldVal) {
-        if (this.chest < this.maxChests) {
-          if (newVal >= this.maxBags && this.chest < this.maxChests) {
-            this.bag = 0;
-            this.chest = this.chest + 1;
-          } else if (newVal !== oldVal) {
-            this.updateGold();
-          }
-        }
-      },
-      chest(newVal, oldVal) {
-        if (newVal !== oldVal && newVal <= this.maxChests) {
-          this.updateGold();
-        }
-      },
-    },
+  onMounted(() => {
+    refreshGold();
+  });
+
+  const decrement = (type) => {
+    const handfuls = type === 'handful' ? 1 : GENERAL.gold.handfulsPerBag;
+    props.character.inventory.gold = Math.max(props.character.inventory.gold - handfuls, 0);
+
+    key.value = uuidv4();
+    refreshGold();
+    charactersStore.saveCharacter(props.character);
   };
+
+  const refreshGold = () => {
+    const handfulsPerBag = GENERAL.gold.handfulsPerBag;
+    const handfulsPerChest = GENERAL.gold.handfulsPerBag * GENERAL.gold.bagsPerChest;
+
+    refreshing.value = true;
+
+    nextTick(() => {
+      chest.value = Math.max(Math.floor(props.character.inventory.gold / handfulsPerChest), 0);
+      bag.value = Math.max(
+        Math.floor((props.character.inventory.gold - (chest.value * handfulsPerChest)) / handfulsPerBag),
+        0,
+      );
+      handful.value = Math.max(
+        (props.character.inventory.gold - ((chest.value * handfulsPerChest) + (bag.value * handfulsPerBag))),
+        0,
+      );
+
+      nextTick(() => {
+        key.value = uuidv4();
+        refreshing.value = false;
+      });
+    });
+  };
+
+  const saveGold = debounce(function () {
+    const gold = handful.value +
+      (bag.value * GENERAL.gold.handfulsPerBag) +
+      (chest.value * GENERAL.gold.bagsPerChest * GENERAL.gold.handfulsPerBag);
+
+    props.character.inventory.gold = gold;
+
+    // compact gold if we have reached max on handfuls or bags
+    if (handful.value === maxHandfuls.value || bag.value === maxBags.value) {
+      refreshGold();
+    }
+
+    charactersStore.saveCharacter(props.character);
+  }, 100);
+
+  watch(handful, (newVal, oldVal) => {
+    if (
+      !refreshing.value &&
+      newVal !== oldVal &&
+      newVal >= 0 &&
+      newVal <= GENERAL.gold.maxHandfuls
+    ) {
+      saveGold();
+    }
+  });
+
+  watch(bag, (newVal, oldVal) => {
+    if (
+      !refreshing.value &&
+      newVal !== oldVal &&
+      newVal >= 0 &&
+      newVal <= GENERAL.gold.maxBags
+    ) {
+      saveGold();
+    }
+  });
+
+  watch(chest, (newVal, oldVal) => {
+    if (
+      !refreshing.value &&
+      newVal !== oldVal &&
+      newVal >= 0 &&
+      newVal <= GENERAL.gold.maxChests
+    ) {
+      saveGold();
+    }
+  });
 </script>
