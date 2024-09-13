@@ -69,14 +69,12 @@
       async createCharacter() {
         const modifiers = getFeaturesByAttribute(this.character, 'goldHandful');
         const bonusGold = calculateModifiers(modifiers, 'goldHandful');
-        const currentGold =  this.character.inventory.gold.handful;
+        const currentGold =  this.character.inventory.gold;
 
         this.builderStore.updateCharacter({
           inventory: {
-            gold: {
-              handful: currentGold + bonusGold,
-            }
-          }
+            gold: currentGold + bonusGold,
+          },
         });
 
         const id = await this.charactersStore.createCharacter(this.character);
