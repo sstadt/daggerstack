@@ -107,7 +107,7 @@
                 InputCheckboxCounter.justify-end(
                   v-model="craftingSelections[index]"
                   :max="maxShortRestActions"
-                  :enabled="Math.min(craftingSelections[index] + shortOptionsRemaining, resourcesAvailable[craftingRecipes[index].resource.type])"
+                  :enabled="Math.min(craftingSelections[index] + shortOptionsRemaining, Math.max(craftingSelections[index], resourcesAvailable[craftingRecipes[index].resource.type]))"
                 )
               div
                 p.font-bold Craft {{ craftingRecipes[index].item }}
@@ -209,7 +209,7 @@
                 InputCheckboxCounter.justify-end(
                   v-model="craftingSelections[index]"
                   :max="maxShortRestActions"
-                  :enabled="Math.min(craftingSelections[index] + shortOptionsRemaining, resourcesAvailable[craftingRecipes[index].resource.type])"
+                  :enabled="Math.min(craftingSelections[index] + longOptionsRemaining, Math.max(craftingSelections[index], resourcesAvailable[craftingRecipes[index].resource.type]))"
                 )
               div
                 p.font-bold Craft {{ craftingRecipes[index].item }}
@@ -233,7 +233,7 @@
   import GENERAL from '~/data/general';
   import ITEMS from '~/data/items';
   import resourceStrings from '~/config/resourceStrings';
-  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
+  import { calculateModifiers, getFeaturesByAttribute, getGold } from '~/helpers/character';
   import { newItem } from '~/helpers/constructors';
 
   const emit = defineEmits(['rest-complete']);
@@ -376,29 +376,41 @@
       );
   });
 
-  const resourcesUsed = computed(() => {
-    function getUsedResources(type) {
-      return craftingRecipes.value
-        .filter((recipe) => recipe.resource.type === type && recipe.selected > 0)
-        .reduce((curr, acc) => acc + curr?.selected, 0);
-    };
+  const getUsedCraftingResources = (type) => {
+    let total = 0;
 
+    craftingRecipes.value.forEach((recipe, index) => {
+      if (recipe?.resource?.type === type) {
+        total += craftingSelections.value[index];
+      }
+    });
+
+    return total;
+  };
+
+  const resourcesUsed = computed(() => {
     return {
-      health: getUsedResources('health'),
-      stress: getUsedResources('stress'),
-      goldHandful: getUsedResources('goldHandful'),
-      goldBag: getUsedResources('goldBag'),
-      goldChest: getUsedResources('goldChest'),
+      health: getUsedCraftingResources('health'),
+      stress: getUsedCraftingResources('stress'),
+      gold: getUsedCraftingResources('goldHandful') +
+        (getUsedCraftingResources('goldBag') * GENERAL.gold.handfulsPerBag) +
+        (getUsedCraftingResources('goldChest') * GENERAL.gold.handfulsPerBag * GENERAL.gold.bagsPerChest),
     };
   });
 
   const resourcesAvailable = computed(() => {
+    const totalGoldAvailable = props.character.inventory.gold;
+    const totalGoldRemaining = totalGoldAvailable - resourcesUsed.value.gold;
+    const goldBagsAvailable = Math.floor(totalGoldRemaining / GENERAL.gold.handfulsPerBag);
+    const goldChestsAvailable = Math.floor(totalGoldRemaining / (GENERAL.gold.handfulsPerBag * GENERAL.gold.bagsPerChest));
+
     return {
       health: Math.max(0, healthSlots.value - props.character.health.current - resourcesUsed.value.health),
       stress: Math.max(0, stressSlots.value - props.character.stress.current - resourcesUsed.value.stress),
-      goldHandful: Math.max(0, props.character.inventory.gold.handful - resourcesUsed.value.goldHandful),
-      goldBag: Math.max(0, props.character.inventory.gold.bag - resourcesUsed.value.goldBag),
-      goldChest: Math.max(0, props.character.inventory.gold.chest - resourcesUsed.value.goldChest),
+      gold: totalGoldRemaining,
+      goldHandful: Math.max(0, totalGoldRemaining),
+      goldBag: Math.max(0, goldBagsAvailable),
+      goldChest: Math.max(0, goldChestsAvailable),
     };
   });
 
@@ -409,7 +421,6 @@
         const [ costType ] = Object.keys(downtime.cost);
 
         return {
-          selected: 0,
           item: downtime.craft,
           resource: {
             type: costType,
@@ -499,18 +510,18 @@
           break;
 
         case 'goldHandful':
-          props.character.inventory.gold.handful =
-            props.character.inventory.gold.handful - (item.quantity * recipeData.resource.cost);
+          props.character.inventory.gold =
+            props.character.inventory.gold - (item.quantity * recipeData.resource.cost);
           break;
 
         case 'goldBag':
-          props.character.inventory.gold.bag =
-            props.character.inventory.gold.bag - (item.quantity * recipeData.resource.cost);
+          props.character.inventory.gold =
+            props.character.inventory.gold - (item.quantity * recipeData.resource.cost * GENERAL.gold.handfulsPerBag);
           break;
 
         case 'goldChest':
-          props.character.inventory.gold.chest =
-            props.character.inventory.gold.chest - (item.quantity * recipeData.resource.cost);
+          props.character.inventory.gold =
+            props.character.inventory.gold - (item.quantity * recipeData.resource.cost * GENERAL.gold.handfulsPerBag * GENERAL.gold.bagsPerChest);
           break;
       }
 

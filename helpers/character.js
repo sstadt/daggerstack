@@ -1,6 +1,7 @@
 
 import upgradeStrings from '~/config/upgradeStrings';
 
+import GENERAL from '~/data/general';
 import SUBCLASSES from '~/data/subclasses';
 import WEAPONS from '~/data/weapons';
 import ARMOR from '~/data/armor';
@@ -342,4 +343,26 @@ export const getOptionsByUpgrade = (upgrade, character) => {
   }
 
   return firstUpgradeKey;
+};
+
+/**
+ * Get the broken down gold values from an existing character
+ *
+ * @param {Object} character The total gold (in handfuls) to split
+ * @returns Object with handful, bag, and chest keys
+ */
+export const getGold = (character) => {
+  const handfulsPerBag = GENERAL.gold.handfulsPerBag;
+  const handfulsPerChest = GENERAL.gold.handfulsPerBag * GENERAL.gold.bagsPerChest;
+  const currentGold = character.inventory.gold;
+
+  const chest = Math.max(Math.floor(currentGold / handfulsPerChest), 0);
+  const bag = Math.max(Math.floor((currentGold - (chest * handfulsPerChest)) / handfulsPerBag), 0);
+  const handful = Math.max((currentGold - ((chest * handfulsPerChest) + (bag * handfulsPerBag))), 0);
+
+  return {
+    handful,
+    bag,
+    chest,
+  };
 };

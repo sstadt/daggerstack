@@ -51,6 +51,7 @@
 
 <script setup>
   import GENERAL from '~/data/general';
+  import { getGold } from '~/helpers/character';
   import { debounce, uuidv4 } from '~/helpers/utility';
 
   const charactersStore = useCharactersStore();
@@ -86,21 +87,14 @@
   };
 
   const refreshGold = () => {
-    const handfulsPerBag = GENERAL.gold.handfulsPerBag;
-    const handfulsPerChest = GENERAL.gold.handfulsPerBag * GENERAL.gold.bagsPerChest;
-
     refreshing.value = true;
 
     nextTick(() => {
-      chest.value = Math.max(Math.floor(props.character.inventory.gold / handfulsPerChest), 0);
-      bag.value = Math.max(
-        Math.floor((props.character.inventory.gold - (chest.value * handfulsPerChest)) / handfulsPerBag),
-        0,
-      );
-      handful.value = Math.max(
-        (props.character.inventory.gold - ((chest.value * handfulsPerChest) + (bag.value * handfulsPerBag))),
-        0,
-      );
+      const gold = getGold(props.character);
+
+      chest.value = gold.chest;
+      bag.value = gold.bag;
+      handful.value = gold.handful;
 
       nextTick(() => {
         key.value = uuidv4();
