@@ -1,7 +1,7 @@
 {
-  "features": [],
   "items": [
     {
+      "id": "419bcefd-b546-4149-b807-986e319d3b4e",
       "name": "Broadsword",
       "slot": "primary",
       "trait": "Agility",
@@ -18,6 +18,7 @@
       }
     },
     {
+      "id": "7f433f89-975d-43ca-953a-fdb4bf4d4a50",
       "name": "Longsword",
       "slot": "primary",
       "trait": "Agility",
@@ -29,6 +30,7 @@
       "feature": null
     },
     {
+      "id": "36cacb26-80d8-47e0-821c-2ae58178abd1",
       "name": "Mace",
       "slot": "primary",
       "trait": "Strength",
@@ -40,6 +42,7 @@
       "feature": null
     },
     {
+      "id": "3a2c087c-6e07-426a-86cc-0fe9b881b5d8",
       "name": "Battleaxe",
       "slot": "primary",
       "trait": "Strength",
@@ -51,6 +54,7 @@
       "feature": null
     },
     {
+      "id": "1669d872-7d2b-4f25-94e7-7a2678d5adcf",
       "name": "Greatsword",
       "slot": "primary",
       "trait": "Strength",
@@ -69,6 +73,7 @@
       }
     },
     {
+      "id": "f1264c8c-bcde-43b6-aabf-e41eadde9ed4",
       "name": "Warhammer",
       "slot": "primary",
       "trait": "Strength",
@@ -87,6 +92,7 @@
       }
     },
     {
+      "id": "22ced67d-2b0b-4522-b376-5066aa8cd8d1",
       "name": "Dagger",
       "slot": "primary",
       "trait": "Finesse",
@@ -98,6 +104,7 @@
       "feature": null
     },
     {
+      "id": "128a509d-8919-459b-a574-a74161f1733c",
       "name": "Quarterstaff",
       "slot": "primary",
       "trait": "Instinct",
@@ -109,6 +116,7 @@
       "feature": null
     },
     {
+      "id": "c8cb9722-6ec5-4e40-aebc-835c2ab8662b",
       "name": "Cutlass",
       "slot": "primary",
       "trait": "Presence",
@@ -120,6 +128,7 @@
       "feature": null
     },
     {
+      "id": "b2163386-ddf2-45a8-9a37-936477c10098",
       "name": "Rapier",
       "slot": "primary",
       "trait": "Presence",
@@ -136,6 +145,7 @@
       }
     },
     {
+      "id": "4f3e7c3f-6fc2-45de-b083-0939973bd508",
       "name": "Halberd",
       "slot": "primary",
       "trait": "Strength",
@@ -147,6 +157,7 @@
       "feature": null
     },
     {
+      "id": "2ca004ca-6f9b-479a-ae0e-c3242ee7a6fd",
       "name": "Spear",
       "slot": "primary",
       "trait": "Finesse",
@@ -158,6 +169,7 @@
       "feature": null
     },
     {
+      "id": "bd4f8d87-d7fe-4e5c-bdd8-aa3d08e21df9",
       "name": "Shortbow",
       "slot": "primary",
       "trait": "Agility",
@@ -169,6 +181,7 @@
       "feature": null
     },
     {
+      "id": "72831050-ec4b-4f24-80d8-cbd9a83d265f",
       "name": "Crossbow",
       "slot": "primary",
       "trait": "Finesse",
@@ -180,6 +193,7 @@
       "feature": null
     },
     {
+      "id": "18cbf841-7e03-4759-8790-99f2f76b6e4d",
       "name": "Longbow",
       "slot": "primary",
       "trait": "Agility",
@@ -198,6 +212,7 @@
       }
     },
     {
+      "id": "33dd1b0e-0a9f-4763-a5d3-b74d04b0d091",
       "name": "Hallowed Axe",
       "slot": "primary",
       "trait": "Strength",
@@ -209,6 +224,7 @@
       "feature": null
     },
     {
+      "id": "2d450aba-9a2a-4588-81c5-fb2590b0c3be",
       "name": "Arcane Gauntlets",
       "slot": "primary",
       "trait": "Strength",
@@ -220,6 +236,7 @@
       "feature": null
     },
     {
+      "id": "4a27bc1c-9a7a-42c8-ac28-3678bc143795",
       "name": "Glowing Rings",
       "slot": "primary",
       "trait": "Agility",
@@ -231,6 +248,7 @@
       "feature": null
     },
     {
+      "id": "67ae1ebf-e8c5-43f5-bfb8-495fc7a98ad3",
       "name": "Hand Runes",
       "slot": "primary",
       "trait": "Instinct",
@@ -242,6 +260,7 @@
       "feature": null
     },
     {
+      "id": "1ce72a0f-f929-44ed-9701-1ae85cd4118d",
       "name": "Returning Blade",
       "slot": "primary",
       "trait": "Finesse",
@@ -253,6 +272,7 @@
       "feature": null
     },
     {
+      "id": "38654a76-a7de-439c-828f-c563b314f3cb",
       "name": "Shortstaff",
       "slot": "primary",
       "trait": "Instinct",
@@ -264,6 +284,7 @@
       "feature": null
     },
     {
+      "id": "157bd3e2-3ede-432d-8a31-fe7f2cbf1680",
       "name": "Dualstaff",
       "slot": "primary",
       "trait": "Instinct",
@@ -275,6 +296,7 @@
       "feature": null
     },
     {
+      "id": "4e19800e-436c-4e8f-8b2b-c3371c2cc4a6",
       "name": "Scepter",
       "slot": "primary",
       "trait": "Presence",
@@ -291,6 +313,7 @@
       }
     },
     {
+      "id": "4e4c595b-4c48-465d-9cfc-00a978ad8de6",
       "name": "Wand",
       "slot": "primary",
       "trait": "Knowledge",
@@ -302,6 +325,7 @@
       "feature": null
     },
     {
+      "id": "0f3902ea-545e-4075-8074-7c3f3209b689",
       "name": "Greatstaff",
       "slot": "primary",
       "trait": "Knowledge",
@@ -318,6 +342,7 @@
       }
     },
     {
+      "id": "2bbf30d7-f16f-4f30-8bf9-53a02597d811",
       "name": "Improved Broadsword",
       "slot": "primary",
       "trait": "Agility",
@@ -334,6 +359,7 @@
       }
     },
     {
+      "id": "07c69fd3-fe79-4935-b2d8-00eda12684d0",
       "name": "Improved Longsword",
       "slot": "primary",
       "trait": "Agility",
@@ -345,6 +371,7 @@
       "feature": null
     },
     {
+      "id": "e409ff38-36ac-4d18-be1f-9c6d4e6303d2",
       "name": "Improved Mace",
       "slot": "primary",
       "trait": "Strength",
@@ -356,6 +383,7 @@
       "feature": null
     },
     {
+      "id": "9667e493-a3c9-46f2-b637-60fe114510ab",
       "name": "Improved Battleaxe",
       "slot": "primary",
       "trait": "Strength",
@@ -367,6 +395,7 @@
       "feature": null
     },
     {
+      "id": "021903cc-63da-4b9c-9335-46181205ce22",
       "name": "Improved Greatsword",
       "slot": "primary",
       "trait": "Strength",
@@ -385,6 +414,7 @@
       }
     },
     {
+      "id": "bf2ee9d8-3090-4e74-8828-f25d99a2a313",
       "name": "Improved Warhammer",
       "slot": "primary",
       "trait": "Strength",
@@ -403,6 +433,7 @@
       }
     },
     {
+      "id": "4f183ce0-128a-4e6b-9c86-f034fe1c97dd",
       "name": "Improved Dagger",
       "slot": "primary",
       "trait": "Finesse",
@@ -414,6 +445,7 @@
       "feature": null
     },
     {
+      "id": "15a5f1a3-881d-4691-8082-8528a9fa4f94",
       "name": "Improved Quarterstaff",
       "slot": "primary",
       "trait": "Instinct",
@@ -425,6 +457,7 @@
       "feature": null
     },
     {
+      "id": "03f338b1-6055-4c2c-b8ce-0b0a1f450d45",
       "name": "Improved Cutlass",
       "slot": "primary",
       "trait": "Presence",
@@ -436,6 +469,7 @@
       "feature": null
     },
     {
+      "id": "47c487f5-9cc7-43d7-8594-3c848594bc79",
       "name": "Improved Rapier",
       "slot": "primary",
       "trait": "Presence",
@@ -452,6 +486,7 @@
       }
     },
     {
+      "id": "46b1f8cd-e6e4-4ab0-9dc0-cc5842ddc574",
       "name": "Improved Halberd",
       "slot": "primary",
       "trait": "Strength",
@@ -463,6 +498,7 @@
       "feature": null
     },
     {
+      "id": "3500d74c-d681-4a95-9c5a-4739fb6f1305",
       "name": "Improved Spear",
       "slot": "primary",
       "trait": "Finesse",
@@ -474,6 +510,7 @@
       "feature": null
     },
     {
+      "id": "5d0dfcff-70bf-4975-b058-84cf80c65999",
       "name": "Improved Shortbow",
       "slot": "primary",
       "trait": "Agility",
@@ -485,6 +522,7 @@
       "feature": null
     },
     {
+      "id": "61c1c954-e7a2-49b6-8547-69ee2c234417",
       "name": "Improved Crossbow",
       "slot": "primary",
       "trait": "Finesse",
@@ -496,6 +534,7 @@
       "feature": null
     },
     {
+      "id": "cb31f66e-bb6a-4786-bfbb-b475a8de0e2c",
       "name": "Improved Longbow",
       "slot": "primary",
       "trait": "Agility",
@@ -514,6 +553,7 @@
       }
     },
     {
+      "id": "e5a79d8b-7f8f-4cf6-80db-6a143bd8e8a6",
       "name": "Gilded Falchion",
       "slot": "primary",
       "trait": "Strength",
@@ -530,6 +570,7 @@
       }
     },
     {
+      "id": "fa5ba699-2363-40fe-bcb2-8b4fbb6e1058",
       "name": "Knuckle Blades",
       "slot": "primary",
       "trait": "Strength",
@@ -546,6 +587,7 @@
       }
     },
     {
+      "id": "d4696347-432f-4c6c-b084-15a013387927",
       "name": "Urok Broadsword",
       "slot": "primary",
       "trait": "Finesse",
@@ -562,6 +604,7 @@
       }
     },
     {
+      "id": "a3d80586-a3d5-4619-810d-bb0d95e22eac",
       "name": "Bladed Whip",
       "slot": "primary",
       "trait": "Agility",
@@ -578,6 +621,7 @@
       }
     },
     {
+      "id": "578f7aa3-76a7-455f-b274-9503d1048a36",
       "name": "Steelforged Halberd",
       "slot": "primary",
       "trait": "Strength",
@@ -594,6 +638,7 @@
       }
     },
     {
+      "id": "d93edc48-f684-4f3f-9a5c-9059c39c0b90",
       "name": "War Scythe",
       "slot": "primary",
       "trait": "Finesse",
@@ -610,6 +655,7 @@
       }
     },
     {
+      "id": "296f4a9d-b2f4-4fd7-9d6d-5f0a26c9939e",
       "name": "Greatbow",
       "slot": "primary",
       "trait": "Strength",
@@ -626,6 +672,7 @@
       }
     },
     {
+      "id": "931958d0-612a-4a6e-82a2-ca9b4f6973f2",
       "name": "Blunderbuss",
       "slot": "primary",
       "trait": "Finesse",
@@ -642,6 +689,7 @@
       }
     },
     {
+      "id": "e014b982-d885-43cc-b789-ebe175f78e4a",
       "name": "Finehair Bow",
       "slot": "primary",
       "trait": "Agility",
@@ -658,6 +706,7 @@
       }
     },
     {
+      "id": "fab00339-dcec-4e5f-bac0-f901cfd17039",
       "name": "Improved Hallowed Axe",
       "slot": "primary",
       "trait": "Strength",
@@ -669,6 +718,7 @@
       "feature": null
     },
     {
+      "id": "d9877ed9-6c89-484d-89c9-0389727ae69c",
       "name": "Improved Arcane Gauntlets",
       "slot": "primary",
       "trait": "Strength",
@@ -680,6 +730,7 @@
       "feature": null
     },
     {
+      "id": "edc25fef-b1ec-4454-bb21-738343df9a73",
       "name": "Improved Glowing Rings",
       "slot": "primary",
       "trait": "Agility",
@@ -691,6 +742,7 @@
       "feature": null
     },
     {
+      "id": "2a9b2f22-efe4-4bf8-a76b-fd4241ef7537",
       "name": "Improved Hand Runes",
       "slot": "primary",
       "trait": "Instinct",
@@ -702,6 +754,7 @@
       "feature": null
     },
     {
+      "id": "be9ad2eb-be2c-4088-9d8d-95cd5699ce18",
       "name": "Improved Returning Blade",
       "slot": "primary",
       "trait": "Finesse",
@@ -713,6 +766,7 @@
       "feature": null
     },
     {
+      "id": "14e62d3d-2d08-47e8-ab32-13a189b1a20b",
       "name": "Improved Shortstaff",
       "slot": "primary",
       "trait": "Instinct",
@@ -724,6 +778,7 @@
       "feature": null
     },
     {
+      "id": "b0c37440-2b6e-4113-bb19-9925be57788f",
       "name": "Improved Dualstaff",
       "slot": "primary",
       "trait": "Instinct",
@@ -735,6 +790,7 @@
       "feature": null
     },
     {
+      "id": "0ccb91ff-6971-414f-9f89-d0cb1d5bd3c9",
       "name": "Improved Scepter",
       "slot": "primary",
       "trait": "Presence",
@@ -751,6 +807,7 @@
       }
     },
     {
+      "id": "706c989c-747a-49b4-897a-b925d51b8d8e",
       "name": "Improved Wand",
       "slot": "primary",
       "trait": "Knowledge",
@@ -762,6 +819,7 @@
       "feature": null
     },
     {
+      "id": "82b0c749-02d0-4835-affd-d1af8910c21d",
       "name": "Improved Greatstaff",
       "slot": "primary",
       "trait": "Knowledge",
@@ -778,6 +836,7 @@
       }
     },
     {
+      "id": "4dabc3b3-1f41-4214-b0b0-0cbb38ac60d0",
       "name": "Ego Blade",
       "slot": "primary",
       "trait": "Agility",
@@ -794,6 +853,7 @@
       }
     },
     {
+      "id": "a03d5c52-212a-40cf-a2b6-96c683d8c892",
       "name": "Casting Sword",
       "slot": "primary",
       "trait": "Strength",
@@ -810,6 +870,7 @@
       }
     },
     {
+      "id": "df01835d-1b90-4b9d-9dc6-e112be439763",
       "name": "Devouring Dagger",
       "slot": "primary",
       "trait": "Finesse",
@@ -826,6 +887,7 @@
       }
     },
     {
+      "id": "4d7e64ef-f579-48cb-9ad8-f58847134e0d",
       "name": "Hammer of Exota",
       "slot": "primary",
       "trait": "Instinct",
@@ -842,6 +904,7 @@
       }
     },
     {
+      "id": "eb05f129-af27-4c5a-b275-f4d83f88f342",
       "name": "Yutari Bloodbow",
       "slot": "primary",
       "trait": "Finesse",
@@ -858,6 +921,7 @@
       }
     },
     {
+      "id": "8471249d-3451-43b0-a0e1-19ac4e97eb4a",
       "name": "Elder Bow",
       "slot": "primary",
       "trait": "Instinct",
@@ -874,6 +938,7 @@
       }
     },
     {
+      "id": "d46ef041-545d-4d4e-b352-4bf12623041c",
       "name": "Scepter of Elias",
       "slot": "primary",
       "trait": "Presence",
@@ -890,6 +955,7 @@
       }
     },
     {
+      "id": "8d64e1f4-db5d-4097-98e3-304e4810ca9f",
       "name": "Wand of Enthrallment",
       "slot": "primary",
       "trait": "Presence",
@@ -906,6 +972,7 @@
       }
     },
     {
+      "id": "1c2ed57b-3224-484d-bb50-eb858c11af26",
       "name": "Bonded Staff",
       "slot": "primary",
       "trait": "Knowledge",
@@ -922,6 +989,7 @@
       }
     },
     {
+      "id": "ea118327-2439-4ab9-9008-1f6fa6db7200",
       "name": "Advanced Broadsword",
       "slot": "primary",
       "trait": "Agility",
@@ -938,6 +1006,7 @@
       }
     },
     {
+      "id": "90385f69-4721-4dfd-8445-18015984cb35",
       "name": "Advanced Longsword",
       "slot": "primary",
       "trait": "Agility",
@@ -949,6 +1018,7 @@
       "feature": null
     },
     {
+      "id": "a8006495-a172-4d36-896b-c1104b48b346",
       "name": "Advanced Mace",
       "slot": "primary",
       "trait": "Strength",
@@ -960,6 +1030,7 @@
       "feature": null
     },
     {
+      "id": "156c3c3b-c254-4db2-a735-c8a132525f71",
       "name": "Advanced Battleaxe",
       "slot": "primary",
       "trait": "Strength",
@@ -971,6 +1042,7 @@
       "feature": null
     },
     {
+      "id": "2d5493bf-55c1-4ad5-ab69-f0c8d1a81c3d",
       "name": "Advanced Greatsword",
       "slot": "primary",
       "trait": "Strength",
@@ -989,6 +1061,7 @@
       }
     },
     {
+      "id": "351dffa8-13b2-4dd4-a7d6-8505ea5feeb2",
       "name": "Advanced Warhammer",
       "slot": "primary",
       "trait": "Strength",
@@ -1007,6 +1080,7 @@
       }
     },
     {
+      "id": "83b7049a-34ef-4c11-8859-babec717a299",
       "name": "Advanced Dagger",
       "slot": "primary",
       "trait": "Finesse",
@@ -1018,6 +1092,7 @@
       "feature": null
     },
     {
+      "id": "9d9f8bb0-4749-4cd1-b44f-80f4e3565dc7",
       "name": "Advanced Quarterstaff",
       "slot": "primary",
       "trait": "Instinct",
@@ -1029,6 +1104,7 @@
       "feature": null
     },
     {
+      "id": "656a65d3-faf1-4f4a-8b2d-df2e1d62af84",
       "name": "Advanced Cutlass",
       "slot": "primary",
       "trait": "Presence",
@@ -1040,6 +1116,7 @@
       "feature": null
     },
     {
+      "id": "c64563a2-488d-4055-954b-6cfe5889381d",
       "name": "Advanced Rapier",
       "slot": "primary",
       "trait": "Presence",
@@ -1056,6 +1133,7 @@
       }
     },
     {
+      "id": "046ee669-a697-40b9-98b2-3bbb2bf983c8",
       "name": "Advanced Halberd",
       "slot": "primary",
       "trait": "Strength",
@@ -1067,6 +1145,7 @@
       "feature": null
     },
     {
+      "id": "71b217bb-25dd-4a48-8b9e-04afad9939b3",
       "name": "Advanced Spear",
       "slot": "primary",
       "trait": "Finesse",
@@ -1078,6 +1157,7 @@
       "feature": null
     },
     {
+      "id": "bc5d93bb-2ba3-440b-92b8-f8698d8323bf",
       "name": "Advanced Shortbow",
       "slot": "primary",
       "trait": "Agility",
@@ -1089,6 +1169,7 @@
       "feature": null
     },
     {
+      "id": "7f3e422b-388a-4f05-94c1-72aaff5fd49c",
       "name": "Advanced Crossbow",
       "slot": "primary",
       "trait": "Finesse",
@@ -1100,6 +1181,7 @@
       "feature": null
     },
     {
+      "id": "717507a1-7bb0-4e78-8637-15c9f5dd6f34",
       "name": "Advanced Longbow",
       "slot": "primary",
       "trait": "Agility",
@@ -1118,6 +1200,7 @@
       }
     },
     {
+      "id": "7f4db24d-b389-439f-9306-467d0f0720c0",
       "name": "Flickerfly Blade",
       "slot": "primary",
       "trait": "Agility",
@@ -1134,6 +1217,7 @@
       }
     },
     {
+      "id": "8943573b-8d2c-48af-912f-814bd599141b",
       "name": "Bravesword",
       "slot": "primary",
       "trait": "Strength",
@@ -1153,6 +1237,7 @@
       }
     },
     {
+      "id": "ce7682f3-2e87-4b72-9ced-c42b1acb389f",
       "name": "Hell's Hammer",
       "slot": "primary",
       "trait": "Strength",
@@ -1169,6 +1254,7 @@
       }
     },
     {
+      "id": "e42b7532-c7f4-43d8-8368-5415469578b2",
       "name": "Labrys Axe",
       "slot": "primary",
       "trait": "Strength",
@@ -1187,6 +1273,7 @@
       }
     },
     {
+      "id": "61c4ffcf-9332-4d76-9f5c-420219ed8af0",
       "name": "Meridian Cutlass",
       "slot": "primary",
       "trait": "Presence",
@@ -1203,6 +1290,7 @@
       }
     },
     {
+      "id": "86865d5e-4708-4d3e-bc7d-ead8add137d8",
       "name": "Retractable Saber",
       "slot": "primary",
       "trait": "Presence",
@@ -1219,6 +1307,7 @@
       }
     },
     {
+      "id": "c2a82f29-9499-475a-b5d1-e6d580f4e84f",
       "name": "Double Flail",
       "slot": "primary",
       "trait": "Agility",
@@ -1235,6 +1324,7 @@
       }
     },
     {
+      "id": "794336c1-8a48-467c-8ace-3c8b8fac54bb",
       "name": "Talon Blades",
       "slot": "primary",
       "trait": "Finesse",
@@ -1251,6 +1341,7 @@
       }
     },
     {
+      "id": "d725865d-d0ef-44cd-a290-1dbde7873a5a",
       "name": "Spiked Bow",
       "slot": "primary",
       "trait": "Agility",
@@ -1267,6 +1358,7 @@
       }
     },
     {
+      "id": "c032dbe0-353f-49be-b8c6-a68fc91b37f9",
       "name": "Black Powder Revolver",
       "slot": "primary",
       "trait": "Finesse",
@@ -1283,6 +1375,7 @@
       }
     },
     {
+      "id": "36829b2b-5bfc-45b6-8c1a-85b70a1c58d0",
       "name": "Advanced Hallowed Axe",
       "slot": "primary",
       "trait": "Strength",
@@ -1294,6 +1387,7 @@
       "feature": null
     },
     {
+      "id": "3b436346-b058-4e22-bb9d-d7a3099f5f59",
       "name": "Advanced Arcane Gauntlets",
       "slot": "primary",
       "trait": "Strength",
@@ -1305,6 +1399,7 @@
       "feature": null
     },
     {
+      "id": "9e3c98c8-f6f9-4ecd-9c01-c7b40dba45ab",
       "name": "Advanced Glowing Rings",
       "slot": "primary",
       "trait": "Agility",
@@ -1316,6 +1411,7 @@
       "feature": null
     },
     {
+      "id": "ad986831-6dd1-4564-b5fe-b3ba8bc8ee4b",
       "name": "Advanced Hand Runes",
       "slot": "primary",
       "trait": "Instinct",
@@ -1327,6 +1423,7 @@
       "feature": null
     },
     {
+      "id": "a834d691-5500-48dd-8518-663b3a909430",
       "name": "Advanced Returning Blade",
       "slot": "primary",
       "trait": "Finesse",
@@ -1338,6 +1435,7 @@
       "feature": null
     },
     {
+      "id": "27aed2d4-9587-417b-9381-fbe6e780312e",
       "name": "Advanced Shortstaff",
       "slot": "primary",
       "trait": "Instinct",
@@ -1349,6 +1447,7 @@
       "feature": null
     },
     {
+      "id": "58698dce-57a8-4af5-9353-923b5e229f5f",
       "name": "Advanced Dualstaff",
       "slot": "primary",
       "trait": "Instinct",
@@ -1360,6 +1459,7 @@
       "feature": null
     },
     {
+      "id": "9a370d0c-b8ae-4d2f-939d-0227dac29de0",
       "name": "Advanced Scepter",
       "slot": "primary",
       "trait": "Presence",
@@ -1376,6 +1476,7 @@
       }
     },
     {
+      "id": "f122439e-628f-4278-972b-7499a8c3de52",
       "name": "Advanced Wand",
       "slot": "primary",
       "trait": "Knowledge",
@@ -1387,6 +1488,7 @@
       "feature": null
     },
     {
+      "id": "e328dc9a-0427-4197-bd15-14a65a2263c5",
       "name": "Advanced Greatstaff",
       "slot": "primary",
       "trait": "Knowledge",
@@ -1403,6 +1505,7 @@
       }
     },
     {
+      "id": "447407ce-797d-4217-8430-19bcc6c2500e",
       "name": "Axe of Fortunis",
       "slot": "primary",
       "trait": "Strength",
@@ -1419,6 +1522,7 @@
       }
     },
     {
+      "id": "d77a57bd-0b45-4e23-9b5c-802457c6a62c",
       "name": "Blessed Anlace",
       "slot": "primary",
       "trait": "Instinct",
@@ -1435,6 +1539,7 @@
       }
     },
     {
+      "id": "d9674512-fddf-4941-8bd7-427baf9db918",
       "name": "Ghostblade",
       "slot": "primary",
       "trait": "Presence",
@@ -1451,6 +1556,7 @@
       }
     },
     {
+      "id": "6ef4cf5a-f0fc-46f4-9a7d-0eda0005befc",
       "name": "Runes of Ruination",
       "slot": "primary",
       "trait": "Knowledge",
@@ -1467,6 +1573,7 @@
       }
     },
     {
+      "id": "341ff734-f509-44b4-80f2-d9ce16ced115",
       "name": "Widogast Pendant",
       "slot": "primary",
       "trait": "Knowledge",
@@ -1483,6 +1590,7 @@
       }
     },
     {
+      "id": "e4dc0aa6-1766-4c05-a650-c398095077ec",
       "name": "Gilded Bow",
       "slot": "primary",
       "trait": "Finesse",
@@ -1499,6 +1607,7 @@
       }
     },
     {
+      "id": "3ee7b779-92ac-4053-877c-ae4c2469226a",
       "name": "Firestaff",
       "slot": "primary",
       "trait": "Instinct",
@@ -1515,6 +1624,7 @@
       }
     },
     {
+      "id": "6549870b-dd86-4d90-912a-373678f05f1d",
       "name": "Mage Orb",
       "slot": "primary",
       "trait": "Knowledge",
@@ -1531,6 +1641,7 @@
       }
     },
     {
+      "id": "7dc0ff8a-62a8-40a8-8e58-5a5cd1dc17aa",
       "name": "Ilmari's Blunderbuss",
       "slot": "primary",
       "trait": "Finesse",
@@ -1547,6 +1658,7 @@
       }
     },
     {
+      "id": "9fd72a87-dbb4-4601-bc8a-f64030836fc7",
       "name": "Legendary Broadsword",
       "slot": "primary",
       "trait": "Agility",
@@ -1563,6 +1675,7 @@
       }
     },
     {
+      "id": "51b398ed-dc35-4dbc-a693-9ee144beec0a",
       "name": "Legendary Longsword",
       "slot": "primary",
       "trait": "Agility",
@@ -1574,6 +1687,7 @@
       "feature": null
     },
     {
+      "id": "1bf2a065-6101-4e6b-ba53-22e74c41e64e",
       "name": "Legendary Mace",
       "slot": "primary",
       "trait": "Strength",
@@ -1585,6 +1699,7 @@
       "feature": null
     },
     {
+      "id": "cff13045-9899-452d-95c8-8da1b7761429",
       "name": "Legendary Battleaxe",
       "slot": "primary",
       "trait": "Strength",
@@ -1596,6 +1711,7 @@
       "feature": null
     },
     {
+      "id": "22a9e82a-b810-4c8f-b3bc-e68d90ca9778",
       "name": "Legendary Greatsword",
       "slot": "primary",
       "trait": "Strength",
@@ -1614,6 +1730,7 @@
       }
     },
     {
+      "id": "1fb5f7a6-d5ef-4a50-a75a-8e812d764b35",
       "name": "Legendary Warhammer",
       "slot": "primary",
       "trait": "Strength",
@@ -1632,6 +1749,7 @@
       }
     },
     {
+      "id": "a0f6603c-d852-47b1-889d-24ae25e2b5c7",
       "name": "Legendary Dagger",
       "slot": "primary",
       "trait": "Finesse",
@@ -1643,6 +1761,7 @@
       "feature": null
     },
     {
+      "id": "2c962d5e-8c24-4d62-848b-a8a8e8029553",
       "name": "Legendary Quarterstaff",
       "slot": "primary",
       "trait": "Instinct",
@@ -1654,6 +1773,7 @@
       "feature": null
     },
     {
+      "id": "76d1f3fb-b43b-4da6-870a-7f2b946798a4",
       "name": "Legendary Cutlass",
       "slot": "primary",
       "trait": "Presence",
@@ -1665,6 +1785,7 @@
       "feature": null
     },
     {
+      "id": "b8f20958-1e6a-4d41-8bdd-e01985ee85e9",
       "name": "Legendary Rapier",
       "slot": "primary",
       "trait": "Presence",
@@ -1681,6 +1802,7 @@
       }
     },
     {
+      "id": "0214f7e3-85e3-4e5d-a64d-7f6606382a95",
       "name": "Legendary Halberd",
       "slot": "primary",
       "trait": "Strength",
@@ -1692,6 +1814,7 @@
       "feature": null
     },
     {
+      "id": "32f24ab2-09bb-4a01-a0b6-f472507dd9b7",
       "name": "Legendary Spear",
       "slot": "primary",
       "trait": "Finesse",
@@ -1703,6 +1826,7 @@
       "feature": null
     },
     {
+      "id": "a247c4d8-01b8-46fc-9fa5-982a49dc6f18",
       "name": "Legendary Shortbow",
       "slot": "primary",
       "trait": "Agility",
@@ -1714,6 +1838,7 @@
       "feature": null
     },
     {
+      "id": "2b06a3ec-e349-4a23-bb57-2bb559fd145e",
       "name": "Legendary Crossbow",
       "slot": "primary",
       "trait": "Finesse",
@@ -1725,6 +1850,7 @@
       "feature": null
     },
     {
+      "id": "b112a850-065a-4f30-93be-e4a13dbb8e21",
       "name": "Legendary Longbow",
       "slot": "primary",
       "trait": "Agility",
@@ -1743,6 +1869,7 @@
       }
     },
     {
+      "id": "7ecabf4c-5819-4dbf-b93e-02f37be36a1f",
       "name": "Double-Sided Sword",
       "slot": "primary",
       "trait": "Agility",
@@ -1759,6 +1886,7 @@
       }
     },
     {
+      "id": "28562fe9-c566-4380-b141-8d9e0d5b55a5",
       "name": "Impact Gauntlet",
       "slot": "primary",
       "trait": "Strength",
@@ -1775,6 +1903,7 @@
       }
     },
     {
+      "id": "23dddad8-68e1-4835-afa6-623afdeeb11a",
       "name": "Sledge Axe",
       "slot": "primary",
       "trait": "Strength",
@@ -1793,6 +1922,7 @@
       }
     },
     {
+      "id": "28f153b4-61c1-48ce-bbc3-0d6c82d3b6eb",
       "name": "Curved Dagger",
       "slot": "primary",
       "trait": "Finesse",
@@ -1809,6 +1939,7 @@
       }
     },
     {
+      "id": "ce463528-b5a6-4d7f-8aa2-db0d6a9d3613",
       "name": "Extended Polearm",
       "slot": "primary",
       "trait": "Finesse",
@@ -1825,6 +1956,7 @@
       }
     },
     {
+      "id": "e22f94f2-1989-4ee3-be1b-040572a743df",
       "name": "Swinging Ropeblade",
       "slot": "primary",
       "trait": "Presence",
@@ -1841,6 +1973,7 @@
       }
     },
     {
+      "id": "b3a031b3-2fd9-4238-b658-ca11c142eb7a",
       "name": "Ricochet Axes",
       "slot": "primary",
       "trait": "Agility",
@@ -1857,6 +1990,7 @@
       }
     },
     {
+      "id": "77531da3-37eb-47a5-9118-6eea8171ab09",
       "name": "Aantari Bow",
       "slot": "primary",
       "trait": "Finesse",
@@ -1873,6 +2007,7 @@
       }
     },
     {
+      "id": "356cd224-91f3-4f5a-9ea0-2a43f6af821b",
       "name": "Hand Cannon",
       "slot": "primary",
       "trait": "Finesse",
@@ -1889,6 +2024,7 @@
       }
     },
     {
+      "id": "80ba5598-bd56-4ecb-895a-3bdd046e553d",
       "name": "Legendary Hallowed Axe",
       "slot": "primary",
       "trait": "Strength",
@@ -1900,6 +2036,7 @@
       "feature": null
     },
     {
+      "id": "dad576de-4491-4228-8eed-82d60fb9b742",
       "name": "Legendary Arcane Gauntlets",
       "slot": "primary",
       "trait": "Strength",
@@ -1911,6 +2048,7 @@
       "feature": null
     },
     {
+      "id": "98601c3d-f497-4a6a-a262-8b37dce543ff",
       "name": "Legendary Glowing Rings",
       "slot": "primary",
       "trait": "Agility",
@@ -1922,6 +2060,7 @@
       "feature": null
     },
     {
+      "id": "66f5f297-6799-4d1b-b3ba-18f6a2b0e540",
       "name": "Legendary Hand Runes",
       "slot": "primary",
       "trait": "Instinct",
@@ -1933,6 +2072,7 @@
       "feature": null
     },
     {
+      "id": "f32336c8-f1a2-4f6a-819f-68b28f3237dd",
       "name": "Legendary Returning Blade",
       "slot": "primary",
       "trait": "Finesse",
@@ -1944,6 +2084,7 @@
       "feature": null
     },
     {
+      "id": "f5129343-d232-441f-ad4a-da870457091d",
       "name": "Legendary Shortstaff",
       "slot": "primary",
       "trait": "Instinct",
@@ -1955,6 +2096,7 @@
       "feature": null
     },
     {
+      "id": "f28282c6-e1fa-4d22-a9de-2d18321170f7",
       "name": "Legendary Dualstaff",
       "slot": "primary",
       "trait": "Instinct",
@@ -1966,6 +2108,7 @@
       "feature": null
     },
     {
+      "id": "02a272cd-fc8c-4eeb-9e3d-aabac9d24b61",
       "name": "Legendary Scepter",
       "slot": "primary",
       "trait": "Presence",
@@ -1982,6 +2125,7 @@
       }
     },
     {
+      "id": "cae4f5ac-e53d-4a0b-aadb-c6bccb09c43a",
       "name": "Legendary Wand",
       "slot": "primary",
       "trait": "Knowledge",
@@ -1993,6 +2137,7 @@
       "feature": null
     },
     {
+      "id": "fbfadb44-2779-4ee6-b21c-65a0d1ca9ca2",
       "name": "Legendary Greatstaff",
       "slot": "primary",
       "trait": "Knowledge",
@@ -2009,6 +2154,7 @@
       }
     },
     {
+      "id": "7b803b0c-97ca-4fe5-a484-c5ea64d59786",
       "name": "Sword of Light & Flame",
       "slot": "primary",
       "trait": "Strength",
@@ -2025,6 +2171,7 @@
       }
     },
     {
+      "id": "d144c1e1-70dc-438d-8465-7a625e3f4a72",
       "name": "Siphoning Gauntlets",
       "slot": "primary",
       "trait": "Presence",
@@ -2041,6 +2188,7 @@
       }
     },
     {
+      "id": "9a5d9ece-ce45-40b9-94a7-d73668787763",
       "name": "Midas Scythe",
       "slot": "primary",
       "trait": "Knowledge",
@@ -2057,6 +2205,7 @@
       }
     },
     {
+      "id": "22f01f19-03a3-4fc4-82c5-e726ea6eaebf",
       "name": "Floating Bladeshards",
       "slot": "primary",
       "trait": "Instinct",
@@ -2073,6 +2222,7 @@
       }
     },
     {
+      "id": "ad4a189e-f370-4a41-83eb-ff985e9ca0d0",
       "name": "Bloodstaff",
       "slot": "primary",
       "trait": "Instinct",
@@ -2089,6 +2239,7 @@
       }
     },
     {
+      "id": "6e742d12-0bc3-4379-aeb7-b8ccb8d24e94",
       "name": "Thistlebow",
       "slot": "primary",
       "trait": "Instinct",
@@ -2105,6 +2256,7 @@
       }
     },
     {
+      "id": "2a6df213-ccb5-4c20-9b4c-a6377cddc86a",
       "name": "Wand of Essek",
       "slot": "primary",
       "trait": "Knowledge",
@@ -2123,6 +2275,7 @@
       }
     },
     {
+      "id": "07cd1783-f158-4356-9d0f-50fabcf9af1f",
       "name": "Magus Revolver",
       "slot": "primary",
       "trait": "Finesse",
@@ -2139,6 +2292,7 @@
       }
     },
     {
+      "id": "4891b65c-ddff-4621-abd6-2782ddfb0051",
       "name": "Fusion Gloves",
       "slot": "primary",
       "trait": "Knowledge",
@@ -2155,6 +2309,7 @@
       }
     },
     {
+      "id": "290445d5-d237-4653-8246-920541aed6f9",
       "name": "Shortsword",
       "slot": "secondary",
       "trait": "Agility",
@@ -2173,6 +2328,7 @@
       }
     },
     {
+      "id": "b36d1277-db27-416b-9d5b-3572b3b3302d",
       "name": "Round Shield",
       "slot": "secondary",
       "trait": "Strength",
@@ -2191,6 +2347,7 @@
       }
     },
     {
+      "id": "c7c0b735-0a4d-4146-bc56-6797a56e95d7",
       "name": "Tower Shield",
       "slot": "secondary",
       "trait": "Strength",
@@ -2210,6 +2367,7 @@
       }
     },
     {
+      "id": "df32112b-c99c-4440-a8a7-9464fccfffa6",
       "name": "Small Dagger",
       "slot": "secondary",
       "trait": "Finesse",
@@ -2228,6 +2386,7 @@
       }
     },
     {
+      "id": "9a442be9-d97b-4ee6-a187-96b6dfe84337",
       "name": "Whip",
       "slot": "secondary",
       "trait": "Presence",
@@ -2244,6 +2403,7 @@
       }
     },
     {
+      "id": "d2899acb-b71a-4278-8dfa-8e05236b7d96",
       "name": "Grappler",
       "slot": "secondary",
       "trait": "Finesse",
@@ -2260,6 +2420,7 @@
       }
     },
     {
+      "id": "37e70552-73ca-4793-9479-8a0dd222680e",
       "name": "Hand Crossbow",
       "slot": "secondary",
       "trait": "Finesse",
@@ -2271,6 +2432,7 @@
       "feature": null
     },
     {
+      "id": "e19de0d3-9e38-43db-9e01-7469be59ed72",
       "name": "Improved Shortsword",
       "slot": "secondary",
       "trait": "Agility",
@@ -2289,6 +2451,7 @@
       }
     },
     {
+      "id": "e2911396-79b6-4ea8-9853-482913985ad4",
       "name": "Improved Round Shield",
       "slot": "secondary",
       "trait": "Strength",
@@ -2307,6 +2470,7 @@
       }
     },
     {
+      "id": "b88ed1cd-46eb-49d3-94f9-f36c53a6b097",
       "name": "Improved Tower Shield",
       "slot": "secondary",
       "trait": "Strength",
@@ -2326,6 +2490,7 @@
       }
     },
     {
+      "id": "ee2c9de2-bbe0-4d1b-8446-a42ad5569bef",
       "name": "Improved Small Dagger",
       "slot": "secondary",
       "trait": "Finesse",
@@ -2344,6 +2509,7 @@
       }
     },
     {
+      "id": "bd25471f-53be-4e67-9fa0-5b2bbe062f40",
       "name": "Improved Whip",
       "slot": "secondary",
       "trait": "Presence",
@@ -2360,6 +2526,7 @@
       }
     },
     {
+      "id": "ff3aa93c-f66e-4c7c-9fd9-57859b73cb69",
       "name": "Improved Grappler",
       "slot": "secondary",
       "trait": "Finesse",
@@ -2376,6 +2543,7 @@
       }
     },
     {
+      "id": "9c4ebc52-1599-45e9-a26a-70a7bd0686fc",
       "name": "Improved Hand Crossbow",
       "slot": "secondary",
       "trait": "Finesse",
@@ -2387,6 +2555,7 @@
       "feature": null
     },
     {
+      "id": "207ed585-f3ac-400e-8b76-a01bfb237197",
       "name": "Spiked Shield",
       "slot": "secondary",
       "trait": "Strength",
@@ -2406,6 +2575,7 @@
       }
     },
     {
+      "id": "4147519b-2917-44ce-a562-55ae80d0d592",
       "name": "Parrying Dagger",
       "slot": "secondary",
       "trait": "Finesse",
@@ -2422,6 +2592,7 @@
       }
     },
     {
+      "id": "5fba2b26-cf81-4e4a-8115-198b35130175",
       "name": "Returning Axe",
       "slot": "secondary",
       "trait": "Agility",
@@ -2433,6 +2604,7 @@
       "feature": null
     },
     {
+      "id": "5c9c809d-b1b4-4f29-8f86-b62195bd9432",
       "name": "Advanced Shortsword",
       "slot": "secondary",
       "trait": "Agility",
@@ -2451,6 +2623,7 @@
       }
     },
     {
+      "id": "61b98e45-2677-4edd-a643-7d8f2a695254",
       "name": "Advanced Round Shield",
       "slot": "secondary",
       "trait": "Strength",
@@ -2469,6 +2642,7 @@
       }
     },
     {
+      "id": "276e530b-d027-4937-8e66-f8cbd003e286",
       "name": "Advanced Tower Shield",
       "slot": "secondary",
       "trait": "Strength",
@@ -2488,6 +2662,7 @@
       }
     },
     {
+      "id": "832bf554-1525-4ae1-9e62-12fc6f2e3bf0",
       "name": "Advanced Small Dagger",
       "slot": "secondary",
       "trait": "Finesse",
@@ -2506,6 +2681,7 @@
       }
     },
     {
+      "id": "6ecf7381-5565-4a48-a959-bf2d514c65f2",
       "name": "Advanced Whip",
       "slot": "secondary",
       "trait": "Presence",
@@ -2522,6 +2698,7 @@
       }
     },
     {
+      "id": "002608d9-0367-4b0f-840e-a0a8ff36d130",
       "name": "Advanced Grappler",
       "slot": "secondary",
       "trait": "Finesse",
@@ -2538,6 +2715,7 @@
       }
     },
     {
+      "id": "f0b0c233-571d-4d28-878d-3ec3bb41f030",
       "name": "Advanced Hand Crossbow",
       "slot": "secondary",
       "trait": "Finesse",
@@ -2549,6 +2727,7 @@
       "feature": null
     },
     {
+      "id": "bed5ff1f-759a-4846-9f6a-1d9f0d31c0fd",
       "name": "Buckler",
       "slot": "secondary",
       "trait": "Agility",
@@ -2565,6 +2744,7 @@
       }
     },
     {
+      "id": "4dc19cd9-38ac-416f-87b0-db4a9f9b01bf",
       "name": "Powered Gauntlet",
       "slot": "secondary",
       "trait": "Knowledge",
@@ -2581,6 +2761,7 @@
       }
     },
     {
+      "id": "27c925a3-e734-40a6-a88d-c4c7b51d0ca8",
       "name": "Hand Sling",
       "slot": "secondary",
       "trait": "Finesse",
@@ -2597,6 +2778,7 @@
       }
     },
     {
+      "id": "a13a3ce0-2891-4d2d-9f35-0d631aebe2c1",
       "name": "Legendary Shortsword",
       "slot": "secondary",
       "trait": "Agility",
@@ -2615,6 +2797,7 @@
       }
     },
     {
+      "id": "0ed1dc14-9161-4358-8618-2d4aa650acd2",
       "name": "Legendary Round Shield",
       "slot": "secondary",
       "trait": "Strength",
@@ -2633,6 +2816,7 @@
       }
     },
     {
+      "id": "bcd9f21d-6ce8-4010-9920-a926d6bc4079",
       "name": "Legendary Tower Shield",
       "slot": "secondary",
       "trait": "Strength",
@@ -2652,6 +2836,7 @@
       }
     },
     {
+      "id": "35b3a39b-2bdf-44cf-9095-0a322a871475",
       "name": "Legendary Small Dagger",
       "slot": "secondary",
       "trait": "Finesse",
@@ -2670,6 +2855,7 @@
       }
     },
     {
+      "id": "88abe07d-4dee-4bfa-85d7-c95a25e04430",
       "name": "Legendary Whip",
       "slot": "secondary",
       "trait": "Presence",
@@ -2686,6 +2872,7 @@
       }
     },
     {
+      "id": "edd28d34-2b0f-4b5a-81ee-8a5da5034a63",
       "name": "Legendary Grappler",
       "slot": "secondary",
       "trait": "Finesse",
@@ -2702,6 +2889,7 @@
       }
     },
     {
+      "id": "d30178ab-3072-491a-88b6-2dcaeeaf7da1",
       "name": "Legendary Hand Crossbow",
       "slot": "secondary",
       "trait": "Finesse",
@@ -2713,6 +2901,7 @@
       "feature": null
     },
     {
+      "id": "ac6b7f71-72e6-4de5-860d-9768c44c6746",
       "name": "Braveshield",
       "slot": "secondary",
       "trait": "Agility",
@@ -2729,6 +2918,7 @@
       }
     },
     {
+      "id": "698c299d-aa92-4731-bd13-279a01571a7e",
       "name": "Knuckle Claws",
       "slot": "secondary",
       "trait": "Strength",
@@ -2745,6 +2935,7 @@
       }
     },
     {
+      "id": "f2bb2db2-09f1-4c8a-83d1-4c58f1b86234",
       "name": "Primer Shard",
       "slot": "secondary",
       "trait": "Instinct",

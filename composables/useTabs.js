@@ -16,9 +16,16 @@ export const useTabs = (tabs) => {
     });
   };
 
+  const useActiveTabIndex = () => {
+    return computed(() => {
+      return tabs.findIndex((tab) => tab.id === activeTab.value.id);
+    });
+  };
+
   return {
     activeTab,
     tabTransition,
     setTab,
+    useActiveTabIndex,
   };
 };

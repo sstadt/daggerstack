@@ -1,6 +1,7 @@
 {
   "items": [
     {
+      "id": "f6b474f0-c397-4100-8638-4bff02f77f90",
       "name": "Premium Bedroll",
       "description": "During any rests, you always automatically clear 1 stress.",
       "onShortRest": {
@@ -15,34 +16,42 @@
       }
     },
     {
+      "id": "52d64315-56f1-4d42-8cb0-f10a0bf32135",
       "name": "Piper Whistle",
       "description": "A handcrafted whistle. Each have a distinctive sound, and the piercing tone can be heard across a one mile radius."
     },
     {
+      "id": "11c15831-6c9c-4ae4-8983-2ae5c1fcbd41",
       "name": "Charging Quiver",
       "description": "When arrows for a bow are kept in the Charging Quiver, damage rolls using the bow deal +2 damage."
     },
     {
+      "id": "6f681f3d-3f64-4817-aa1d-944597d22414",
       "name": "Alistair's Torch",
       "description": "A magic torch that lights at will and spreads light much farther than it looks like it should. This could fill a cave with light bright enough to feel like it's daytime."
     },
     {
+      "id": "5f2c2d21-ea60-4f4d-821e-c834aa2cbfd3",
       "name": "Speaking Orbs",
       "description": "A pair of orbs that allow any creatures holding them to communicate with each other across any distance."
     },
     {
+      "id": "1e25195c-08da-4d49-9363-6050a8cedeaa",
       "name": "Manacles",
       "description": "A pair of locking cuffs with a key."
     },
     {
+      "id": "894c864b-28ae-46bd-b622-a22b048e9516",
       "name": "Arcane Cloak",
       "description": "A cloak whose color, texture, and size can be adjusted by any user with the spellcast ability at will."
     },
     {
+      "id": "8390724d-2449-4a87-aa9e-1d4ed3c57d06",
       "name": "Woven Net",
       "description": "A net that can be used to trap small creatures. To use it, make a Finesse roll. On a success, the difficulty to break free is 16."
     },
     {
+      "id": "d3b5c15d-ca7b-4f91-89f6-2d9a94ca3511",
       "name": "Fire Jar",
       "description": "Pour out strange liquid within the contents of this jar to instantly produce fire. The contents regenerate on your next long rest.",
       "charge": {
@@ -55,22 +64,27 @@
       }
     },
     {
+      "id": "5ebef7e7-9a5f-403d-ae84-6fd27614a37e",
       "name": "Suspended Rod",
       "description": "A flat rod inscribed with runes. When it is activated, it is immediately suspended in place where it is. It cannot move, does not abide by the rules of gravity, and will remain in place until it is deactivated."
     },
     {
+      "id": "7a43c541-0aeb-49c1-a279-cf09ac8f4f2f",
       "name": "Glamor Stone",
       "description": "Activate this pebble-sized stone to memorize a look - hairdo, makeup, outfit. You may spend a Hope to instantly re-create this look at any time."
     },
     {
+      "id": "6d84c3c3-6f92-4dce-b136-1c6db88921a1",
       "name": "Empty Chest",
       "description": "A magical chest that will appear empty, even if there are items being kept inside. The owner can use a specific word, phrase, or other trigger when opening the chest to reveal these items."
     },
     {
+      "id": "2e13cdaa-181a-4ab7-b67f-75d0c5dfadc2",
       "name": "Companion Case",
       "description": "A carrying case for a small animal companion. While they are inside, the case and the animal are immune to all harm."
     },
     {
+      "id": "cf417314-f138-425a-b37c-7c90aabe9cab",
       "name": "Piercing Arrows",
       "description": "When firing a bow, you may use Piercing Arrows to add your proficiency to your damage roll. 3 uses per short rest.",
       "charge": {
@@ -83,6 +97,7 @@
       }
     },
     {
+      "id": "f1aeb168-e383-443f-87ca-319b423a151d",
       "name": "Valorstone",
       "description": "Attach to armor. Adds the following feature to armor that doesn't already have a feature: Resilient (Before you mark your last armor slot, roll a d6. On a 6, you use the armor without marking the slot.)",
       "attach": {
@@ -94,10 +109,12 @@
       }
     },
     {
+      "id": "94dc22a0-d13b-476b-b080-6d7ae34c775b",
       "name": "Skeleton Key",
       "description": "Use this to make a Finesse roll at advantage when attempting to open a locked door."
     },
     {
+      "id": "dabe5caa-f3a3-497d-9c34-e3ce0f9ae49c",
       "name": "Arcane Prism",
       "description": "Position this prism in a location of your choosing. Once activated, any allies that stand within close distance of this prism get +1 to their Spellcast rolls. Once it is deactivated, it can't be activated again until your next long rest.",
       "charge": {
@@ -110,6 +127,7 @@
       }
     },
     {
+      "id": "9c9234fe-17af-4602-a0d0-cb3bbc48ef2e",
       "name": "Minor Stamina Potion Recipe",
       "description": "During downtime, spend one of your downtime moves and a handful of gold to craft a Minor Stamina Potion.",
       "downtime": {
@@ -121,6 +139,7 @@
       }
     },
     {
+      "id": "b467d86b-ca43-41bf-a740-96d2c54cff05",
       "name": "Minor Health Potion Recipe",
       "description": "During downtime, spend one of your downtime moves and a handful of gold to craft a Minor Health Potion.",
       "downtime": {
@@ -132,10 +151,12 @@
       }
     },
     {
+      "id": "1b07820a-81cb-4ef2-ae19-51c98119f67d",
       "name": "Homing Compasses",
       "description": "Two compasses that only point at each other no matter how far apart they are."
     },
     {
+      "id": "7b7b10f2-21c6-4678-bef2-6873551e142d",
       "name": "Corrector Sprite",
       "description": "A tiny sprite who sits in the curve of your ear canal and whispers helpful advice during combat. Once per short rest, you may take advantage on an attack roll. Do not give them your true name.",
       "charge": {
@@ -148,14 +169,17 @@
       }
     },
     {
+      "id": "556561d4-e8dd-4035-9257-2f82ca0622dd",
       "name": "Gecko Gloves",
       "description": "You can climb up vertical surfaces and across ceilings."
     },
     {
+      "id": "e5444718-c44e-4a23-830b-7ab7ad533577",
       "name": "Lorekeeper",
       "description": "Store the name of up to three hostile creatures. Next time you face them, take +1 on any action rolls against them."
     },
     {
+      "id": "04b3256a-3ea0-4ec8-b89e-5a9febea3cb5",
       "name": "Vial of Darksmoke Recipe",
       "description": "During downtime, spend one of your downtime moves and mark a stress to craft a Vial of Darksmoke.",
       "downtime": {
@@ -167,6 +191,7 @@
       }
     },
     {
+      "id": "c4158c1c-eb50-46d7-bd4b-9ba2f0c42889",
       "name": "Bloodstone",
       "description": "Attach to a weapon. Adds the following feature to a weapon that doesn't already have a feature: Brutal (If any of your damage dice roll their maximum value, roll an additional damage die of that size.)",
       "attach": {
@@ -178,6 +203,7 @@
       }
     },
     {
+      "id": "f2192e62-92b7-4699-bd06-6c411c043556",
       "name": "Greatstone",
       "description": "Attach to a weapon. Adds the following feature to a weapon that doesn't already have a feature: Powerful (Roll one extra damage die and drop the lowest.)",
       "attach": {
@@ -189,10 +215,12 @@
       }
     },
     {
+      "id": "59da7d9a-5236-45fa-8462-a5a319f1045e",
       "name": "Glider",
       "description": "A small parachute that can be deployed by marking Stress. It allows the user to glide down from a high place safely to the ground below."
     },
     {
+      "id": "e360112c-5065-43fd-b461-90894ef28af8",
       "name": "Ring of Silence",
       "description": "Spend a Hope to activate this ring until your next short rest. Your footsteps are silent.",
       "charge": {
@@ -205,18 +233,22 @@
       }
     },
     {
+      "id": "7a0f8c45-e1d4-41ce-a725-8cc9c4939876",
       "name": "Calming Pendant",
       "description": "If you should ever have to mark your last stress slot, roll a d6. On a 5+, don't mark it."
     },
     {
+      "id": "21fa0fcc-d678-4dc1-86fa-d99efc979e48",
       "name": "Dual Flask",
       "description": "A flask that can hold two different liquids. A small button on the side allows the drinker to switch between them."
     },
     {
+      "id": "dbf528f9-ae67-4378-bb09-9b3c27431292",
       "name": "Bag of Ficklesand",
       "description": "This is a small bag of sand that can be convinced to be much heavier or lighter than it should be with a Presence (10) roll. You can also blow sand in the face of an adversary with a Finesse roll to make them temporarily Vulnerable."
     },
     {
+      "id": "881e4a88-fce7-461e-af08-5e5ba0e0e982",
       "name": "Ring of Resistance",
       "description": "Once per long rest, activate this ring to only take half damage on an incoming attack.",
       "charge": {
@@ -229,10 +261,12 @@
       }
     },
     {
+      "id": "c95182cc-0cc7-4108-b55e-9cb138deb1fa",
       "name": "Phoenix Feather",
       "description": "While you have any quantity of Phoenix Feathers, when you drop unconscious and roll to see if you take a scar, always take +1 to the die result."
     },
     {
+      "id": "6449a559-db31-4de9-a6fe-70c6d974917d",
       "name": "Box of Many Goods",
       "description": "A small box that can only be opened once per long rest. When it is, roll a d12. If you roll a 1-6, it is empty. If you roll a 7-10, it contains one random consumable. If you roll an 11-12, it contains two random consumables.",
       "charge": {
@@ -245,6 +279,7 @@
       }
     },
     {
+      "id": "0d5011ac-4ceb-4086-969f-6c861af8edd8",
       "name": "Airblade Charm",
       "description": "Attach to a melee weapon to make it able to attack at a Close distance. 3 uses per short rest.",
       "attach": {
@@ -264,11 +299,13 @@
       }
     },
     {
+      "id": "066ed8a2-264d-4e87-993e-c242d7ed3cb9",
       "name": "Portal Seed",
       "description": "Plant this in the ground to grow a portal in this spot. The portal will be ready to use in 24 hours and you may travel to any other spot you've planted a portal seed. A portal may be destroyed by dealing any amount of magic damage to it.",
       "consumable": true
     },
     {
+      "id": "8a46d4f9-23a3-4f5a-a980-f221d10f5c50",
       "name": "Paragon's Chain",
       "description": "Once per long rest, you may use a downtime move to meditate on an ideal or principle you hold dear and focus your will into the chain. Until your next long rest, you can spend a Hope to use a d20 as your Hope die for rolls that directly align with that principle.",
       "charge": {
@@ -281,6 +318,7 @@
       }
     },
     {
+      "id": "45c3c7d5-8213-45a0-97c8-30dbed77f467",
       "name": "Elusive Amulet",
       "description": "Once per long rest, activate this to go Hidden until you move from this location. Any enemies who move into line of sight with you while you're Hidden don't see you.",
       "charge": {
@@ -293,6 +331,7 @@
       }
     },
     {
+      "id": "f88c2e8d-c5a0-42c0-8523-218058c0114a",
       "name": "Hopekeeper Locket",
       "description": "During a long rest, if you have 5 Hope, you may spend 1 Hope and imbue the locket with your bountiful resolve. If you ever have 0 Hope, you may use the locket and gain 1 Hope. The locket must then be recharged during a long rest.",
       "charge": {
@@ -301,11 +340,13 @@
       }
     },
     {
+      "id": "6c2ac2f5-379c-463f-90a0-2ae1b8d51b6c",
       "name": "Infinite Bag",
       "description": "Items put into this bag are stored in a pocket dimension and can be retrieved at any time.",
       "container": true
     },
     {
+      "id": "65999911-0f2d-4392-b011-39d469f56ecf",
       "name": "Stride Relic",
       "description": "Add +1 to your Agility. You cannot hold any other relics.",
       "relic": true,
@@ -314,6 +355,7 @@
       }
     },
     {
+      "id": "2c4b51b7-8067-42bc-aa68-afb35fef8f46",
       "name": "Bolster Relic",
       "description": "Add +1 to your Strength. You cannot hold any other relics.",
       "relic": true,
@@ -322,6 +364,7 @@
       }
     },
     {
+      "id": "38656635-1575-4ed6-bea2-c4b576e66c78",
       "name": "Focus Relic",
       "description": "Add +1 to your Finesse. You cannot hold any other relics.",
       "relic": true,
@@ -330,6 +373,7 @@
       }
     },
     {
+      "id": "63736f34-0669-43eb-ac3d-a7c149f267a0",
       "name": "Charm Relic",
       "description": "Add +1 to your Presence. You cannot hold any other relics.",
       "relic": true,
@@ -338,6 +382,7 @@
       }
     },
     {
+      "id": "6afafe66-7ad6-448b-a9aa-8ac1eae14f41",
       "name": "Sharp Relic",
       "description": "Add +1 to your Knowledge. You cannot hold any other relics.",
       "relic": true,
@@ -346,18 +391,22 @@
       }
     },
     {
+      "id": "c9cd0d16-c21f-4f75-aa12-e51a36af586f",
       "name": "Flickerfly Pendant",
       "description": "While wearing your melee weapons dealing physical damage extend with a gossamer sheen. You can hit creatures up to Very Close range."
     },
     {
+      "id": "7fce138c-b4d2-4779-9521-356b59f6115a",
       "name": "Lakestrider Boots",
       "description": "You may walk along the surface of water as if it were soft ground."
     },
     {
+      "id": "66866d05-1d92-49f6-bc43-14d93da60175",
       "name": "Clay Companion",
       "description": "This ball of clay can be sculpted into various animal shapes and will then behave as that animal (a clay spider can spin clay webs, a clay bird can fly). This companion has continuity of memory and self across different shapes but may adopt some mannerisms with each form."
     },
     {
+      "id": "a21cfc35-def9-4276-bc11-ad1bf8294634",
       "name": "Attune Relic",
       "description": "Add +1 to your Instinct. You cannot hold any other relics.",
       "relic": true,
@@ -366,6 +415,7 @@
       }
     },
     {
+      "id": "cd762902-4bf0-48ce-a2dd-a671eafc298c",
       "name": "Honing Relic",
       "description": "Add +1 to one of your Experiences. You cannot hold any other relics.",
       "relic": true,
@@ -374,6 +424,7 @@
       }
     },
     {
+      "id": "77f5d3fb-e489-4bda-b222-ec3f0279ed49",
       "name": "Mythic Dust Recipe",
       "description": "During downtime, spend one of your downtime moves and a bag of gold to craft Mythic Dust.",
       "downtime": {
@@ -385,337 +436,430 @@
       }
     },
     {
+      "id": "bca5b647-61b8-4a76-ba9f-424bf81ce167",
       "name": "Shard of Memory",
       "description": "Once per long rest, spend 2 Hope to recall a Domain card from your vault instead of payings its Recall Cost."
     },
     {
+      "id": "786c3237-73ec-425e-a754-11b4dab691c6",
       "name": "Gem of Audacity",
       "description": "Attach to a weapon to allow you to make a Presence roll when using it to attack."
     },
     {
+      "id": "4c1c1a24-e46a-4182-b390-ea0647950d50",
       "name": "Gem of Sagacity",
       "description": "Attach to a weapon to allow you to make a Knowledge roll when using it to attack."
     },
     {
+      "id": "f12b3d79-45c7-4ca8-b6ea-69facd560b9a",
       "name": "Gem of Insight",
       "description": "Attach to a weapon to allow you to make an Instinct roll when using it to attack."
     },
     {
+      "id": "73cb0f99-c7e0-45d3-aa0b-e4a6421de156",
       "name": "Gem of Might",
       "description": "Attach to a weapon to allow you to make a Strength roll when using it to attack."
     },
     {
+      "id": "8eac5e88-0650-417d-aceb-cc0243b359f6",
       "name": "Gem of Alacrity",
       "description": "Attach to a weapon to allow you to make an Agility roll when using it to attack."
     },
     {
+      "id": "c1b5c0cd-4e1d-4fed-8a2c-a2ab60f384d1",
       "name": "Gem of Precision",
       "description": "Attach to a weapon to allow you to make a Finesse roll when using it to attack."
     },
     {
+      "id": "9614223a-0b7e-4be4-b4dc-2fed34855e71",
       "name": "Ring of Unbreakable Resolve",
       "description": "Once per session, when the GM spends 1 Fear, you can spend 4 Hope to cancel the effects of that spent Fear."
     },
     {
+      "id": "8f7a5987-4dfe-4388-a756-6e5ee53a48c9",
       "name": "Belt of Unity",
       "description": "Once per session, you may spend 5 Hope to lead a Tag Team action with 3 PCs instead of 2."
     },
     {
+      "id": "cff4343b-0952-4076-970d-18af50bc010b",
       "name": "Stride Potion",
       "description": "Take a +1 to your next Agility roll.",
       "consumable": true
     },
     {
+      "id": "205889fd-e1bb-4981-9a1a-503e28ef2449",
       "name": "Bolster Potion",
       "description": "Take a +1 to your next Strength roll.",
       "consumable": true
     },
     {
+      "id": "cb343e41-000e-4ec8-9711-1bf10bd1b6e6",
       "name": "Focus Potion",
       "description": "Take a +1 to your next Finesse roll.",
       "consumable": true
     },
     {
+      "id": "f2101c30-66fe-4b11-bc69-1e824c0f8a5c",
       "name": "Charm Potion",
       "description": "Take a +1 to your next Presence roll.",
       "consumable": true
     },
     {
+      "id": "6437352b-a7c4-4e16-953d-d932722ace0f",
       "name": "Sharp Potion",
       "description": "Take a +1 to your next Knowledge roll.",
       "consumable": true
     },
     {
+      "id": "096e173b-3c6a-4c42-bced-63e4910d18c9",
       "name": "Attune Potion",
       "description": "Take a +1 to your next Instinct roll.",
       "consumable": true
     },
     {
+      "id": "b266135a-94cc-4fa2-b691-8c4e3203d2ec",
       "name": "Minor Health Potion",
       "description": "Immediately clear 1d4 hit points.",
-      "consumable": true
+      "consumable": true,
+      "restore": {
+        "health": "1d4"
+      }
     },
     {
+      "id": "2766cf07-1284-4ac8-a78f-b4e4289ce362",
       "name": "Minor Stamina Potion",
       "description": "Immediately clear 1d4 stress.",
-      "consumable": true
+      "consumable": true,
+      "restore": {
+        "stress": "1d4"
+      }
     },
     {
+      "id": "7a73d45e-7f1d-4136-a2da-8d00c9cda33f",
       "name": "Grindletooth Venom",
       "description": "Apply to physical weapon to add +1d6 to its next damage roll.",
       "consumable": true
     },
     {
+      "id": "cb8477ce-2862-4065-b858-2706680d837f",
       "name": "Varik Leaves",
       "description": "Immediately gain 2 hope.",
-      "consumable": true
+      "consumable": true,
+      "restore": {
+        "hope": 2
+      }
     },
     {
+      "id": "69d3ecc9-27a0-4ea0-b0ba-5fe42c7134cd",
       "name": "Vial of Moondrip",
       "description": "See in total darkness until your next short rest.",
       "consumable": true
     },
     {
+      "id": "4e87a1d1-4876-4317-841c-3eb6d5a57722",
       "name": "Unstable Arcane Shard",
       "description": "Use Finesse to throw at a group of enemies within Far range. Any you succeed against take 1d20 magic damage.",
       "consumable": true
     },
     {
+      "id": "ffbd75f8-b7c0-4b76-99a9-5b6252d7f9f6",
       "name": "Potion of Stability",
       "description": "On use, take one additional downtime move.",
       "consumable": true
     },
     {
+      "id": "9037a86f-7575-4652-a27c-84ced6f2aa60",
       "name": "Improved Grindletooth Venom",
       "description": "Apply to physical weapon to add +1d8 to its next damage roll.",
       "consumable": true
     },
     {
+      "id": "a42f1aea-e17f-4a6b-9de6-0171333a8e7f",
       "name": "Morphing Clay",
       "description": "Spend one Hope. The person using this item can alter their face to change their facial features enough to make them unrecognizable until their next short rest.",
-      "consumable": true
+      "consumable": true,
+      "restore": {
+        "hope": -1
+      }
     },
     {
+      "id": "49b1a8ed-f3c7-4638-8842-5f2640030288",
       "name": "Vial of Darksmoke",
       "description": "Use during an incoming attack to roll a number of d6 equal to your Agility score. Add the highest result to your Evasion score against the attack.",
       "consumable": true
     },
     {
+      "id": "b975ffb9-e8e0-4c86-be65-88cead20557e",
       "name": "Jumping Root",
       "description": "You can leap to anywhere within Far range without needing to roll. This effect ends when you land there.",
       "consumable": true
     },
     {
+      "id": "944029dd-2889-4d00-b958-099e9033f564",
       "name": "Snap Powder",
       "description": "Mark stress and clear a hit point.",
       "consumable": true
     },
     {
+      "id": "b8ea7eba-6d5c-4f8b-a4f7-f8a134228d2c",
       "name": "Health Potion",
-      "description": "Immediately clear 1+1d4 hit points.",
-      "consumable": true
+      "description": "Immediately clear 1d4+1 hit points.",
+      "consumable": true,
+      "restore": {
+        "health": "1d4+1"
+      }
     },
     {
+      "id": "259a2890-8bd0-41b6-a2bb-2aaf81e1a8bd",
       "name": "Stamina Potion",
-      "description": "Immediately clear 1+1d4 stress.",
-      "consumable": true
+      "description": "Immediately clear 1d4+1 stress.",
+      "consumable": true,
+      "restore": {
+        "stress": "1d4+1"
+      }
     },
     {
+      "id": "f02c10e2-a28a-43c4-bb6a-82aca95bed83",
       "name": "Armor Stitcher",
       "description": "Use this to spend any number of Hope and repair that many armor slots.",
       "consumable": true
     },
     {
+      "id": "7940cb07-9483-4ad9-bd99-a32ffd4b6648",
       "name": "Gill Salve",
       "description": "You can breathe underwater for a number of minutes equal to your level.",
       "consumable": true
     },
     {
+      "id": "7e9baf94-1db5-42dd-986a-4b77522d13c1",
       "name": "Replication Parchment",
       "description": "When you touch this piece of parchment to another, it will copy it exactly. Once it's made into this copy, it is no longer Replication Parchment.",
       "consumable": true
     },
     {
+      "id": "928a21d1-12d8-4285-a4e7-fcd49d3f2757",
       "name": "Improved Arcane Shard",
       "description": "Use Finesse to throw at a group of enemies within Far range. Any you succeed against take 2d20 magic damage.",
       "consumable": true
     },
     {
+      "id": "6cb93bbe-56bf-4b4b-96b1-5ad027caa551",
       "name": "Major Stride Potion",
       "description": "Take a +1 to Agility until your next short rest.",
       "consumable": true
     },
     {
+      "id": "cd435e3a-4982-42e3-a81e-6f801aab3a42",
       "name": "Major Bolster Potion",
       "description": "Take a +1 to Strength until your next short rest.",
       "consumable": true
     },
     {
+      "id": "4ed6fb63-8791-4572-9f45-fd79a20c2abc",
       "name": "Major Focus Potion",
       "description": "Take a +1 to Finesse until your next short rest.",
       "consumable": true
     },
     {
+      "id": "0172920c-a35d-40e7-aacd-fdd595e60f75",
       "name": "Major Umbra Potion",
       "description": "Take a +1 to Presence until your next short rest.",
       "consumable": true
     },
     {
+      "id": "690014ce-e70e-45bc-88e9-fc795b12c6cd",
       "name": "Major Sharp Potion",
       "description": "Take a +1 to Knowledge until your next short rest.",
       "consumable": true
     },
     {
+      "id": "b5975569-89e2-4a56-b331-732a498fd7a8",
       "name": "Major Attune Potion",
       "description": "Take a +1 to Instinct until your next short rest.",
       "consumable": true
     },
     {
+      "id": "98c8c183-de86-465c-b771-c095df6e4266",
       "name": "Blood of the Yorgi",
       "description": "Disappear from where you are and immediately reappear anywhere within very far distance.",
       "consumable": true
     },
     {
+      "id": "0a55c6a0-6d91-46dd-b325-753d8b815d5f",
       "name": "Homet's Secret Potion",
       "description": "After consuming, on the next successful attack you make that deals magic damage, treat the damage as you would on a critical success.",
       "consumable": true
     },
     {
+      "id": "3953e9cd-53f8-498e-bed0-2b70c947e54d",
       "name": "Redthorn Saliva",
       "description": "Apply to physical weapon to add +1d12 to its next damage roll.",
       "consumable": true
     },
     {
+      "id": "b29ef7b1-255b-40a7-b312-12184d9c1495",
       "name": "Channelstone",
       "description": "Take a spell or grimoire from your vault and use it once, then return it to your vault.",
       "consumable": true
     },
     {
+      "id": "60f48207-5acb-4800-85e1-9c54ed24a690",
       "name": "Mythic Dust",
       "description": "Apply to a magic weapon to add +1d12 to its next damage roll.",
       "consumable": true
     },
     {
+      "id": "0e871ad8-adc5-42b3-8e70-862f27d4a151",
       "name": "Acidpaste",
       "description": "Eats away walls and other surfaces in bright flashes.",
       "consumable": true
     },
     {
+      "id": "77ed6ea7-8501-4158-8ba5-d4759aeb4f6b",
       "name": "Hopehold Flare",
       "description": "On use, allies within close distance always rolls a d6 when they spend a Hope. On a 6, they get the effect of that Hope without spending it. This lasts until your next short rest.",
       "consumable": true
     },
     {
+      "id": "1a505297-7d7b-44d6-9036-d83039851139",
       "name": "Major Arcane Shard",
       "description": "Use Finesse to throw at a group of enemies within Far range. Any you succeed against take 4d20 magic damage.",
       "consumable": true
     },
     {
+      "id": "19808b78-d4f8-4f75-8ee0-c234331ba2cd",
       "name": "Featherbone",
       "description": "Control your falling speed for a number of minutes equal to your level.",
       "consumable": true
     },
     {
+      "id": "2c560cce-b606-4c32-875a-5275ca4282b6",
       "name": "Circle of the Void",
       "description": "Mark stress. Magical spells are temporarily unable to be cast everywhere within far distance of this object. Everything within this range is immune to magic damage.",
       "consumable": true
     },
     {
+      "id": "965946e7-1629-4f91-9ef3-3028fef34b0e",
       "name": "Sun Tree Sap",
       "description": "Roll 1d6. On a 5-6, clear two Hit Points. On a 2-5, clear three stress. On a 1, see the Veil of Death and return changed, taking one Scar.",
       "consumable": true
     },
     {
+      "id": "b1ebee11-4a93-47ff-9192-f54437e2b540",
       "name": "Dripfang Poison",
       "description": "Does 8d10 direct magic damage to a creature who consumes it.",
       "consumable": true
     },
     {
+      "id": "0468bf6e-74b2-4db1-92b0-802844b8fa7b",
       "name": "Major Health Potion",
-      "description": "Immediately clear 2+1d4 hit points.",
-      "consumable": true
+      "description": "Immediately clear 1d4+2 hit points.",
+      "consumable": true,
+      "restore": {
+        "health": "1d4+2"
+      }
     },
     {
+      "id": "cc5b92c4-a358-43d8-af8b-c1df1aaff684",
       "name": "Major Stamina Potion",
-      "description": "Immediately clear 2+1d4 stress.",
-      "consumable": true
+      "description": "Immediately clear 1d4+2 stress.",
+      "consumable": true,
+      "restore": {
+        "stress": "1d4+2"
+      }
     },
     {
+      "id": "52afcec6-0beb-4595-bb29-7fad07b8be11",
       "name": "Ogre Musk",
       "description": "Keep from anybody from tracking you by physical or magic means until your next short rest.",
       "consumable": true
     },
     {
+      "id": "5fb300f8-5a15-4410-9572-4969d73b78d2",
       "name": "Wingsprout",
       "description": "You gain magic wings that allow you to fly for a number of minutes equal to your level.",
       "consumable": true
     },
     {
+      "id": "0ca890e3-fdb3-4dbf-8541-e75cb6ed7560",
       "name": "Jar of Lost Voices",
       "description": "Release the voices to create a deafening echo of sound for a number of minutes equal to your Instinct score. Anyone within far distance unprepared for the sound automatically takes 6d8 magic damage.",
       "consumable": true
     },
     {
+      "id": "a7d83cb0-1ad0-4a37-bcd2-739326878376",
       "name": "Dragonbloom Tea",
       "description": "Make a fiery breath attack on all close enemies in front of you. Make an Instinct roll against the targets. On a success, deal d20 physical damage.",
       "consumable": true
     },
     {
+      "id": "dcbe229a-6f33-4200-83aa-48d685736110",
       "name": "Bridge Seed",
       "description": "Thick vines grow slowly from where you are standing to somewhere else within far distance, allowing you to climb up or across safely. It dissipates at your next short rest.",
       "consumable": true
     },
     {
+      "id": "3d09a0e6-1a12-4d98-b7c2-4bae639d66b1",
       "name": "Sleeping Sap",
       "description": "Puts a willing creature to sleep for a full night's rest. When they awaken, they have all stress cleared.",
       "consumable": true
     },
     {
+      "id": "9e456903-90dc-484e-ae22-b681cbe7429e",
       "name": "Feast of Xuria",
       "description": "Provides a single meal for the party that clears all hit points and stress, and gives 1d4 of hope.",
       "consumable": true
     },
     {
+      "id": "19510930-66dd-46ab-84eb-e862307be0f8",
       "name": "Bonding Honey",
       "description": "Glues two objects together permanently.",
       "consumable": true
     },
     {
+      "id": "61f70e9f-c93d-47b4-8330-b7c022a64d04",
       "name": "Shrinking Potion",
       "description": "Reduces the drinker's size in half until they choose to drop this form or take their next short rest. Take +2 Agility.",
       "consumable": true
     },
     {
+      "id": "fd98a830-5ca5-453b-9015-7e0589e7e179",
       "name": "Growing Potion",
       "description": "Makes the drinker twice as large until they choose to drop this form or take their next short rest. Take +2 Strength.",
       "consumable": true
     },
     {
+      "id": "b3a249bc-9083-47c5-b05c-dc015e1e06e8",
       "name": "Knowledge Stone",
       "description": "If you die while holding this stone, one ally may take a card from your loadout to place in their own loadout or vault. When they take this knowledge, the stone crumbles.",
       "consumable": true
     },
     {
+      "id": "249e94ec-f6b8-4a94-bd7e-095a7f503551",
       "name": "Sweet Moss",
       "description": "Consume during a short rest to clear an additional 1d4 hit points or 1d4 stress.",
       "consumable": true
     },
     {
+      "id": "fddb0a55-518f-4957-9801-7ac45388204c",
       "name": "Blinding Orb",
       "description": "Creates a flash of bright light that causes all creatures in Close range to be Vulnerable until they next take Hit Point damage.",
       "consumable": true
     },
     {
+      "id": "f5ab5f10-a0be-4792-841f-dad9f098b483",
       "name": "Death Tea",
       "description": "Any critical successes on an attack roll automatically kill the creature you're facing. If you don't get any critical successes on an attack roll before your next long rest, you die.",
       "consumable": true
     },
     {
+      "id": "382e6600-14a9-4d26-8332-84fcc2e73b43",
       "name": "Mirror of Marigold",
       "description": "Spend hope to negate all incoming damage, shattering the mirror. You may also mark a Stress before it shatters to attempt to reflect it back to the attacker. If you do, make an attack roll using Finesse.",
       "consumable": true
     },
     {
+      "id": "864c0b60-48a2-4b4b-a0b3-8f215e50113c",
       "name": "Stardrop",
       "description": "On use, it summons a hailstorm of comets that automatically deal 8d20 physical damage to all creatures within Very Rar range of where it was triggered.",
       "consumable": true

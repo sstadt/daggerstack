@@ -1,5 +1,5 @@
 <template lang="pug">
-  .input--textarea.flex.flex-col(:class="wrapperClass")
+  .input--textarea.flex.flex-col.relative(:class="wrapperClass")
     label.uppercase.font-bold.text-slate-500(
       v-if="label"
       :class="{ 'sr-only': hideLabel }"
@@ -14,7 +14,7 @@
       @keypress="keyPress"
       @keyup="resize"
     )
-    textarea.px-4.py-2.text-xl.h-0.opacity-0.m-0.pointer-events-none(
+    textarea.absolute.top-0.w-full.px-4.py-2.text-xl.h-0.opacity-0.m-0.overflow-hidden.pointer-events-none(
       ref="$shadow"
       :value="modelValue"
     )
