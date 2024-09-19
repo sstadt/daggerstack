@@ -16,8 +16,9 @@
         .absolute.bottom-0.h-2.bg-white.pointer-events-none.transition-all.translate-y-px(
           :style="tabIndicatorStyle"
         )
-    transition(:name="tabTransition" mode="out-in")
-      component(:is="tabComponents[activeTab.name]")
+    .max-w-5xl.container
+      transition(:name="tabTransition" mode="out-in")
+        component(:is="tabComponents[activeTab.name]")
 </template>
 
 <script>

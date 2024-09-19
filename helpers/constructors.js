@@ -221,3 +221,23 @@ export const newStatusEffect = (buff = {}) => {
     modify: { ...options.modify },
   };
 };
+
+/**
+ * Create a buff object; used for putting together
+ * homebrew and status effects
+ *
+ * @param {Object} buff The buff object with a stat and a score
+ * @returns
+ */
+export const newBuff = (buff = {}) => {
+  const defaults = {
+    stat: '',
+    score: 1,
+  };
+  const options = Object.assign({}, defaults, buff);
+
+  return {
+    stat: options.stat,
+    score: options.score,
+  };
+};

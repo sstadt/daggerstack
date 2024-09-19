@@ -116,3 +116,9 @@
     resize();
   });
 </script>
+
+<style lang="scss" scoped>
+  textarea {
+    min-height: 44px;
+  }
+</style>

@@ -1,8 +1,8 @@
 <template lang="pug">
-  .p-8
-    p todo: output homebrew items here
+  .py-8
     .flex.justify-end
       BasicButton(size="sm" priority="secondary" @click="newItem") Create Item
+    p todo: output homebrew items here
     HomebrewDrawerItem(ref="itemDrawer")
 </template>
 

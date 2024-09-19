@@ -64,30 +64,8 @@
 </template>
 
 <script>
-  import upgradeStrings from '~/config/upgradeStrings';
-
-  const blacklist = [
-    'experience', // todo, handle this later, separately
-    'companionRange',
-    'companionDamage',
-    'companionEvasion',
-    'primaryMeleeDamage',
-    'newExperience',
-    'hopeSlot',
-  ];
-
-  const newBuff = (buff = {}) => {
-    const defaults = {
-      stat: '',
-      score: 1,
-    };
-    const options = Object.assign({}, defaults, buff);
-
-    return {
-      stat: options.stat,
-      score: options.score,
-    };
-  };
+  import { newBuff } from '~/helpers/constructors';
+  import upgradeOptions from '~/config/upgradeOptions';
 
   export default {
     name: 'SheetBuff',
@@ -123,15 +101,7 @@
           }
         });
 
-        return Object.keys(upgradeStrings)
-          .filter((key) => !blacklist.includes(key))
-          .map((key) => {
-            return {
-              label: upgradeStrings[key],
-              value: key,
-            };
-          })
-          .concat(experienceOptions);
+        return upgradeOptions.concat(experienceOptions);
       },
       saveDisabled() {
         if (this.name === '') return true;
