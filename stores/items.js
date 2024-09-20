@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 
 import ITEMS from '~/data/items';
 
-export const useDataStore = defineStore('data', {
+export const useItemsStore = defineStore('items', {
   state: () => {
     return {
       items: [ ...ITEMS.items ],

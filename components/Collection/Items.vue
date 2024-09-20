@@ -3,7 +3,7 @@
     .flex.justify-end
       BasicButton(size="sm" priority="secondary" @click="newItem") Create Item
     p todo: output homebrew items here
-    HomebrewDrawerItem(ref="itemDrawer")
+    HomebrewDrawerItem(ref="itemDrawer" @save="saveItem")
 </template>
 
 <script>
@@ -17,5 +17,9 @@
 
   const newItem = () => {
     itemDrawer.value.open();
+  };
+
+  const saveItem = (item) => {
+    console.log(item);
   };
 </script>
