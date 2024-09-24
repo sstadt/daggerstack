@@ -209,12 +209,17 @@
     itemPublic.value = false;
     itemType.value = '';
     itemCharges.value = 3;
+    itemHasCharges.value = false;
     itemChargesDescription.value = '';
     itemRechargeOn.value = 'shortRest';
 
     craftItemSearch.value = '';
     craftItemCost.value = 0;
     craftItemResource.value = 'goldHandful';
+
+    modify.value = [];
+    featureName.value = '';
+    featureDescription.value = '';
 
     resourceType.value = 'stress';
     resourceAmount.value = '';

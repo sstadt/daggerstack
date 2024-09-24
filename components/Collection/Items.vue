@@ -1,8 +1,10 @@
 <template lang="pug">
   .py-8
-    .flex.justify-end
-      BasicButton(size="sm" priority="secondary" @click="newItem") Create Item
-    p todo: output homebrew items here
+    .space-y-4
+      .grid.grid-cols-1.gap-4(class="md:grid-cols-2")
+        HomebrewCardItem(v-for="item in itemsStore.homebrew" :item="item")
+      .flex.justify-end
+        BasicButton(size="sm" priority="secondary" @click="newItem") New Item
     HomebrewDrawerItem(ref="itemDrawer" @save="saveItem")
 </template>
 
@@ -13,6 +15,9 @@
 </script>
 
 <script setup>
+  const itemsStore = useItemsStore();
+  const toastStore = useToastStore();
+
   const itemDrawer = ref(null);
 
   const newItem = () => {
@@ -20,6 +25,8 @@
   };
 
   const saveItem = (item) => {
-    console.log(item);
+    const id = itemsStore.saveItem(item);
+
+    if (id) toastStore.postMessage({ body: `Created new item: ${item.name}` });
   };
 </script>

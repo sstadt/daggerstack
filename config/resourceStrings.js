@@ -2,9 +2,9 @@
 export default {
   stress: 'Stress',
   health: 'Hit Points',
-  armor: 'Armor Slot',
+  armor: 'Armor Slots',
   hope: 'Hope',
-  goldHandful: 'Gold Handful',
-  goldBag: 'Gold Bag',
-  goldChest: 'Chest of Gold',
+  goldHandful: 'Gold Handfuls',
+  goldBag: 'Gold Bags',
+  goldChest: 'Chest of Golds',
 };

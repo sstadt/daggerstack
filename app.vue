@@ -19,13 +19,17 @@
 </script>
 
 <script setup>
+  const userStore = useUserStore();
   const builderStore = useBuilderStore();
   const charactersStore = useCharactersStore();
-  const userStore = useUserStore();
+  const itemsStore = useItemsStore();
 
   onMounted(() => {
     userStore.init();
     builderStore.loadSavedCharacter();
+
+    // hydrate homebrew items globally
+    itemsStore.hydrate();
   });
 </script>
 
