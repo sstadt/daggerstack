@@ -1,7 +1,7 @@
 <template lang="pug">
   .input--text.flex.flex-col(:class="wrapperClass")
     label.uppercase.font-bold.text-slate-500(
-      v-if="label && !hideLabel"
+      v-if="label"
       :class="{ 'sr-only': hideLabel }"
     )
       | {{ label }}

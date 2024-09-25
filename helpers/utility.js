@@ -46,3 +46,26 @@ export const debounce = (func, wait = 300, immediate = false) => {
 export const clone = (obj) => {
   return JSON.parse(JSON.stringify(obj));
 };
+
+/**
+ * Wait until a condition is true
+ *
+ * @param {Function} condition A function that returns true when the condition is met
+ * @param {Integer} delay Time between checking condition
+ * @param {Integer} iterations Maximum number of iterations to complete
+ * @returns {Promise} Resolves when the condition is true, rejects if iteration count is reach and the condition is still not true
+ */
+export const waitUntil = (condition, delay = 100, iterations = 100) => {
+  return new Promise((resolve, reject) => {
+    let count = 0;
+    const interval = setInterval(() => {
+      if (condition()) {
+        clearInterval(interval);
+        resolve();
+      }
+
+      if (count >= iterations) reject();
+      count += 1;
+    }, delay);
+  });
+};

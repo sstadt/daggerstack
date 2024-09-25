@@ -3,7 +3,9 @@
     label.uppercase.font-bold.text-slate-500(
       v-if="label"
       :class="{ 'sr-only': hideLabel }"
-    ) {{ label }}
+    )
+      | {{ label }}
+      span(v-if="required") *
     textarea.px-4.py-2.text-xl.resize-none.outline-0.overflow-hidden.border.transition-all(
       type="text"
       ref="input"

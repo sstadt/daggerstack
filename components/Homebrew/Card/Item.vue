@@ -7,8 +7,8 @@
           NuxtIcon(v-if="item.consumable" name="potion")
           NuxtIcon(v-else-if="item.relic" name="ahnk")
           NuxtIcon(v-else-if="item.attach" name="jigsaw")
-          NuxtIcon(v-else-if="item.downtime" name="campfire")
-          NuxtIcon(v-else-if="item.recipe" name="codex")
+          NuxtIcon(v-else-if="item.downtime?.craft" name="background")
+          NuxtIcon(v-else-if="item.onLongRest || item.onShortRest" name="campfire")
       p {{ item.description }}
     div(v-if="item.attach?.feature")
       p.font-bold {{ item.attach.feature.name }}

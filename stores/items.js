@@ -13,7 +13,7 @@ export const useItemsStore = defineStore('items', {
       return this.items.filter((item) => item.created_at);
     },
     item(id) {
-      // TODO
+      return this.items.find((item) => item.id === id);
     },
   },
   actions: {

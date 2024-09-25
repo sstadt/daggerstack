@@ -1,8 +1,20 @@
 <template lang="pug">
   BasicDrawer(title="New Item" ref="itemEditor")
     form.space-y-4.px-4(@submit.prevent="saveItem")
-      InputText(type="text" label="Name" v-model="itemName")
-      InputTextarea(type="text" label="Description" v-model="itemDescription")
+      InputText(
+        type="text"
+        label="Name"
+        v-model="itemName"
+        :errors="v$.itemName ? v$.itemName.errors : []"
+        required
+      )
+      InputTextarea(
+        type="text"
+        label="Description"
+        v-model="itemDescription"
+        :errors="v$.itemDescription ? v$.itemDescription.errors : []"
+        required
+      )
       .space-y-2
         InputCheckbox(v-model="itemHasCharges" label="Has Charges")
         transition(name="slide-fade-left")
@@ -40,7 +52,11 @@
               placeholder="1d4"
             )
         .space-y-4(v-else-if="itemType === 'recipe'")
-          InputText(label="craft item" v-model="craftItemSearch")
+          InputSearchItem(
+            label="craft item"
+            v-model="craftItemId"
+            :filters="{ consumable: true }"
+          )
           .flex.space-x-4
             InputCounter(label="Cost" v-model="craftItemCost")
             InputSelect.flex-grow(
@@ -109,6 +125,9 @@
 </script>
 
 <script setup>
+  import { useVuelidate } from '@vuelidate/core';
+  import { required } from '@vuelidate/validators';
+
   import resourceStrings from '~/config/resourceStrings';
   import upgradeOptions from '~/config/upgradeOptions';
   import { newBuff } from '~/helpers/constructors';
@@ -147,7 +166,7 @@
   const featureName = ref('');
   const featureDescription = ref('');
 
-  const craftItemSearch = ref('');
+  const craftItemId = ref('');
   const craftItemCost = ref(0);
   const craftItemResource = ref('goldHandful');
   const resourceOptions = Object.keys(resourceStrings).map((key) => {
@@ -173,11 +192,16 @@
     { label: 'Any Rest', value: 'all' },
   ];
 
+  const v$ = useVuelidate(
+    { itemName: { required }, itemDescription: { required } },
+    { itemName, itemDescription },
+  );
+
   const formValid = computed(() => {
     const basicsValid = itemName.value !== '' && itemDescription.value !== '';
 
     if (itemType.value === 'recipe') {
-      return basicsValid && craftItemSearch.value !== '';
+      return basicsValid && craftItemId.value !== '';
     }
 
     if (itemType.value === 'relic') {
@@ -213,7 +237,7 @@
     itemChargesDescription.value = '';
     itemRechargeOn.value = 'shortRest';
 
-    craftItemSearch.value = '';
+    craftItemId.value = '';
     craftItemCost.value = 0;
     craftItemResource.value = 'goldHandful';
 
@@ -230,7 +254,10 @@
     userId = item?.user_id ? item.user_id : null;
   };
 
-  const saveItem = () => {
+  const saveItem = async () => {
+    const formValid = await v$.value.$validate();
+    if (!formValid) return;
+
     const item = {
       name: itemName.value,
       description: itemDescription.value,
@@ -262,8 +289,8 @@
 
       case 'recipe':
         item.downtime = {
-          craft: craftItemSearch.value, // todo: ID of craftable item
-          description: `Craft a ${craftItemSearch.value}`,
+          craft: craftItemId.value, // todo: ID of craftable item
+          description: `Craft a ${craftItemId.value}`,
           cost: {},
         };
         item.downtime.cost[craftItemResource.value] = craftItemCost.value;
