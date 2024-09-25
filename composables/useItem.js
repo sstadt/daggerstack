@@ -1,5 +1,16 @@
 
 export const useItem = () => {
+  const useItemIcon = (item) => {
+    return computed(() => {
+      if (item.consumable) return 'potion';
+      if (item.relic) return 'ahnk';
+      if (item.attach) return 'jigsaw';
+      if (item.downtime?.craft) return 'background';
+      if (item.onLongRest || item.onShortRest) return 'campfire';
+
+      return null;
+    });
+  };
 
   const useTitleClass = (item) => {
     return computed(() => {
@@ -18,6 +29,7 @@ export const useItem = () => {
   };
 
   return {
+    useItemIcon,
     useTitleClass,
     modifierString,
   }

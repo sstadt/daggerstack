@@ -21,7 +21,6 @@
           button.py-2.px-3.text-left.cursor-pointer(
             v-for="(item, index) in searchResults"
             type="button"
-            :class="resultsTitleClass[index]"
             @click="selectItem(item)"
           )
             span.block {{ item.name }}
@@ -122,12 +121,6 @@
           return item.name.toLowerCase().includes(search.value.toLowerCase());
         })
       : [];
-  });
-
-  const resultsTitleClass = computed(() => {
-    return searchResults.value.map((item) => {
-      return useTitleClass(item);
-    });
   });
 
   onMounted(() => {

@@ -3,12 +3,8 @@
     div
       .flex.justify-between.space-x-2
         h3.font-bold.text-xl(:class="titleClass") {{ item.name }}
-        .text-2xl
-          NuxtIcon(v-if="item.consumable" name="potion")
-          NuxtIcon(v-else-if="item.relic" name="ahnk")
-          NuxtIcon(v-else-if="item.attach" name="jigsaw")
-          NuxtIcon(v-else-if="item.downtime?.craft" name="background")
-          NuxtIcon(v-else-if="item.onLongRest || item.onShortRest" name="campfire")
+        .text-2xl(v-if="itemIcon")
+          NuxtIcon(:name="itemIcon")
       p {{ item.description }}
     div(v-if="item.attach?.feature")
       p.font-bold {{ item.attach.feature.name }}
@@ -33,7 +29,7 @@
   import restStrings from '~/config/restStrings';
   import attachmentStrings from '~/config/attachmentStrings';
 
-  const { useTitleClass, modifierString } = useItem();
+  const { useItemIcon, useTitleClass, modifierString } = useItem();
 
   const props = defineProps({
     item: {
@@ -42,6 +38,7 @@
     },
   });
 
+  const itemIcon = useItemIcon(props.item);
   const titleClass = useTitleClass(props.item);
 
   const restore = computed(() => {
