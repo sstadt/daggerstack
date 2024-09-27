@@ -4,12 +4,13 @@
       .grid.grid-cols-1.gap-4(class="md:grid-cols-2")
         HomebrewCardItem.cursor-pointer(
           v-for="item in itemsStore.homebrew"
+          :key="item.id"
           :item="item"
           @click="editItem(item)"
         )
       .flex.justify-end
         BasicButton(size="sm" priority="secondary" @click="newItem") New Item
-    HomebrewDrawerItem(ref="itemDrawer" @save="saveItem")
+    HomebrewDrawerItem(ref="itemDrawer" @save="saveItem" @delete="deleteItem")
 </template>
 
 <script>
@@ -28,13 +29,15 @@
     itemDrawer.value.open();
   };
 
-  const saveItem = (item) => {
-    const id = itemsStore.saveItem(item);
-
-    if (id) toastStore.postMessage({ body: `Created new item: ${item.name}` });
-  };
-
   const editItem = (item) => {
     itemDrawer.value.open(item);
+  };
+
+  const saveItem = (item) => {
+    itemsStore.saveItem(item);
+  };
+
+  const deleteItem = async (id) => {
+    itemsStore.deleteItem(id);
   };
 </script>

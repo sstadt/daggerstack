@@ -17,25 +17,29 @@
 <script>
   export default {
     name: 'DialogConfirm',
-    data() {
-      return {
-        question: '',
-        isOpen: false,
-      };
-    },
-    methods: {
-      ask(question) {
-        this.question = question;
-        this.isOpen = true;
-      },
-      cancel() {
-        this.$emit('cancel');
-        this.isOpen = false;
-      },
-      confirm() {
-        this.$emit('confirm');
-        this.isOpen = false;
-      },
-    },
   };
+</script>
+
+<script setup>
+  const question = ref('');
+  const isOpen = ref(false);
+
+  const emit = defineEmits(['cancel', 'confirm']);
+
+  const cancel = () => {
+    emit('cancel');
+    isOpen.value = false;
+  };
+
+  const confirm = () => {
+    emit('confirm');
+    isOpen.value = false;
+  };
+
+  const ask = (q) => {
+    question.value = q;
+    isOpen.value = true;
+  };
+
+  defineExpose({ ask });
 </script>

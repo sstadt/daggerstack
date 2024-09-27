@@ -134,10 +134,10 @@ export const useCharactersStore = defineStore('characters', {
           .delete()
           .eq('id', characterId);
 
-        this.characterList.splice(index, 1);
-
         if (error) {
           toastStore.postMessage({ body: error.message });
+        } else {
+          this.characterList.splice(index, 1);
         }
       }
 

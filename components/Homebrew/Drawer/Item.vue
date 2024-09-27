@@ -1,5 +1,9 @@
 <template lang="pug">
-  BasicDrawer(title="New Item" ref="itemEditor")
+  DialogConfirm(ref="confirmDialog" @confirm="confirmDelete")
+  BasicDrawer(
+    :title="id ? 'Edit Item' : 'New Item'"
+    ref="itemEditor"
+  )
     form.space-y-4.px-4(@submit.prevent="saveItem")
       InputText(
         type="text"
@@ -116,7 +120,14 @@
             )
       .flex.justify-between.items-center
         InputToggle(label="Public" v-model="itemPublic")
-        BasicButton(type="submit" :disabled="!formValid") Save
+      .mt-auto.space-y-2
+        BasicButton.w-full(type="submit" :disabled="!formValid") Save
+        BasicButton.w-full(
+          v-if="id"
+          type="button"
+          priority="secondary"
+          @click="deleteItem"
+        ) Delete
 </template>
 
 <script>
@@ -134,10 +145,12 @@
   import { newBuff } from '~/helpers/constructors';
   import { clone } from '~/helpers/utility';
 
-  const emit = defineEmits(['save']);
+  const emit = defineEmits(['save', 'delete']);
 
-  let id = null;
-  let userId = null;
+  const confirmDialog = ref(null);
+
+  const id = ref(null);
+  const userId = ref(null);
 
   const itemEditor = ref(null);
 
@@ -323,8 +336,8 @@
     }
 
     // store db values for existing items
-    id = item?.id ? item.id : null;
-    userId = item?.user_id ? item.user_id : null;
+    id.value = item?.id ? item.id : null;
+    userId.value = item?.user_id ? item.user_id : null;
   };
 
   const saveItem = async () => {
@@ -337,8 +350,8 @@
       public: itemPublic.value,
     };
 
-    if (id) item.id = id;
-    if (userId) item.user_id = userId;
+    if (id.value) item.id = id.value;
+    if (userId.value) item.user_id = userId.value;
 
     if (itemHasCharges.value === true) {
       item.charge = {
@@ -409,6 +422,16 @@
 
     emit('save', item);
     itemEditor.value.close();
+  };
+
+  const deleteItem = () => {
+    confirmDialog.value
+      .ask(`Are you sure you want to delete ${itemName.value}? This cannot be undone.`);
+  };
+
+  const confirmDelete = () => {
+    itemEditor.value.close();
+    emit('delete', id.value);
   };
 
   const open = (item) => {
