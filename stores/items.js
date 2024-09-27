@@ -12,8 +12,8 @@ export const useItemsStore = defineStore('items', {
     homebrew() {
       return this.items.filter((item) => item.created_at);
     },
-    item(id) {
-      return this.items.find((item) => item.id === id);
+    item() {
+      return (id) => this.items.find((item) => item.id === id);
     },
   },
   actions: {

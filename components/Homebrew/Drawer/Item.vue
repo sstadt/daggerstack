@@ -56,6 +56,7 @@
             label="craft item"
             v-model="craftItemId"
             :filters="{ consumable: true }"
+            :item-id="inititalCraftItemId"
           )
           .flex.space-x-4
             InputCounter(label="Cost" v-model="craftItemCost")
@@ -145,7 +146,6 @@
   const itemPublic = ref(false);
   const itemHasCharges = ref(false);
   const itemCharges = ref(3);
-  const itemChargesDescription = ref('');
 
   const itemRechargeOn = ref('');
   const rechargeRestOptions = [
@@ -167,6 +167,7 @@
   const featureDescription = ref('');
 
   const craftItemId = ref('');
+  const inititalCraftItemId = ref(null);
   const craftItemCost = ref(0);
   const craftItemResource = ref('goldHandful');
   const resourceOptions = Object.keys(resourceStrings).map((key) => {
@@ -228,26 +229,98 @@
   };
 
   const loadItem = (item) => {
-    itemName.value = '';
-    itemDescription.value = '';
-    itemPublic.value = false;
+    itemName.value = item?.name || '';
+    itemDescription.value = item?.description || '';
+    itemPublic.value = item?.public || false;
+
     itemType.value = '';
-    itemCharges.value = 3;
-    itemHasCharges.value = false;
-    itemChargesDescription.value = '';
-    itemRechargeOn.value = 'shortRest';
 
-    craftItemId.value = '';
-    craftItemCost.value = 0;
-    craftItemResource.value = 'goldHandful';
+    if (item?.onShortRest || item?.onLongRest) itemType.value = 'downtime';
+    if (item?.consumable) itemType.value = 'consumable';
+    if (item?.relic) itemType.value = 'relic';
+    if (item?.attach) itemType.value = 'attachment';
+    if (item?.downtime?.craft) itemType.value = 'recipe';
 
-    modify.value = [];
-    featureName.value = '';
-    featureDescription.value = '';
+    // load charges
+    if (item?.charge) {
+      itemCharges.value = item.charge.max;
+      itemHasCharges.value = true;
+      itemRechargeOn.value = item.charge.recharge.on;
+    } else {
+      itemCharges.value = 3;
+      itemHasCharges.value = false;
+      itemRechargeOn.value = 'shortRest';
+    }
 
-    resourceType.value = 'stress';
-    resourceAmount.value = '';
-    restType.value = 'shortRest';
+    // load recipe
+    if (itemType.value === 'recipe') {
+      const [ resourceType ] = Object.keys(item.downtime.cost);
+
+      craftItemId.value = item.downtime.craft;
+      inititalCraftItemId.value = item.downtime.craft;
+      craftItemCost.value = item.downtime.cost[resourceType];
+      craftItemResource.value = resourceType;
+    } else {
+      craftItemId.value = '';
+      craftItemCost.value = 0;
+      craftItemResource.value = 'goldHandful';
+    }
+
+    // load relic
+    if (itemType.value === 'relic') {
+      const modifiers = [];
+
+      for (let [key, value] of Object.entries(item.modify)) {
+        modifiers.push({
+          stat: key,
+          score: value,
+        });
+      }
+
+      modify.value = modifiers;
+    } else {
+      modify.value = [];
+    }
+
+    if (itemType.value === 'attachment') {
+      attachType.value = item.attach.type;
+      featureName.value = item.attach.feature?.name || '';
+      featureDescription.value = item.attach.feature?.description || '';
+    } else {
+      attachType.value = '';
+      featureName.value = '';
+      featureDescription.value = '';
+    }
+
+    // NOTE: downtime and consumable share reactives for inputs, so
+    //       they need to be checked together
+    if (itemType.value === 'downtime') {
+      // load downtime item
+      let downtimeRestType = 'shortRest';
+      if (item.onLongRest && item.onShortRest) downtimeRestType = 'all';
+      if (item.onLongRest) downtimeRestType = 'longRest';
+
+      const onRest = downtimeRestType === 'all' || downtimeRestType === 'longRest'
+        ? item.onLongRest
+        : item.onShortRest;
+      const [ downtimeResourceType ] = Object.keys(onRest.resource);
+
+      resourceType.value = downtimeResourceType;
+      resourceAmount.value = onRest.resource[downtimeResourceType];
+      restType.value = downtimeRestType;
+
+    } else if (itemType.value === 'consumable' && item.restore) {
+      // load consumable
+      const [ consumableResourceType ] = Object.keys(item.restore);
+      resourceType.value = consumableResourceType;
+      resourceAmount.value = item.restore[consumableResourceType];
+
+    } else {
+      // load defaults for shared reactives
+      resourceType.value = 'stress';
+      resourceAmount.value = '';
+      restType.value = 'shortRest';
+    }
 
     // store db values for existing items
     id = item?.id ? item.id : null;

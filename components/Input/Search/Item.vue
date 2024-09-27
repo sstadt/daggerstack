@@ -13,6 +13,7 @@
         v-model="search"
         :placeholder="placeholder"
         @keydown.esc="searching = false"
+        @blur="searching = false"
       )
       transition(name="fade")
         .absolute.bottom-0.translate-y-full.max-h-56.overflow-y-auto.z-10.bg-white.shadow.w-full.divide-y(
@@ -94,7 +95,7 @@
   });
 
   const search = ref('');
-  const searching = ref(props.itemId === null ? true : false);
+  const searching = ref(props.itemId ? false : true);
   const selectedItem = ref(null);
 
   const wrapperClass = useWrapperClass(props.disabled);
@@ -116,7 +117,7 @@
   });
 
   const searchResults = computed(() => {
-    return search.value.length > 3 && searching.value
+    return searching.value && search.value.length > 3
       ? filteredItems.value.filter((item) => {
           return item.name.toLowerCase().includes(search.value.toLowerCase());
         })
@@ -125,9 +126,10 @@
 
   onMounted(() => {
     if (props.itemId) {
-      waitUntil(itemsStore.item(props.itemId)).then(() => {
+      waitUntil(() => itemsStore.item(props.itemId)).then(() => {
         const item = itemsStore.item(props.itemId);
-        selectedItem.value = clone(item);
+
+        selectItem(item);
       });
     }
   });
