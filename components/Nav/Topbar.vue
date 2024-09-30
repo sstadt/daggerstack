@@ -10,11 +10,14 @@
           ul.absolute.bottom-0.right-0.translate-y-full.bg-slate-800.shadow.z-20.divide-y.divide-slate-700.text-right(
             v-if="userMenuOpen"
           )
-            li(@click="() => userMenuOpen = false")
+            li(
+              v-for="link in menuLinks"
+              @click="() => userMenuOpen = false"
+            )
               NuxtLink.inline-block.px-4.py-2.w-full.whitespace-nowrap(
                 class="hover:bg-slate-600"
-                to="/character"
-              ) Character List
+                :to="link.url"
+              ) {{ link.label }}
             li
               .px-4.py-2.w-full.whitespace-nowrap(
                 class="hover:bg-slate-600"
@@ -26,34 +29,38 @@
 <script>
   export default {
     name: 'NavTopbar',
-    data() {
-      return {
-        userMenuOpen: false,
-      };
-    },
-    setup() {
-      const userStore = useUserStore();
-      const toastStore = useToastStore();
-      return { userStore, toastStore };
-    },
-    methods: {
-      toggleUserMenu() {
-        this.userMenuOpen = !this.userMenuOpen;
-      },
-      logOut() {
-        this.userMenuOpen = false;
-        this.$refs.confirm
-          .ask('Are you sure you want to log out?');
-      },
-      async confirmLogOut() {
-        const error = await this.userStore.logOut();
+  };
+</script>
 
-        if (error) {
-          this.toastStore.addMessage({ body: error.message });
-        } else {
-          this.$router.push('/');
-        }
-      },
-    },
+<script setup>
+  const router = useRouter();
+  const userStore = useUserStore();
+  const toastStore = useToastStore();
+
+  const userMenuOpen = ref(false);
+  const confirm = ref(null);
+
+  const menuLinks = ref([
+    { url: '/character', label: 'Character List' },
+    { url: '/homebrew/collection', label: 'Homebrew Collection' },
+  ]);
+
+  const toggleUserMenu = () => {
+    userMenuOpen.value = !userMenuOpen.value;
+  };
+
+  const logOut = () => {
+    userMenuOpen.value = false;
+    confirm.value.ask('Are you sure you want to log out?');
+  };
+
+  const confirmLogOut = async () => {
+    const error = await userStore.logOut();
+
+    if (error) {
+      toastStore.addMessage({ body: error.message });
+    } else {
+      router.push('/');
+    }
   };
 </script>

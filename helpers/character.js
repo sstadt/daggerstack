@@ -33,15 +33,6 @@ export const getArmor = (name) =>
   ARMOR.items.find((armor) => armor.name === name);
 
 /**
- * Get an item's statistics from game data
- *
- * @param {String} name The name of the item
- * @returns The matching item
- */
-export const getItem = (name) =>
-  ITEMS.items.find((item) => item.name === name);
-
-/**
  * Determine the current tier of a character
  *
  * @param {Object} character The character to find tier for

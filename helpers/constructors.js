@@ -156,6 +156,7 @@ export const newArmor = (armor = {}) => {
 export const newItem = (item = {}) => {
   const defaults = {
     id: uuidv4(),
+    itemId: `custom-${uuidv4()}`,
     name: null,
     chargesUsed: 0,
     notes: '',
@@ -169,6 +170,7 @@ export const newItem = (item = {}) => {
 
   return {
     id: options.id,
+    itemId: options.itemId,
     name: options.name,
     chargesUsed: options.chargesUsed,
     notes: options.notes,

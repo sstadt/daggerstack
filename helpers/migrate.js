@@ -12,13 +12,19 @@
  * method.
  *
  * To automatically apply migrations when characters are hydrated,
- * add the migration object to the "migrations" array
+ * add the migration object to the "migrations" array.
+ *
+ * To test a migration before allowing the app to save character
+ * changes, set the 'dev' attribute on a migration object to true
  */
 
 import GENERAL from '~/data/general';
-import { clone } from '~/helpers/utility';
+import { items } from '~/data/items';
+import { clone, uuidv4 } from '~/helpers/utility';
 
 /**
+ * Gold Consolidation
+ *
  * Consolidate gold bags and chests into handfuls. Changes
  * the character.inventory.gold attribute to remove goldhandful,
  * goldBag, and goldChest. Replaces the gold object with an
@@ -40,24 +46,80 @@ const goldConsolidation = {
       (parseInt(bag || 0, 10) * GENERAL.gold.handfulsPerBag) +
       (parseInt(chest || 0, 10) * GENERAL.gold.bagsPerChest * GENERAL.gold.handfulsPerBag);
 
-      return updatedCharacter;
+    return updatedCharacter;
+  },
+};
+
+/**
+ * Item IDs
+ *
+ * Migrate items that were previously identified by name in search to
+ * add the itemId attribute to character items, allowing the base item
+ * to be matched via ID instead of item name.
+ *
+ * This is necessary to allow homebrew items and base game items to be
+ * used interchangeably.
+ *
+ * Migrations assume character has no homebrew items and only matches on
+ * stock items.
+ */
+const itemId = {
+  isValid(character) {
+    // if character has no items, migration is not necessary
+    if (character.inventory?.items && character.inventory?.items?.length < 1) return true;
+
+    for (let i = 0, j = character.inventory.items.length; i < j; i++) {
+      // if there is a single item without a baseItem ID, migrate the character
+      if (!character.inventory.items[i].itemId) return false;
+    }
+
+    return true;
+  },
+  migrate(character) {
+    const updatedCharacter = clone(character);
+    const updatedItems = [];
+
+    character.inventory.items.forEach((item) => {
+      const baseItem = items.find((i) => i.name === item.name);
+
+      if (baseItem) {
+        item.itemId = baseItem.id;
+      } else {
+        item.itemId = `custom-${uuidv4()}`;
+      }
+
+      updatedItems.push(item);
+    });
+
+    updatedCharacter.inventory.items = updatedItems;
+
+    return updatedCharacter;
   },
 };
 
 const migrations = [
   goldConsolidation,
+  itemId,
 ];
 
 export default (characters) => {
   const migratedCharacters = [];
+  let devMode = false;
 
   characters.forEach((character) => {
     migrations.forEach((migration) => {
       if (!migration.isValid(character)) {
+        if (migration.dev) devMode = true;
         migratedCharacters.push(migration.migrate(character));
       }
     });
   });
 
-  return migratedCharacters;
+  if (devMode) {
+    console.log('--- TESTING MIGRATIONS ---');
+    console.log(migratedCharacters);
+    console.log('--- TESTING MIGRATIONS ---');
+  }
+
+  return devMode ? [] : migratedCharacters;
 };

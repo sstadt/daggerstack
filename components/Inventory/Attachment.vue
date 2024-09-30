@@ -14,49 +14,43 @@
 </template>
 
 <script>
-  import { getItem } from '~/helpers/character';
-
   export default {
     name: 'InventoryAttachment',
-    props: {
-      character: {
-        type: Object,
-        required: true,
-      },
-      attachment: {
-        type: Object,
-        required: true,
-      },
-    },
-    data() {
-      return {
-        chargesUsed: this.attachment.chargesUsed,
-      };
-    },
-    setup() {
-      const charactersStore = useCharactersStore();
-
-      return { charactersStore };
-    },
-    computed: {
-      attachmentItem() {
-        if (!this.attachment) return null;
-
-        return getItem(this.attachment.name);
-      },
-    },
-    watch: {
-      chargesUsed(newVal, oldVal) {
-        if (newVal !== oldVal) {
-          const index = this.character.inventory.items
-            .findIndex((item) => item.id === this.attachment.id);
-          const updatedAttachment = { ...this.attachment };
-
-          updatedAttachment.chargesUsed = this.chargesUsed;
-          this.character.inventory.items.splice(index, 1, updatedAttachment);
-          this.charactersStore.saveCharacter(this.character);
-        }
-      },
-    },
   };
+</script>
+
+<script setup>
+  const charactersStore = useCharactersStore();
+  const itemsStore = useItemsStore();
+
+  const props = defineProps({
+    character: {
+      type: Object,
+      required: true,
+    },
+    attachment: {
+      type: Object,
+      required: true,
+    },
+  });
+
+  const chargesUsed = ref(props.attachment.chargesUsed);
+
+  const attachmentItem = computed(() => {
+    if (!this.attachment) return null;
+
+    return itemsStore.item(this.attachment.itemId);
+  });
+
+  watch(chargesUsed, (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      const index = props.character.inventory.items
+        .findIndex((item) => item.id === this.attachment.id);
+      const updatedAttachment = { ...props.attachment };
+
+      updatedAttachment.chargesUsed = chargesUsed.value;
+      props.character.inventory.items.splice(index, 1, updatedAttachment);
+      charactersStore.saveCharacter(props.character);
+    }
+  });
 </script>

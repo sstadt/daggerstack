@@ -19,51 +19,54 @@
 </template>
 
 <script>
-  import ITEMS from '~/data/items';
+  export default {
+    name: 'InventoryItemPicker',
+  };
+</script>
+
+<script setup>
   import { newItem } from '~/helpers/constructors';
   import { uuidv4 } from '~/helpers/utility';
 
-  export default {
-    name: 'InventoryItemPicker',
-    props: {
-      character: {
-        type: Object,
-        required: true,
-      },
+  const itemsStore = useItemsStore();
+
+  const emit = defineEmits(['select']);
+
+  const props = defineProps({
+    character: {
+      type: Object,
+      required: true,
     },
-    data() {
-      return {
-        key: uuidv4(),
-        itemList: [ ...ITEMS.items ],
-        customName: '',
-        customNotes: '',
-      };
-    },
-    computed: {
-      relicList() {
-        return this.itemList
-          .filter((item) => item.relic === true)
-          .map((item) => item.name);
-      },
-      hasRelic() {
-        return this.character.inventory.items
-          .find((item) => this.relicList.includes(item.name));
-      },
-    },
-    methods: {
-      addItem(item) {
-        this.$emit('select', newItem({
-          name: item.name,
-          modify: item.modify ? { ...item.modify } : {},
-        }));
-      },
-      addCustomItem() {
-        this.$emit('select', newItem({
-          name: this.customName,
-          notes: this.customNotes,
-          custom: true,
-        }));
-      },
-    },
+  });
+
+  const key = ref(uuidv4())
+  const customName = ref('');
+  const customNotes = ref('');
+
+  const relicList = computed(() => {
+    return itemsStore.items
+      .filter((item) => item.relic === true)
+      .map((item) => item.id);
+  });
+
+  const hasRelic = computed(() => {
+    return props.character.inventory.items
+      .find((item) => relicList.value.includes(item.itemId));
+  });
+
+  const addItem = (item) => {
+    emit('select', newItem({
+      itemId: item.id,
+      name: item.name,
+      modify: item.modify ? { ...item.modify } : {},
+    }));
+  };
+
+  const addCustomItem = () => {
+    emit('select', newItem({
+      name: customName.value,
+      notes: customNotes.value,
+      custom: true,
+    }));
   };
 </script>

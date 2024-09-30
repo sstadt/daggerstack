@@ -61,7 +61,13 @@
 </template>
 
 <script>
-  import { getArmor, getItem, getWeapon } from '~/helpers/character';
+  export default {
+    name: 'InventoryItem',
+  };
+</script>
+
+<script setup>
+  import { getArmor, getWeapon } from '~/helpers/character';
   import { uuidv4 } from '~/helpers/utility';
 
   import {
@@ -70,194 +76,190 @@
     ATTACH_TYPE_ARMOR,
   } from '~/config/itemPicker';
 
-  export default {
-    name: 'InventoryItem',
-    props: {
-      character: {
-        type: Object,
-        default: null,
-      },
-      characterItem: {
-        type: Object,
-        default: null,
-      },
-      baseItem: {
-        type: Object,
-        default: null,
-      },
-      readOnly: {
-        type: Boolean,
-        default: false,
-      },
-    },
-    data() {
-      const [ firstExperience ] = this.character ? this.character.experience : [];
-      const selectedAttachmentTarget = this.characterItem ? this.characterItem.attachment : null;
+  const { useTitleClass } = useItem();
 
+  const itemsStore = useItemsStore();
+
+  const emit = defineEmits(['update', 'remove']);
+
+  const props = defineProps({
+    character: {
+      type: Object,
+      default: null,
+    },
+    characterItem: {
+      type: Object,
+      default: null,
+    },
+    baseItem: {
+      type: Object,
+      default: null,
+    },
+    readOnly: {
+      type: Boolean,
+      default: false,
+    },
+  });
+
+  const [ firstExperience ] = props.character ? props.character.experience : [];
+
+  const key = ref(uuidv4());
+  const deleting = ref(false);
+  const itemName = ref(props.characterItem && props.characterItem.custom ? props.characterItem.name : null);
+  const chargesUsed = ref(props.characterItem ? props.characterItem.chargesUsed : 0);
+  const itemQuantity = ref(props.characterItem ? props.characterItem.quantity : 1);
+  const itemNotes = ref(props.characterItem ? props.characterItem.notes : '');
+  const selectedExperience = ref(
+    props.characterItem?.options?.experience
+      ? props.characterItem.options.experience
+      : firstExperience ? firstExperience.id : null
+  );
+  const selectedAttachmentTarget = ref(props.characterItem ? props.characterItem.attachment : null);
+  const details = ref(null);
+
+  const item = computed(() => {
+    if (props.baseItem) return null;
+
+    return props.characterItem.custom
+      ? props.characterItem
+      : itemsStore.item(props.characterItem.itemId);
+  });
+
+  const titleClass = useTitleClass(item.value || props.baseItem);
+
+  const experienceOptions = computed(() => {
+    return props.character.experience.map((experience) => {
       return {
-        key: uuidv4(),
-        deleting: false,
-        itemName: this.characterItem && this.characterItem.custom ? this.characterItem.name : null,
-        chargesUsed: this.characterItem ? this.characterItem.chargesUsed : 0,
-        itemQuantity: this.characterItem ? this.characterItem.quantity : 1,
-        itemNotes: this.characterItem ? this.characterItem.notes : '',
-        selectedExperience: this.characterItem?.options?.experience
-          ? this.characterItem.options.experience
-          : firstExperience ? firstExperience.id : null,
-        selectedAttachmentTarget,
+        label: experience.name,
+        value: experience.id,
       };
-    },
-    computed: {
-      item() {
-        if (this.baseItem) return null;
+    });
+  });
 
-        return this.characterItem.custom
-          ? this.characterItem
-          : getItem(this.characterItem.name);
-      },
-      titleClass() {
-        const item = this.item || this.baseItem;
+  const attachmentTargets = computed(() => {
+    if (!item.value.attach || props.readOnly) return [];
 
-        return {
-          'text-cyan-950': !item.consumable && !item.relic && !item.attach,
-          'text-green-600': item.consumable,
-          'text-green-800': item.downtime?.craft,
-          'text-orange-600': item.relic,
-          'text-pink-800': item.attach,
-        }
-      },
-      experienceOptions() {
-        return this.character.experience.map((experience) => {
-          return {
-            label: experience.name,
-            value: experience.id,
-          };
+    const options = [];
+    const primaryWeapon = getWeapon(props.character.equipment.primaryWeapon.name);
+    const secondaryWeapon = getWeapon(props.character.equipment.secondaryWeapon.name);
+    const armor = getArmor(props.character.equipment.armor.name);
+
+    // primary weapon
+    if (primaryWeapon && !primaryWeapon.feature) {
+      if (
+        item.value.attach.type === ATTACH_TYPE_WEAPON ||
+        item.value.attach.type === ATTACH_TYPE_MELEE_WEAPON &&
+        primaryWeapon.range.toLowerCase() === 'melee'
+      ) {
+        options.push({
+          label: props.character.equipment.primaryWeapon.name,
+          value: props.character.equipment.primaryWeapon.id,
         });
-      },
-      attachmentTargets() {
-        if (!this.item.attach || this.readOnly) return [];
+      }
+    }
 
-        const options = [];
-        const primaryWeapon = getWeapon(this.character.equipment.primaryWeapon.name);
-        const secondaryWeapon = getWeapon(this.character.equipment.secondaryWeapon.name);
-        const armor = getArmor(this.character.equipment.armor.name);
+    // secondary weapon
+    if (secondaryWeapon && !secondaryWeapon.feature) {
+      if (
+        item.value.attach.type === ATTACH_TYPE_WEAPON ||
+        item.value.attach.type === ATTACH_TYPE_MELEE_WEAPON &&
+        secondaryWeapon.range.toLowerCase() === 'melee'
+      ) {
+        options.push({
+          label: props.character.equipment.secondaryWeapon.name,
+          value: props.character.equipment.secondaryWeapon.id,
+        });
+      }
+    }
 
-        // primary weapon
-        if (primaryWeapon && !primaryWeapon.feature) {
-          if (
-            this.item.attach.type === ATTACH_TYPE_WEAPON ||
-            this.item.attach.type === ATTACH_TYPE_MELEE_WEAPON &&
-            primaryWeapon.range.toLowerCase() === 'melee'
-          ) {
-            options.push({
-              label: this.character.equipment.primaryWeapon.name,
-              value: this.character.equipment.primaryWeapon.id,
-            });
-          }
-        }
-
-        // secondary weapon
-        if (secondaryWeapon && !secondaryWeapon.feature) {
-          if (
-            this.item.attach.type === ATTACH_TYPE_WEAPON ||
-            this.item.attach.type === ATTACH_TYPE_MELEE_WEAPON &&
-            secondaryWeapon.range.toLowerCase() === 'melee'
-          ) {
-            options.push({
-              label: this.character.equipment.secondaryWeapon.name,
-              value: this.character.equipment.secondaryWeapon.id,
-            });
-          }
-        }
+    if (
+      item.value.attach.type === ATTACH_TYPE_WEAPON ||
+      item.value.attach.type === ATTACH_TYPE_MELEE_WEAPON
+    ) {
+      props.character.inventory.weapons.forEach((characterWeapon) => {
+        const weapon = getWeapon(characterWeapon.name);
 
         if (
-          this.item.attach.type === ATTACH_TYPE_WEAPON ||
-          this.item.attach.type === ATTACH_TYPE_MELEE_WEAPON
+          !weapon.feature &&
+          (
+            item.value.attach.type === ATTACH_TYPE_WEAPON ||
+            item.value.attach.type === ATTACH_TYPE_MELEE_WEAPON &&
+            weapon.range.toLowerCase() === 'melee'
+          )
         ) {
-          this.character.inventory.weapons.forEach((characterWeapon) => {
-            const weapon = getWeapon(characterWeapon.name);
-
-            if (
-              !weapon.feature &&
-              (
-                this.item.attach.type === ATTACH_TYPE_WEAPON ||
-                this.item.attach.type === ATTACH_TYPE_MELEE_WEAPON &&
-                weapon.range.toLowerCase() === 'melee'
-              )
-            ) {
-              options.push({
-                label: characterWeapon.name,
-                value: characterWeapon.id,
-              });
-            }
-          });
-        }
-
-        if (armor && !armor.feature && this.item.attach.type === ATTACH_TYPE_ARMOR) {
           options.push({
-            label: this.character.equipment.armor.name,
-            value: this.character.equipment.armor.id,
+            label: characterWeapon.name,
+            value: characterWeapon.id,
           });
         }
+      });
+    }
 
-        return options;
-      },
-    },
-    methods: {
-      use() {
-        if (this.itemQuantity > 1) {
-          this.itemQuantity = this.itemQuantity - 1;
+    if (armor && !armor.feature && item.value.attach.type === ATTACH_TYPE_ARMOR) {
+      options.push({
+        label: props.character.equipment.armor.name,
+        value: props.character.equipment.armor.id,
+      });
+    }
 
-          this.$emit('update', { quantity: this.itemQuantity });
-          this.key = uuidv4();
-        } else {
-          this.$emit('remove');
-        }
-      },
-      remove() {
-        this.deleting = true;
-        this.$refs.details.close();
-      },
-      detailsClosed() {
-        if (this.deleting) {
-          this.$emit('remove');
-        }
-      },
-      save() {
-        if (this.itemQuantity < 1) {
-          this.remove();
-          return;
-        }
+    return options;
+  });
 
-        const item = this.item || this.baseItem;
-        const options = {};
-        const attachment = this.selectedAttachmentTarget === '' || this.selectedAttachmentTarget === null
-          ? null
-          : this.selectedAttachmentTarget;
+  const use = () => {
+    if (itemQuantity.value > 1) {
+      itemQuantity.value = itemQuantity.value - 1;
 
-        if (this.item.modify?.experience) {
-          options.experience = this.selectedExperience;
-        }
-
-        this.$emit('update', {
-          name: this.characterItem && this.characterItem.custom ? this.itemName : item.name,
-          quantity: this.itemQuantity,
-          notes: this.itemNotes,
-          options,
-          attachment,
-        });
-        this.$refs.details.close();
-      },
-      openDetails() {
-        if (!this.readOnly && this.characterItem) this.$refs.details.open();
-      },
-    },
-    watch: {
-      chargesUsed(newVal, oldVal) {
-        if (newVal !== oldVal && newVal > -1) {
-          this.$emit('update', { chargesUsed: this.chargesUsed });
-        }
-      },
-    },
+      emit('update', { quantity: itemQuantity.value });
+      key.value = uuidv4();
+    } else {
+      emit('remove');
+    }
   };
+
+  const remove = () => {
+    deleting.value = true;
+    details.value.close();
+  };
+
+  const detailsClosed = () => {
+    if (deleting.value) {
+      emit('remove');
+    }
+  };
+
+  const save = () => {
+    if (itemQuantity.value < 1) {
+      remove();
+      return;
+    }
+
+    const item = item.value || props.baseItem;
+    const options = {};
+    const attachment = selectedAttachmentTarget.value === '' || selectedAttachmentTarget.value === null
+      ? null
+      : selectedAttachmentTarget.value;
+
+    if (item.value.modify?.experience) {
+      options.experience = selectedExperience.value;
+    }
+
+    emit('update', {
+      name: props.characterItem && props.characterItem.custom ? itemName.value : item.name,
+      quantity: itemQuantity.value,
+      notes: itemNotes.value,
+      options,
+      attachment,
+    });
+    details.value.close();
+  };
+
+  const openDetails = () => {
+    if (!props.readOnly && props.characterItem) details.value.open();
+  };
+
+  watch(chargesUsed, (newVal, oldVal) => {
+    if (newVal !== oldVal && newVal > -1) {
+      emit('update', { chargesUsed: chargesUsed.value });
+    }
+  });
 </script>

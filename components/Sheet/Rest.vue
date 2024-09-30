@@ -231,7 +231,6 @@
   import { rollDice } from '~/helpers/dice';
 
   import GENERAL from '~/data/general';
-  import ITEMS from '~/data/items';
   import resourceStrings from '~/config/resourceStrings';
   import { calculateModifiers, getFeaturesByAttribute, getGold } from '~/helpers/character';
   import { newItem } from '~/helpers/constructors';
@@ -248,6 +247,7 @@
   const charactersStore = useCharactersStore();
   const sheetStore = useSheetStore();
   const toastStore = useToastStore();
+  const itemsStore = useItemsStore();
 
   const tabs = [
     { id: 'short-rest', name: 'Short Rest' },
@@ -349,7 +349,7 @@
 
   const itemData = computed(() => {
     return props.character.inventory.items
-      .map((item) => ITEMS.items.find((data) => data.name === item.name))
+      .map((item) => itemsStore.items.find((data) => data.id === item.itemId))
       .filter((item) => item?.name);
   });
 
