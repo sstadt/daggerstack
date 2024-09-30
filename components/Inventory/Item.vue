@@ -180,7 +180,7 @@
         const weapon = getWeapon(characterWeapon.name);
 
         if (
-          !weapon.feature &&
+          weapon && !weapon.feature &&
           (
             item.value.attach.type === ATTACH_TYPE_WEAPON ||
             item.value.attach.type === ATTACH_TYPE_MELEE_WEAPON &&
@@ -233,18 +233,18 @@
       return;
     }
 
-    const item = item.value || props.baseItem;
+    const updatedItem = item.value || props.baseItem;
     const options = {};
     const attachment = selectedAttachmentTarget.value === '' || selectedAttachmentTarget.value === null
       ? null
       : selectedAttachmentTarget.value;
 
-    if (item.value.modify?.experience) {
+    if (updatedItem.modify?.experience) {
       options.experience = selectedExperience.value;
     }
 
     emit('update', {
-      name: props.characterItem && props.characterItem.custom ? itemName.value : item.name,
+      name: props.characterItem && props.characterItem.custom ? itemName.value : updatedItem.name,
       quantity: itemQuantity.value,
       notes: itemNotes.value,
       options,

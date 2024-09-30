@@ -107,10 +107,10 @@
                 InputCheckboxCounter.justify-end(
                   v-model="craftingSelections[index]"
                   :max="maxShortRestActions"
-                  :enabled="Math.min(craftingSelections[index] + shortOptionsRemaining, Math.max(craftingSelections[index], resourcesAvailable[craftingRecipes[index].resource.type]))"
+                  :enabled="craftingMaxAvailableShortRest[index]"
                 )
               div
-                p.font-bold Craft {{ craftingRecipes[index].item }}
+                p.font-bold {{ craftingRecipes[index].label }}
                 p.text-sm.text-cyan-700 Cost: {{ craftingRecipes[index].resource.cost }} {{ resourceStrings[craftingRecipes[index].resource.type] }}
         p(v-if="shortRestChargeItems.length > 0") Regain charges for: {{ shortRestChargeItems.map((i) => i.name).join(', ') }}
         BasicButton.w-full(
@@ -209,10 +209,10 @@
                 InputCheckboxCounter.justify-end(
                   v-model="craftingSelections[index]"
                   :max="maxShortRestActions"
-                  :enabled="Math.min(craftingSelections[index] + longOptionsRemaining, Math.max(craftingSelections[index], resourcesAvailable[craftingRecipes[index].resource.type]))"
+                  :enabled="craftingMaxAvailableLongRest[index]"
                 )
               div
-                p.font-bold Craft {{ craftingRecipes[index].item }}
+                p.font-bold {{ craftingRecipes[index].label }}
                 p.text-sm.text-cyan-700 Cost: {{ craftingRecipes[index].resource.cost }} {{ resourceStrings[craftingRecipes[index].resource.type] }}
         p(v-if="longRestChargeItems.length > 0") Regain charges for: {{ longRestChargeItems.map((i) => i.name).join(', ') }}
         BasicButton.w-full(
@@ -354,10 +354,9 @@
   });
 
   const resourceItems = computed(() => {
-    return itemData.value.filter((item, index, arr) => {
-      return arr.indexOf((i) => i.name === item.name) === index &&
-        item.onShortRest?.resource || item.onLongRest?.resource
-    });
+    return itemData.value
+      .filter((item) => item.onShortRest?.resource || item.onLongRest?.resource)
+      .filter((item, index, arr) => arr.findIndex((i) => i.id === item.id) === index);
   });
 
   const healthSlots = computed(() => {
@@ -381,7 +380,7 @@
 
     craftingRecipes.value.forEach((recipe, index) => {
       if (recipe?.resource?.type === type) {
-        total += craftingSelections.value[index];
+        total += craftingSelections.value[index] * recipe.resource.cost;
       }
     });
 
@@ -417,17 +416,42 @@
   const craftingRecipes = computed(() => {
     return itemData.value
       .filter((data) => data.downtime?.craft)
-      .map(({ downtime }) => {
-        const [ costType ] = Object.keys(downtime.cost);
+      .map((data) => {
+        const [ costType ] = Object.keys(data.downtime.cost);
 
         return {
-          item: downtime.craft,
+          item: data.downtime.craft,
+          label: data.downtime.description,
           resource: {
             type: costType,
-            cost: downtime.cost[costType],
+            cost: data.downtime.cost[costType],
           },
         };
       });
+  });
+
+  const craftingMaxAvailableLongRest = computed(() => {
+    return craftingRecipes.value.map((recipe, index) => {
+      const available = resourcesAvailable.value[recipe.resource.type];
+      const maxCrafts = Math.floor(available / recipe.resource.cost);
+
+      return Math.max(
+        craftingSelections.value[index],
+        Math.min(maxCrafts, craftingSelections.value[index] + longOptionsRemaining.value),
+      );
+    });
+  });
+
+  const craftingMaxAvailableShortRest = computed(() => {
+    return craftingRecipes.value.map((recipe, index) => {
+      const available = resourcesAvailable.value[recipe.resource.type];
+      const maxCrafts = Math.floor(available / recipe.resource.cost);
+
+      return Math.max(
+        craftingSelections.value[index],
+        Math.min(maxCrafts, craftingSelections.value[index] + shortOptionsRemaining.value),
+      );
+    });
   });
 
   const craftingActionsSelected = computed(() => {
@@ -438,7 +462,7 @@
     return props.character.inventory.items
       .filter((item) => item.chargesUsed > 0) // items with charges used
       .map((item) => {
-        const data = itemData.find((d) => d.name === item.name);
+        const data = itemData.value.find((d) => d.name === item.name);
 
         return {
           id: item.id,
@@ -454,7 +478,7 @@
     return props.character.inventory.items
       .filter((item) => item.chargesUsed > 0) // items with charges used
       .map((item) => {
-        const data = itemData.find((d) => d.name === item.name);
+        const data = itemData.value.find((d) => d.name === item.name);
 
         return {
           id: item.id,
@@ -472,9 +496,11 @@
     craftingSelections.value.forEach((selection, index) => {
       if (selection > 0) {
         const recipe = craftingRecipes.value[index];
+        const baseItem = itemsStore.item(recipe.item);
 
         items.push(newItem({
-          name: recipe.item,
+          itemId: baseItem.id,
+          name: baseItem.name,
           quantity: selection,
         }));
       }
@@ -493,7 +519,7 @@
     const updates = [];
 
     craftedItems.value.forEach((item) => {
-      const recipeData = craftingRecipes.value.find((r) => r.item === item.name);
+      const recipeData = craftingRecipes.value.find((r) => r.item === item.itemId);
 
       if (!recipeData) return;
 
@@ -627,15 +653,17 @@
     }
 
     // resource items
-    resourceItems.value.forEach(({ onShortRest }) => {
-      if (onShortRest?.resource?.stress) {
-        props.character.stress.current =
-          Math.max(0, props.character.stress.current + onShortRest.resource.stress);
-      }
+    resourceItems.value.forEach((resourceItem) => {
+      if (!resourceItem.onShortRest) return;
 
-      if (onShortRest?.resource?.health) {
-        props.character.health.current =
-          Math.max(0, props.character.health.current + onShortRest.resource.health);
+      const [ resourceType ] = Object.keys(resourceItem.onShortRest.resource);
+
+      if (['health', 'stress', 'armor'].includes(resourceType)) {
+        props.character[resourceType].current =
+          Math.max(
+            0,
+            props.character[resourceType].current - resourceItem.onShortRest.resource[resourceType],
+          );
       }
     });
 
@@ -709,15 +737,17 @@
     }
 
     // resource items
-    resourceItems.value.forEach(({ onLongRest }) => {
-      if (onLongRest?.resource?.stress) {
-        props.character.stress.current =
-          Math.max(0, props.character.stress.current + onLongRest.resource.stress);
-      }
+    resourceItems.value.forEach((resourceItem) => {
+      if (!resourceItem.onLongRest) return;
 
-      if (onLongRest?.resource?.health) {
-        props.character.health.current =
-          Math.max(0, props.character.health.current + onLongRest.resource.health);
+      const [ resourceType ] = Object.keys(resourceItem.onLongRest.resource);
+
+      if (['health', 'stress', 'armor'].includes(resourceType)) {
+        props.character[resourceType].current =
+          Math.max(
+            0,
+            props.character[resourceType].current - resourceItem.onLongRest.resource[resourceType],
+          );
       }
     });
 

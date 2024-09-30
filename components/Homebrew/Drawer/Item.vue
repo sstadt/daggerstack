@@ -145,6 +145,8 @@
   import { newBuff } from '~/helpers/constructors';
   import { clone } from '~/helpers/utility';
 
+  const itemsStore = useItemsStore();
+
   const emit = defineEmits(['save', 'delete']);
 
   const confirmDialog = ref(null);
@@ -231,6 +233,10 @@
     }
 
     return basicsValid;
+  });
+
+  const craftItem = computed(() => {
+    return itemsStore.item(craftItemId.value);
   });
 
   const removeModifier = (index) => {
@@ -376,7 +382,7 @@
       case 'recipe':
         item.downtime = {
           craft: craftItemId.value, // todo: ID of craftable item
-          description: `Craft a ${craftItemId.value}`,
+          description: `Craft a ${craftItem.value.name}`,
           cost: {},
         };
         item.downtime.cost[craftItemResource.value] = craftItemCost.value;

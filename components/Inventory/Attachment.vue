@@ -37,15 +37,15 @@
   const chargesUsed = ref(props.attachment.chargesUsed);
 
   const attachmentItem = computed(() => {
-    if (!this.attachment) return null;
+    if (!props.attachment) return null;
 
-    return itemsStore.item(this.attachment.itemId);
+    return itemsStore.item(props.attachment.itemId);
   });
 
   watch(chargesUsed, (newVal, oldVal) => {
     if (newVal !== oldVal) {
       const index = props.character.inventory.items
-        .findIndex((item) => item.id === this.attachment.id);
+        .findIndex((item) => item.id === props.attachment.id);
       const updatedAttachment = { ...props.attachment };
 
       updatedAttachment.chargesUsed = chargesUsed.value;

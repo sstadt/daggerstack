@@ -6,12 +6,12 @@
       "description": "During any rests, you always automatically clear 1 stress.",
       "onShortRest": {
         "resource": {
-          "stress": -1
+          "stress": 1
         }
       },
       "onLongRest": {
         "resource": {
-          "stress": -1
+          "stress": 1
         }
       }
     },
@@ -131,7 +131,7 @@
       "name": "Minor Stamina Potion Recipe",
       "description": "During downtime, spend one of your downtime moves and a handful of gold to craft a Minor Stamina Potion.",
       "downtime": {
-        "craft": "Minor Stamina Potion",
+        "craft": "2766cf07-1284-4ac8-a78f-b4e4289ce362",
         "description": "Craft a Minor Stamina Potion",
         "cost": {
           "goldHandful": 1
@@ -143,7 +143,7 @@
       "name": "Minor Health Potion Recipe",
       "description": "During downtime, spend one of your downtime moves and a handful of gold to craft a Minor Health Potion.",
       "downtime": {
-        "craft": "Minor Health Potion",
+        "craft": "b266135a-94cc-4fa2-b691-8c4e3203d2ec",
         "description": "Craft a Minor Health Potion",
         "cost": {
           "goldHandful": 1
@@ -183,7 +183,7 @@
       "name": "Vial of Darksmoke Recipe",
       "description": "During downtime, spend one of your downtime moves and mark a stress to craft a Vial of Darksmoke.",
       "downtime": {
-        "craft": "Vial of Darksmoke",
+        "craft": "49b1a8ed-f3c7-4638-8842-5f2640030288",
         "description": "Craft a Vial of Darksmoke",
         "cost": {
           "stress": 1
@@ -428,7 +428,7 @@
       "name": "Mythic Dust Recipe",
       "description": "During downtime, spend one of your downtime moves and a bag of gold to craft Mythic Dust.",
       "downtime": {
-        "craft": "Mythic Dust",
+        "craft": "60f48207-5acb-4800-85e1-9c54ed24a690",
         "description": "Craft a Mythic Dust",
         "cost": {
           "goldBag": 1

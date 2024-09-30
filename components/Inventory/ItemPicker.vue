@@ -10,7 +10,7 @@
       //- todo: filtering
     .divide-y
       button.px-4.w-full(
-        v-for="item in itemList"
+        v-for="item in itemsStore.items"
         :disabled="item.relic && hasRelic"
         :class="{ 'opacity-50': item.relic && hasRelic }"
         @click="addItem(item)"
