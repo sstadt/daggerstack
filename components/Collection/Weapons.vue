@@ -1,6 +1,6 @@
 <template lang="pug">
   .p-8
-    p Collection Weapons
+    img.mt-8(:src="constructionImage")
 </template>
 
 <script>
@@ -10,4 +10,5 @@
 </script>
 
 <script setup>
+  import constructionImage from '~/assets/images/under-construction.jpeg';
 </script>
