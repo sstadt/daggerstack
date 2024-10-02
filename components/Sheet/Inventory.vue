@@ -4,7 +4,7 @@
       .flex.flex-col.space-y-2.items-end
         TransitionGroup.w-full.divide-y(name="slide-fade-left" tag="div")
           InventoryItem(
-            v-for="(item, index) in items"
+            v-for="(item, index) in character.inventory.items"
             :key="item.id"
             :character-item="item"
             :character="character"
@@ -40,6 +40,12 @@
 </template>
 
 <script>
+  export default {
+    name: 'SheetInventory',
+  };
+</script>
+
+<script setup>
   import GENERAL from '~/data/general';
   import WEAPONS from '~/data/weapons';
 
@@ -52,73 +58,70 @@
     SLOT_INVENTORY_WEAPON,
   } from '~/config/equipmentPicker';
 
-  export default {
-    name: 'SheetInventory',
-    props: {
-      character: {
-        type: Object,
-        required: true,
-      },
-    },
-    data() {
-      return {
-        activeSlot: 0,
-        maxInventoryWeapons: GENERAL.maxInventoryWeapons,
-        items: this.character.inventory.items,
-        type: ALL_WEAPON_TYPE,
-        slot: SLOT_INVENTORY_WEAPON,
-      };
-    },
-    setup() {
-      const charactersStore = useCharactersStore();
+  const charactersStore = useCharactersStore();
 
-      return { charactersStore };
+  const props = defineProps({
+    character: {
+      type: Object,
+      required: true,
     },
-    computed: {
-      inventoryWeapons() {
-        const weapons = this.character.inventory.weapons
-          .map((w) => WEAPONS.items.find((weapon) => weapon.name === w.name));
+  });
 
-        return weapons;
-      },
-    },
-    methods: {
-      openEquipmentPicker(activeSlot) {
-        this.activeSlot = activeSlot;
-        this.$refs.equipmentPicker.open();
-      },
-      selectWeapon({ item }) {
-        if (this.character.inventory.weapons[this.activeSlot]) {
-          this.character.inventory.weapons.splice(this.activeSlot, 1, newWeapon({ name: item }));
-        } else {
-          this.character.inventory.weapons.push(newWeapon({ name: item }));
-        }
+  const maxInventoryWeapons = GENERAL.maxInventoryWeapons;
 
-        this.charactersStore.saveCharacter(this.character);
-        this.$refs.equipmentPicker.close();
-      },
-      removeEquippedWeapon() {
-        this.character.inventory.weapons.splice(this.activeSlot, 1, newWeapon());
-        this.charactersStore.saveCharacter(this.character);
-        this.$refs.equipmentPicker.close();
-      },
-      openItemPicker() {
-        this.$refs.itemPicker.open();
-      },
-      addItem(item) {
-        this.$refs.itemPicker.close();
-        this.character.inventory.items.push({ ...item });
-        this.charactersStore.saveCharacter(this.character);
-      },
-      updateItem(updatedItem, index) {
-        const item = Object.assign({}, this.character.inventory.items[index], updatedItem);
-        this.character.inventory.items.splice(index, 1, item);
-        this.charactersStore.saveCharacter(this.character);
-      },
-      removeItem(index) {
-        this.character.inventory.items.splice(index, 1);
-        this.charactersStore.saveCharacter(this.character);
-      },
-    },
+  const activeSlot = ref(0);
+  const type = ref(ALL_WEAPON_TYPE);
+  const slot = ref(SLOT_INVENTORY_WEAPON);
+  const itemPicker = ref(null);
+  const equipmentPicker = ref(null);
+
+  const inventoryWeapons = computed(() => {
+    const weapons = props.character.inventory.weapons
+      .map((w) => WEAPONS.items.find((weapon) => weapon.name === w.name));
+
+    return weapons;
+  });
+
+  const openEquipmentPicker = (slot) => {
+    activeSlot.value = slot;
+    equipmentPicker.value.open();
+  };
+
+  const selectWeapon = ({ item }) => {
+    if (props.character.inventory.weapons[activeSlot.value]) {
+      props.character.inventory.weapons.splice(activeSlot.value, 1, newWeapon({ name: item }));
+    } else {
+      props.character.inventory.weapons.push(newWeapon({ name: item }));
+    }
+
+    charactersStore.saveCharacter(props.character);
+    equipmentPicker.value.close();
+  };
+
+  const removeEquippedWeapon = () => {
+    props.character.inventory.weapons.splice(activeSlot.value, 1, newWeapon());
+    charactersStore.saveCharacter(props.character);
+    equipmentPicker.value.close();
+  };
+
+  const openItemPicker = () => {
+    itemPicker.value.open();
+  };
+
+  const addItem = (item) => {
+    itemPicker.value.close();
+    props.character.inventory.items.push({ ...item });
+    charactersStore.saveCharacter(props.character);
+  };
+
+  const updateItem = (updatedItem, index) => {
+    const item = Object.assign({}, props.character.inventory.items[index], updatedItem);
+    props.character.inventory.items.splice(index, 1, item);
+    charactersStore.saveCharacter(props.character);
+  };
+
+  const removeItem = (index) => {
+    props.character.inventory.items.splice(index, 1);
+    charactersStore.saveCharacter(props.character);
   };
 </script>
