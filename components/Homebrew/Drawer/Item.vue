@@ -47,7 +47,7 @@
             InputSelect.shrink-0(
               label="recharge"
               v-model="resourceType"
-              :options="resourceOptions"
+              :options="consumableResourceOptions"
               class="w-7/12"
             )
             InputText(
@@ -190,6 +190,9 @@
       label: resourceStrings[key],
       value: key,
     };
+  });
+  const consumableResourceOptions = resourceOptions.filter((option) => {
+    return ['health', 'stress', 'armor'].includes(option.value);
   });
 
   const attachType = ref('');

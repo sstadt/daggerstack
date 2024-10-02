@@ -4,7 +4,7 @@
       .max-w-5xl.container.sheet-header__title.flex-none.py-4.text-white.cursor-pointer(
         :class="{ 'container': mq.lgPlus }"
       )
-        p.font-bold.text-lg.uppercase.text-slate-300 My Homebrew
+        p.font-bold.text-lg.uppercase.text-slate-300 Browse Homebrew
         h1.font-bold.text-5xl.uppercase.truncate {{ activeTab.name }}
       .max-w-5xl.mx-auto.flex.relative
         NavButton(
@@ -23,16 +23,16 @@
 
 <script>
   export default {
-    name: 'HomebrewCollection',
+    name: 'HomebrewBrowser',
     inject: ['mq'],
   };
 </script>
 
 <script setup>
   const tabComponents = {
-    'Items': resolveComponent('CollectionItems'),
-    'Weapons': resolveComponent('CollectionWeapons'),
-    'Armor': resolveComponent('CollectionArmor'),
+    'Items': resolveComponent('HomebrewItems'),
+    'Weapons': resolveComponent('HomebrewWeapons'),
+    'Armor': resolveComponent('HomebrewArmor'),
   };
   const tabs = [
     { id: 'items', name: 'Items', icon: 'gem-pendant' },
