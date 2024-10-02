@@ -1,5 +1,9 @@
 
 export const useItem = () => {
+  const useIsHomebrew = (item) => {
+    return Number.isInteger(item.id);
+  };
+
   const useItemIcon = (item) => {
     return computed(() => {
       if (item.consumable) return 'potion';
@@ -29,6 +33,7 @@ export const useItem = () => {
   };
 
   return {
+    useIsHomebrew,
     useItemIcon,
     useTitleClass,
     modifierString,

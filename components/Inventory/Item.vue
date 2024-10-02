@@ -3,7 +3,9 @@
     //- base item only - used in item picker
     .flex-grow(v-if="baseItem" @click="openDetails")
       .flex.justify-between.items-center.space-x-2
-        h3.font-bold.truncate(:class="titleClass") {{ baseItem.name }}
+        .flex.items-center.space-x-1
+          NuxtIcon.text-blue-600.font-sm(v-if="isHomebrew" name="homebrew")
+          h3.font-bold.truncate(:class="titleClass") {{ baseItem.name }}
         .no-shrink(v-if="baseItem.charge")
           InputCheckboxCounter.no-shrink(
             v-model="chargesUsed"
@@ -76,7 +78,7 @@
     ATTACH_TYPE_ARMOR,
   } from '~/config/itemPicker';
 
-  const { useTitleClass } = useItem();
+  const { useIsHomebrew, useTitleClass } = useItem();
 
   const itemsStore = useItemsStore();
 
@@ -126,6 +128,7 @@
   });
 
   const titleClass = useTitleClass(item.value || props.baseItem);
+  const isHomebrew = useIsHomebrew(item.value || props.baseItem);
 
   const experienceOptions = computed(() => {
     return props.character.experience.map((experience) => {
