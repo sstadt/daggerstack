@@ -1,22 +1,30 @@
 <template lang="pug">
   .fixed.bottom-4.right-4.pointer-none.z-20
-    .flex.flex-row.gap-1.py-3(v-if="pushQueued || pendingSave.length > 0")
+    .flex.flex-row.gap-1.py-3(v-if="showWaiting")
       .ball.w-2.h-2.rounded-full.bg-violet-500
       .ball.w-2.h-2.rounded-full.bg-violet-500(class="[animation-delay:-.3s]")
       .ball.w-2.h-2.rounded-full.bg-violet-500(class="[animation-delay:-.5s]")
-    .loader(v-else-if="savingCharacter")
+    .loader(v-else-if="showSaving")
 </template>
 
 <script>
-  import { mapState } from 'pinia';
-
   export default {
     name: 'SheetSaveSpinner',
-    computed: {
-      ...mapState(useCharactersStore, ['pushQueued', 'savingCharacter']),
-      ...mapState(useUserStore, ['pendingSave']),
-    },
   };
+</script>
+
+<script setup>
+  const charactersStore = useCharactersStore();
+  const userStore = useUserStore();
+
+  const showWaiting = computed(() => {
+    return charactersStore.pushQueued ||
+      userStore.pendingSave.length > 0 && !userStore.savingHomebrew;
+  });
+
+  const showSaving = computed(() => {
+    return charactersStore.savingCharacter || userStore.savingHomebrew;
+  });
 </script>
 
 <style lang="scss" scoped>
