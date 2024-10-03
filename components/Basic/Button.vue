@@ -31,14 +31,14 @@
       type: String,
       default: 'primary',
       validator(value) {
-        return ['primary', 'secondary'].includes(value);
+        return ['primary', 'secondary', 'danger'].includes(value);
       },
     },
     rounded: {
       type: String,
       default: 'all',
       validator(value) {
-        return ['all', 'left', 'right'].includes(value);
+        return ['all', 'left', 'right', 'none'].includes(value);
       },
     },
     icon: {
@@ -61,6 +61,7 @@
       'py-5 px-7 text-xl': props.size === 'lg',
       'text-white bg-violet-800 border-violet-900 hover:bg-violet-950 focus:bg-violet-950': props.priority === 'primary',
       'bg-slate-100 border-slate-300 hover:bg-slate-300 focus:bg-slate-300': props.priority === 'secondary',
+      'text-white bg-red-800 hover:bg-red-600 focus:bg-red-600': props.priority === 'danger',
       'opacity-30': props.disabled,
       'rounded-md': props.rounded === 'all',
       'rounded-r-md': props.rounded === 'right',

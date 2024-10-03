@@ -19,6 +19,7 @@
 </script>
 
 <script setup>
+import { waitUntil } from './helpers/utility';
   const userStore = useUserStore();
   const builderStore = useBuilderStore();
   const charactersStore = useCharactersStore();
@@ -29,7 +30,9 @@
     builderStore.loadSavedCharacter();
 
     // hydrate homebrew items globally
-    itemsStore.hydrate();
+    waitUntil(() => userStore.user?.id).then(() => {
+      itemsStore.hydrate();
+    });
   });
 </script>
 

@@ -1,6 +1,6 @@
 <template lang="pug">
   .fixed.bottom-4.right-4.pointer-none.z-20
-    .flex.flex-row.gap-1.py-3(v-if="pushQueued")
+    .flex.flex-row.gap-1.py-3(v-if="pushQueued || pendingSave.length > 0")
       .ball.w-2.h-2.rounded-full.bg-violet-500
       .ball.w-2.h-2.rounded-full.bg-violet-500(class="[animation-delay:-.3s]")
       .ball.w-2.h-2.rounded-full.bg-violet-500(class="[animation-delay:-.5s]")
@@ -14,6 +14,7 @@
     name: 'SheetSaveSpinner',
     computed: {
       ...mapState(useCharactersStore, ['pushQueued', 'savingCharacter']),
+      ...mapState(useUserStore, ['pendingSave']),
     },
   };
 </script>

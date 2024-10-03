@@ -2,10 +2,11 @@
   .space-y-2.py-3.px-4.border.rounded
     div
       .flex.justify-between.space-x-2
-        h3.font-bold.text-xl(:class="titleClass") {{ item.name }}
+        div
+          h3.font-bold.text-xl(:class="titleClass") {{ item.name }}
+          p.text-slate-600 {{ item.description }}
         .text-2xl(v-if="itemIcon")
           NuxtIcon(:name="itemIcon")
-      p {{ item.description }}
     div(v-if="item.attach?.feature")
       p.font-bold {{ item.attach.feature.name }}
       p {{ item.attach.feature.description }}

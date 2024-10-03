@@ -19,6 +19,7 @@
     .max-w-5xl.container
       transition(:name="tabTransition" mode="out-in")
         component(:is="tabComponents[activeTab.name]")
+    SheetSaveSpinner
 </template>
 
 <script>
@@ -30,9 +31,9 @@
 
 <script setup>
   const tabComponents = {
-    'Items': resolveComponent('HomebrewItems'),
-    'Weapons': resolveComponent('HomebrewWeapons'),
-    'Armor': resolveComponent('HomebrewArmor'),
+    'Items': resolveComponent('HomebrewPublicItems'),
+    'Weapons': resolveComponent('HomebrewPublicWeapons'),
+    'Armor': resolveComponent('HomebrewPublicArmor'),
   };
   const tabs = [
     { id: 'items', name: 'Items', icon: 'gem-pendant' },

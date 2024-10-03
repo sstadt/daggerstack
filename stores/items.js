@@ -6,6 +6,9 @@ export const useItemsStore = defineStore('items', {
   state: () => {
     return {
       items: [ ...ITEMS.items ],
+      hydrated: false,
+      publicItems: [],
+      publicHydrated: false,
     };
   },
   getters: {
@@ -23,12 +26,31 @@ export const useItemsStore = defineStore('items', {
 
       const { data, error } = await userStore.supabase
         .from('homebrew_items')
-        .select();
+        .select()
+        .eq('user_id', userStore.user.id);
 
       if (error) {
         toastStore.postMessage({ body: error.message });
       } else {
         this.items = this.items.concat(data);
+        this.hydrated = true;
+      }
+    },
+    async hydratePublic() {
+      const userStore = useUserStore();
+      const toastStore = useToastStore();
+
+      const { data, error } = await userStore.supabase
+        .from('homebrew_items')
+        .select()
+        .eq('public', true)
+        .neq('user_id', userStore.user.id);
+
+      if (error) {
+        toastStore.postMessage({ body: error.message });
+      } else {
+        this.publicItems = [ ...data ];
+        this.publicHydrated = true;
       }
     },
     async saveItem(item) {
@@ -94,6 +116,9 @@ export const useItemsStore = defineStore('items', {
           toastStore.postMessage({ body: `Deleted ${itemName}` });
         }
       }
+    },
+    clear() {
+      this.items = [ ...ITEMS.items ];
     },
   },
 });

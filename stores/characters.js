@@ -143,6 +143,12 @@ export const useCharactersStore = defineStore('characters', {
 
       return;
     },
+    clear () {
+      this.characterList = [];
+      this.currentCharacter = null;
+      this.charactersLoaded = false;
+      this.hydrated = false;
+    },
   },
   debounce: {
     pushCharacter: DEBOUNCE_DELAY,
