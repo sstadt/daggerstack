@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-import { clone } from '~/helpers/utility';
+import { clone, cleanProfanity } from '~/helpers/utility';
 
 import ITEMS from '~/data/items';
 
@@ -58,13 +58,14 @@ export const useItemsStore = defineStore('items', {
     async saveItem(item) {
       const userStore = useUserStore();
       const toastStore = useToastStore();
+      const cleanItem = cleanProfanity(item);
 
-      if (item.id) {
+      if (cleanItem.id) {
         // update item
         const { error, data } = await userStore.supabase
           .from('homebrew_items')
-          .update(item)
-          .eq('id', item.id)
+          .update(cleanItem)
+          .eq('id', cleanItem.id)
           .select();
 
         if (error) {
@@ -74,7 +75,7 @@ export const useItemsStore = defineStore('items', {
           const index = this.items.findIndex((i) => i.id === updatedItem.id);
 
           this.items.splice(index, 1, updatedItem);
-          toastStore.postMessage({ body: `Saved changes to ${item.name}` });
+          toastStore.postMessage({ body: `Saved changes to ${updatedItem.name}` });
 
           return updatedItem.id;
         }
@@ -82,7 +83,7 @@ export const useItemsStore = defineStore('items', {
         // create item
         const { data, error } = await userStore.supabase
           .from('homebrew_items')
-          .insert(item)
+          .insert(cleanItem)
           .select();
 
         if (error) {

@@ -142,6 +142,7 @@
 
   import resourceStrings from '~/config/resourceStrings';
   import upgradeOptions from '~/config/upgradeOptions';
+  import { itemTypeOptions } from '~/config/items';
   import { newBuff } from '~/helpers/constructors';
   import { clone } from '~/helpers/utility';
 
@@ -169,13 +170,6 @@
   ];
 
   const itemType = ref('');
-  const itemTypeOptions = [
-    { label: 'Consumable', value: 'consumable' }, // configure optional resource recharge
-    { label: 'Recipe', value: 'recipe' }, // choose another item to craft and a resource cost
-    { label: 'Relic', value: 'relic' }, // allows adding of modfiers
-    { label: 'Attachment', value: 'attachment' }, // applies charges to parent, allows creation of feature
-    { label: 'Downtime', value: 'downtime' }, // recharge resources automatically on downtime activity
-  ];
 
   const modify = ref([]);
   const featureName = ref('');

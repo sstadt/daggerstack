@@ -19,7 +19,8 @@
 </script>
 
 <script setup>
-import { waitUntil } from './helpers/utility';
+  import { waitUntil } from './helpers/utility';
+
   const userStore = useUserStore();
   const builderStore = useBuilderStore();
   const charactersStore = useCharactersStore();

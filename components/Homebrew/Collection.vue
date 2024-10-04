@@ -4,7 +4,10 @@
       .max-w-5xl.container.sheet-header__title.flex-none.py-4.text-white.cursor-pointer(
         :class="{ 'container': mq.lgPlus }"
       )
-        p.font-bold.text-lg.uppercase.text-slate-300 My Homebrew
+        .flex.items-center.space-x-2
+          NuxtLink.text-lg.uppercase.text-slate-300(to="/homebrew") Homebrew
+          NuxtIcon.text-sm(name="chevron-right")
+          p.font-bold.text-lg.uppercase.text-slate-300 Collection
         h1.font-bold.text-5xl.uppercase.truncate {{ activeTab.name }}
       .max-w-5xl.mx-auto.flex.relative
         NavButton(

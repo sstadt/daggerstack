@@ -14,3 +14,13 @@ export const getItemType = (item) => {
 
   return 'basic';
 };
+
+/**
+ * Determine if a base item has charges
+ *
+ * @param {Object} item The item to check
+ * @returns True if the item has charges
+ */
+export const hasCharges = (item) => {
+  return Boolean(item.charge);
+};

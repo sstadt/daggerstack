@@ -1,4 +1,6 @@
 
+import { badWords, replacementChars, keyBlacklist } from '~/config/profanity';
+
 /**
  * Generate a unique uuid
  *
@@ -68,4 +70,45 @@ export const waitUntil = (condition, delay = 100, iterations = 100) => {
       count += 1;
     }, delay);
   });
+};
+
+// Helper function to generate a random string of symbols
+const getRandomSymbols = (length) => {
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * replacementChars.length);
+    result += replacementChars[randomIndex];
+  }
+  return result;
+};
+
+const cleanString = (input) => {
+  // Replace each profane word in the input string
+  badWords.forEach(badWord => {
+    const regex = new RegExp(badWord, 'gi');
+    input = input.replace(regex, match => getRandomSymbols(match.length));
+  });
+
+  return input;
+};
+
+export const cleanProfanity = (obj) => {
+  const target = clone(obj);
+
+  if (typeof target === 'object' && target !== null) {
+    // Iterate through each key in the object (or index in case of arrays)
+    for (const key in target) {
+      if (target.hasOwnProperty(key)) {
+        if (typeof target[key] === 'object' && target[key] !== null) {
+          // Recursively clean nested objects or arrays
+          cleanProfanity(target[key]);
+        } else if (typeof target[key] === 'string' && !keyBlacklist.includes(key)) {
+          // Apply cleanProfanity to string values
+          target[key] = cleanString(target[key]);
+        }
+      }
+    }
+  }
+
+  return target;
 };

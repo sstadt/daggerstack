@@ -41,9 +41,9 @@
   const confirm = ref(null);
 
   const menuLinks = ref([
-    { url: '/character', label: 'Character List' },
+    { url: '/character', label: 'Characters' },
     { url: '/homebrew', label: 'Browse Homebrew' },
-    { url: '/homebrew/collection', label: 'My Homebrew' },
+    { url: '/homebrew/collection', label: 'My Collection' },
   ]);
 
   const toggleUserMenu = () => {
