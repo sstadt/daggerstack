@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 
+import { clone } from '~/helpers/utility';
+
 import ITEMS from '~/data/items';
 
 export const useItemsStore = defineStore('items', {
@@ -27,7 +29,7 @@ export const useItemsStore = defineStore('items', {
       const { data, error } = await userStore.supabase
         .from('homebrew_items')
         .select()
-        .eq('user_id', userStore.user.id);
+        .or(`user_id.eq.${userStore.user.id},id.in.(${userStore.profile.items.join(',')})`);
 
       if (error) {
         toastStore.postMessage({ body: error.message });
@@ -116,6 +118,14 @@ export const useItemsStore = defineStore('items', {
           toastStore.postMessage({ body: `Deleted ${itemName}` });
         }
       }
+    },
+    bookmarkAdded(id) {
+      const item = this.publicItems.find((i) => i.id === id);
+      this.items.push(clone(item));
+    },
+    bookmarkRemoved(id) {
+      const index = this.items.findIndex((i) => i.id === id);
+      this.items.splice(index, 1);
     },
     clear() {
       this.items = [ ...ITEMS.items ];

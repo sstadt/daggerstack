@@ -58,8 +58,10 @@
   const toggleBookmark = (id) => {
     if (bookmarks.value.includes(id)) {
       userStore.removeHomebrew('items', id);
+      itemsStore.bookmarkRemoved(id);
     } else {
       userStore.addHomebrew('items', id);
+      itemsStore.bookmarkAdded(id);
     }
   };
 </script>

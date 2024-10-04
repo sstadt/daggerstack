@@ -30,7 +30,7 @@ import { waitUntil } from './helpers/utility';
     builderStore.loadSavedCharacter();
 
     // hydrate homebrew items globally
-    waitUntil(() => userStore.user?.id).then(() => {
+    waitUntil(() => userStore.loaded).then(() => {
       itemsStore.hydrate();
     });
   });

@@ -1,15 +1,23 @@
 <template lang="pug">
   .py-8
     .space-y-4
-      .grid.grid-cols-1.gap-4(class="md:grid-cols-2")
-        HomebrewCardItem.cursor-pointer(
-          v-for="item in itemsStore.homebrew"
-          :key="item.id"
-          :item="item"
-          @click="editItem(item)"
+      .relative(
+        v-for="item in itemsStore.homebrew"
+        :key="item.id"
+      )
+        NuxtIcon.absolute.top-0.right-14.text-red-900.text-xl(
+          v-if="bookmarks.includes(item.id)"
+          name="bookmark"
         )
-      .flex.justify-end
-        BasicButton(size="sm" priority="secondary" @click="newItem") New Item
+        HomebrewCardItem.cursor-pointer(:item="item" @click="editItem(item)")
+    BasicButton.fixed.bottom-20.right-6.shadow(
+      size="sm"
+      priority="secondary"
+      icon
+      @click="newItem"
+    )
+      NuxtIcon(name="plus")
+      span.sr-only New Item
     HomebrewDrawerItem(ref="itemDrawer" @save="saveItem" @delete="deleteItem")
 </template>
 
@@ -20,17 +28,22 @@
 </script>
 
 <script setup>
+  const userStore = useUserStore();
   const itemsStore = useItemsStore();
   const toastStore = useToastStore();
 
   const itemDrawer = ref(null);
+
+  const bookmarks = computed(() => {
+    return userStore.profile?.items || [];
+  });
 
   const newItem = () => {
     itemDrawer.value.open();
   };
 
   const editItem = (item) => {
-    itemDrawer.value.open(item);
+    if (!bookmarks.value.includes(item.id)) itemDrawer.value.open(item);
   };
 
   const saveItem = (item) => {
