@@ -101,7 +101,7 @@ export const cleanProfanity = (obj) => {
       if (target.hasOwnProperty(key)) {
         if (typeof target[key] === 'object' && target[key] !== null) {
           // Recursively clean nested objects or arrays
-          cleanProfanity(target[key]);
+          target[key] = { ...cleanProfanity(target[key]) };
         } else if (typeof target[key] === 'string' && !keyBlacklist.includes(key)) {
           // Apply cleanProfanity to string values
           target[key] = cleanString(target[key]);

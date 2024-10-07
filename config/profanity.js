@@ -1,5 +1,5 @@
 
-export const replacementChars = ['#', '@', '$', '!', '%', '*'];
+export const replacementChars = ['#', '@', '$', '!', '%', '*', '?'];
 
 export const keyBlacklist = ['id', 'created_at', 'user_id'];
 

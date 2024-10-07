@@ -1,7 +1,7 @@
 
 export const useItem = () => {
   const useIsHomebrew = (item) => {
-    return Number.isInteger(item.id);
+    return Number.isInteger(item?.id);
   };
 
   const useItemIcon = (item) => {
