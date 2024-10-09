@@ -20,7 +20,7 @@
         ) +{{ damageModifier }}
         |  ({{ weapon.damageType }})
     p.text-slate-600.text-sm.space-x-1(v-if="weapon.feature")
-      span.font-bold {{ weapon.feature.label }}
+      span.font-bold {{ weapon.feature.name }}
       span.italic {{ weapon.feature.description }}
     InventoryAttachment(
       v-if="attachment"

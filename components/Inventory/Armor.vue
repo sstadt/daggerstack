@@ -4,7 +4,7 @@
       h3.text-lg.font-bold.truncate(:class="titleClass") {{ armor.name }}
       p.text-lg {{ armor.score }}
     p.text-sm.text-slate-600(v-if="armor.feature")
-      span.font-bold.mr-1 {{ armor.feature.label }}
+      span.font-bold.mr-1 {{ armor.feature.name }}
       span.italic {{ armor.feature.description }}
     InventoryAttachment(
       v-if="attachment"

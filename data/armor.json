@@ -7,8 +7,7 @@
       "score": 3,
       "tier": 1,
       "feature": {
-        "name": "flexible",
-        "label": "Flexible",
+        "name": "Flexible",
         "description": "+1 to Evasion",
         "modify": {
           "evasion": 1
@@ -28,8 +27,7 @@
       "score": 5,
       "tier": 1,
       "feature": {
-        "name": "heavy",
-        "label": "Heavy",
+        "name": "Heavy",
         "description": "-1 to Evasion",
         "modify": {
           "evasion": -1
@@ -42,8 +40,7 @@
       "score": 6,
       "tier": 1,
       "feature": {
-        "name": "very heavy",
-        "label": "Very Heavy",
+        "name": "Very Heavy",
         "description": "-2 to Evasion and -1 to Agility",
         "modify": {
           "evasion": -2,
@@ -57,8 +54,7 @@
       "score": 4,
       "tier": 2,
       "feature": {
-        "name": "flexible",
-        "label": "Flexible",
+        "name": "Flexible",
         "description": "+1 to Evasion",
         "modify": {
           "evasion": 1
@@ -78,8 +74,7 @@
       "score": 6,
       "tier": 2,
       "feature": {
-        "name": "heavy",
-        "label": "Heavy",
+        "name": "Heavy",
         "description": "-1 to Evasion",
         "modify": {
           "evasion": -1
@@ -92,8 +87,7 @@
       "score": 7,
       "tier": 2,
       "feature": {
-        "name": "very heavy",
-        "label": "Very Heavy",
+        "name": "Very Heavy",
         "description": "-2 to Evasion and -1 to Agility",
         "modify": {
           "evasion": -2,
@@ -107,8 +101,7 @@
       "score": 2,
       "tier": 2,
       "feature": {
-        "name": "reinforced",
-        "label": "Reinforced",
+        "name": "Reinforced",
         "description": "Increase your armor score by the number of unmarked armor slots you have",
         "modify": {}
       }
@@ -119,8 +112,7 @@
       "score": 5,
       "tier": 2,
       "feature": {
-        "name": "resistant",
-        "label": "Resistant",
+        "name": "Resistant",
         "description": "Mark 2 armor slots to make yourself resistant to the incoming damage instead of reducing it by your armor score",
         "modify": {}
       }
@@ -131,8 +123,7 @@
       "score": 5,
       "tier": 2,
       "feature": {
-        "name": "sturdy",
-        "label": "Sturdy",
+        "name": "Sturdy",
         "description": "Before you mark your last armor slot, roll a d6. On a 6, you use the armor without marking the slot",
         "modify": {}
       }
@@ -143,8 +134,7 @@
       "score": 5,
       "tier": 2,
       "feature": {
-        "name": "warded",
-        "label": "Warded",
+        "name": "Warded",
         "description": "Each armor slot is worth an extra 2d4 against magic damage",
         "modify": {}
       }
@@ -155,8 +145,7 @@
       "score": 5,
       "tier": 2,
       "feature": {
-        "name": "quiet",
-        "label": "Quiet",
+        "name": "Quiet",
         "description": "+2 to any rolls you make to move without being heard",
         "modify": {}
       }
@@ -167,8 +156,7 @@
       "score": 6,
       "tier": 2,
       "feature": {
-        "name": "hopeful",
-        "label": "Hopeful",
+        "name": "Hopeful",
         "description": "Anytime you need to spend Hope, you may mark an Armor Slot instead.",
         "modify": {}
       }
@@ -179,8 +167,7 @@
       "score": 5,
       "tier": 3,
       "feature": {
-        "name": "flexible",
-        "label": "Flexible",
+        "name": "Flexible",
         "description": "+1 to Evasion",
         "modify": {
           "evasion": 1
@@ -200,8 +187,7 @@
       "score": 7,
       "tier": 3,
       "feature": {
-        "name": "heavy",
-        "label": "Heavy",
+        "name": "Heavy",
         "description": "-1 to Evasion",
         "modify": {
           "evasion": -1
@@ -214,8 +200,7 @@
       "score": 8,
       "tier": 3,
       "feature": {
-        "name": "very heavy",
-        "label": "Very Heavy",
+        "name": "Very Heavy",
         "description": "-2 to Evasion and -1 to Agility",
         "modify": {
           "evasion": -2,
@@ -229,8 +214,7 @@
       "score": 6,
       "tier": 3,
       "feature": {
-        "name": "gilded",
-        "label": "Gilded",
+        "name": "Gilded",
         "description": "When you mark an armor slot, you may spend any amount of Hope to also reduce the incoming damage by an amount equal to your proficiency per Hope spent",
         "modify": {}
       }
@@ -241,8 +225,7 @@
       "score": 6,
       "tier": 3,
       "feature": {
-        "name": "impenetrable",
-        "label": "Impenetrable",
+        "name": "Impenetrable",
         "description": "When you mark an armor slot, you cannot fill your last hit point as the result of physical damage",
         "modify": {}
       }
@@ -253,8 +236,7 @@
       "score": 6,
       "tier": 3,
       "feature": {
-        "name": "sharp",
-        "label": "Sharp",
+        "name": "Sharp",
         "description": "Add 1d4 to any damage rolls you make on a successful Melee attack",
         "modify": {}
       }
@@ -265,8 +247,7 @@
       "score": 9,
       "tier": 3,
       "feature": {
-        "name": "physical",
-        "label": "Physical",
+        "name": "Physical",
         "description": "You cannot use this armor against Magic damage",
         "modify": {}
       }
@@ -277,8 +258,7 @@
       "score": 9,
       "tier": 3,
       "feature": {
-        "name": "magic",
-        "label": "Magic",
+        "name": "Magic",
         "description": "You cannot use this armor against Physical damage",
         "modify": {}
       }
@@ -289,8 +269,7 @@
       "score": 10,
       "tier": 3,
       "feature": {
-        "name": "painful",
-        "label": "Painful",
+        "name": "Painful",
         "description": "Mark stress every time you use one or more armor slots on an attack",
         "modify": {}
       }
@@ -301,8 +280,7 @@
       "score": 7,
       "tier": 4,
       "feature": {
-        "name": "flexible",
-        "label": "Flexible",
+        "name": "Flexible",
         "description": "+1 to Evasion",
         "modify": {
           "evasion": 1
@@ -322,8 +300,7 @@
       "score": 9,
       "tier": 4,
       "feature": {
-        "name": "heavy",
-        "label": "Heavy",
+        "name": "Heavy",
         "description": "-1 to Evasion",
         "modify": {
           "evasion": -1
@@ -336,8 +313,7 @@
       "score": 10,
       "tier": 4,
       "feature": {
-        "name": "very heavy",
-        "label": "Very Heavy",
+        "name": "Very Heavy",
         "description": "-2 to Evasion and -1 to Agility",
         "modify": {
           "evasion": -2,
@@ -351,8 +327,7 @@
       "score": 5,
       "tier": 4,
       "feature": {
-        "name": "timeslowing",
-        "label": "Timeslowing",
+        "name": "Timeslowing",
         "description": "On any incoming attacks, roll 1d4 and add its value to your Evasion score",
         "modify": {}
       }
@@ -363,8 +338,7 @@
       "score": 7,
       "tier": 4,
       "feature": {
-        "name": "channeling",
-        "label": "Channeling",
+        "name": "Channeling",
         "description": "While this armor is equipped, take +1 to all Spellcast rolls",
         "modify": {}
       }
@@ -375,8 +349,7 @@
       "score": 8,
       "tier": 4,
       "feature": {
-        "name": "burning",
-        "label": "Burning",
+        "name": "Burning",
         "description": "When an enemy strikes you in Melee, they immediately mark a stress",
         "modify": {}
       }
@@ -387,8 +360,7 @@
       "score": 8,
       "tier": 4,
       "feature": {
-        "name": "variable",
-        "label": "Variable",
+        "name": "Variable",
         "description": "Add +1 to your armor score for every range beyond Melee the damage is coming from",
         "modify": {}
       }
@@ -399,8 +371,7 @@
       "score": 8,
       "tier": 4,
       "feature": {
-        "name": "truthseeking",
-        "label": "Truthseeking",
+        "name": "Truthseeking",
         "description": "This armor glows when anyone within Close range tells a lie",
         "modify": {}
       }
@@ -411,8 +382,7 @@
       "score": 15,
       "tier": 4,
       "feature": {
-        "name": "difficult",
-        "label": "Difficult",
+        "name": "Difficult",
         "description": "-1 to all Character Traits",
         "modify": {
           "agility": -1,

@@ -11,8 +11,7 @@
       "tier": 1,
       "burden": 1,
       "feature": {
-        "name": "reliable",
-        "label": "Reliable",
+        "name": "Reliable",
         "description": "+1 to attack rolls with this weapon",
         "modify": {}
       }
@@ -64,8 +63,7 @@
       "tier": 1,
       "burden": 2,
       "feature": {
-        "name": "massive",
-        "label": "Massive",
+        "name": "Massive",
         "description": "-1 Agility, roll one extra damage die and drop the lowest",
         "modify": {
           "agility": -1
@@ -83,8 +81,7 @@
       "tier": 1,
       "burden": 2,
       "feature": {
-        "name": "heavy",
-        "label": "Heavy",
+        "name": "Heavy",
         "description": "-1 to Agility",
         "modify": {
           "agility": -1
@@ -138,8 +135,7 @@
       "tier": 1,
       "burden": 1,
       "feature": {
-        "name": "quick",
-        "label": "Quick",
+        "name": "Quick",
         "description": "When making an attack roll, mark a Stress to include an additional target in range",
         "modify": {}
       }
@@ -203,8 +199,7 @@
       "tier": 1,
       "burden": 2,
       "feature": {
-        "name": "cumbersome",
-        "label": "Cumbersome",
+        "name": "Cumbersome",
         "description": "-1 to Evasion",
         "modify": {
           "evasion": -1
@@ -306,8 +301,7 @@
       "tier": 1,
       "burden": 2,
       "feature": {
-        "name": "versatile",
-        "label": "Versatile",
+        "name": "Versatile",
         "description": "Presence Melee - d10",
         "modify": {}
       }
@@ -335,8 +329,7 @@
       "tier": 1,
       "burden": 2,
       "feature": {
-        "name": "powerful",
-        "label": "Powerful",
+        "name": "Powerful",
         "description": "Roll one extra damage die and drop the lowest",
         "modify": {}
       }
@@ -352,8 +345,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "reliable",
-        "label": "Reliable",
+        "name": "Reliable",
         "description": "+1 to attack rolls with this weapon",
         "modify": {}
       }
@@ -405,8 +397,7 @@
       "tier": 2,
       "burden": 2,
       "feature": {
-        "name": "massive",
-        "label": "Massive",
+        "name": "Massive",
         "description": "-1 Agility, roll one extra damage die and drop the lowest",
         "modify": {
           "agility": -1
@@ -424,8 +415,7 @@
       "tier": 2,
       "burden": 2,
       "feature": {
-        "name": "heavy",
-        "label": "Heavy",
+        "name": "Heavy",
         "description": "-1 to Agility",
         "modify": {
           "agility": -1
@@ -479,8 +469,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "quick",
-        "label": "Quick",
+        "name": "Quick",
         "description": "When making an attack roll, mark a Stress to include an additional target in range",
         "modify": {}
       }
@@ -544,8 +533,7 @@
       "tier": null,
       "burden": 2,
       "feature": {
-        "name": "two-handed",
-        "label": "Two-Handed",
+        "name": "Two-handed",
         "description": "-1 to Evasion",
         "modify": {
           "evasion": -1
@@ -563,8 +551,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "powerful",
-        "label": "Powerful",
+        "name": "Powerful",
         "description": "Roll one extra damage die and drop the lowest",
         "modify": {}
       }
@@ -580,8 +567,7 @@
       "tier": 2,
       "burden": 2,
       "feature": {
-        "name": "brutal",
-        "label": "Brutal",
+        "name": "Brutal",
         "description": "For every 10 rolled on a damage die, roll an extra d10 of damage",
         "modify": {}
       }
@@ -597,8 +583,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "deadly",
-        "label": "Deadly",
+        "name": "Deadly",
         "description": "When you do Severe damage, deal one extra HP",
         "modify": {}
       }
@@ -614,8 +599,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "quick",
-        "label": "Quick",
+        "name": "Quick",
         "description": "When making an attack roll, mark a Stress to include an additional target in range",
         "modify": {}
       }
@@ -631,8 +615,7 @@
       "tier": 2,
       "burden": 2,
       "feature": {
-        "name": "scary",
-        "label": "Scary",
+        "name": "Scary",
         "description": "Successful attacks also deal an extra Stress",
         "modify": {}
       }
@@ -648,8 +631,7 @@
       "tier": 2,
       "burden": 2,
       "feature": {
-        "name": "reliable",
-        "label": "Reliable",
+        "name": "Reliable",
         "description": "+1 on attack rolls with this weapon",
         "modify": {}
       }
@@ -665,8 +647,7 @@
       "tier": 2,
       "burden": 2,
       "feature": {
-        "name": "powerful",
-        "label": "Powerful",
+        "name": "Powerful",
         "description": "Roll one extra damage die and drop the lowest",
         "modify": {}
       }
@@ -682,8 +663,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "reloading",
-        "label": "Reloading",
+        "name": "Reloading",
         "description": "Roll 1d6 after the attack. On a 1, you must use an action to reload your weapon before you can fire it again",
         "modify": {}
       }
@@ -699,8 +679,7 @@
       "tier": 2,
       "burden": 2,
       "feature": {
-        "name": "reliable",
-        "label": "Reliable",
+        "name": "Reliable",
         "description": "+1 on attack rolls with this weapon",
         "modify": {}
       }
@@ -800,8 +779,7 @@
       "tier": 2,
       "burden": 2,
       "feature": {
-        "name": "versatile",
-        "label": "Versatile",
+        "name": "Versatile",
         "description": "Presence Melee - d10+3",
         "modify": {}
       }
@@ -829,8 +807,7 @@
       "tier": 2,
       "burden": 2,
       "feature": {
-        "name": "powerful",
-        "label": "Powerful",
+        "name": "Powerful",
         "description": "Roll one extra damage die and drop the lowest",
         "modify": {}
       }
@@ -846,8 +823,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "pompous",
-        "label": "Pompous",
+        "name": "Pompous",
         "description": "Must have a Presence score of 0 or less to use this weapon",
         "modify": {}
       }
@@ -863,8 +839,7 @@
       "tier": 2,
       "burden": 2,
       "feature": {
-        "name": "versatile",
-        "label": "Versatile",
+        "name": "Versatile",
         "description": "Knowledge Far - d6+3",
         "modify": {}
       }
@@ -880,8 +855,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "scary",
-        "label": "Scary",
+        "name": "Scary",
         "description": "Successful attacks also deal a stress",
         "modify": {}
       }
@@ -897,8 +871,7 @@
       "tier": 2,
       "burden": 2,
       "feature": {
-        "name": "eruptive",
-        "label": "Eruptive",
+        "name": "Eruptive",
         "description": "When you hit a creature in Melee, each Very Close enemy must make a Reaction Roll (14) or take half damage as well.",
         "modify": {}
       }
@@ -914,8 +887,7 @@
       "tier": 2,
       "burden": 2,
       "feature": {
-        "name": "brutal",
-        "label": "Brutal",
+        "name": "Brutal",
         "description": "For every 6 rolled on a damage die, roll an additional d6 of damage",
         "modify": {}
       }
@@ -931,8 +903,7 @@
       "tier": 2,
       "burden": 2,
       "feature": {
-        "name": "powerful",
-        "label": "Powerful",
+        "name": "Powerful",
         "description": "Roll one extra damage die and drop the lowest",
         "modify": {}
       }
@@ -948,8 +919,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "invigorating",
-        "label": "Invigorating",
+        "name": "Invigorating",
         "description": "When you make a successful attack, roll a d4. On a 4, clear a stress",
         "modify": {}
       }
@@ -965,8 +935,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "persuasive",
-        "label": "Persuasive",
+        "name": "Persuasive",
         "description": "Mark stress before rolling Presence to add +2 to the result",
         "modify": {}
       }
@@ -982,8 +951,7 @@
       "tier": 2,
       "burden": 2,
       "feature": {
-        "name": "reliable",
-        "label": "Reliable",
+        "name": "Reliable",
         "description": "1 on any attack rolls with this weapon",
         "modify": {}
       }
@@ -999,8 +967,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "reliable",
-        "label": "Reliable",
+        "name": "Reliable",
         "description": "+1 to attack rolls with this weapon",
         "modify": {}
       }
@@ -1052,8 +1019,7 @@
       "tier": 3,
       "burden": 2,
       "feature": {
-        "name": "massive",
-        "label": "Massive",
+        "name": "Massive",
         "description": "-1 Agility, roll one extra damage die and drop the lowest",
         "modify": {
           "agility": -1
@@ -1071,8 +1037,7 @@
       "tier": 3,
       "burden": 2,
       "feature": {
-        "name": "heavy",
-        "label": "Heavy",
+        "name": "Heavy",
         "description": "-1 to Agility",
         "modify": {
           "agility": -1
@@ -1126,8 +1091,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "quick",
-        "label": "Quick",
+        "name": "Quick",
         "description": "When making an attack roll, mark a Stress to include an additional target in range",
         "modify": {}
       }
@@ -1191,8 +1155,7 @@
       "tier": 3,
       "burden": 2,
       "feature": {
-        "name": "cumbersome",
-        "label": "Cumbersome",
+        "name": "Cumbersome",
         "description": "-1 to Evasion",
         "modify": {
           "evasion": -1
@@ -1210,8 +1173,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "sharpwing",
-        "label": "Sharpwing",
+        "name": "Sharpwing",
         "description": "Add your Agility score to this weapon's damage roll",
         "modify": {}
       }
@@ -1227,8 +1189,7 @@
       "tier": 3,
       "burden": 2,
       "feature": {
-        "name": "dense",
-        "label": "Dense",
+        "name": "Dense",
         "description": "-1 to Agility & +3 to Severe Damage Threshold",
         "modify": {
           "agility": -1,
@@ -1247,8 +1208,7 @@
       "tier": 3,
       "burden": 2,
       "feature": {
-        "name": "devastating",
-        "label": "Devastating",
+        "name": "Devastating",
         "description": "Mark stress before your attack roll to use d20s as your damage dice instead",
         "modify": {}
       }
@@ -1264,8 +1224,7 @@
       "tier": 3,
       "burden": 2,
       "feature": {
-        "name": "protective",
-        "label": "Protective",
+        "name": "Protective",
         "description": "Add +1 to your Armor score",
         "modify": {
           "armorScore": 1
@@ -1283,8 +1242,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "dueling",
-        "label": "Dueling",
+        "name": "Dueling",
         "description": "Take advantage on attack rolls when there are no other adversaries or allies besides the current target in Close range",
         "modify": {}
       }
@@ -1300,8 +1258,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "retractable",
-        "label": "Retractable",
+        "name": "Retractable",
         "description": "Blade can be hidden in hilt to avoid recognition as a weapon",
         "modify": {}
       }
@@ -1317,8 +1274,7 @@
       "tier": 3,
       "burden": 2,
       "feature": {
-        "name": "powerful",
-        "label": "Powerful",
+        "name": "Powerful",
         "description": "Roll one extra damage die and drop the lowest",
         "modify": {}
       }
@@ -1334,8 +1290,7 @@
       "tier": 3,
       "burden": 2,
       "feature": {
-        "name": "brutal",
-        "label": "Brutal",
+        "name": "Brutal",
         "description": "For every 10 rolled on a damage die, roll an additional d10 of damage",
         "modify": {}
       }
@@ -1351,8 +1306,7 @@
       "tier": 3,
       "burden": 2,
       "feature": {
-        "name": "versatile",
-        "label": "Versatile",
+        "name": "Versatile",
         "description": "Agility Melee - d12+5",
         "modify": {}
       }
@@ -1368,8 +1322,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "reloading",
-        "label": "Reloading",
+        "name": "Reloading",
         "description": "Roll 1d6 after the attack. On a 1, you must use an action to reload your weapon before you can fire it again",
         "modify": {}
       }
@@ -1469,8 +1422,7 @@
       "tier": 3,
       "burden": 2,
       "feature": {
-        "name": "versatile",
-        "label": "Versatile",
+        "name": "Versatile",
         "description": "Presence Melee - d10+4",
         "modify": {}
       }
@@ -1498,9 +1450,8 @@
       "tier": 3,
       "burden": 2,
       "feature": {
-        "name": "powerful",
-        "label": "Powerful",
-        "description": "oll one extra damage die and drop the lowest",
+        "name": "Powerful",
+        "description": "Roll one extra damage die and drop the lowest",
         "modify": {}
       }
     },
@@ -1515,8 +1466,7 @@
       "tier": 3,
       "burden": 2,
       "feature": {
-        "name": "lucky",
-        "label": "Lucky",
+        "name": "Lucky",
         "description": "Spend a Stress on a failure to reroll your attack and take the new result",
         "modify": {}
       }
@@ -1532,8 +1482,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "healing",
-        "label": "Healing",
+        "name": "Healing",
         "description": "During downtime, automatically heal 1 hit point",
         "modify": {}
       }
@@ -1549,8 +1498,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "otherworldly",
-        "label": "Otherworldly",
+        "name": "Otherworldly",
         "description": "You can choose whether to do Physical or Magic damage",
         "modify": {}
       }
@@ -1566,8 +1514,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "painful",
-        "label": "Painful",
+        "name": "Painful",
         "description": "Mark stress every time you attack with this weapon",
         "modify": {}
       }
@@ -1583,8 +1530,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "timebender",
-        "label": "Timebender",
+        "name": "Timebender",
         "description": "You may choose the target of your attack after making your attack roll",
         "modify": {}
       }
@@ -1600,8 +1546,7 @@
       "tier": 3,
       "burden": 2,
       "feature": {
-        "name": "self-correcting",
-        "label": "Self-Correcting",
+        "name": "Self-Correcting",
         "description": "Any 1's rolled on the damage dice may be treated as 8's instead",
         "modify": {}
       }
@@ -1617,8 +1562,7 @@
       "tier": 3,
       "burden": 2,
       "feature": {
-        "name": "burn",
-        "label": "Burn",
+        "name": "Burn",
         "description": "For every damage dice that rolls an 6, deal a stress",
         "modify": {}
       }
@@ -1634,8 +1578,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "powerful",
-        "label": "Powerful",
+        "name": "Powerful",
         "description": "Roll one extra damage die and drop the lowest",
         "modify": {}
       }
@@ -1651,8 +1594,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "reloading",
-        "label": "Reloading",
+        "name": "Reloading",
         "description": "Roll 1d6 after the attack. On a 1, you must use an action to reload your weapon before you can fire it again",
         "modify": {}
       }
@@ -1668,8 +1610,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "reliable",
-        "label": "Reliable",
+        "name": "Reliable",
         "description": "+1 to attack rolls with this weapon",
         "modify": {}
       }
@@ -1721,8 +1662,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "massive",
-        "label": "Massive",
+        "name": "Massive",
         "description": "-1 Agility, roll one extra damage die and drop the lowest",
         "modify": {
           "agility": -1
@@ -1740,8 +1680,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "heavy",
-        "label": "Heavy",
+        "name": "Heavy",
         "description": "-1 to Agility",
         "modify": {
           "agility": -1
@@ -1795,8 +1734,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "quick",
-        "label": "Quick",
+        "name": "Quick",
         "description": "When making an attack roll, mark a Stress to include an additional target in range",
         "modify": {}
       }
@@ -1860,8 +1798,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "cumbersome",
-        "label": "Cumbersome",
+        "name": "Cumbersome",
         "description": "-1 to Evasion",
         "modify": {
           "evasion": -1
@@ -1879,8 +1816,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "quick",
-        "label": "Quick",
+        "name": "Quick",
         "description": "When making an attack roll, mark a Stress to include an additional target in range",
         "modify": {}
       }
@@ -1896,8 +1832,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "concussive",
-        "label": "Concussive",
+        "name": "Concussive",
         "description": "Spend Hope on a successful attack to launch the target into Far range",
         "modify": {}
       }
@@ -1913,8 +1848,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "destructive",
-        "label": "Destructive",
+        "name": "Destructive",
         "description": "-1 to Agility, all Very Close enemies mark a Stress on a successful attack",
         "modify": {
           "agility": -1
@@ -1932,8 +1866,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "serrated",
-        "label": "Serrated",
+        "name": "Serrated",
         "description": "Any 1's rolled on the damage dice count as 10 points of damage",
         "modify": {}
       }
@@ -1949,8 +1882,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "long",
-        "label": "Long",
+        "name": "Long",
         "description": "Can target all enemies in a line within range with your attack",
         "modify": {}
       }
@@ -1966,8 +1898,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "grappling",
-        "label": "Grappling",
+        "name": "Grappling",
         "description": "Spend Hope on a successful attack to temporarily make the target Restrained, or pull them into melee with you",
         "modify": {}
       }
@@ -1983,8 +1914,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "bouncing",
-        "label": "Bouncing",
+        "name": "Bouncing",
         "description": "Spend any amount of Stress to hit that many targets in range with the attack",
         "modify": {}
       }
@@ -2000,8 +1930,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "reliable",
-        "label": "Reliable",
+        "name": "Reliable",
         "description": "+1 on any attack rolls with this weapon",
         "modify": {}
       }
@@ -2017,8 +1946,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "reloading",
-        "label": "Reloading",
+        "name": "Reloading",
         "description": "Roll 1d6 after the attack. On a 1, you must use an action to reload your weapon before you can fire it again",
         "modify": {}
       }
@@ -2118,8 +2046,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "versatile",
-        "label": "Versatile",
+        "name": "Versatile",
         "description": "Presence Melee - d10+6",
         "modify": {}
       }
@@ -2147,8 +2074,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "powerful",
-        "label": "Powerful",
+        "name": "Powerful",
         "description": "Roll one extra damage die and drop the lowest",
         "modify": {}
       }
@@ -2164,8 +2090,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "penetrating",
-        "label": "Penetrating",
+        "name": "Penetrating",
         "description": "Cuts through solid material",
         "modify": {}
       }
@@ -2181,8 +2106,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "lifestealing",
-        "label": "Lifestealing",
+        "name": "Lifestealing",
         "description": "On a successful attack, roll a d6. On a 6, heal a hit point or clear a Stress",
         "modify": {}
       }
@@ -2198,8 +2122,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "greedy",
-        "label": "Greedy",
+        "name": "Greedy",
         "description": "You may spend one handful of gold to increase your proficiency by +1 on a damage roll",
         "modify": {}
       }
@@ -2215,8 +2138,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "powerful",
-        "label": "Powerful",
+        "name": "Powerful",
         "description": "Roll one extra damage die and drop the lowest",
         "modify": {}
       }
@@ -2232,8 +2154,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "painful",
-        "label": "Painful",
+        "name": "Painful",
         "description": "Mark a Stress every time you attack with this weapon",
         "modify": {}
       }
@@ -2249,8 +2170,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "reliable",
-        "label": "Reliable",
+        "name": "Reliable",
         "description": "+1 on any attack rolls with this weapon",
         "modify": {}
       }
@@ -2266,8 +2186,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "timebender",
-        "label": "Timebender",
+        "name": "Timebender",
         "description": "-1 to Agility. You may choose the target of your attack after making your attack roll",
         "modify": {
           "agility": -1
@@ -2285,8 +2204,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "reloading",
-        "label": "Reloading",
+        "name": "Reloading",
         "description": "Roll 1d6 after the attack. On a 1, you must use an action to reload your weapon before you can fire it again",
         "modify": {}
       }
@@ -2302,8 +2220,7 @@
       "tier": 4,
       "burden": 2,
       "feature": {
-        "name": "bonded",
-        "label": "Bonded",
+        "name": "Bonded",
         "description": "Add your Level to the damage result",
         "modify": {}
       }
@@ -2319,8 +2236,7 @@
       "tier": 1,
       "burden": 1,
       "feature": {
-        "name": "paired",
-        "label": "Paired",
+        "name": "Paired",
         "description": "+2 to Primary Weapon damage in Melee",
         "modify": {
           "primaryMeleeDamage": 2
@@ -2338,8 +2254,7 @@
       "tier": 1,
       "burden": 1,
       "feature": {
-        "name": "protective",
-        "label": "Protective",
+        "name": "Protective",
         "description": "Add +1 to your armor score",
         "modify": {
           "armorScore": 1
@@ -2357,8 +2272,7 @@
       "tier": 1,
       "burden": 1,
       "feature": {
-        "name": "barrier",
-        "label": "Barrier",
+        "name": "Barrier",
         "description": "Add +3 to your armor score, -2 to Evasion",
         "modify": {
           "armorScore": 3,
@@ -2377,8 +2291,7 @@
       "tier": 1,
       "burden": 1,
       "feature": {
-        "name": "paired",
-        "label": "Paired",
+        "name": "Paired",
         "description": "+2 to Primary Weapon damage in Melee",
         "modify": {
           "primaryMeleeDamage": 2
@@ -2396,8 +2309,7 @@
       "tier": 1,
       "burden": 1,
       "feature": {
-        "name": "whipcrack",
-        "label": "Whipcrack",
+        "name": "Whipcrack",
         "description": "Mark a Stress to scatter enemies in Melee into Close range",
         "modify": {}
       }
@@ -2413,8 +2325,7 @@
       "tier": 1,
       "burden": 1,
       "feature": {
-        "name": "hook",
-        "label": "Hook",
+        "name": "Hook",
         "description": "On a successful attack, you may also pull the target into Melee with you",
         "modify": {}
       }
@@ -2442,8 +2353,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "paired",
-        "label": "Paired",
+        "name": "Paired",
         "description": "+3 to Primary Weapon damage in Melee",
         "modify": {
           "primaryMeleeDamage": 3
@@ -2461,8 +2371,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "protective",
-        "label": "Protective",
+        "name": "Protective",
         "description": "+2 to Armor Score",
         "modify": {
           "armorScore": 2
@@ -2480,8 +2389,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "barrier",
-        "label": "Barrier",
+        "name": "Barrier",
         "description": "+4 to Armor Score, -2 to Evasion",
         "modify": {
           "armorScore": 4,
@@ -2500,8 +2408,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "paired",
-        "label": "Paired",
+        "name": "Paired",
         "description": "+3 to Primary Weapon damage in Melee",
         "modify": {
           "primaryMeleeDamage": 3
@@ -2519,8 +2426,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "whipcrack",
-        "label": "Whipcrack",
+        "name": "Whipcrack",
         "description": "Mark stress to scatter enemies in Melee into Close range",
         "modify": {}
       }
@@ -2536,8 +2442,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "hook",
-        "label": "Hook",
+        "name": "Hook",
         "description": "On a successful attack, you may also pull the target into Melee with you",
         "modify": {}
       }
@@ -2565,8 +2470,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "double duty",
-        "label": "Double Duty",
+        "name": "Double Duty",
         "description": "+2 to Armor score, +1 to Primary Weapon damage in Melee",
         "modify": {
           "armorScore": 2,
@@ -2585,8 +2489,7 @@
       "tier": 2,
       "burden": 1,
       "feature": {
-        "name": "parry",
-        "label": "Parry",
+        "name": "Parry",
         "description": "On an attack against you, roll this weapon's damage dice. If any match the attacker's, they are removed before damage is totalled",
         "modify": {}
       }
@@ -2614,8 +2517,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "paired",
-        "label": "Paired",
+        "name": "Paired",
         "description": "+4 to Primary Weapon damage in Melee",
         "modify": {
           "primaryMeleeDamage": 4
@@ -2633,8 +2535,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "protective",
-        "label": "Protective",
+        "name": "Protective",
         "description": "+3 to Armor Score",
         "modify": {
           "armorScore": 3
@@ -2652,8 +2553,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "barrier",
-        "label": "Barrier",
+        "name": "Barrier",
         "description": "+5 to Armor Score, -2 to Evasion",
         "modify": {
           "armorScore": 5,
@@ -2672,8 +2572,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "paired",
-        "label": "Paired",
+        "name": "Paired",
         "description": "+4 to Primary Weapon damage in Melee",
         "modify": {
           "primaryMeleeDamage": 4
@@ -2691,8 +2590,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "whipcrack",
-        "label": "Whipcrack",
+        "name": "Whipcrack",
         "description": "Mark stress to scatter enemies in Melee into Close range",
         "modify": {}
       }
@@ -2708,8 +2606,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "hook",
-        "label": "Hook",
+        "name": "Hook",
         "description": "On a successful attack, you may also pull the target into Melee with you",
         "modify": {}
       }
@@ -2737,8 +2634,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "deflecting",
-        "label": "Deflecting",
+        "name": "Deflecting",
         "description": "On an incoming attack, you may spend an armor slot to boost your Evasion score by your Armor score",
         "modify": {}
       }
@@ -2754,8 +2650,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "charged attack",
-        "label": "Charged Attack",
+        "name": "Charged Attack",
         "description": "Mark stress to increase proficiency by +1 on Primary Weapon attack",
         "modify": {}
       }
@@ -2771,8 +2666,7 @@
       "tier": 3,
       "burden": 1,
       "feature": {
-        "name": "versatile",
-        "label": "Versatile",
+        "name": "Versatile",
         "description": "Finesse Close - d8+4",
         "modify": {}
       }
@@ -2788,8 +2682,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "paired",
-        "label": "Paired",
+        "name": "Paired",
         "description": "+5 to Primary Weapon damage in Melee",
         "modify": {
           "primaryMeleeDamage": 5
@@ -2807,8 +2700,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "protective",
-        "label": "Protective",
+        "name": "Protective",
         "description": "+4 to Armor Score",
         "modify": {
           "armorScore": 4
@@ -2826,8 +2718,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "barrier",
-        "label": "Barrier",
+        "name": "Barrier",
         "description": "+6 to Armor Score, -2 to Evasion",
         "modify": {
           "armorScore": 6,
@@ -2846,8 +2737,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "paired",
-        "label": "Paired",
+        "name": "Paired",
         "description": "+5 to Primary Weapon damage in Melee",
         "modify": {
           "primaryMeleeDamage": 5
@@ -2865,8 +2755,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "whipcrack",
-        "label": "Whipcrack",
+        "name": "Whipcrack",
         "description": "Mark stress to scatter enemies in Melee into Close range",
         "modify": {}
       }
@@ -2882,8 +2771,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "hook",
-        "label": "Hook",
+        "name": "Hook",
         "description": "On a successful attack, you may also pull the target into Melee with you",
         "modify": {}
       }
@@ -2911,8 +2799,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "sheltering",
-        "label": "Sheltering",
+        "name": "Sheltering",
         "description": "Using an armor slot reduces damage for you and all allies in Melee with you",
         "modify": {}
       }
@@ -2928,8 +2815,7 @@
       "tier": 4,
       "burden": 1,
       "feature": {
-        "name": "doubled up",
-        "label": "Doubled Up",
+        "name": "Doubled Up",
         "description": "When you make an attack with your Primary Weapon, you may also deal damage with this weapon to another creature in melee",
         "modify": {}
       }
@@ -2945,8 +2831,7 @@
       "tier": null,
       "burden": 2,
       "feature": {
-        "name": "3",
-        "label": "3",
+        "name": "Locked On",
         "description": "On a successful attack with this weapon against a target, the next hit with your Primary Weapon automatically hits that target",
         "modify": {}
       }
