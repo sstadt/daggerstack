@@ -1,15 +1,16 @@
 <template lang="pug">
   .py-8
-    .space-y-4
-      .relative(
-        v-for="item in itemsStore.homebrew"
-        :key="item.id"
-      )
-        NuxtIcon.absolute.top-0.right-14.text-red-900.text-xl(
-          v-if="bookmarks.includes(item.id)"
-          name="bookmark"
+    .grid.grid-cols-1.gap-4(class="md:grid-cols-2")
+      TransitionGroup(name="slide-fade-left")
+        .relative(
+          v-for="item in itemsStore.homebrew"
+          :key="item.id"
         )
-        HomebrewCardItem.cursor-pointer(:item="item" @click="editItem(item)")
+          NuxtIcon.absolute.top-0.right-14.text-red-900.text-xl(
+            v-if="bookmarks.includes(item.id)"
+            name="bookmark"
+          )
+          HomebrewCardItem.cursor-pointer.h-full(:item="item" @click="editItem(item)")
     BasicButton.fixed.bottom-20.right-6.shadow(
       size="sm"
       priority="secondary"

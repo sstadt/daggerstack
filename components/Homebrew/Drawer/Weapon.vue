@@ -44,14 +44,18 @@
       .flex.space-x-2
         InputSelect.flex-grow(
           label="Damage"
-          class="w-1/2"
           v-model="itemDamage"
           :options="damageOptions"
           required
         )
+        InputCounter(
+          label="Bonus"
+          v-model="itemDamageBonus"
+          :max="20"
+          :min="-20"
+        )
         InputSelect.flex-grow(
-          label="Damage Type"
-          class="w-1/2"
+          label="Type"
           v-model="itemDamageType"
           :options="damageTypeOptions"
           required
@@ -144,6 +148,7 @@
   const itemTrait = ref('agility');
   const itemRange = ref('Melee');
   const itemDamage = ref('d8');
+  const itemDamageBonus = ref(0);
   const itemDamageType = ref('physical');
   const itemTier = ref(1);
   const itemBurden = ref(1);
@@ -154,7 +159,7 @@
   );
 
   const formValid = computed(() => {
-    const basicsValid = itemName.value !== '' && itemDescription.value !== '';
+    const basicsValid = itemName.value !== '';
 
     return basicsValid;
   });
@@ -175,12 +180,16 @@
   };
 
   const loadItem = (item) => {
+    const dmgArr = item ? item.damage.split(/[+-]/) : ['d8'];
+    const [ dmgDie, dmgMod ] = dmgArr;
+
     itemName.value = item?.name || '';
     itemPublic.value = item?.public || false;
     itemSlot.value = item?.slot || 'primary';
     itemTrait.value = item?.trait || 'agility';
     itemRange.value = item?.range || 'Melee';
-    itemDamage.value = item?.damage || 'd8';
+    itemDamage.value = dmgDie;
+    itemDamageBonus.value = dmgMod || 0;
     itemDamageType.value = item?.damageType || 'physical';
     itemTier.value = item?.tier || 1;
     itemBurden.value = item?.burden || 1;
@@ -212,14 +221,16 @@
     const formValid = await v$.value.$validate();
     if (!formValid) return;
 
+    const damageBonus = itemDamageBonus.value > 0
+      ? `+${itemDamageBonus.value}`
+      : itemDamageBonus.value < 0 ? String(itemDamageBonus.value) : '';
     const weapon = {
       name: itemName.value,
-      description: itemDescription.value,
       public: itemPublic.value,
       slot: itemSlot.value,
       trait: itemTrait.value,
       range: itemRange.value,
-      damage: itemDamage.value,
+      damage: `${itemDamage.value}${damageBonus}`,
       damageType: itemDamageType.value,
       tier: itemTier.value,
       burden: itemBurden.value,
