@@ -3,12 +3,12 @@
     .flex.justify-between.items-center.space-x-2
       p.font-bold.truncate.text-pink-800 {{ attachment.name }}
       InputCheckboxCounter.no-shrink(
-        v-if="attachmentItem.charge"
+        v-if="attachmentItem?.charge"
         v-model="chargesUsed"
         :max="attachmentItem.charge.max"
         @click.stop
       )
-    p.text-sm.text-slate-600(v-if="attachmentItem.attach.feature")
+    p.text-sm.text-slate-600(v-if="attachmentItem?.attach?.feature")
       strong {{ attachmentItem.attach.feature.name }}:
       |  {{ attachmentItem.attach.feature.description }}
 </template>
