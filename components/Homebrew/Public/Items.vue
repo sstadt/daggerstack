@@ -14,31 +14,13 @@
         .space-y-4(v-else)
           .grid.grid-cols-1.gap-4(class="md:grid-cols-2")
             TransitionGroup(name="slide-fade-left")
-              .rounded.relative.transition-all.overflow-hidden.group(
+              HomebrewCardControls(
                 v-for="item in searchItems"
                 :key="item.id"
-                class="hover:shadow focus:shadow"
+                :homebrew-id="item.id"
+                :bookmarks="bookmarks"
               )
                 HomebrewCardItem.h-full(:item="item")
-                transition(name="slide-fade-top")
-                  NuxtIcon.absolute.top-0.right-14.text-red-900.text-xl(
-                    v-if="bookmarks.includes(item.id)"
-                    name="bookmark"
-                  )
-                BasicButton.rounded-tl.absolute.bottom-0.right-0.translate-y-full.transition-all(
-                  size="xs"
-                  :priority="bookmarks.includes(item.id) ? 'danger' : 'primary'"
-                  rounded="none"
-                  class="group-hover:translate-y-0 group-focus:translate-y-0 focus:translate-y-0"
-                  :disabled="userStore.pendingSave.includes(item.id)"
-                  @click="toggleBookmark(item.id)"
-                )
-                  span(v-if="bookmarks.includes(item.id)")
-                    NuxtIcon.mr-1(name="times")
-                    | Remove
-                  span(v-else)
-                    NuxtIcon.mr-1(name="plus")
-                    | Add
     BasicDrawer(title="filters" ref="filters")
       .px-4
         .space-y-4
