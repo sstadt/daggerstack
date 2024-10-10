@@ -19,6 +19,8 @@
                 :key="item.id"
                 :homebrew-id="item.id"
                 :bookmarks="bookmarks"
+                @add-bookmark="addBookmark(item.id)"
+                @remove-bookmark="removeBookmark(item.id)"
               )
                 HomebrewCardItem.h-full(:item="item")
     BasicDrawer(title="filters" ref="filters")
@@ -104,14 +106,14 @@
     });
   });
 
-  const toggleBookmark = (id) => {
-    if (bookmarks.value.includes(id)) {
-      userStore.removeHomebrew('items', id);
-      itemsStore.bookmarkRemoved(id);
-    } else {
-      userStore.addHomebrew('items', id);
-      itemsStore.bookmarkAdded(id);
-    }
+  const addBookmark = (id) => {
+    userStore.addHomebrew('items', id);
+    itemsStore.bookmarkAdded(id);
+  };
+
+  const removeBookmark = (id) => {
+    userStore.removeHomebrew('items', id);
+    itemsStore.bookmarkRemoved(id);
   };
 
   const resetFilters = () => {

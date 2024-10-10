@@ -14,31 +14,15 @@
         .space-y-4(v-else)
           .grid.grid-cols-1.gap-4(class="md:grid-cols-2")
             TransitionGroup(name="slide-fade-left")
-              .rounded.relative.transition-all.overflow-hidden.group(
+              HomebrewCardControls(
                 v-for="weapon in searchWeapons"
                 :key="weapon.id"
-                class="hover:shadow focus:shadow"
+                :homebrew-id="weapon.id"
+                :bookmarks="bookmarks"
+                @add-bookmark="addBookmark(weapon.id)"
+                @remove-bookmark="removeBookmark(weapon.id)"
               )
-                HomebrewCardItem.h-full(:weapon="weapon")
-                transition(name="slide-fade-top")
-                  NuxtIcon.absolute.top-0.right-14.text-red-900.text-xl(
-                    v-if="bookmarks.includes(weapon.id)"
-                    name="bookmark"
-                  )
-                BasicButton.rounded-tl.absolute.bottom-0.right-0.translate-y-full.transition-all(
-                  size="xs"
-                  :priority="bookmarks.includes(weapon.id) ? 'danger' : 'primary'"
-                  rounded="none"
-                  class="group-hover:translate-y-0 group-focus:translate-y-0 focus:translate-y-0"
-                  :disabled="userStore.pendingSave.includes(weapon.id)"
-                  @click="toggleBookmark(weapon.id)"
-                )
-                  span(v-if="bookmarks.includes(weapon.id)")
-                    NuxtIcon.mr-1(name="times")
-                    | Remove
-                  span(v-else)
-                    NuxtIcon.mr-1(name="plus")
-                    | Add
+                HomebrewCardWeapon.h-full(:weapon="weapon")
     BasicDrawer(title="filters" ref="filters")
       .px-4
         .space-y-4
@@ -64,7 +48,7 @@
   const filters = ref(null);
 
   const filteredWeapons = computed(() => {
-    return weaponsStore.publicItems.filter((item) => {
+    return weaponsStore.publicWeapons.filter((item) => {
       return true;
     });
   });
@@ -89,14 +73,14 @@
     });
   });
 
-  const toggleBookmark = (id) => {
-    if (bookmarks.value.includes(id)) {
-      userStore.removeHomebrew('weapons', id);
-      weaponsStore.bookmarkRemoved(id);
-    } else {
-      userStore.addHomebrew('weapons', id);
-      weaponsStore.bookmarkAdded(id);
-    }
+  const addBookmark = (id) => {
+    userStore.addHomebrew('weapons', id);
+    weaponsStore.bookmarkAdded(id);
+  };
+
+  const removeBookmark = (id) => {
+    userStore.removeHomebrew('weapons', id);
+    weaponsStore.bookmarkRemoved(id);
   };
 
   const resetFilters = () => {

@@ -1,7 +1,5 @@
 <template lang="pug">
-  .rounded.relative.transition-all.overflow-hidden.group(
-    class="hover:shadow focus:shadow"
-  )
+  .rounded.relative.transition-all.overflow-hidden.group(class="hover:shadow focus:shadow")
     slot
     transition(name="slide-fade-top")
       NuxtIcon.absolute.top-0.right-14.text-red-900.text-xl(

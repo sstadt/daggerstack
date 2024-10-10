@@ -132,7 +132,7 @@
 
 <script>
   export default {
-    name: 'CollectionItems',
+    name: 'HomebrewDrawerItem',
   };
 </script>
 

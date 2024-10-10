@@ -82,7 +82,7 @@ export const useWeaponsStore = defineStore('weapons', {
       } else {
         // create item
         const { data, error } = await userStore.supabase
-          .from('homebrew_items')
+          .from('homebrew_weapons')
           .insert(cleanWeapon)
           .select();
 
@@ -108,7 +108,7 @@ export const useWeaponsStore = defineStore('weapons', {
       if (index > -1) {
         const weaponName = this.weapons[index].name;
         const { error } = await userStore.supabase
-          .from('homebrew_items')
+          .from('homebrew_weapons')
           .delete()
           .eq('id', id);
 

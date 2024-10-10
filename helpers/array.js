@@ -29,9 +29,9 @@ export const excludeArrayItems = (excludeArray, arrayToFilter) => {
  * @param {Array} arr The array to convert
  * @returns The resulting array
  */
-export const createSelectOptions = (arr) => {
+export const createSelectOptions = (arr, capitalize = true) => {
   return structuredClone(arr).map((item) => ({
-    label: titleCase(item),
+    label: capitalize ? titleCase(item) : item,
     value: item,
   }));
 };

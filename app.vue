@@ -25,6 +25,7 @@
   const builderStore = useBuilderStore();
   const charactersStore = useCharactersStore();
   const itemsStore = useItemsStore();
+  const weaponsStore = useWeaponsStore();
 
   onMounted(() => {
     userStore.init();
@@ -33,6 +34,7 @@
     // hydrate homebrew items globally
     waitUntil(() => userStore.loaded).then(() => {
       itemsStore.hydrate();
+      weaponsStore.hydrate();
     });
   });
 </script>
