@@ -26,6 +26,7 @@
   const charactersStore = useCharactersStore();
   const itemsStore = useItemsStore();
   const weaponsStore = useWeaponsStore();
+  const armorStore = useArmorStore();
 
   onMounted(() => {
     userStore.init();
@@ -35,6 +36,7 @@
     waitUntil(() => userStore.loaded).then(() => {
       itemsStore.hydrate();
       weaponsStore.hydrate();
+      armorStore.hydrate();
     });
   });
 </script>

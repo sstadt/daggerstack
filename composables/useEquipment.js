@@ -1,7 +1,9 @@
 
 export const useEquipment = () => {
   const useIsHomebrew = (equipment) => {
-    return Number.isInteger(equipment?.id);
+    return computed(() => {
+      return Number.isInteger(equipment?.id);
+    });
   };
 
   const useTitleClass = (equipment) => {

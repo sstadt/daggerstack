@@ -3,6 +3,8 @@ import { defineStore } from 'pinia';
 const DEBOUNCE_DELAY = 3000;
 const VALID_HOMEBREW_TYPES = [
   'items',
+  'weapons',
+  'armor',
 ];
 
 export const useUserStore = defineStore('user', {

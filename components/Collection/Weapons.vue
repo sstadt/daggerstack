@@ -39,7 +39,7 @@
   const drawer = ref(null);
 
   const bookmarks = computed(() => {
-    return userStore.profile?.items || [];
+    return userStore.profile?.weapons || [];
   });
 
   const newItem = () => {

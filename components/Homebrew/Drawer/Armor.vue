@@ -1,6 +1,6 @@
 <template lang="pug">
   DialogConfirm(ref="confirmDialog" @confirm="confirmDelete")
-  BasicDrawer(:title="id ? 'Edit Weapon' : 'New Weapon'" ref="editor")
+  BasicDrawer(:title="id ? 'Edit Armor' : 'New Armor'" ref="editor")
     form.space-y-4.px-4(@submit.prevent="saveItem")
       .flex.space-x-2
         InputText.flex-grow(
@@ -10,56 +10,16 @@
           :errors="v$.itemName ? v$.itemName.errors : []"
           required
         )
-        InputSelect(label="Tier" v-model="itemTier" :options="tierOptions" required)
       .flex.space-x-2
-        InputSelect.flex-grow(
-          label="Slot"
-          class="w-1/2"
-          v-model="itemSlot"
-          :options="slotOptions"
-          required
-        )
-        InputSelect.flex-grow(
-          label="Burden"
-          class="w-1/2"
-          v-model="itemBurden"
-          :options="burdenOptions"
-          required
-        )
-      .flex.space-x-2
-        InputSelect.flex-grow(
-          label="Trait"
-          class="w-1/2"
-          v-model="itemTrait"
-          :options="traitOptions"
-          required
-        )
-        InputSelect.flex-grow(
-          label="Range"
-          class="w-1/2"
-          v-model="itemRange"
-          :options="rangeOptions"
-          required
-        )
-      .flex.space-x-2
-        InputSelect.flex-grow(
-          label="Damage"
-          v-model="itemDamage"
-          :options="damageOptions"
-          required
-        )
         InputCounter(
-          label="Bonus"
-          v-model="itemDamageBonus"
-          :max="20"
+          label="Score"
+          v-model="itemScore"
           :min="-20"
-        )
-        InputSelect.flex-grow(
-          label="Type"
-          v-model="itemDamageType"
-          :options="damageTypeOptions"
+          :max="20"
+          :errors="v$.itemName ? v$.itemName.errors : []"
           required
         )
+        InputSelect.flex-grow(label="Tier" v-model="itemTier" :options="tierOptions" required)
       InputText(type="text" label="Feature Name" v-model="featureName")
       InputTextarea(type="text" label="Feature Description" v-model="featureDescription")
       .space-y-2
@@ -130,33 +90,18 @@
     addModifier,
   } = useHomebrewDrawer();
 
-  const slotOptions = createSelectOptions(['primary', 'secondary']);
-  const traitOptions = createSelectOptions(GENERAL.traits);
-  const rangeOptions = createSelectOptions(GENERAL.range);
-  const damageOptions = createSelectOptions(GENERAL.dice, false);
-  const damageTypeOptions = createSelectOptions(['physical', 'magical']);
   const tierOptions = createSelectOptions([1, 2, 3, 4], false);
-  const burdenOptions = [
-    { label: 'One-handed', value: 1 },
-    { label: 'Two-handed', value: 2 },
-  ];
 
-  const itemSlot = ref('primary');
-  const itemTrait = ref('agility');
-  const itemRange = ref('Melee');
-  const itemDamage = ref('d8');
-  const itemDamageBonus = ref(0);
-  const itemDamageType = ref('physical');
   const itemTier = ref(1);
-  const itemBurden = ref(1);
+  const itemScore = ref(1);
 
   const v$ = useVuelidate(
-    { itemName: { required } },
-    { itemName },
+    { itemName: { required }, itemScore: { required } },
+    { itemName, itemScore },
   );
 
   const formValid = computed(() => {
-    const basicsValid = itemName.value !== '';
+    const basicsValid = itemName.value !== '' && itemScore.value !== 0;
 
     return basicsValid;
   });
@@ -177,19 +122,10 @@
   };
 
   const loadItem = (item) => {
-    const dmgArr = item ? item.damage.split(/[+-]/) : ['d8'];
-    const [ dmgDie, dmgMod ] = dmgArr;
-
     itemName.value = item?.name || '';
     itemPublic.value = item?.public || false;
-    itemSlot.value = item?.slot || 'primary';
-    itemTrait.value = item?.trait || 'agility';
-    itemRange.value = item?.range || 'Melee';
-    itemDamage.value = dmgDie;
-    itemDamageBonus.value = dmgMod || 0;
-    itemDamageType.value = item?.damageType || 'physical';
+    itemScore.value = item?.score || 1;
     itemTier.value = item?.tier || 1;
-    itemBurden.value = item?.burden || 1;
     featureName.value = item?.feature?.name || '';
     featureDescription.value = item?.feature?.description || '';
 
@@ -218,19 +154,11 @@
     const formValid = await v$.value.$validate();
     if (!formValid) return;
 
-    const damageBonus = itemDamageBonus.value > 0
-      ? `+${itemDamageBonus.value}`
-      : itemDamageBonus.value < 0 ? String(itemDamageBonus.value) : '';
     const weapon = {
       name: itemName.value,
       public: itemPublic.value,
-      slot: itemSlot.value,
-      trait: itemTrait.value,
-      range: itemRange.value,
-      damage: `${itemDamage.value}${damageBonus}`,
-      damageType: itemDamageType.value,
+      score: itemScore.value,
       tier: itemTier.value,
-      burden: itemBurden.value,
       feature: null,
     };
 

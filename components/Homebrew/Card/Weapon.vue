@@ -25,7 +25,6 @@
   import upgradeStrings from '~/config/upgradeStrings';
   import { titleCase } from '~/helpers/string';
 
-
   const { useShowMainHand, useShowOffHand } = useWeapon();
 
   const props = defineProps({

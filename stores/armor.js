@@ -72,9 +72,9 @@ export const useArmorStore = defineStore('armor', {
           toastStore.postMessage({ body: error.message });
         } else {
           const [ updatedArmor ] = data;
-          const index = this.items.findIndex((i) => i.id === updatedArmor.id);
+          const index = this.armorList.findIndex((i) => i.id === updatedArmor.id);
 
-          this.items.splice(index, 1, updatedArmor);
+          this.armorList.splice(index, 1, updatedArmor);
           toastStore.postMessage({ body: `Saved changes to ${updatedArmor.name}` });
 
           return updatedArmor.id;
@@ -82,7 +82,7 @@ export const useArmorStore = defineStore('armor', {
       } else {
         // create item
         const { data, error } = await userStore.supabase
-          .from('homebrew_items')
+          .from('homebrew_armor')
           .insert(cleanArmor)
           .select();
 
@@ -108,14 +108,14 @@ export const useArmorStore = defineStore('armor', {
       if (index > -1) {
         const armorName = this.armorList[index].name;
         const { error } = await userStore.supabase
-          .from('homebrew_items')
+          .from('homebrew_armor')
           .delete()
           .eq('id', id);
 
         if (error) {
           toastStore.postMessage({ body: error.message });
         } else {
-          this.items.splice(index, 1);
+          this.armorList.splice(index, 1);
           toastStore.postMessage({ body: `Deleted ${armorName}` });
         }
       }
