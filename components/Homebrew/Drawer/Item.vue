@@ -2,7 +2,7 @@
   DialogConfirm(ref="confirmDialog" @confirm="confirmDelete")
   BasicDrawer(
     :title="id ? 'Edit Item' : 'New Item'"
-    ref="itemEditor"
+    ref="editor"
   )
     form.space-y-4.px-4(@submit.prevent="saveItem")
       InputText(
@@ -150,35 +150,24 @@
 
   const emit = defineEmits(['save', 'delete']);
 
-  const confirmDialog = ref(null);
+  const {
+    id,
+    userId,
+    itemName,
+    itemPublic,
+    featureName,
+    featureDescription,
+    modify,
+    editor,
+    confirmDialog,
+    removeModifier,
+    addModifier,
+  } = useHomebrewDrawer();
 
-  const id = ref(null);
-  const userId = ref(null);
-
-  const itemEditor = ref(null);
-
-  const itemName = ref('');
-  const itemDescription = ref('');
-  const itemPublic = ref(false);
-  const itemHasCharges = ref(false);
-  const itemCharges = ref(3);
-
-  const itemRechargeOn = ref('');
   const rechargeRestOptions = [
     { label: 'Short Rest', value: 'shortRest' },
     { label: 'Long Rest', value: 'longRest' },
   ];
-
-  const itemType = ref('');
-
-  const modify = ref([]);
-  const featureName = ref('');
-  const featureDescription = ref('');
-
-  const craftItemId = ref('');
-  const inititalCraftItemId = ref(null);
-  const craftItemCost = ref(0);
-  const craftItemResource = ref('goldHandful');
   const resourceOptions = Object.keys(resourceStrings).map((key) => {
     return {
       label: resourceStrings[key],
@@ -188,22 +177,34 @@
   const consumableResourceOptions = resourceOptions.filter((option) => {
     return ['health', 'stress', 'armor'].includes(option.value);
   });
-
-  const attachType = ref('');
   const attachTypeOptions = [
     { label: 'Weapon', value: 'weapon' },
     { label: 'Melee Weapon', value: 'meleeWeapon' },
     { label: 'Armor', value: 'armor' },
   ];
-
-  const restType = ref('shortRest');
-  const resourceType = ref('stress');
-  const resourceAmount = ref('');
   const downtimeRestOptions = [
     { label: 'Short Rest', value: 'shortRest' },
     { label: 'Long Rest', value: 'longRest' },
     { label: 'Any Rest', value: 'all' },
   ];
+
+  const itemDescription = ref('');
+  const itemHasCharges = ref(false);
+  const itemCharges = ref(3);
+  const itemRechargeOn = ref('');
+
+  const itemType = ref('');
+
+  const craftItemId = ref('');
+  const inititalCraftItemId = ref(null);
+  const craftItemCost = ref(0);
+  const craftItemResource = ref('goldHandful');
+
+  const attachType = ref('');
+
+  const restType = ref('shortRest');
+  const resourceType = ref('stress');
+  const resourceAmount = ref('');
 
   const v$ = useVuelidate(
     { itemName: { required }, itemDescription: { required } },
@@ -235,14 +236,6 @@
   const craftItem = computed(() => {
     return itemsStore.item(craftItemId.value);
   });
-
-  const removeModifier = (index) => {
-    modify.value.splice(index, 1);
-  };
-
-  const addModifier = () => {
-    modify.value.push(newBuff({ stat: 'agility' }));
-  };
 
   const loadItem = (item) => {
     itemName.value = item?.name || '';
@@ -424,7 +417,7 @@
     }
 
     emit('save', item);
-    itemEditor.value.close();
+    editor.value.close();
   };
 
   const deleteItem = () => {
@@ -433,13 +426,13 @@
   };
 
   const confirmDelete = () => {
-    itemEditor.value.close();
+    editor.value.close();
     emit('delete', id.value);
   };
 
   const open = (item) => {
     loadItem(item);
-    itemEditor.value.open();
+    editor.value.open();
   };
 
   defineExpose({ open });
