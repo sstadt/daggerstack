@@ -48,7 +48,7 @@
   const filters = ref(null);
 
   const filteredWeapons = computed(() => {
-    return armorStore.publicWeapons.filter((item) => {
+    return armorStore.publicArmor.filter((item) => {
       return true;
     });
   });

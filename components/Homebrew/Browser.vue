@@ -7,7 +7,7 @@
         .flex.items-center.space-x-2
           p.font-bold.text-lg.uppercase.text-slate-300 Homebrew
           NuxtIcon.text-sm(name="chevron-right")
-          NuxtLink.text-lg.uppercase.text-slate-300(to="/homebrew/collection") Collection
+          NuxtLink.text-lg.uppercase.text-slate-300.font-light(to="/homebrew/collection") Collection
         h1.font-bold.text-5xl.uppercase.truncate {{ activeTab.name }}
       .max-w-5xl.mx-auto.flex.relative
         NavButton(

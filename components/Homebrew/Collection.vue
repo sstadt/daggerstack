@@ -5,7 +5,7 @@
         :class="{ 'container': mq.lgPlus }"
       )
         .flex.items-center.space-x-2
-          NuxtLink.text-lg.uppercase.text-slate-300(to="/homebrew") Homebrew
+          NuxtLink.text-lg.uppercase.text-slate-300.font-light(to="/homebrew") Homebrew
           NuxtIcon.text-sm(name="chevron-right")
           p.font-bold.text-lg.uppercase.text-slate-300 Collection
         h1.font-bold.text-5xl.uppercase.truncate {{ activeTab.name }}
