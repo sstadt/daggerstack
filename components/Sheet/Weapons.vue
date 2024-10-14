@@ -1,5 +1,5 @@
 <template lang="pug">
-  BasicCard(title="Active Weapons")
+  BasicCard(title="Weapons")
     .flex.justify-center.mt-2.mb-4(@click="showBonuses")
       h3.uppercase.text-sm.font-bold.mr-4 Proficiency
       InputCheckbox(
@@ -7,39 +7,21 @@
         :checked="proficiency >= n"
         read-only
       )
-    .mb-8.space-y-4
-      h3.font-black.uppercase.mt-6 Primary
-      InventoryWeapon.cursor-pointer(
-        v-if="primaryWeapon"
-        :weapon="getWeapon(primaryWeapon.name)"
-        :character-weapon="character.equipment.primaryWeapon"
-        :character="character"
-        @click="openPicker(primaryWeaponType)"
-      )
-      BasicButton.mx-auto.block(
-        v-else
-        priority="secondary"
-        @click="openPicker(primaryWeaponType)"
-      ) Select Weapon
     .space-y-4
-      h3.font-black.uppercase Secondary
-      .relative(v-if="secondaryWeapon")
-        InventoryWeapon.cursor-pointer(
-          :weapon="getWeapon(secondaryWeapon.name)"
-          :character-weapon="character.equipment.secondaryWeapon"
-          :character="character"
-          :class="{ 'opacity-20 pointer-events-none': shouldRespectBurden && isPrimaryTwoHanded }"
-          @click="openPicker(secondaryWeaponType)"
-        )
-        .absolute.transform.text-2xl.text-red-600.uppercase.w-full.text-center.font-black(
-          v-if="shouldRespectBurden && isPrimaryTwoHanded"
-          class="top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-        ) No free hands
-      BasicButton.mx-auto.block(
-        v-else
-        priority="secondary"
-        @click="openPicker(secondaryWeaponType)"
-      ) Select Weapon
+      .grid
+      transition-group(name="slide-fade-left")
+        .flex.space-x-2.items-center(v-for="weapon in character.inventory.weapons" :key="weapon.id")
+          InventoryWeapon.cursor-pointer(
+            :weapon-id="weapon.itemId"
+            :character="character"
+            :character-weapon="weapon"
+          )
+          .w-14
+            transition(name="fade" mode="out-in")
+              div(v-if="weapon.equipped === true") todo
+              BasicButton(v-else size="xs" priority="secondary" @click="equip(weapon)") Equip
+      .flex.justify-end(v-if="character.inventory?.weapons?.length < GENERAL.maxInventoryWeapons")
+        BasicButton(size="sm" priority="secondary" @click="openPicker") Add Weapon
     SheetBonuses(
       ref="bonuses"
       statistic="proficiency"
@@ -49,8 +31,6 @@
       InventoryEquipmentPicker(
         :type="pickerType"
         :character="character"
-        :active-slot="activeSlot"
-        include-inventory
         @select="selectItem"
         @remove-equipped-item="removeEquippedItem"
       )
@@ -63,28 +43,20 @@
 </script>
 
 <script setup>
+  import GENERAL from '~/data/general';
   import WEAPONS from '~/data/weapons';
 
   import { newWeapon } from '~/helpers/constructors';
   import {
-    getWeapon,
     calculateModifiers,
     getFeaturesByAttribute,
     respectBurden,
   } from '~/helpers/character';
 
-  import {
-    PRIMARY_WEAPON_TYPE,
-    SECONDARY_WEAPON_TYPE,
-    SLOT_PRIMARY_WEAPON,
-    SLOT_SECONDARY_WEAPON,
-  } from '~/config/equipmentPicker';
+  import { PRIMARY_WEAPON_TYPE } from '~/config/equipmentPicker';
 
   const charactersStore = useCharactersStore();
 
-  const primaryWeaponType = ref(PRIMARY_WEAPON_TYPE);
-  const secondaryWeaponType = ref(SECONDARY_WEAPON_TYPE);
-  const activeSlot = ref(null);
   const pickerType = ref(PRIMARY_WEAPON_TYPE);
   const baseProficiency = ref(1);
   const equipmentPicker = ref(null);
@@ -128,22 +100,6 @@
     return baseProficiency.value + calculateModifiers(proficiencyBonuses.value, 'proficiency');
   });
 
-  const primaryWeapon = computed(() => {
-    return props.character.equipment.primaryWeapon.name
-      ? WEAPONS.items.find((weapon) => props.character.equipment.primaryWeapon.name === weapon.name)
-      : null;
-  });
-
-  const secondaryWeapon = computed(() => {
-    return props.character.equipment.secondaryWeapon.name
-      ? WEAPONS.items.find((weapon) => props.character.equipment.secondaryWeapon.name === weapon.name)
-      : null;
-  });
-
-  const isPrimaryTwoHanded = computed(() => {
-    return primaryWeapon.value?.burden > 1;
-  });
-
   const shouldRespectBurden = computed(() => {
     return respectBurden(props.character);
   });
@@ -152,44 +108,13 @@
     bonuses.open();
   };
 
-  const openPicker = (weaponType) => {
-    pickerType.value = weaponType === PRIMARY_WEAPON_TYPE
-      ? PRIMARY_WEAPON_TYPE
-      : SECONDARY_WEAPON_TYPE;
-    activeSlot.value = weaponType === PRIMARY_WEAPON_TYPE
-      ? SLOT_PRIMARY_WEAPON
-      : SLOT_SECONDARY_WEAPON;
-
+  const openPicker = () => {
     equipmentPicker.value.open();
   };
 
-  const selectItem = ({ item, fromInventory = false }) => {
-    let weaponUpdated = false;
-
-    // swap from inventory
-    if (fromInventory === true) {
-      const inventoryIndex = props.character.inventory.weapons.findIndex((w) => w.name === item);
-      const inventoryWeapon = { ...props.character.inventory.weapons[inventoryIndex] };
-      const currentWeapon = activeSlot.value === SLOT_PRIMARY_WEAPON
-        ? { ...props.character.equipment.primaryWeapon }
-        : { ...props.character.equipment.secondaryWeapon };
-
-      props.character.equipment[activeSlot.value] = inventoryWeapon;
-      props.character.inventory.weapons.splice(inventoryIndex, 1, currentWeapon);
-      weaponUpdated = true;
-
-    // new primary weapon
-    } else if (activeSlot.value === SLOT_PRIMARY_WEAPON) {
-      props.character.equipment.primaryWeapon = newWeapon({ name: item });
-      weaponUpdated = true;
-
-    // new secondary weapon
-    } else if (activeSlot.value === SLOT_SECONDARY_WEAPON) {
-      props.character.equipment.secondaryWeapon = newWeapon({ name: item });
-      weaponUpdated = true;
-    }
-
-    if (weaponUpdated) {
+  const selectItem = ({ item }) => {
+    if (props.character.inventory.weapons.length < GENERAL.maxInventoryWeapons) {
+      props.character.inventory.weapons.push(newWeapon({ name: item.name, itemId: item.id }));
       charactersStore.saveCharacter(props.character);
     }
 
@@ -197,21 +122,22 @@
   };
 
   const removeEquippedItem = () => {
-    let itemRemoved = false;
+    // TODO
+    // let itemRemoved = false;
 
-    if (activeSlot.value === SLOT_PRIMARY_WEAPON) {
-      props.character.equipment.primaryWeapon = newWeapon();
-      itemRemoved = true;
-    }
+    // if (activeSlot.value === SLOT_PRIMARY_WEAPON) {
+    //   props.character.equipment.primaryWeapon = newWeapon();
+    //   itemRemoved = true;
+    // }
 
-    if (activeSlot.value === SLOT_SECONDARY_WEAPON) {
-      props.character.equipment.secondaryWeapon = newWeapon();
-      itemRemoved = true;
-    }
+    // if (activeSlot.value === SLOT_SECONDARY_WEAPON) {
+    //   props.character.equipment.secondaryWeapon = newWeapon();
+    //   itemRemoved = true;
+    // }
 
-    if (itemRemoved) {
-      charactersStore.saveCharacter(props.character);
-      equipmentPicker.value.close();
-    }
+    // if (itemRemoved) {
+    //   charactersStore.saveCharacter(props.character);
+    //   equipmentPicker.value.close();
+    // }
   };
 </script>

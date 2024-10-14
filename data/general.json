@@ -39,5 +39,5 @@
   "spellcasters": ["bard", "druid", "ranger", "rogue", "seraph", "sorcerer", "wizard"],
   "dice": ["d4", "d6", "d8", "d10", "d12", "d20"],
   "range": ["Melee", "Very Close", "Close", "Far", "Very Far"],
-  "maxInventoryWeapons": 2
+  "maxInventoryWeapons": 4
 }

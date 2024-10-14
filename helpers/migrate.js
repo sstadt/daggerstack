@@ -20,7 +20,10 @@
 
 import GENERAL from '~/data/general';
 import { items } from '~/data/items';
+import WEAPONS from '~/data/weapons';
+import ARMOR from '~/data/armor';
 import { clone, uuidv4 } from '~/helpers/utility';
+import { newWeapon, newArmor } from '~/helpers/constructors';
 
 /**
  * Gold Consolidation
@@ -97,9 +100,73 @@ const itemId = {
   },
 };
 
+/**
+ * Equipment
+ *
+ * Migrate characters from separate equipment object configuration
+ * to including character equipment in inventory.
+ *
+ * Migrates old equipment assuming there is no homebrew equipment
+ * configured in the old equipment configuration.
+ */
+const equipment = {
+  isValid(character) {
+    return !character.equipment;
+  },
+  migrate(character) {
+    const updatedCharacter = clone(character);
+    const primaryWeapon = { ...character.equipment.primaryWeapon };
+    const primaryWeaponData = WEAPONS.items.find((w) => w.name === primaryWeapon?.name);
+    const secondaryWeapon = { ...character.equipment.secondaryWeapon };
+    const secondaryWeaponData = WEAPONS.items.find((w) => w.name === secondaryWeapon?.name);
+    const armorData = ARMOR.items
+      .find((a) => a.name === character.equipment.armor?.name);
+    const armor = { ...character.equipment.armor };
+    const weapons = [];
+
+    if (primaryWeaponData) {
+      primaryWeapon.equipped = true;
+      primaryWeapon.itemId = primaryWeaponData.id;
+      weapons.push(newWeapon(primaryWeapon));
+    }
+
+    if (secondaryWeaponData) {
+      if (primaryWeaponData.burden < 2 && secondaryWeaponData.burden < 2) {
+        secondaryWeapon.equipped = true;
+      }
+
+      secondaryWeapon.itemId = secondaryWeaponData.id;
+      weapons.push(newWeapon(secondaryWeapon));
+    }
+
+    character.inventory.weapons.forEach((weapon) => {
+      const data = WEAPONS.items.find((w) => w.name === weapon.name);
+
+      if (data) {
+        const updatedWeapon = { ...weapon };
+
+        updatedWeapon.itemId = data.id;
+        weapons.push(newWeapon(updatedWeapon));
+      }
+    });
+
+    if (armorData) {
+      armor.itemId = armorData.id;
+      armor.equipped = true;
+      updatedCharacter.inventory.armor = newArmor(armor);
+    }
+
+    updatedCharacter.inventory.weapons = clone(weapons);
+    updatedCharacter.equipment = null;
+
+    return updatedCharacter;
+  },
+};
+
 const migrations = [
   goldConsolidation,
   itemId,
+  equipment,
 ];
 
 export default (characters) => {

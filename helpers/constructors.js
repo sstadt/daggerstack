@@ -71,6 +71,7 @@ export const newCharacter = () => {
       items: [],
       gold: 1,
       weapons: [],
+      armor: newArmor(),
     },
     experience: [],
     background: [],
@@ -104,17 +105,19 @@ export const newCharacter = () => {
 export const newWeapon = (weapon = {}) => {
   const defaults = {
     id: uuidv4(),
+    itemId: null,
     name: null,
+    equipped: false,
     notes: '',
-    attachment: null,
   };
   const options = Object.assign({}, defaults, weapon);
 
   return {
     id: options.id,
+    itemId: options.itemId,
     name: options.name,
+    equipped: options.equipped,
     notes: options.notes,
-    attachment: options.attachment,
   };
 };
 
@@ -130,7 +133,9 @@ export const newWeapon = (weapon = {}) => {
 export const newArmor = (armor = {}) => {
   const defaults = {
     id: uuidv4(),
+    itemId: null,
     name: null,
+    equipped: false,
     notes: '',
     attachment: null,
   };
@@ -138,7 +143,9 @@ export const newArmor = (armor = {}) => {
 
   return {
     id: options.id,
+    itemId: options.itemId,
     name: options.name,
+    equipped: options.equipped,
     notes: options.notes,
     attachment: options.attachment,
   };
