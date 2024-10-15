@@ -1,27 +1,27 @@
 <template lang="pug">
-  .w-full.space-y-1(v-if="weaponData")
+  .w-full.space-y-1
     .flex.justify-between.items-center
-      h3.text-xl.font-bold.truncate(:class="titleClass") {{ weaponData.name }}
-      .flex
-        NuxtIcon(v-if="showMainHand" name="left-hand")
-        NuxtIcon(v-if="showOffhand" name="right-hand")
+      h3.text-xl.font-bold.truncate.space-x-1(:class="titleClass") {{ weapon.name }}
     .flex.justify-between
-      p
-        NuxtIcon.text-amber-600.mr-1(
-          v-if="weaponData.trait.toLowerCase() === recommendedTrait"
+      p.space-x-1
+        NuxtIcon.text-amber-600(
+          v-if="weapon.trait.toLowerCase() === recommendedTrait"
           name="recommended"
         )
-        | {{ weaponData.trait }} {{ weaponData.range }}
+        span
+          NuxtIcon(v-if="showMainHand" name="left-hand")
+          NuxtIcon(v-if="showOffhand" name="right-hand")
+        span {{ weapon.trait }} {{ weapon.range }}
       p
         | {{ damageDice }}
         span(
-          v-if="damageModifier !== modifier || damageModifier !== 0"
+          v-if="damageModifier !== baseModifier || damageModifier !== 0"
           :class="modifierClass"
         ) +{{ damageModifier }}
-        |  ({{ weaponData.damageType }})
-    p.text-slate-600.text-sm.space-x-1(v-if="weaponData.feature")
-      span.font-bold {{ weaponData.feature.name }}
-      span.italic {{ weaponData.feature.description }}
+        |  ({{ weapon.damageType.substring(0, 3) }})
+    p.text-slate-600.text-sm.space-x-1(v-if="weapon.feature")
+      span.font-bold {{ weapon.feature.name }}
+      span.italic {{ weapon.feature.description }}
     InventoryAttachment(
       v-if="attachment"
       :character="character"
@@ -41,12 +41,13 @@
     getFeaturesByAttribute,
   } from '~/helpers/character';
 
-  const weaponsStore = useWeaponsStore();
-  const { useIsHomebrew, useTitleClass, modifierString } = useEquipment();
+  // TODO: this doesn't work with inventory for some reason
+  //       it renders all instances identically
+  // const { useIsHomebrew, useTitleClass, modifierString } = useEquipment();
 
   const props = defineProps({
-    weaponId: {
-      type: [ String, Number ],
+    weapon: {
+      type: Object,
       required: true,
     },
     characterWeapon: {
@@ -65,24 +66,29 @@
 
   const attachmentChargesUsed = ref(0);
 
-  const weaponData = computed(() => {
-    return weaponsStore.weapon(props.weaponId);
+  const isHomebrew = computed(() => {
+    return Number.isInteger(props.weapon.id);
   });
 
-  const isHomebrew = useIsHomebrew(weaponData.value);
-  const titleClass = useTitleClass(weaponData.value);
+  const titleClass = computed(() => {
+    return {
+      'text-blue-600': props.weapon.tier === 2,
+      'text-purple-700': props.weapon.tier === 3,
+      'text-orange-600': props.weapon.tier === 4,
+    };
+  });
 
   const damageDice = computed(() => {
-    if (!weaponData.value) return '';
+    if (!props.weapon) return '';
 
-    const [ dice ] = weaponData.value.damage.split(/[+-]/);
+    const [ dice ] = props.weapon.damage.split(/[+-]/);
     return dice;
   });
 
   const baseModifier = computed(() => {
-    if (!weaponData.value) return '';
+    if (!props.weapon) return '';
 
-    const mod = weaponData.value.damage.replace(damageDice.value, '').replace('+', '');
+    const mod = props.weapon.damage.replace(damageDice.value, '').replace('+', '');
     return mod.length > 0 ? parseInt(mod, 10) : 0;
   });
 
@@ -91,7 +97,7 @@
 
     const modifiers = getFeaturesByAttribute(props.character, 'primaryMeleeDamage');
 
-    return weaponData.value?.range.toLowerCase() === 'melee' && weaponData.value?.slot === 'primary'
+    return props.weapon?.range.toLowerCase() === 'melee' && props.weapon?.slot === 'primary'
       ? baseModifier.value + calculateModifiers(modifiers, 'primaryMeleeDamage')
       : baseModifier.value;
   });
@@ -112,10 +118,10 @@
   });
 
   const showMainHand = computed(() => {
-    return weaponData.value.slot === 'primary';
+    return props.weapon.slot === 'primary';
   });
 
   const showOffhand = computed(() => {
-    return weaponData.value.burden > 1 || weaponData.value.slot === 'secondary';
+    return props.weapon.burden > 1 || props.weapon.slot === 'secondary';
   });
 </script>

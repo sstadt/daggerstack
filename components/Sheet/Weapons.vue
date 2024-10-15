@@ -8,18 +8,17 @@
         read-only
       )
     .space-y-4
-      .grid
       transition-group(name="slide-fade-left")
-        .flex.space-x-2.items-center(v-for="weapon in character.inventory.weapons" :key="weapon.id")
+        InventoryWeaponControls(
+          v-for="weapon in character.inventory.weapons"
+          :key="weapon.id"
+          :character-weapon="weapon"
+          @equip="equip(weapon)"
+        )
           InventoryWeapon.cursor-pointer(
-            :weapon-id="weapon.itemId"
-            :character="character"
+            :weapon="weaponsStore.weapon(weapon.itemId)"
             :character-weapon="weapon"
           )
-          .w-14
-            transition(name="fade" mode="out-in")
-              div(v-if="weapon.equipped === true") todo
-              BasicButton(v-else size="xs" priority="secondary" @click="equip(weapon)") Equip
       .flex.justify-end(v-if="character.inventory?.weapons?.length < GENERAL.maxInventoryWeapons")
         BasicButton(size="sm" priority="secondary" @click="openPicker") Add Weapon
     SheetBonuses(
@@ -28,12 +27,7 @@
       :bonuses="proficiencyBonuses"
     )
     BasicDrawer(ref="equipmentPicker" title="Weapons")
-      InventoryEquipmentPicker(
-        :type="pickerType"
-        :character="character"
-        @select="selectItem"
-        @remove-equipped-item="removeEquippedItem"
-      )
+      InventoryEquipmentPicker(type="weapon" :character="character" @select="selectItem")
 </template>
 
 <script>
@@ -44,7 +38,6 @@
 
 <script setup>
   import GENERAL from '~/data/general';
-  import WEAPONS from '~/data/weapons';
 
   import { newWeapon } from '~/helpers/constructors';
   import {
@@ -52,12 +45,11 @@
     getFeaturesByAttribute,
     respectBurden,
   } from '~/helpers/character';
-
-  import { PRIMARY_WEAPON_TYPE } from '~/config/equipmentPicker';
+import { clone } from '~/helpers/utility';
 
   const charactersStore = useCharactersStore();
+  const weaponsStore = useWeaponsStore();
 
-  const pickerType = ref(PRIMARY_WEAPON_TYPE);
   const baseProficiency = ref(1);
   const equipmentPicker = ref(null);
   const bonuses = ref(null);
@@ -112,7 +104,7 @@
     equipmentPicker.value.open();
   };
 
-  const selectItem = ({ item }) => {
+  const selectItem = (item) => {
     if (props.character.inventory.weapons.length < GENERAL.maxInventoryWeapons) {
       props.character.inventory.weapons.push(newWeapon({ name: item.name, itemId: item.id }));
       charactersStore.saveCharacter(props.character);
@@ -121,23 +113,33 @@
     equipmentPicker.value.close();
   };
 
-  const removeEquippedItem = () => {
-    // TODO
-    // let itemRemoved = false;
+  const equip = (equipWeapon) => {
+    const equipData = weaponsStore.weapon(equipWeapon.itemId);
 
-    // if (activeSlot.value === SLOT_PRIMARY_WEAPON) {
-    //   props.character.equipment.primaryWeapon = newWeapon();
-    //   itemRemoved = true;
-    // }
+    props.character.inventory.weapons.forEach((carriedWeapon) => {
+      const carriedData = weaponsStore.weapon(carriedWeapon.itemId);
 
-    // if (activeSlot.value === SLOT_SECONDARY_WEAPON) {
-    //   props.character.equipment.secondaryWeapon = newWeapon();
-    //   itemRemoved = true;
-    // }
+      // equip weapon
+      if (equipWeapon.id === carriedWeapon.id && !carriedWeapon.equipped) {
+        carriedWeapon.equipped = true;
+        return;
+      }
 
-    // if (itemRemoved) {
-    //   charactersStore.saveCharacter(props.character);
-    //   equipmentPicker.value.close();
-    // }
+      // unequip conflicting weapons
+      if (
+        equipWeapon.id !== carriedWeapon.id &&
+        carriedWeapon.equipped &&
+        (
+          equipData.burden > 1 ||
+          carriedData.burden > 1 ||
+          equipData.slot === carriedData.slot
+        )
+      ) {
+        carriedWeapon.equipped = false;
+        return;
+      }
+    });
+
+    charactersStore.saveCharacter(props.character);
   };
 </script>

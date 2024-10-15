@@ -7,11 +7,13 @@ module.exports = {
     './nuxt.config.{js,ts}',
   ],
   safelist: [
-    'text-red-600',
-    'text-green-600',
-    'text-orange-600',
-    'text-cyan-950',
-    'text-pink-800',
+    'text-blue-600', // weapon/armor tier 2
+    'text-purple-700', // weapon/armor tier 3
+    'text-orange-600', // weapon/armor tier 4
+    'text-red-600', // alert
+    'text-green-600', // alert
+    'text-cyan-950', // alert
+    'text-pink-800', // alert
   ],
   darkMode: 'media', // or 'media' or 'class'
   theme: {
