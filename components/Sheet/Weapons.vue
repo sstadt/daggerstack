@@ -10,7 +10,7 @@
     .space-y-4
       transition-group(name="slide-fade-left")
         InventoryWeaponControls(
-          v-for="weapon in character.inventory.weapons"
+          v-for="(weapon, index) in character.inventory.weapons"
           :key="weapon.id"
           :character-weapon="weapon"
           @equip="equip(weapon)"
@@ -18,6 +18,8 @@
           InventoryWeapon.cursor-pointer(
             :weapon="weaponsStore.weapon(weapon.itemId)"
             :character-weapon="weapon"
+            @update="(updatedWeapon) => updateItem(updatedWeapon, index)"
+            @remove="removeItem(index)"
           )
       .flex.justify-end(v-if="character.inventory?.weapons?.length < GENERAL.maxInventoryWeapons")
         BasicButton(size="sm" priority="secondary" @click="openPicker") Add Weapon
@@ -45,7 +47,7 @@
     getFeaturesByAttribute,
     respectBurden,
   } from '~/helpers/character';
-import { clone } from '~/helpers/utility';
+  import { clone } from '~/helpers/utility';
 
   const charactersStore = useCharactersStore();
   const weaponsStore = useWeaponsStore();
@@ -140,6 +142,19 @@ import { clone } from '~/helpers/utility';
       }
     });
 
+    charactersStore.saveCharacter(props.character);
+  };
+
+  const updateItem = (updates, index) => {
+    const existingWeapon = clone(props.character.inventory.weapons[index]);
+    const updatedWeapon = Object.assign(existingWeapon, updates);
+
+    props.character.inventory.weapons.splice(index, 1, updatedWeapon);
+    charactersStore.saveCharacter(props.character);
+  };
+
+  const removeItem = (index) => {
+    props.character.inventory.weapons.splice(index, 1);
     charactersStore.saveCharacter(props.character);
   };
 </script>

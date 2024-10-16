@@ -46,6 +46,7 @@
 
   const updateItem = (updatedItem, index) => {
     const item = Object.assign({}, props.character.inventory.items[index], updatedItem);
+
     props.character.inventory.items.splice(index, 1, item);
     charactersStore.saveCharacter(props.character);
   };
