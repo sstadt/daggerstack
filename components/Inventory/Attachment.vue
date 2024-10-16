@@ -1,5 +1,5 @@
 <template lang="pug">
-  .space-y-1
+  .space-y-1(v-if="attachmentItem")
     .flex.justify-between.items-center.space-x-2
       p.font-bold.truncate.text-pink-800 {{ attachment.name }}
       InputCheckboxCounter.no-shrink(

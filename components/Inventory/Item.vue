@@ -30,6 +30,9 @@
           )
       p.text-sm.text-slate-600(v-if="item.description") {{ item.description }}
       p.text-sm.text-slate-600(v-if="characterItem.notes !== ''") {{ characterItem.notes }}
+    .flex.justify-between.flex-grow(v-else-if="!baseItem && !item?.custom")
+      h3.font-bold.truncate Homebrew Item Deleted
+      BasicButton(size="sm" priority="secondary" @click.stop="remove") Delete
     //- item editor
     BasicDrawer(v-if="characterItem" ref="details" title="Item Details" @close="detailsClosed")
       .px-8.space-y-6
@@ -143,38 +146,9 @@
     if (!item.value.attach || props.readOnly) return [];
 
     const options = [];
-    const primaryWeapon = getWeapon(props.character.equipment.primaryWeapon.name);
-    const secondaryWeapon = getWeapon(props.character.equipment.secondaryWeapon.name);
-    const armor = getArmor(props.character.equipment.armor.name);
+    const armor = getArmor(props.character.inventory.armor?.name);
 
-    // primary weapon
-    if (primaryWeapon && !primaryWeapon.feature) {
-      if (
-        item.value.attach.type === ATTACH_TYPE_WEAPON ||
-        item.value.attach.type === ATTACH_TYPE_MELEE_WEAPON &&
-        primaryWeapon.range.toLowerCase() === 'melee'
-      ) {
-        options.push({
-          label: props.character.equipment.primaryWeapon.name,
-          value: props.character.equipment.primaryWeapon.id,
-        });
-      }
-    }
-
-    // secondary weapon
-    if (secondaryWeapon && !secondaryWeapon.feature) {
-      if (
-        item.value.attach.type === ATTACH_TYPE_WEAPON ||
-        item.value.attach.type === ATTACH_TYPE_MELEE_WEAPON &&
-        secondaryWeapon.range.toLowerCase() === 'melee'
-      ) {
-        options.push({
-          label: props.character.equipment.secondaryWeapon.name,
-          value: props.character.equipment.secondaryWeapon.id,
-        });
-      }
-    }
-
+    // weapons
     if (
       item.value.attach.type === ATTACH_TYPE_WEAPON ||
       item.value.attach.type === ATTACH_TYPE_MELEE_WEAPON
@@ -200,8 +174,8 @@
 
     if (armor && !armor.feature && item.value.attach.type === ATTACH_TYPE_ARMOR) {
       options.push({
-        label: props.character.equipment.armor.name,
-        value: props.character.equipment.armor.id,
+        label: props.character.inventory.armor.name,
+        value: props.character.inventory.armor.id,
       });
     }
 

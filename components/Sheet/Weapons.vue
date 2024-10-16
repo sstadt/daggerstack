@@ -18,6 +18,7 @@
           InventoryWeapon.cursor-pointer(
             :weapon="weaponsStore.weapon(weapon.itemId)"
             :character-weapon="weapon"
+            :character="character"
             @update="(updates) => updateItem(updates, index)"
             @remove="removeItem(index)"
           )
