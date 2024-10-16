@@ -12,6 +12,7 @@
     .divide-y
       button.w-full.text-left.p-4(
         v-for="item in sortedItems"
+        :key="item.id"
         class="focus:bg-slate-100"
         @click="selectItem(item)"
       )

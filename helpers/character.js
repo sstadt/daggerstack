@@ -5,7 +5,6 @@ import GENERAL from '~/data/general';
 import SUBCLASSES from '~/data/subclasses';
 import WEAPONS from '~/data/weapons';
 import ARMOR from '~/data/armor';
-import ITEMS from '~/data/items';
 import COMMUNITY from '~/data/community';
 import ANCESTRY from '~/data/ancestry';
 
@@ -106,15 +105,11 @@ export const calculateModifiers = (features, attribute) => {
  * @returns An array of features
  */
 export const getFeaturesByAttribute = (character, attribute, options = {}) => {
-  const primaryWeapon = character.equipment?.primaryWeapon?.name
-    ? getWeapon(character.equipment.primaryWeapon.name)
-    : null;
-  const secondaryWeapon = character.equipment?.secondaryWeapon?.name
-    ? getWeapon(character.equipment.secondaryWeapon.name)
-    : null;
-  const burden = respectBurden(character) && character.equipment
-    ? (primaryWeapon?.burden || 0) + (secondaryWeapon?.burden || 0)
-    : 0;
+  // const weapons = character.inventory?.weapons
+  //   .filter((characterWeapon) => characterWeapon.equipped)
+  //   .map((characterWeapon) => {
+  //     return { ...weaponsStore.weapon(characterWeapon.id) };
+  //   });
   const subclasses = character.subclass
     ? character.subclass.map((characterSubclass) => {
         return allSubclasses.find((subclass) => subclass.name === characterSubclass);
@@ -131,18 +126,12 @@ export const getFeaturesByAttribute = (character, attribute, options = {}) => {
   const features = [];
 
   // weapons
-  if (primaryWeapon) {
-    if (primaryWeapon?.feature?.modify && primaryWeapon.feature.modify[attribute]) {
-      features.push({ ...primaryWeapon.feature });
-    }
-  }
-
-  // verify we are not carrying too much before including secondary weapon feature
-  if (burden < 3 && secondaryWeapon) {
-    if (secondaryWeapon?.feature?.modify && secondaryWeapon.feature.modify[attribute]) {
-      features.push({ ...secondaryWeapon.feature });
-    }
-  }
+  // if (weapons) {
+  //   weapons.forEach((weapon) => {
+  //     console.log(weapon);
+  //     // features.push({ ...primaryWeapon.feature });
+  //   });
+  // }
 
   // items
   if (character.inventory?.items) {

@@ -43,15 +43,12 @@
   import GENERAL from '~/data/general';
 
   import { newWeapon } from '~/helpers/constructors';
-  import {
-    calculateModifiers,
-    getFeaturesByAttribute,
-    respectBurden,
-  } from '~/helpers/character';
+  import { respectBurden } from '~/helpers/character';
   import { clone } from '~/helpers/utility';
 
   const charactersStore = useCharactersStore();
   const weaponsStore = useWeaponsStore();
+  const { getFeaturesByAttribute, calculateModifiers } = useSheetBonuses();
 
   const baseProficiency = ref(1);
   const equipmentPicker = ref(null);

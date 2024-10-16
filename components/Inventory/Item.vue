@@ -72,7 +72,6 @@
 </script>
 
 <script setup>
-  import { getArmor, getWeapon } from '~/helpers/character';
   import { uuidv4 } from '~/helpers/utility';
 
   import {
@@ -84,6 +83,8 @@
   const { useIsHomebrew, useTitleClass } = useItem();
 
   const itemsStore = useItemsStore();
+  const weaponsStore = useWeaponsStore();
+  const armorStore = useArmorStore();
 
   const emit = defineEmits(['update', 'remove']);
 
@@ -146,7 +147,7 @@
     if (!item.value.attach || props.readOnly) return [];
 
     const options = [];
-    const armor = getArmor(props.character.inventory.armor?.name);
+    const armor = armorStore.armor(props.character.inventory.armor?.itemId);
 
     // weapons
     if (
@@ -154,7 +155,7 @@
       item.value.attach.type === ATTACH_TYPE_MELEE_WEAPON
     ) {
       props.character.inventory.weapons.forEach((characterWeapon) => {
-        const weapon = getWeapon(characterWeapon.name);
+        const weapon = weaponsStore.weapon(characterWeapon.itemId);
 
         if (
           weapon && !weapon.feature &&

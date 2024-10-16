@@ -82,124 +82,154 @@
 </template>
 
 <script>
-  import { useCharactersStore } from '~/stores/characters';
-  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
-
-  import GENERAL from '~/data/general';
-
   export default {
     name: 'SheetStatistics',
-    inject: ['mq'],
-    props: {
-      character: {
-        type: Object,
-        required: true,
-      },
-    },
-    data() {
-      return {
-        currentArmor: this.character.armor.current,
-        maxArmor: GENERAL.maxArmorSlots,
-        selectedTrait: 'agility',
-        selectedSecondaryTrait: null,
-      };
-    },
-    setup() {
-      const charactersStore = useCharactersStore();
-
-      return { charactersStore };
-    },
-    computed: {
-      armorSlotBonuses() {
-        return getFeaturesByAttribute(this.character, 'armorSlot');
-      },
-      armorSlots() {
-        return this.character.armor.slots +
-          calculateModifiers(this.armorSlotBonuses, 'armorSlot');
-      },
-      evasionBonuses() {
-        return getFeaturesByAttribute(this.character, 'evasion');
-      },
-      characterEvasion() {
-        return this.character.evasion +
-          calculateModifiers(this.evasionBonuses, 'evasion');
-      },
-      armorScoreBonuses() {
-        return getFeaturesByAttribute(this.character, 'armorScore');
-      },
-      characterArmor() {
-        return 0 +
-          calculateModifiers(this.armorScoreBonuses, 'armorScore');
-      },
-      agilityBonuses() {
-        return getFeaturesByAttribute(this.character, 'agility');
-      },
-      characterAgility() {
-        return this.character.agility.score +
-          calculateModifiers(this.agilityBonuses, 'agility');
-      },
-      strengthBonuses() {
-        return getFeaturesByAttribute(this.character, 'strength');
-      },
-      characterStrength() {
-        return this.character.strength.score +
-          calculateModifiers(this.strengthBonuses, 'strength');
-      },
-      finesseBonuses() {
-        return getFeaturesByAttribute(this.character, 'finesse');
-      },
-      characterFinesse() {
-        return this.character.finesse.score +
-          calculateModifiers(this.finesseBonuses, 'finesse');
-      },
-      instinctBonuses() {
-        return getFeaturesByAttribute(this.character, 'instinct');
-      },
-      characterInstinct() {
-        return this.character.instinct.score +
-          calculateModifiers(this.instinctBonuses, 'instinct');
-      },
-      presenceBonuses() {
-        return getFeaturesByAttribute(this.character, 'presence');
-      },
-      characterPresence() {
-        return this.character.presence.score +
-          calculateModifiers(this.presenceBonuses, 'presence');
-      },
-      knowledgeBonuses() {
-        return getFeaturesByAttribute(this.character, 'knowledge');
-      },
-      characterKnowledge() {
-        return this.character.knowledge.score +
-          calculateModifiers(this.knowledgeBonuses, 'knowledge');
-      },
-      selectedBonuses() {
-        return this.selectedTrait
-          ? this[`${this.selectedTrait}Bonuses`]
-          : [];
-      },
-      selectedSecondaryBonuses() {
-        return this.selectedSecondaryTrait
-          ? this[`${this.selectedSecondaryTrait}Bonuses`]
-          : [];
-      },
-    },
-    methods: {
-      showBonuses(trait) {
-        this.selectedTrait = trait;
-        this.selectedSecondaryTrait = trait === 'armorScore' ? 'armorSlot' : null;
-        this.$nextTick(() => {
-          this.$refs.bonuses.open();
-        });
-      },
-    },
-    watch: {
-      currentArmor(newVal, oldVal) {
-        if (newVal !== oldVal) {
-          this.character.armor.current = newVal;
-          this.charactersStore.saveCharacter(this.character);
-        }
-      },
-    },
   };
+</script>
+
+<script setup>
+  import GENERAL from '~/data/general';
+  import { useMq } from "vue3-mq";
+
+  const mq = useMq();
+  const charactersStore = useCharactersStore();
+  const { getFeaturesByAttribute, calculateModifiers } = useSheetBonuses();
+
+  const props = defineProps({
+    character: {
+      type: Object,
+      required: true,
+    },
+  });
+
+  const currentArmor = ref(props.character.armor.current);
+  const maxArmor = ref(GENERAL.maxArmorSlots);
+  const selectedTrait = ref('agility');
+  const selectedSecondaryTrait = ref(null);
+  const bonuses = ref(null);
+
+  const armorSlotBonuses = computed(() => {
+    return getFeaturesByAttribute(props.character, 'armorSlot');
+  });
+
+  const evasionBonuses = computed(() => {
+    return getFeaturesByAttribute(props.character, 'evasion');
+  });
+
+  const armorScoreBonuses = computed(() => {
+    return getFeaturesByAttribute(props.character, 'armorScore');
+  });
+
+  const agilityBonuses = computed(() => {
+    return getFeaturesByAttribute(props.character, 'agility');
+  });
+
+  const strengthBonuses = computed(() => {
+    return getFeaturesByAttribute(props.character, 'strength');
+  });
+
+  const finesseBonuses = computed(() => {
+    return getFeaturesByAttribute(props.character, 'finesse');
+  });
+
+  const instinctBonuses = computed(() => {
+    return getFeaturesByAttribute(props.character, 'instinct');
+  });
+
+  const presenceBonuses = computed(() => {
+    return getFeaturesByAttribute(props.character, 'presence');
+  });
+
+  const knowledgeBonuses = computed(() => {
+    return getFeaturesByAttribute(props.character, 'knowledge');
+  });
+
+  const armorSlots = computed(() => {
+    return props.character.armor.slots +
+      calculateModifiers(armorSlotBonuses.value, 'armorSlot');
+  });
+
+  const characterEvasion = computed(() => {
+    return props.character.evasion +
+      calculateModifiers(evasionBonuses.value, 'evasion');
+  });
+
+  const characterArmor = computed(() => {
+    return 0 +
+      calculateModifiers(armorScoreBonuses.value, 'armorScore');
+  });
+
+  const characterAgility = computed(() => {
+    return props.character.agility.score +
+      calculateModifiers(agilityBonuses.value, 'agility');
+  });
+
+  const characterStrength = computed(() => {
+    return props.character.strength.score +
+      calculateModifiers(strengthBonuses.value, 'strength');
+  });
+
+  const characterFinesse = computed(() => {
+    return props.character.finesse.score +
+      calculateModifiers(finesseBonuses.value, 'finesse');
+  });
+
+  const characterInstinct = computed(() => {
+    return props.character.instinct.score +
+      calculateModifiers(instinctBonuses.value, 'instinct');
+  });
+
+  const characterPresence = computed(() => {
+    return props.character.presence.score +
+      calculateModifiers(presenceBonuses.value, 'presence');
+  });
+
+  const characterKnowledge = computed(() => {
+    return props.character.knowledge.score +
+      calculateModifiers(knowledgeBonuses.value, 'knowledge');
+  });
+
+  const selectedBonuses = computed(() => {
+    switch (selectedTrait.value) {
+      case 'armorSlot':
+        return armorSlotBonuses.value;
+      case 'evasion':
+        return evasionBonuses.value;
+      case 'armorScore':
+        return armorScoreBonuses.value;
+      case 'agility':
+        return agilityBonuses.value;
+      case 'strength':
+        return strengthBonuses.value;
+      case 'finesse':
+        return finesseBonuses.value;
+      case 'instinct':
+        return instinctBonuses.value;
+      case 'presence':
+        return presenceBonuses.value;
+      case 'knowledge':
+        return knowledgeBonuses.value;
+      default:
+        return [];
+    }
+  });
+
+  const selectedSecondaryBonuses = computed(() => {
+    return selectedSecondaryTrait.value === 'armorSlot' ? armorSlotBonuses.value : [];
+  });
+
+  const showBonuses = (trait) => {
+    selectedTrait.value = trait;
+    selectedSecondaryTrait.value = trait === 'armorScore' ? 'armorSlot' : null;
+    nextTick(() => {
+      bonuses.value.open();
+    });
+  };
+
+  watch(currentArmor, (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      props.character.armor.current = newVal;
+      charactersStore.saveCharacter(props.character);
+    }
+  });
 </script>
