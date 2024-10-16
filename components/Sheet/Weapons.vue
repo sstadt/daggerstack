@@ -18,7 +18,7 @@
           InventoryWeapon.cursor-pointer(
             :weapon="weaponsStore.weapon(weapon.itemId)"
             :character-weapon="weapon"
-            @update="(updatedWeapon) => updateItem(updatedWeapon, index)"
+            @update="(updates) => updateItem(updates, index)"
             @remove="removeItem(index)"
           )
       .flex.justify-end(v-if="character.inventory?.weapons?.length < GENERAL.maxInventoryWeapons")
@@ -146,7 +146,7 @@
   };
 
   const updateItem = (updates, index) => {
-    const existingWeapon = clone(props.character.inventory.weapons[index]);
+    const existingWeapon = { ...props.character.inventory.weapons[index] };
     const updatedWeapon = Object.assign(existingWeapon, updates);
 
     props.character.inventory.weapons.splice(index, 1, updatedWeapon);

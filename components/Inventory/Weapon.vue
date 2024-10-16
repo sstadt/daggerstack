@@ -2,6 +2,7 @@
   .w-full
     .space-y-1(@click="openDetails")
       .flex.justify-between.items-center
+        NuxtIcon.text-blue-600.font-sm(v-if="isHomebrew" name="homebrew")
         h3.text-xl.font-bold.truncate.space-x-1(:class="titleClass") {{ weapon.name }}
       .flex.justify-between
         p.space-x-1
@@ -75,7 +76,6 @@
     },
   });
 
-  const attachmentChargesUsed = ref(0);
   const weaponNotes = ref(props.characterWeapon?.notes || '');
   const deleting = ref(false);
   const details = ref(null);
