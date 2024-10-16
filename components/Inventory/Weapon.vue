@@ -1,7 +1,7 @@
 <template lang="pug">
   .w-full
     .space-y-1(@click="openDetails")
-      .flex.justify-between.items-center
+      .flex.items-center.space-x-1
         NuxtIcon.text-blue-600.font-sm(v-if="isHomebrew" name="homebrew")
         h3.text-xl.font-bold.truncate.space-x-1(:class="titleClass") {{ weapon.name }}
       .flex.justify-between

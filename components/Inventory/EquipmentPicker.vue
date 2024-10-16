@@ -1,6 +1,6 @@
 <template lang="pug">
   .equipment-picker
-    .sticky.p-4.top-0.bg-white.shadow.space-y-1
+    .sticky.p-4.top-0.bg-white.shadow.space-y-1.z-10
       h3.text-xl.font-black.uppercase Available Items
       .flex.space-x-6
         InputFilter(

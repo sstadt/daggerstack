@@ -32,7 +32,7 @@
       p.text-sm.text-slate-600(v-if="characterItem.notes !== ''") {{ characterItem.notes }}
     .flex.justify-between.flex-grow(v-else-if="!baseItem && !item?.custom")
       h3.font-bold.truncate Homebrew Item Deleted
-      BasicButton(size="sm" priority="secondary" @click.stop="remove") Delete
+      BasicButton(size="sm" priority="secondary" @click.stop="emit('remove')") Delete
     //- item editor
     BasicDrawer(v-if="characterItem" ref="details" title="Item Details" @close="detailsClosed")
       .px-8.space-y-6
