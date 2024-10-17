@@ -168,10 +168,7 @@
   const currentArmor = ref(props.character.armor.current);
   const maxArmor = ref(GENERAL.maxArmorSlots);
   const settingsLoaded = ref(false);
-  const currentTierTab = ref(0);
   const selectedTiers = ref([1]);
-
-  let swiper = null;
 
   const showShapeshiftStats = computed(() => {
     // basic shapeshift forms
@@ -227,14 +224,12 @@
 
     const hybridForms = [];
 
-    forms.value.forEach((formList) => {
-      if (!selectedForm.value.hybridTier.includes(formList.tier)) return;
+    forms.value.forEach((form) => {
+      if (!selectedForm.value.hybridTier.includes(form.tier)) return;
 
-      formList.forms.forEach((form) => {
-        if (!form.upgradeTier && !form.hybrid) {
-          hybridForms.push(clone({ ...form }));
-        }
-      });
+      if (!form.upgradeTier && !form.hybrid) {
+        hybridForms.push(clone({ ...form }));
+      }
     });
 
     return hybridForms;
@@ -490,22 +485,6 @@
     selectedForm.value = form;
   };
 
-  const next = () => {
-    swiper.slideTo(Math.min(currentTierTab.value + 1, forms.value.length));
-  };
-
-  const prev = () => {
-    swiper.slideTo(Math.max(currentTierTab.value - 1, 0));
-  };
-
-  const onSwiper = (slider) => {
-    swiper = slider;
-  };
-
-  const onSlideChange = (slider) => {
-    currentTierTab.value = slider.activeIndex;
-  };
-
   const selectUpgradedForm = (form) => {
     upgradedForm.value = clone(form);
   };
@@ -528,7 +507,7 @@
       }
     });
 
-    for (let i = 2, j = characterTier.value; i < j; i++) {
+    for (let i = 2, j = characterTier.value; i <= j; i++) {
       selectedTiers.value.push(i);
     }
 

@@ -41,7 +41,7 @@ export const respectBurden = (character) => {
  * @returns Boolean True is the character can have a companion
  */
 export const hasCompanion = (character) => {
-  let hasCompanion = false;
+  let characterHasCompanion = false;
 
   character.subclass.forEach((subclass) => {
     const multiclass = character.levelSelections.find((selection) => selection.type === 'multiclass');
@@ -54,12 +54,12 @@ export const hasCompanion = (character) => {
       classData && classData.foundation.companion === true ||
       multiclassData && multiclassData.foundation.companion === true
     ) {
-      hasCompanion = true;
-      return; // break forEach
+      characterHasCompanion = true;
+      return;
     }
   });
 
-  return hasCompanion;
+  return characterHasCompanion;
 };
 
 /**
