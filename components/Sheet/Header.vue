@@ -44,129 +44,139 @@
 </template>
 
 <script>
-  import { mapState } from 'pinia';
+  export default {
+    name: 'SheetHeader',
+  };
+</script>
+
+<script setup>
+  import { useMq } from 'vue3-mq';
 
   import CLASSES from '~/data/classes';
 
   import { ucFirst, titleCase } from '~/helpers/string';
-  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
 
-  export default {
-    name: 'SheetHeader',
-    inject: ['mq'],
-    props: {
-      character: {
-        type: Object,
-        required: true,
-      },
+  const userStore = useUserStore();
+  const toastStore = useToastStore();
+  const sheetStore = useSheetStore();
+
+  const mq = useMq();
+  const { getFeaturesByAttribute, calculateModifiers } = useSheetBonuses();
+
+  const emit = defineEmits(['level-up']);
+
+  const props = defineProps({
+    character: {
+      type: Object,
+      required: true,
     },
-    data() {
-      return {
-        transition: 'paginate-left',
-        currentIndex: 0,
-      };
-    },
-    setup() {
-      const userStore = useUserStore();
-      const toastStore = useToastStore();
+  });
 
-      return { userStore, toastStore };
-    },
-    computed: {
-      ...mapState(useSheetStore, ['key']),
-      tabs() {
-        const tabs = [];
+  const transition = ref('paginate-left');
+  const currentIndex = ref(0);
+  const characterDrawer = ref(null);
 
-        tabs.push({ title: 'Rest', icon: 'campfire' });
-        tabs.push({ title: 'Status Effects', icon: 'buff' });
-        tabs.push({ title: 'Persona', icon: 'persona' });
+  const tabs = computed(() => {
+    const tabs = [];
 
-        if (this.mq.lgPlus) {
-          tabs.push({ title: 'Background', icon: 'background' })
-        }
+    tabs.push({ title: 'Rest', icon: 'campfire' });
+    tabs.push({ title: 'Status Effects', icon: 'buff' });
+    tabs.push({ title: 'Persona', icon: 'persona' });
 
-        tabs.push({ title: 'Settings', icon: 'cog' });
+    if (mq.lgPlus) {
+      tabs.push({ title: 'Background', icon: 'background' })
+    }
 
-        return tabs;
-      },
-      classData() {
-        return CLASSES[this.character.baseClass];
-      },
-      multiclassUpgrade() {
-        return this.character.levelSelections
-          .find((selection) => selection.type === 'multiclass');
-      },
-      classLabel() {
-        const [ primarySubclass, secondarySubclass ] = this.character.subclass;
-        const classArr = this.mq.mdMinus
-          ? [ titleCase(this.character.baseClass) ]
-          : [ titleCase(`${primarySubclass} ${this.character.baseClass}`) ];
+    tabs.push({ title: 'Settings', icon: 'cog' });
 
-        if (this.multiclassUpgrade) {
-          const multiclassLabel = this.mq.mdMinus
-            ? this.multiclassUpgrade.options.class
-            : `${secondarySubclass} ${this.multiclassUpgrade.options.class}`;
+    return tabs;
+  });
 
-          classArr.push(titleCase(multiclassLabel));
-        }
+  const classData = computed(() => {
+    return CLASSES[props.character.baseClass];
+  });
 
-        return classArr.join(' / ');
-      },
-      domains() {
-        const domains = [ ...this.classData.domains ];
+  const multiclassUpgrade = computed(() => {
+    return props.character.levelSelections
+      .find((selection) => selection.type === 'multiclass');
+  });
 
-        if (this.multiclassUpgrade) domains.push(this.multiclassUpgrade.options.domain);
+  const classLabel = computed(() => {
+    const [ primarySubclass, secondarySubclass ] = props.character.subclass;
+    const classArr = mq.mdMinus
+      ? [ titleCase(props.character.baseClass) ]
+      : [ titleCase(`${primarySubclass} ${props.character.baseClass}`) ];
 
-        return this.healthPercent > 0 ? domains : ['skull'];
-      },
-      domainsClass() {
-        return {
-          '-bottom-8': this.domains.length < 3,
-        };
-      },
-      domainsStyle() {
-        return {
-          'font-size': this.domains.length < 3 ? '180px' : '150px',
-        };
-      },
-      healthSlots() {
-        const healthSlotBonuses = getFeaturesByAttribute(this.character, 'healthSlot');
+    if (multiclassUpgrade.value) {
+      const multiclassLabel = mq.mdMinus
+        ? multiclassUpgrade.value.options.class
+        : `${secondarySubclass} ${multiclassUpgrade.value.options.class}`;
 
-        return this.character.health.slots +
-          calculateModifiers(healthSlotBonuses, 'healthSlot');
-      },
-      healthPercent() {
-        return (1 - (this.character.health.current / this.healthSlots)).toFixed(2);
-      },
-      headerClass() {
-        return {
-          'bg-black': this.healthPercent > 0.9,
-          'bg-emerald-950': this.healthPercent > 0.7 && this.healthPercent <= 0.9,
-          'bg-yellow-950': this.healthPercent > 0.3 && this.healthPercent <= 0.7,
-          'bg-red-950': this.healthPercent <= 0.3,
-        };
-      },
-    },
-    methods: {
-      ucFirst,
-      openDrawer() {
-        this.$refs.characterDrawer.open();
-      },
-      closeDrawer() {
-        this.$refs.characterDrawer.close();
-      },
-      setTab(index) {
-        this.transition = index < this.currentIndex
-          ? 'paginate-left'
-          : 'paginate-right';
+      classArr.push(titleCase(multiclassLabel));
+    }
 
-        this.currentIndex = index;
-      },
-      levelUp() {
-        this.$emit('level-up');
-        this.$refs.characterDrawer.close();
-      },
-    },
+    return classArr.join(' / ');
+  });
+
+  const domains = computed(() => {
+    const domains = [ ...classData.value.domains ];
+
+    if (multiclassUpgrade.value) domains.push(multiclassUpgrade.value.options.domain);
+
+    return healthPercent.value > 0 ? domains : ['skull'];
+  });
+
+  const domainsClass = computed(() => {
+    return {
+      '-bottom-8': domains.value.length < 3,
+    };
+  });
+
+  const domainsStyle = computed(() => {
+    return {
+      'font-size': domains.value.length < 3 ? '180px' : '150px',
+    };
+  });
+
+  const healthSlots = computed(() => {
+    const healthSlotBonuses = getFeaturesByAttribute(props.character, 'healthSlot');
+
+    return props.character.health.slots +
+      calculateModifiers(healthSlotBonuses, 'healthSlot');
+  });
+
+  const healthPercent = computed(() => {
+    return (1 - (props.character.health.current / healthSlots.value)).toFixed(2);
+  });
+
+  const headerClass = computed(() => {
+    return {
+      'bg-black': healthPercent.value > 0.9,
+      'bg-emerald-950': healthPercent.value > 0.7 && healthPercent.value <= 0.9,
+      'bg-yellow-950': healthPercent.value > 0.3 && healthPercent.value <= 0.7,
+      'bg-red-950': healthPercent.value <= 0.3,
+    };
+  });
+
+  const openDrawer = () => {
+    characterDrawer.value.open();
+  };
+
+  const closeDrawer = () => {
+    characterDrawer.value.close();
+  };
+
+  const setTab = (index) => {
+    transition.value = index < currentIndex.value
+      ? 'paginate-left'
+      : 'paginate-right';
+
+    currentIndex.value = index;
+  };
+
+  const levelUp = () => {
+    emit('level-up');
+    characterDrawer.value.close();
   };
 </script>
 

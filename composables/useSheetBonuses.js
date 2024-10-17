@@ -12,6 +12,17 @@ export const useSheetBonuses = () => {
   const weaponsStore = useWeaponsStore();
   const armorStore = useArmorStore();
 
+  /**
+   * Get all character sheet features that modify a given attribute.
+   * If companion is passed, skips all modifier types except level
+   * selections (training).
+   *
+   * @param {Object} character The character to compile modifiers for
+   * @param {attribute} attribute The attribute to compile modifiers for
+   * @param {Object} options Additional options for filtering
+   *  exclude: Array of modifier types to exclude
+   * @returns An array of features
+   */
   const getFeaturesByAttribute = (character, attribute, options = {}) => {
     const weapons = character.inventory?.weapons
       .filter((characterWeapon) => characterWeapon.equipped)
@@ -162,6 +173,22 @@ export const useSheetBonuses = () => {
     return features;
   };
 
+  /**
+   * Calculate the total modifiers to a given attribute from an array
+   * of upgrades. Each child of the modify parameter will count it's
+   * modifier in the end result.
+   *
+   * Ex feature:
+   *
+   * { modify: { agility: 1, armorSlot: 2 } }
+   *
+   * Passing 'agility' as the attribute argument will increase the total
+   * modifier by 1 given the above feature.
+   *
+   * @param {Array} features The array of enhancements
+   * @param {String} attribute The name of the attribute to increase
+   * @returns
+   */
   const calculateModifiers = (features, attribute) => {
     let score = 0;
 

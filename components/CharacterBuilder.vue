@@ -3,87 +3,81 @@
     .character-builder(v-if="saveLoaded")
       h2.text-center.text-2xl.font-black.uppercase.p-4 Create Character
       .flex.flex-col.flex-grow
-        BuilderProgress(:page="currentPage" :steps="8" @set="setPage")
+        BuilderProgress(:page="builderStore.currentPage" :steps="8" @set="setPage")
         .flex.flex-grow
           transition(:name="transition" mode="out-in")
-            BuilderStep1(v-if="currentPage === 0" @next="nextPage")
-            BuilderStep2(v-else-if="currentPage === 1" @next="nextPage")
-            BuilderStep3(v-else-if="currentPage === 2" @next="nextPage")
-            BuilderStep4(v-else-if="currentPage === 3" @next="nextPage")
-            BuilderStep5(v-else-if="currentPage === 4" @next="nextPage")
-            BuilderStep6(v-else-if="currentPage === 5" @next="nextPage")
-            BuilderStep7(v-else-if="currentPage === 6" @next="nextPage")
-            BuilderStep8(v-else-if="currentPage === 7" @next="createCharacter")
+            BuilderStep1(v-if="builderStore.currentPage === 0" @next="nextPage")
+            BuilderStep2(v-else-if="builderStore.currentPage === 1" @next="nextPage")
+            BuilderStep3(v-else-if="builderStore.currentPage === 2" @next="nextPage")
+            BuilderStep4(v-else-if="builderStore.currentPage === 3" @next="nextPage")
+            BuilderStep5(v-else-if="builderStore.currentPage === 4" @next="nextPage")
+            BuilderStep6(v-else-if="builderStore.currentPage === 5" @next="nextPage")
+            BuilderStep7(v-else-if="builderStore.currentPage === 6" @next="nextPage")
+            BuilderStep8(v-else-if="builderStore.currentPage === 7" @next="createCharacter")
 </template>
 
 <script>
-  import { mapState } from 'pinia';
-
-  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
-
   export default {
     name: 'CharacterBuilder',
-    data() {
-      return {
-        saveLoaded: false,
-        transition: 'paginate-left',
-      };
-    },
-    computed: {
-      ...mapState(useBuilderStore, ['currentPage', 'character']),
-      ...mapState(useUserStore, ['user']),
-    },
-    setup() {
-      const builderStore = useBuilderStore();
-      const charactersStore = useCharactersStore();
+  };
+</script>
 
-      return { builderStore, charactersStore };
-    },
-    mounted() {
-      if (!this.user) {
-        this.$router.push('/');
-      }
+<script setup>
+  const router = useRouter();
+  const route = useRoute();
+  const builderStore = useBuilderStore();
+  const charactersStore = useCharactersStore();
+  const userStore = useUserStore();
+  const { getFeaturesByAttribute, calculateModifiers } = useSheetBonuses();
 
-      if (!this.$route.query.new) {
-        this.builderStore.loadSavedCharacter();
-      } else {
-        this.builderStore.currentPage = 0;
-        this.builderStore.savePage();
-        this.$router.replace({'query': null});
-      }
+  const saveLoaded = ref(false);
+  const transition = ref('paginate-left');
 
-      this.saveLoaded = true;
-    },
-    methods: {
-      nextPage() {
-        this.setPage(this.currentPage + 1);
+  onMounted(() => {
+    if (!userStore.user) {
+      router.push('/');
+    }
+
+    if (!route.query.new) {
+      builderStore.loadSavedCharacter();
+    } else {
+      builderStore.currentPage = 0;
+      builderStore.savePage();
+      router.replace({'query': null});
+    }
+
+    saveLoaded.value = true;
+  });
+
+  const nextPage = () => {
+    setPage(builderStore.currentPage + 1);
+  };
+
+  const setPage = (page) => {
+    transition.value = page > builderStore.currentPage
+      ? 'paginate-right'
+      : 'paginate-left';
+
+    builderStore.currentPage = page;
+    builderStore.savePage();
+  };
+
+  const createCharacter = async () => {
+    const modifiers = getFeaturesByAttribute(builderStore.character, 'goldHandful');
+    const bonusGold = calculateModifiers(modifiers, 'goldHandful');
+    const currentGold = builderStore.character.inventory.gold;
+
+    builderStore.updateCharacter({
+      inventory: {
+        gold: currentGold + bonusGold,
       },
-      setPage(page) {
-        this.transition = page > this.currentPage
-          ? 'paginate-right'
-          : 'paginate-left';
+    });
 
-        this.builderStore.currentPage = page;
-        this.builderStore.savePage();
-      },
-      async createCharacter() {
-        const modifiers = getFeaturesByAttribute(this.character, 'goldHandful');
-        const bonusGold = calculateModifiers(modifiers, 'goldHandful');
-        const currentGold =  this.character.inventory.gold;
+    const id = await charactersStore.createCharacter(builderStore.character);
 
-        this.builderStore.updateCharacter({
-          inventory: {
-            gold: currentGold + bonusGold,
-          },
-        });
-
-        const id = await this.charactersStore.createCharacter(this.character);
-
-        if (id) {
-          this.$router.push({ path: `/character/${id}` });
-          this.builderStore.newCharacter();
-        }
-      },
-    },
+    if (id) {
+      router.push({ path: `/character/${id}` });
+      builderStore.newCharacter();
+    }
   };
 </script>

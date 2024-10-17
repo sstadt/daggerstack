@@ -46,14 +46,10 @@
 </script>
 
 <script setup>
-  import {
-    calculateModifiers,
-    getFeaturesByAttribute,
-  } from '~/helpers/character';
-
   // TODO: this doesn't work with inventory for some reason
   //       it renders all instances identically
   // const { useIsHomebrew, useTitleClass, modifierString } = useEquipment();
+  const { getFeaturesByAttribute, calculateModifiers } = useSheetBonuses();
 
   const emit = defineEmits(['update', 'remove']);
 

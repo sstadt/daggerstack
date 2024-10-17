@@ -25,138 +25,136 @@
 </template>
 
 <script>
-  import { useCharactersStore } from '~/stores/characters';
+  export default {
+    name: 'SheetExperience',
+  };
+</script>
 
-  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
+<script setup>
   import { ucFirst } from '~/helpers/string';
 
   import GENERAL from '~/data/general';
   import CLASSES from '~/data/classes';
 
-  export default {
-    name: 'SheetExperience',
-    props: {
-      character: {
-        type: Object,
-        required: true,
-      },
-    },
-    data() {
-      return {
-        hope: this.character.hope,
-        baseMaxHope: GENERAL.maxHope,
-        selectedBonusesIndex: 0,
-      };
-    },
-    setup() {
-      const charactersStore = useCharactersStore();
+  const { getFeaturesByAttribute, calculateModifiers } = useSheetBonuses();
 
-      return { charactersStore };
-    },
-    computed: {
-      baseClass() {
-        return this.character.baseClass
-          ? CLASSES[this.character.baseClass]
-          : null;
-      },
-      hopeModifiers() {
-        const characterModifiers = getFeaturesByAttribute(this.character, 'hopeSlot');
-        const companionModifiers = this.character.companion.name
-          ? getFeaturesByAttribute(this.character.companion, 'hopeSlot')
-          : [];
-        return characterModifiers.concat(companionModifiers);
-      },
-      maxHope() {
-        return this.baseMaxHope + calculateModifiers(this.hopeModifiers, 'hopeSlot');
-      },
-      experienceBonuses() {
-        return this.character.experience.map((exp) => {
-          const experience = { ...exp };
-          const bonuses = [];
+  const charactersStore = useCharactersStore();
 
-          // level selections
-          this.character.levelSelections
-            .filter((selection) => {
-              return selection.type === 'experience' && selection.options.includes(experience.id);
-            })
-            .forEach((selection) => {
-              bonuses.push({
-                name: `Level ${selection.level} (selection)`,
-                modify: {
-                  experience: selection.value,
-                }
-              });
+  const props = defineProps({
+    character: {
+      type: Object,
+      required: true,
+    },
+  });
+
+  const hope = ref(props.character.hope);
+  const baseMaxHope = ref(GENERAL.maxHope);
+  const selectedBonusesIndex = ref(0);
+  const bonuses = ref(null);
+
+  const baseClass = computed(() => {
+    return props.character.baseClass
+      ? CLASSES[props.character.baseClass]
+      : null;
+  });
+
+  const hopeModifiers = computed(() => {
+    const characterModifiers = getFeaturesByAttribute(props.character, 'hopeSlot');
+    const companionModifiers = props.character.companion.name
+      ? getFeaturesByAttribute(props.character.companion, 'hopeSlot')
+      : [];
+    return characterModifiers.concat(companionModifiers);
+  });
+
+  const maxHope = computed(() => {
+    return baseMaxHope.value + calculateModifiers(hopeModifiers.value, 'hopeSlot');
+  });
+
+  const experienceBonuses = computed(() => {
+    return props.character.experience.map((exp) => {
+      const experience = { ...exp };
+      const bonuses = [];
+
+      // level selections
+      props.character.levelSelections
+        .filter((selection) => {
+          return selection.type === 'experience' && selection.options.includes(experience.id);
+        })
+        .forEach((selection) => {
+          bonuses.push({
+            name: `Level ${selection.level} (selection)`,
+            modify: {
+              experience: selection.value,
+            }
+          });
+        });
+
+      // items
+      if (props.character.inventory) {
+        props.character.inventory.items
+          .filter((item) => {
+            return item.modify &&
+              item.modify.experience &&
+              item.options &&
+              item.options.experience === experience.id;
+          })
+          .forEach((item) => {
+            bonuses.push({
+              name: item.name,
+              modify: {
+                experience: item.modify.experience,
+              }
             });
+          });
+      }
 
-          // items
-          if (this.character.inventory) {
-            this.character.inventory.items
-              .filter((item) => {
-                return item.modify &&
-                  item.modify.experience &&
-                  item.options &&
-                  item.options.experience === experience.id;
-              })
-              .forEach((item) => {
-                bonuses.push({
-                  name: item.name,
-                  modify: {
-                    experience: item.modify.experience,
-                  }
-                });
-              });
-          }
+      // status effects
+      if (props.character.buffs) {
+        props.character.buffs
+          .filter((buff) => (buff.enabled && buff.modify[`experience-${experience.id}`]))
+          .forEach((buff) => {
+            bonuses.push({
+              name: buff.name,
+              modify: {
+                experience: buff.modify[`experience-${experience.id}`],
+              }
+            });
+          });
+      }
 
-          // status effects
-          if (this.character.buffs) {
-            this.character.buffs
-              .filter((buff) => (buff.enabled && buff.modify[`experience-${experience.id}`]))
-              .forEach((buff) => {
-                bonuses.push({
-                  name: buff.name,
-                  modify: {
-                    experience: buff.modify[`experience-${experience.id}`],
-                  }
-                });
-              });
-          }
+      return bonuses;
+    });
+  });
 
-          return bonuses;
-        });
-      },
-      selectedExperience() {
-        return this.experiences[this.selectedBonusesIndex]
-          ? this.experiences[this.selectedBonusesIndex].name
-          : null;
-      },
-      experiences() {
-        return this.character.experience.map((exp, index) => {
-          const experience = { ...exp };
+  const selectedExperience = computed(() => {
+    return experiences.value[selectedBonusesIndex.value]
+      ? experiences.value[selectedBonusesIndex.value].name
+      : null;
+  });
 
-          experience.score = this.experienceBonuses[index].reduce((acc, curr) => {
-            return acc + curr.modify.experience;
-          }, experience.score);
+  const experiences = computed(() => {
+    return props.character.experience.map((exp, index) => {
+      const experience = { ...exp };
 
-          return experience;
-        });
-      },
-    },
-    methods: {
-      ucFirst,
-      showBonuses(index) {
-        this.selectedBonusesIndex = index;
-        this.$nextTick(() => {
-          this.$refs.bonuses.open();
-        });
-      },
-    },
-    watch: {
-      hope(newVal, oldVal) {
-        if (newVal !== oldVal) {
-          this.character.hope = newVal;
-          this.charactersStore.saveCharacter(this.character);
-        }
-      },
-    },
+      experience.score = experienceBonuses.value[index].reduce((acc, curr) => {
+        return acc + curr.modify.experience;
+      }, experience.score);
+
+      return experience;
+    });
+  });
+
+  const showBonuses = (index) => {
+    selectedBonusesIndex.value = index;
+    nextTick(() => {
+      bonuses.value.open();
+    });
   };
+
+  watch(hope, (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      props.character.hope = newVal;
+      props.charactersStore.saveCharacter(props.character);
+    }
+  });
 </script>

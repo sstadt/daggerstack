@@ -134,248 +134,273 @@
 </template>
 
 <script>
+  export default {
+    name: 'SheetHealth',
+  };
+</script>
+
+<script setup>
+  import { useMq } from 'vue3-mq';
+
   import { useCharactersStore } from '~/stores/characters';
-  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
 
   import GENERAL from '~/data/general';
   import CLASSES from '~/data/classes';
   import { newStatusEffect } from '~/helpers/constructors';
 
-  export default {
-    name: 'SheetHealth',
-    inject: ['mq'],
-    props: {
-      character: {
-        type: Object,
-        required: true,
-      },
+  const charactersStore = useCharactersStore();
+  const sheetStore = useSheetStore();
+
+  const mq = useMq();
+  const { getFeaturesByAttribute, calculateModifiers } = useSheetBonuses();
+
+  const props = defineProps({
+    character: {
+      type: Object,
+      required: true,
     },
-    data() {
-      return {
-        currentHealth: this.character.health.current,
-        maxHealth: GENERAL.maxHitPoints,
-        currentStress: this.character.stress.current,
-        maxStress: GENERAL.maxStress,
-        selectedTrait: 'majorDamageThreshold',
-        activeAccordion: 'glory',
-        scarDescription: '',
-        hitPointsRefresh: 0,
-        stressRefresh: 0,
-      };
-    },
-    setup() {
-      const charactersStore = useCharactersStore();
-      const sheetStore = useSheetStore();
+  });
 
-      return { charactersStore, sheetStore };
-    },
-    computed: {
-      baseClass() {
-        return this.character.baseClass
-          ? CLASSES[this.character.baseClass]
-          : null;
-      },
-      tier1Levels() {
-        // num levels between 2 and 4
-        return Math.max(Math.min(this.character.level - 1, 3), 0);
-      },
-      tier2Levels() {
-        // num levels between 5 and 7
-        return Math.max(Math.min(this.character.level - 4, 3), 0);
-      },
-      tier3Levels() {
-        // num levels between 8 and 10
-        return Math.max(Math.min(this.character.level - 7, 3), 0);
-      },
-      majorDamageThresholdBonuses() {
-        const bonuses = getFeaturesByAttribute(this.character, 'majorDamageThreshold');
-        const tier1Always = this.baseClass.tier1.always.find((m) => m.increase.majorDamageThreshold);
-        const tier1Modifier = tier1Always
-          ? tier1Always.increase.majorDamageThreshold * this.tier1Levels
-          : 0;
-        const tier2Always = this.baseClass.tier2.always.find((m) => m.increase.majorDamageThreshold);
-        const tier2Modifier = tier2Always
-          ? tier2Always.increase.majorDamageThreshold * this.tier2Levels
-          : 0;
-        const tier3Always = this.baseClass.tier3.always.find((m) => m.increase.majorDamageThreshold);
-        const tier3Modifier = tier3Always
-          ? tier3Always.increase.majorDamageThreshold * this.tier3Levels
-          : 0;
+  const currentHealth = ref(props.character.health.current);
+  const maxHealth = ref(GENERAL.maxHitPoints);
+  const currentStress = ref(props.character.stress.current);
+  const maxStress = ref(GENERAL.maxStress);
+  const selectedTrait = ref('majorDamageThreshold');
+  const activeAccordion = ref('glory');
+  const scarDescription = ref('');
+  const hitPointsRefresh = ref(0);
+  const stressRefresh = ref(0);
+  const bonuses = ref(null);
+  const death = ref(null);
 
-        if (tier1Modifier > 0) {
-          bonuses.push({
-            name: 'Level 2-4 (auto)',
-            modify: {
-              majorDamageThreshold: tier1Modifier,
-            },
-          });
-        }
+  const baseClass = computed(() => {
+    return props.character.baseClass
+      ? CLASSES[props.character.baseClass]
+      : null;
+  });
 
-        if (tier2Modifier > 0) {
-          bonuses.push({
-            name: 'Level 5-7 (auto)',
-            modify: {
-              majorDamageThreshold: tier2Modifier,
-            },
-          });
-        }
+  const tier1Levels = computed(() => {
+    // num levels between 2 and 4
+    return Math.max(Math.min(props.character.level - 1, 3), 0);
+  });
 
-        if (tier3Modifier > 0) {
-          bonuses.push({
-            name: 'Level 8-10 (auto)',
-            modify: {
-              majorDamageThreshold: tier3Modifier,
-            },
-          });
-        }
+  const tier2Levels = computed(() => {
+    // num levels between 5 and 7
+    return Math.max(Math.min(props.character.level - 4, 3), 0);
+  });
 
-        return bonuses;
-      },
-      majorThreshold() {
-        return this.baseClass.startingThreshold.major +
-          calculateModifiers(this.majorDamageThresholdBonuses, 'majorDamageThreshold');
-      },
-      severeDamageThresholdBonuses() {
-        const bonuses = getFeaturesByAttribute(this.character, 'severeDamageThreshold');
-        const tier1Always = this.baseClass.tier1.always.find((m) => m.increase.severeDamageThreshold);
-        const tier1Modifier = tier1Always
-          ? tier1Always.increase.severeDamageThreshold * this.tier1Levels
-          : 0;
-        const tier2Always = this.baseClass.tier2.always.find((m) => m.increase.severeDamageThreshold);
-        const tier2Modifier = tier2Always
-          ? tier2Always.increase.severeDamageThreshold * this.tier2Levels
-          : 0;
-        const tier3Always = this.baseClass.tier3.always.find((m) => m.increase.severeDamageThreshold);
-        const tier3Modifier = tier3Always
-          ? tier3Always.increase.severeDamageThreshold * this.tier3Levels
-          : 0;
+  const tier3Levels = computed(() => {
+    // num levels between 8 and 10
+    return Math.max(Math.min(props.character.level - 7, 3), 0);
+  });
 
-        if (tier1Modifier > 0) {
-          bonuses.push({
-            name: 'Level 2-4',
-            modify: {
-              severeDamageThreshold: tier1Modifier,
-            },
-          });
-        }
+  const majorDamageThresholdBonuses = computed(() => {
+    const thresholdBonuses = getFeaturesByAttribute(props.character, 'majorDamageThreshold');
+    const tier1Always = baseClass.value.tier1.always.find((m) => m.increase.majorDamageThreshold);
+    const tier1Modifier = tier1Always
+      ? tier1Always.increase.majorDamageThreshold * tier1Levels.value
+      : 0;
+    const tier2Always = baseClass.value.tier2.always.find((m) => m.increase.majorDamageThreshold);
+    const tier2Modifier = tier2Always
+      ? tier2Always.increase.majorDamageThreshold * tier2Levels.value
+      : 0;
+    const tier3Always = baseClass.value.tier3.always.find((m) => m.increase.majorDamageThreshold);
+    const tier3Modifier = tier3Always
+      ? tier3Always.increase.majorDamageThreshold * tier3Levels.value
+      : 0;
 
-        if (tier2Modifier > 0) {
-          bonuses.push({
-            name: 'Level 5-7',
-            modify: {
-              severeDamageThreshold: tier2Modifier,
-            },
-          });
-        }
+    if (tier1Modifier > 0) {
+      thresholdBonuses.push({
+        name: 'Level 2-4 (auto)',
+        modify: {
+          majorDamageThreshold: tier1Modifier,
+        },
+      });
+    }
 
-        if (tier3Modifier > 0) {
-          bonuses.push({
-            name: 'Level 8-10',
-            modify: {
-              severeDamageThreshold: tier3Modifier,
-            },
-          });
-        }
+    if (tier2Modifier > 0) {
+      thresholdBonuses.push({
+        name: 'Level 5-7 (auto)',
+        modify: {
+          majorDamageThreshold: tier2Modifier,
+        },
+      });
+    }
 
-        return bonuses;
-      },
-      severeThreshold() {
-        return this.baseClass.startingThreshold.severe +
-          calculateModifiers(this.severeDamageThresholdBonuses, 'severeDamageThreshold');
-      },
-      thresholds() {
-        return [
-          { name: 'major', score: this.majorThreshold },
-          { name: 'severe', score: this.severeThreshold },
-        ];
-      },
-      healthSlotBonuses() {
-        return getFeaturesByAttribute(this.character, 'healthSlot');
-      },
-      healthSlots() {
-        return this.character.health.slots +
-          calculateModifiers(this.healthSlotBonuses, 'healthSlot');
-      },
-      outOfHitPoints() {
-        return this.character.health.current === this.healthSlots;
-      },
-      stressSlotBonuses() {
-        return getFeaturesByAttribute(this.character, 'stressSlot');
-      },
-      stressSlots() {
-        return this.character.health.slots +
-          calculateModifiers(this.stressSlotBonuses, 'stressSlot');
-      },
-      selectedBonuses() {
-        return this.selectedTrait
-          ? this[`${this.selectedTrait}Bonuses`]
-          : [];
-      },
-    },
-    methods: {
-      showBonuses(trait) {
-        this.selectedTrait = trait;
-        this.$nextTick(() => {
-          this.$refs.bonuses.open();
-        });
-      },
-      openDeathMoves() {
-        this.$refs.death.open();
-      },
-      setActiveAccordion(id) {
-        this.activeAccordion = id;
-      },
-      riskHope() {
-        this.character.health.current = Math.max(0, this.character.health.current - this.hitPointsRefresh);
-        this.character.stress.current = Math.max(0, this.character.stress.current - this.stressRefresh);
-        this.charactersStore.saveCharacter(this.character);
-        this.$refs.death.close();
-      },
-      riskCrit() {
-        this.character.health.current = 0;
-        this.character.stress.current = 0;
-        this.charactersStore.saveCharacter(this.character);
-        this.$refs.death.close();
-      },
-      addScar() {
-        const scar = newStatusEffect({
-          name: this.scarDescription,
-          enabled: true,
-          scar: true,
-          modify: {
-            hopeSlot: -1,
-          },
-        });
+    if (tier3Modifier > 0) {
+      thresholdBonuses.push({
+        name: 'Level 8-10 (auto)',
+        modify: {
+          majorDamageThreshold: tier3Modifier,
+        },
+      });
+    }
 
-        this.character.buffs.push(scar);
-        this.charactersStore.saveCharacter(this.character);
-        this.$refs.death.close();
-      },
-      refresh() {
-        this.sheetStore.refreshCharacterSheet();
-      },
-    },
-    watch: {
-      currentHealth(newVal, oldVal) {
-        if (newVal !== oldVal) {
-          this.character.health.current = newVal;
-          this.charactersStore.saveCharacter(this.character);
+    return thresholdBonuses;
+  });
 
-          this.$nextTick(() => {
-            if (this.outOfHitPoints) {
-              this.openDeathMoves();
-            }
-          });
-        }
-      },
-      currentStress(newVal, oldVal) {
-        if (newVal !== oldVal) {
-          this.character.stress.current = newVal;
-          this.charactersStore.saveCharacter(this.character);
-        }
-      },
-    },
+  const majorThreshold = computed(() => {
+    return baseClass.value.startingThreshold.major +
+      calculateModifiers(majorDamageThresholdBonuses.value, 'majorDamageThreshold');
+  });
+
+  const severeDamageThresholdBonuses = computed(() => {
+    const thresholdBonuses = getFeaturesByAttribute(props.character, 'severeDamageThreshold');
+    const tier1Always = baseClass.value.tier1.always.find((m) => m.increase.severeDamageThreshold);
+    const tier1Modifier = tier1Always
+      ? tier1Always.increase.severeDamageThreshold * tier1Levels.value
+      : 0;
+    const tier2Always = baseClass.value.tier2.always.find((m) => m.increase.severeDamageThreshold);
+    const tier2Modifier = tier2Always
+      ? tier2Always.increase.severeDamageThreshold * tier2Levels.value
+      : 0;
+    const tier3Always = baseClass.value.tier3.always.find((m) => m.increase.severeDamageThreshold);
+    const tier3Modifier = tier3Always
+      ? tier3Always.increase.severeDamageThreshold * tier3Levels.value
+      : 0;
+
+    if (tier1Modifier > 0) {
+      thresholdBonuses.push({
+        name: 'Level 2-4',
+        modify: {
+          severeDamageThreshold: tier1Modifier,
+        },
+      });
+    }
+
+    if (tier2Modifier > 0) {
+      thresholdBonuses.push({
+        name: 'Level 5-7',
+        modify: {
+          severeDamageThreshold: tier2Modifier,
+        },
+      });
+    }
+
+    if (tier3Modifier > 0) {
+      thresholdBonuses.push({
+        name: 'Level 8-10',
+        modify: {
+          severeDamageThreshold: tier3Modifier,
+        },
+      });
+    }
+
+    return thresholdBonuses;
+  });
+
+  const severeThreshold = computed(() => {
+    return baseClass.value.startingThreshold.severe +
+      calculateModifiers(severeDamageThresholdBonuses.value, 'severeDamageThreshold');
+  });
+
+  const thresholds = computed(() => {
+    return [
+      { name: 'major', score: majorThreshold.value },
+      { name: 'severe', score: severeThreshold.value },
+    ];
+  });
+
+  const healthSlotBonuses = computed(() => {
+    return getFeaturesByAttribute(props.character, 'healthSlot');
+  });
+
+  const stressSlotBonuses = computed(() => {
+    return getFeaturesByAttribute(props.character, 'stressSlot');
+  });
+
+  const healthSlots = computed(() => {
+    return props.character.health.slots +
+      calculateModifiers(healthSlotBonuses.value, 'healthSlot');
+  });
+
+  const stressSlots = computed(() => {
+    return props.character.health.slots +
+      calculateModifiers(stressSlotBonuses.value, 'stressSlot');
+  });
+
+  const outOfHitPoints = computed(() => {
+    return props.character.health.current === healthSlots.value;
+  });
+
+  const selectedBonuses = computed(() => {
+    switch (selectedTrait.value) {
+      case 'healthSlot':
+        return healthSlotBonuses.value;
+      case 'stressSlot':
+        return stressSlotBonuses.value;
+      default:
+        return [];
+    }
+  });
+
+  const showBonuses = (trait) => {
+    selectedTrait.value = trait;
+    nextTick(() => {
+      bonuses.value.open();
+    });
   };
+
+  const openDeathMoves = () => {
+    death.value.open();
+  };
+
+  const setActiveAccordion = (id) => {
+    activeAccordion.value = id;
+  };
+
+  const riskHope = () => {
+    props.character.health.current = Math.max(0, props.character.health.current - hitPointsRefresh.value);
+    props.character.stress.current = Math.max(0, props.character.stress.current - stressRefresh.value);
+    charactersStore.saveCharacter(props.character);
+    death.value.close();
+  };
+
+  const riskCrit = () => {
+    props.character.health.current = 0;
+    props.character.stress.current = 0;
+    charactersStore.saveCharacter(props.character);
+    death.value.close();
+  };
+
+  const addScar = () => {
+    const scar = newStatusEffect({
+      name: scarDescription.value,
+      enabled: true,
+      scar: true,
+      modify: {
+        hopeSlot: -1,
+      },
+    });
+
+    props.character.buffs.push(scar);
+    charactersStore.saveCharacter(props.character);
+    death.value.close();
+  };
+
+  const refresh = () => {
+    sheetStore.refreshCharacterSheet();
+  };
+
+  watch(currentHealth, (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      props.character.health.current = newVal;
+      charactersStore.saveCharacter(props.character);
+
+      nextTick(() => {
+        if (outOfHitPoints.value) {
+          openDeathMoves();
+        }
+      });
+    }
+  });
+
+  watch(currentStress, (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      props.character.stress.current = newVal;
+      charactersStore.saveCharacter(props.character);
+    }
+  });
 </script>
 
 <style lang="scss" scoped>

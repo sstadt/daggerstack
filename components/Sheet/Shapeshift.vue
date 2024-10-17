@@ -116,441 +116,452 @@
           )
     //- form selection
     .space-y-6(v-else-if="settingsLoaded")
-      .flex.justify-center.items-center.space-x-4.shrink-0
-        button.flex.text-xl(
-          :disabled="currentTierTab === 0"
-          :class="{ 'opacity-30': currentTierTab === 0 }"
-          @click="prev"
-        )
-          span.sr-only Tier {{ Math.max(currentTierTab, 1) }}
-          NuxtIcon(name="chevron-left")
-        h3.text-xl.font-bold.uppercase Tier {{ currentTierTab + 1 }}
-        button.flex.text-xl(
-          :disabled="currentTierTab >= forms.length"
-          :class="{ 'opacity-30': currentTierTab >= forms.length - 1 }"
-          @click="next"
-        )
-          span.sr-only Tier {{ Math.min(currentTierTab + 2, forms.length) }}
-          NuxtIcon(name="chevron-right")
-      Swiper.tier-carousel(
-        :items-to-show="1"
-        :initial-slide="currentTierTab"
-        :centered-slides="true"
-        :auto-height="true"
-        @swiper="onSwiper"
-        @slide-change="onSlideChange"
-      )
-        SwiperSlide(v-for="category in forms")
-          .divide-y
-            button.py-4.px-8.space-y-2.w-full.text-left(
-              v-for="(form, index) in category.forms"
-              class="focus:bg-slate-100 lg:px-0"
-              @click="shapeshift(form)"
-            )
-              SheetShapeshiftPreview(:form="form")
+      .pb-6.px-8.top-0.bg-white.shadow.z-10
+        InputFilter(v-model="selectedTiers" label="tier" :options="[1, 2, 3, 4]")
+      .divide-y
+        transition-group(name="slide-fade-left")
+          button.py-4.px-8.space-y-2.w-full.text-left(
+            v-for="(form, index) in forms"
+            :key="form.name"
+            class="focus:bg-slate-100 lg:px-0"
+            @click="shapeshift(form)"
+          )
+            SheetShapeshiftPreview(:form="form")
 </template>
 
 <script>
+  export default {
+    name: 'SheetShapeshift',
+  };
+</script>
+
+<script setup>
+  import { useMq } from 'vue3-mq';
+
   import GENERAL from '~/data/general';
   import CLASSES from '~/data/classes';
 
-  import {
-    calculateModifiers,
-    getFeaturesByAttribute,
-    getCharacterTier,
-  } from '~/helpers/character';
+  import { getCharacterTier } from '~/helpers/character';
   import { clone } from '~/helpers/utility';
   import { ucFirst } from '~/helpers/string';
   import { createSelectOptions, uniqueElements } from '~/helpers/array';
 
-  export default {
-    name: 'SheetShapeshift',
-    inject: ['mq'],
-    props: {
-      character: {
-        type: Object,
-        required: true,
-      },
-    },
-    data() {
-      return {
-        traits: [ ...GENERAL.traits ],
-        selectedForm: null,
-        selectedUpgradeForm: '',
-        upgradedForm: null,
-        selectedHybridForms: [],
-        currentHybridForms: [],
-        currentArmor: this.character.armor.current,
-        maxArmor: GENERAL.maxArmorSlots,
-        settingsLoaded: false,
-        currentTierTab: 0,
-        swiper: null,
-      };
-    },
-    setup() {
-      const charactersStore = useCharactersStore();
-      const sheetStore = useSheetStore();
+  const charactersStore = useCharactersStore();
+  const sheetStore = useSheetStore();
 
-      return { charactersStore, sheetStore };
-    },
-    mounted() {
-      this.currentTierTab = this.forms.length - 1;
-      this.selectedForm = this.sheetStore.settings.selectedForm;
-      this.upgradedForm = this.sheetStore.settings.upgradedForm;
-      this.currentHybridForms = [ ...this.sheetStore.settings.currentHybridForms ];
+  const mq = useMq();
+  const { getFeaturesByAttribute, calculateModifiers } = useSheetBonuses();
 
-      // populate selections so features auto populate for hybrids
-      this.currentHybridForms.forEach((form) => {
-        if (form) {
-          this.selectedHybridForms.push(form.name);
+  const props = defineProps({
+    character: {
+      type: Object,
+      required: true,
+    },
+  });
+
+  const traits = ref([ ...GENERAL.traits ]);
+  const selectedForm = ref(null);
+  const selectedUpgradeForm = ref('');
+  const upgradedForm = ref(null);
+  const selectedHybridForms = ref([]);
+  const currentHybridForms = ref([]);
+  const currentArmor = ref(props.character.armor.current);
+  const maxArmor = ref(GENERAL.maxArmorSlots);
+  const settingsLoaded = ref(false);
+  const currentTierTab = ref(0);
+  const selectedTiers = ref([1]);
+
+  let swiper = null;
+
+  const showShapeshiftStats = computed(() => {
+    // basic shapeshift forms
+    if (selectedForm.value && !selectedForm.value.hybrid && !selectedForm.value.upgradeTier) {
+      return true;
+    }
+
+    // upgraded shapeshift forms
+    if (selectedForm.value?.upgradeTier && upgradedForm.value) {
+      return true
+    }
+
+    // hybrid shapeshift form
+    if (selectedForm.value?.hybrid && currentHybridForms.value.length === selectedForm.value.hybrid) {
+      return true;
+    }
+
+    // something has not been selected
+    return false;
+  });
+
+  const showUpgradeSelection = computed(() => {
+    return Boolean(selectedForm.value?.upgradeTier) && !upgradedForm.value;
+  });
+
+  const upgradeForms = computed(() => {
+    if (!selectedForm.value?.upgradeTier) return [];
+
+    const upgradeForms = [];
+
+    forms.value.forEach((form) => {
+      if (!selectedForm.value.upgradeTier.includes(form.tier)) return;
+
+      if (!form.upgradeTier && !form.hybrid) {
+        upgradeForms.push(clone({ ...form }));
+      }
+    });
+
+    return upgradeForms;
+  });
+
+  const upgradeFormOptions = computed(() => {
+    return createSelectOptions(upgradeForms.value.map((form) => form.name));
+  });
+
+  const showHybridSelection = computed(() => {
+    return Number.isInteger(selectedForm.value?.hybrid) &&
+      currentHybridForms.value.length < selectedForm.value.hybrid;
+  });
+
+  const hybridForms = computed(() => {
+    if (!selectedForm.value?.hybrid) return [];
+
+    const hybridForms = [];
+
+    forms.value.forEach((formList) => {
+      if (!selectedForm.value.hybridTier.includes(formList.tier)) return;
+
+      formList.forms.forEach((form) => {
+        if (!form.upgradeTier && !form.hybrid) {
+          hybridForms.push(clone({ ...form }));
         }
       });
+    });
 
-      this.settingsLoaded = true;
-    },
-    computed: {
-      showShapeshiftStats() {
-        // basic shapeshift forms
-        if (this.selectedForm && !this.selectedForm.hybrid && !this.selectedForm.upgradeTier) {
-          return true;
+    return hybridForms;
+  });
+
+  const hybridFormOptions = computed(() => {
+    if (!selectedForm.value.hybrid) return [];
+
+    const options = [];
+
+    for (let i = 0, j = selectedForm.value.hybrid; i < j; i++) {
+      options.push(createSelectOptions(hybridForms.value.map((form) => form.name)));
+    }
+
+    return options;
+  });
+
+  const selectedHybridFormFeatures = computed(() => {
+    const features = [];
+    const formData = selectedHybridForms.value.map((formName) => {
+      return hybridForms.value.find((form) => form.name === formName);
+    });
+    let advantage = [];
+
+    formData.forEach((form) => {
+      form?.features.forEach((feature) => {
+        if (feature.name === 'Take advantage on') {
+          advantage = advantage.concat(feature.description.split(', '));
+        } else {
+          features.push(feature);
         }
+      });
+    });
 
-        // upgraded shapeshift forms
-        if (this.selectedForm?.upgradeTier && this.upgradedForm) {
-          return true
-        }
+    features.unshift({
+      name: 'Take advantage on',
+      description: uniqueElements(advantage).join(', '),
+    });
 
-        // hybrid shapeshift form
-        if (this.selectedForm?.hybrid && this.currentHybridForms.length === this.selectedForm.hybrid) {
-          return true;
-        }
+    return features;
+  });
 
-        // something has not been selected
-        return false;
-      },
-      showUpgradeSelection() {
-        return Boolean(this.selectedForm?.upgradeTier) && !this.upgradedForm;
-      },
-      upgradeForms() {
-        if (!this.selectedForm?.upgradeTier) return [];
+  const hybridFormsSelected = computed(() => {
+    return selectedHybridForms.value.reduce((acc, selection) => {
+      return acc && typeof selection === 'string' && selection.length > 0;
+    }, true);
+  });
 
-        const upgradeForms = [];
+  const characterTier = computed(() => {
+    return getCharacterTier(props.character);
+  });
 
-        this.forms.forEach((formList) => {
-          if (!this.selectedForm.upgradeTier.includes(formList.tier)) return;
+  const pageTransition = computed(() => {
+    return selectedForm.value ? 'paginate-right' : 'paginate-left';
+  });
 
-          formList.forms.forEach((form) => {
-            if (!form.upgradeTier && !form.hybrid) {
-              upgradeForms.push(clone({ ...form }));
-            }
-          });
-        });
+  const baseClass = computed(() => {
+    return CLASSES[props.character.baseClass];
+  });
 
-        return upgradeForms;
-      },
-      upgradeFormOptions() {
-        return createSelectOptions(this.upgradeForms.map((form) => form.name));
-      },
-      showHybridSelection() {
-        return Number.isInteger(this.selectedForm?.hybrid) &&
-          this.currentHybridForms.length < this.selectedForm.hybrid;
-      },
-      hybridForms() {
-        if (!this.selectedForm?.hybrid) return [];
+  const forms = computed(() => {
+    return baseClass.value
+      ? baseClass.value.alternateForms
+          .filter((form) => form.tier <= characterTier.value && selectedTiers.value.includes(form.tier))
+      : [];
+  });
 
-        const hybridForms = [];
+  const formName = computed(() => {
+    if (upgradedForm.value) {
+      const [ prefix ] = selectedForm.value.name.split(' ');
+      return `${prefix} ${upgradedForm.value.name}`;
+    }
 
-        this.forms.forEach((formList) => {
-          if (!this.selectedForm.hybridTier.includes(formList.tier)) return;
+    return selectedForm.value?.name;
+  });
 
-          formList.forms.forEach((form) => {
-            if (!form.upgradeTier && !form.hybrid) {
-              hybridForms.push(clone({ ...form }));
-            }
-          });
-        });
+  const formExamples = computed(() => {
+    if (upgradedForm.value) return [ ...upgradedForm.value.examples ];
+    if (!selectedForm.value) return [];
 
-        return hybridForms;
-      },
-      hybridFormOptions() {
-        if (!this.selectedForm.hybrid) return [];
+    return selectedForm.value.upgradeTier
+      ? []
+      : [ ...selectedForm.value.examples ];
+  });
 
-        const options = [];
+  const armorSlots = computed(() => {
+    const base = props.character.armor.slots;
+    const features = getFeaturesByAttribute(props.character, 'armorSlot');
 
-        for (let i = 0, j = this.selectedForm.hybrid; i < j; i++) {
-          options.push(createSelectOptions(this.hybridForms.map((form) => form.name)));
-        }
+    return base + calculateModifiers(features, 'armorSlot');
+  });
 
-        return options;
-      },
-      selectedHybridFormFeatures() {
-        const features = [];
-        const formData = this.selectedHybridForms.map((formName) => {
-          return this.hybridForms.find((form) => form.name === formName);
-        });
-        let advantage = [];
+  const characterEvasion = computed(() => {
+    const base = props.character.evasion;
+    const modifiers = getFeaturesByAttribute(props.character, 'evasion');
 
-        formData.forEach((form) => {
-          form?.features.forEach((feature) => {
-            if (feature.name === 'Take advantage on') {
-              advantage = advantage.concat(feature.description.split(', '));
-            } else {
-              features.push(feature);
-            }
-          });
-        });
+    if (selectedForm.value) {
+      modifiers.push({
+        name: selectedForm.value.name,
+        modify: {
+          evasion: selectedForm.value.evasion,
+        },
+      });
+    }
 
-        features.unshift({
-          name: 'Take advantage on',
-          description: uniqueElements(advantage).join(', '),
-        });
+    if (upgradedForm.value) {
+      modifiers.push({
+        name: upgradedForm.value.name,
+        modify: {
+          evasion: upgradedForm.value.evasion,
+        },
+      });
+    }
 
-        return features;
-      },
-      hybridFormsSelected() {
-        return this.selectedHybridForms.reduce((acc, selection) => {
-          return acc && typeof selection === 'string' && selection.length > 0;
-        }, true);
-      },
-      characterTier() {
-        return getCharacterTier(this.character);
-      },
-      pageTransition() {
-        return this.selectedForm ? 'paginate-right' : 'paginate-left';
-      },
-      baseClass() {
-        return CLASSES[this.character.baseClass];
-      },
-      forms() {
-        return this.baseClass
-          ? this.baseClass.alternateForms
-              .filter((forms) => forms.tier <= this.characterTier)
-          : [];
-      },
-      formName() {
-        if (this.upgradedForm) {
-          const [ prefix ] = this.selectedForm.name.split(' ');
-          return `${prefix} ${this.upgradedForm.name}`;
-        }
+    return base + calculateModifiers(modifiers, 'evasion');
+  });
 
-        return this.selectedForm?.name;
-      },
-      formExamples() {
-        if (this.upgradedForm) return [ ...this.upgradedForm.examples ];
-        if (!this.selectedForm) return [];
+  const characterArmor = computed(() => {
+    const base = 0;
+    const features = getFeaturesByAttribute(props.character, 'armorScore');
 
-        return this.selectedForm.upgradeTier
-          ? []
-          : [ ...this.selectedForm.examples ];
-      },
-      armorSlots() {
-        const base = this.character.armor.slots;
-        const features = getFeaturesByAttribute(this.character, 'armorSlot');
+    return base + calculateModifiers(features, 'armorScore');
+  });
 
-        return base + calculateModifiers(features, 'armorSlot');
-      },
-      characterEvasion() {
-        const base = this.character.evasion;
-        const modifiers = getFeaturesByAttribute(this.character, 'evasion');
+  const primaryTrait = computed(() => {
+    if (!selectedForm.value) return null;
 
-        if (this.selectedForm) {
-          modifiers.push({
-            name: this.selectedForm.name,
-            modify: {
-              evasion: this.selectedForm.evasion,
-            },
-          });
-        }
+    const baseform = upgradedForm.value ? upgradedForm.value : selectedForm.value;
 
-        if (this.upgradedForm) {
-          modifiers.push({
-            name: this.upgradedForm.name,
-            modify: {
-              evasion: this.upgradedForm.evasion,
-            },
-          });
-        }
+    let trait = null;
+    let score = -999;
 
-        return base + calculateModifiers(modifiers, 'evasion');
-      },
-      characterArmor() {
-        const base = 0;
-        const features = getFeaturesByAttribute(this.character, 'armorScore');
+    traits.value.forEach((t) => {
+      if (baseform[t] > score) {
+        trait = t;
+        score = baseform[t];
 
-        return base + calculateModifiers(features, 'armorScore');
-      },
-      primaryTrait() {
-        if (!this.selectedForm) return null;
+        return;
+      }
+    });
 
-        const baseform = this.upgradedForm ? this.upgradedForm : this.selectedForm;
+    return trait;
+  });
 
-        let trait = null;
-        let score = -999;
+  const characterAgility = computed(() => {
+    const base = props.character.agility.score;
+    const features = getFeaturesByAttribute(props.character, 'agility');
+    const formBonus = primaryTrait.value === 'agility' && upgradedForm.value
+      ? selectedForm.value.bestTrait + upgradedForm.value.agility
+      : selectedForm.value.agility;
 
-        this.traits.forEach((t) => {
-          if (baseform[t] > score) {
-            trait = t;
-            score = baseform[t];
+    return Number.isInteger(formBonus)
+      ? base + formBonus + calculateModifiers(features, 'agility')
+      : base + calculateModifiers(features, 'agility');
+  });
 
-            return;
-          }
-        });
+  const characterStrength = computed(() => {
+    const base = props.character.strength.score;
+    const features = getFeaturesByAttribute(props.character, 'strength');
+    const formBonus = primaryTrait.value === 'strength' && upgradedForm.value
+      ? selectedForm.value.bestTrait + upgradedForm.value.strength
+      : selectedForm.value.strength;
 
-        return trait;
-      },
-      characterAgility() {
-        const base = this.character.agility.score;
-        const features = getFeaturesByAttribute(this.character, 'agility');
-        const formBonus = this.primaryTrait === 'agility' && this.upgradedForm
-          ? this.selectedForm.bestTrait + this.upgradedForm.agility
-          : this.selectedForm.agility;
+    return Number.isInteger(formBonus)
+      ? base + formBonus + calculateModifiers(features, 'strength')
+      : base + calculateModifiers(features, 'strength');
+  });
 
-        return Number.isInteger(formBonus)
-          ? base + formBonus + calculateModifiers(features, 'agility')
-          : base + calculateModifiers(features, 'agility');
-      },
-      characterStrength() {
-        const base = this.character.strength.score;
-        const features = getFeaturesByAttribute(this.character, 'strength');
-        const formBonus = this.primaryTrait === 'strength' && this.upgradedForm
-          ? this.selectedForm.bestTrait + this.upgradedForm.strength
-          : this.selectedForm.strength;
+  const characterFinesse = computed(() => {
+    const base = props.character.finesse.score;
+    const features = getFeaturesByAttribute(props.character, 'finesse');
+    const formBonus = primaryTrait.value === 'finesse' && upgradedForm.value
+      ? selectedForm.value.bestTrait + upgradedForm.value.finesse
+      : selectedForm.value.finesse;
 
-        return Number.isInteger(formBonus)
-          ? base + formBonus + calculateModifiers(features, 'strength')
-          : base + calculateModifiers(features, 'strength');
-      },
-      characterFinesse() {
-        const base = this.character.finesse.score;
-        const features = getFeaturesByAttribute(this.character, 'finesse');
-        const formBonus = this.primaryTrait === 'finesse' && this.upgradedForm
-          ? this.selectedForm.bestTrait + this.upgradedForm.finesse
-          : this.selectedForm.finesse;
+    return Number.isInteger(formBonus)
+      ? base + formBonus + calculateModifiers(features, 'finesse')
+      : base + calculateModifiers(features, 'finesse');
+  });
 
-        return Number.isInteger(formBonus)
-          ? base + formBonus + calculateModifiers(features, 'finesse')
-          : base + calculateModifiers(features, 'finesse');
-      },
-      characterInstinct() {
-        const base = this.character.instinct.score;
-        const features = getFeaturesByAttribute(this.character, 'instinct');
-        const formBonus = this.primaryTrait === 'instinct' && this.upgradedForm
-          ? this.selectedForm.bestTrait + this.upgradedForm.instinct
-          : this.selectedForm.instinct;
+  const characterInstinct = computed(() => {
+    const base = props.character.instinct.score;
+    const features = getFeaturesByAttribute(props.character, 'instinct');
+    const formBonus = primaryTrait.value === 'instinct' && upgradedForm.value
+      ? selectedForm.value.bestTrait + upgradedForm.value.instinct
+      : selectedForm.value.instinct;
 
-        return Number.isInteger(formBonus)
-          ? base + formBonus + calculateModifiers(features, 'instinct')
-          : base + calculateModifiers(features, 'instinct');
-      },
-      characterPresence() {
-        const base = this.character.presence.score;
-        const features = getFeaturesByAttribute(this.character, 'presence');
-        const formBonus = this.primaryTrait === 'presence' && this.upgradedForm
-          ? this.selectedForm.bestTrait + this.upgradedForm.presence
-          : this.selectedForm.presence;
+    return Number.isInteger(formBonus)
+      ? base + formBonus + calculateModifiers(features, 'instinct')
+      : base + calculateModifiers(features, 'instinct');
+  });
 
-        return Number.isInteger(formBonus)
-          ? base + formBonus + calculateModifiers(features, 'presence')
-          : base + calculateModifiers(features, 'presence');
-      },
-      characterKnowledge() {
-        const base = this.character.knowledge.score;
-        const features = getFeaturesByAttribute(this.character, 'knowledge');
-        const formBonus = this.primaryTrait === 'knowledge' && this.upgradedForm
-          ? this.selectedForm.bestTrait + this.upgradedForm.knowledge
-          : this.selectedForm.knowledge;
+  const characterPresence = computed(() => {
+    const base = props.character.presence.score;
+    const features = getFeaturesByAttribute(props.character, 'presence');
+    const formBonus = primaryTrait.value === 'presence' && upgradedForm.value
+      ? selectedForm.value.bestTrait + upgradedForm.value.presence
+      : selectedForm.value.presence;
 
-        return Number.isInteger(formBonus)
-          ? base + formBonus + calculateModifiers(features, 'knowledge')
-          : base + calculateModifiers(features, 'knowledge');
-      },
-      formAttack() {
-        if (this.upgradedForm) {
-          const range = this.upgradedForm.range;
-          const [ dice, type ] = this.upgradedForm.attack.split(' ');
-          const [ die, modStr ] = dice.split('+');
-          const modVal = modStr ? parseInt(modStr, 10) : 0;
-          const currentDieIndex = GENERAL.dice.indexOf(die);
-          const damageDie = Number.isInteger(this.selectedForm.damageDie)
-            ? GENERAL.dice[Math.min(currentDieIndex + this.selectedForm.damageDie, GENERAL.dice.length - 1)]
-            : die;
+    return Number.isInteger(formBonus)
+      ? base + formBonus + calculateModifiers(features, 'presence')
+      : base + calculateModifiers(features, 'presence');
+  });
 
-          return `${range} ${damageDie}+${modVal + this.selectedForm.damageBonus} ${type}`;
-        }
+  const characterKnowledge = computed(() => {
+    const base = props.character.knowledge.score;
+    const features = getFeaturesByAttribute(props.character, 'knowledge');
+    const formBonus = primaryTrait.value === 'knowledge' && upgradedForm.value
+      ? selectedForm.value.bestTrait + upgradedForm.value.knowledge
+      : selectedForm.value.knowledge;
 
-        return `${this.selectedForm.range} ${this.selectedForm.attack}`;
-      },
-      formFeatures() {
-        if (this.upgradedForm) return [ ...this.upgradedForm.features ];
-        if (this.currentHybridForms.length > 0) return [ ...this.selectedHybridFormFeatures ];
+    return Number.isInteger(formBonus)
+      ? base + formBonus + calculateModifiers(features, 'knowledge')
+      : base + calculateModifiers(features, 'knowledge');
+  });
 
-        return this.selectedForm
-          ? [ ...this.selectedForm.features ]
-          : [];
-      },
-    },
-    methods: {
-      ucFirst,
-      shapeshift(form) {
-        if (form?.hybrid) {
-          this.selectedHybridForms = [];
+  const formAttack = computed(() => {
+    if (upgradedForm.value) {
+      const range = upgradedForm.value.range;
+      const [ dice, type ] = upgradedForm.value.attack.split(' ');
+      const [ die, modStr ] = dice.split('+');
+      const modVal = modStr ? parseInt(modStr, 10) : 0;
+      const currentDieIndex = GENERAL.dice.indexOf(die);
+      const damageDie = Number.isInteger(selectedForm.value.damageDie)
+        ? GENERAL.dice[Math.min(currentDieIndex + selectedForm.value.damageDie, GENERAL.dice.length - 1)]
+        : die;
 
-          // add an empty option for each hybrid selection dropdown
-          for (let i = 0; i < form.hybrid; i++) {
-            this.selectedHybridForms.push('');
-          }
-        }
+      return `${range} ${damageDie}+${modVal + selectedForm.value.damageBonus} ${type}`;
+    }
 
-        this.selectedForm = form;
-      },
-      next() {
-        this.swiper.slideTo(Math.min(this.currentTierTab + 1, this.forms.length));
-      },
-      prev() {
-        this.swiper.slideTo(Math.max(this.currentTierTab - 1, 0));
-      },
-      onSwiper(swiper) {
-        this.swiper = swiper;
-      },
-      onSlideChange(swiper) {
-        this.currentTierTab = swiper.activeIndex;
-      },
-      selectUpgradedForm(form) {
-        this.upgradedForm = clone(form);
-      },
-      selectHybridForms() {
-        this.currentHybridForms = this.selectedHybridForms.map((formName) => {
-          return this.hybridForms.find((form) => form.name === formName);
-        });
-      },
-    },
-    watch: {
-      currentArmor(newVal, oldVal) {
-        if (newVal !== oldVal) {
-          this.character.armor.current = newVal;
-          this.charactersStore.saveCharacter(this.character);
-        }
-      },
-      selectedForm(newVal, oldVal) {
-        if (this.settingsLoaded && newVal !== oldVal) {
-          this.sheetStore.saveSetting({ selectedForm: newVal });
+    return `${selectedForm.value.range} ${selectedForm.value.attack}`;
+  });
 
-          if (newVal === null) {
-            this.upgradedForm = null;
-            this.currentHybridForms = [];
-          }
-        }
-      },
-      upgradedForm(newVal, oldVal) {
-        if (this.settingsLoaded && newVal !== oldVal) {
-          this.sheetStore.saveSetting({ upgradedForm: newVal });
-        }
-      },
-      currentHybridForms(newVal, oldVal) {
-        if (this.settingsLoaded && JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
-          this.sheetStore.saveSetting({ currentHybridForms: newVal });
-        }
-      },
-    },
+  const formFeatures = computed(() => {
+    if (upgradedForm.value) return [ ...upgradedForm.value.features ];
+    if (currentHybridForms.value.length > 0) return [ ...selectedHybridFormFeatures.value ];
+
+    return selectedForm.value
+      ? [ ...selectedForm.value.features ]
+      : [];
+  });
+
+  const shapeshift = (form) => {
+    if (form?.hybrid) {
+      selectedHybridForms.value = [];
+
+      // add an empty option for each hybrid selection dropdown
+      for (let i = 0; i < form.hybrid; i++) {
+        selectedHybridForms.value.push('');
+      }
+    }
+
+    selectedForm.value = form;
   };
+
+  const next = () => {
+    swiper.slideTo(Math.min(currentTierTab.value + 1, forms.value.length));
+  };
+
+  const prev = () => {
+    swiper.slideTo(Math.max(currentTierTab.value - 1, 0));
+  };
+
+  const onSwiper = (slider) => {
+    swiper = slider;
+  };
+
+  const onSlideChange = (slider) => {
+    currentTierTab.value = slider.activeIndex;
+  };
+
+  const selectUpgradedForm = (form) => {
+    upgradedForm.value = clone(form);
+  };
+
+  const selectHybridForms = () => {
+    currentHybridForms.value = selectedHybridForms.value.map((formName) => {
+      return hybridForms.value.find((form) => form.name === formName);
+    });
+  };
+
+  onMounted(() => {
+    selectedForm.value = sheetStore.settings.selectedForm;
+    upgradedForm.value = sheetStore.settings.upgradedForm;
+    currentHybridForms.value = [ ...sheetStore.settings.currentHybridForms ];
+
+    // populate selections so features auto populate for hybrids
+    currentHybridForms.value.forEach((form) => {
+      if (form) {
+        selectedHybridForms.value.push(form.name);
+      }
+    });
+
+    for (let i = 2, j = characterTier.value; i < j; i++) {
+      selectedTiers.value.push(i);
+    }
+
+    settingsLoaded.value = true;
+  });
+
+  watch(currentArmor, (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      props.character.armor.current = newVal;
+      charactersStore.saveCharacter(props.character);
+    }
+  });
+
+  watch(selectedForm, (newVal, oldVal) => {
+    if (settingsLoaded.value && newVal !== oldVal) {
+      sheetStore.saveSetting({ selectedForm: newVal });
+
+      if (newVal === null) {
+        upgradedForm.value = null;
+        currentHybridForms.value = [];
+      }
+    }
+  });
+
+  watch(upgradedForm, (newVal, oldVal) => {
+    if (settingsLoaded.value && newVal !== oldVal) {
+      sheetStore.saveSetting({ upgradedForm: newVal });
+    }
+  });
+
+  watch(currentHybridForms, (newVal, oldVal) => {
+    if (settingsLoaded.value && JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+      sheetStore.saveSetting({ currentHybridForms: newVal });
+    }
+  });
 </script>

@@ -232,7 +232,7 @@
 
   import GENERAL from '~/data/general';
   import resourceStrings from '~/config/resourceStrings';
-  import { calculateModifiers, getFeaturesByAttribute, getGold } from '~/helpers/character';
+  import { getGold } from '~/helpers/character';
   import { newItem } from '~/helpers/constructors';
 
   const emit = defineEmits(['rest-complete']);
@@ -254,6 +254,7 @@
     { id: 'long-rest', name: 'Long Rest' },
   ];
   const { activeTab, tabTransition, setTab } = useTabs(tabs);
+  const { getFeaturesByAttribute, calculateModifiers } = useSheetBonuses();
 
   const maxShortRestActions = GENERAL.maxShortRestOptions + calculateModifiers(
     getFeaturesByAttribute(props.character, 'shortRestAction'),

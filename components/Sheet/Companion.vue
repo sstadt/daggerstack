@@ -88,185 +88,189 @@
 </template>
 
 <script>
+  export default {
+    name: 'SheetCompanion',
+  };
+</script>
+
+<script setup>
   import { useVuelidate } from '@vuelidate/core';
   import { helpers, required } from '@vuelidate/validators';
 
   import { useCharactersStore } from '~/stores/characters';
   import { uuidv4 } from '~/helpers/utility';
-  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
   import { ucFirst } from '~/helpers/string';
 
   import GENERAL from '~/data/general';
   import COMPANION from '~/data/companion';
 
-  export default {
-    name: 'SheetCompanion',
-    props: {
-      character: {
-        type: Object,
-        required: true,
+  const charactersStore = useCharactersStore();
+
+  const { getFeaturesByAttribute, calculateModifiers } = useSheetBonuses();
+
+  const props = defineProps({
+    character: {
+      type: Object,
+      required: true,
+    },
+  });
+
+  const traits = ref([ ...GENERAL.traits ]);
+  const maxStress = ref(GENERAL.companionMaxStress);
+  const exampleExperience = ref(COMPANION.exampleExperience);
+  const companionName = ref(props.character.companion.name);
+  const companionSpecies = ref(props.character.companion.species);
+  const companionTraits = ref(props.character.companion.traits);
+  const currentStress = ref(props.character.companion.stress.current);
+  const experiences = ref([ ...props.character.companion.experience ]);
+  const companionTraining = ref(null);
+
+  if (props.character.companion.experience.length < props.character.experience.length) {
+    for (let i = props.character.companion.experience.length; i < props.character.experience.length; i++) {
+      experiences.value.push({
+        id: uuidv4(),
+        name: null,
+        score: 2,
+      });
+    }
+  }
+
+  const v$ = useVuelidate(
+    {
+      companionName: { required },
+      companionSpecies: { required },
+      experiences: {
+        $each: helpers.forEach({
+          name: { required },
+        }),
       },
     },
-    data() {
-      const numCharacterExperience = this.character.experience.length;
-      const numCompanionExperience = this.character.companion.experience.length;
-      const experiences = [ ...this.character.companion.experience ];
+    { companionName, companionSpecies, experiences },
+  );
 
-      if (numCompanionExperience < numCharacterExperience) {
-        for (let i = numCompanionExperience; i < numCharacterExperience; i++) {
-          experiences.push({
-            id: uuidv4(),
-            name: null,
-            score: 2,
-          });
-        }
-      }
+  const companionValid = computed(() => {
+    return maxTraitsSelected.value &&
+      !newExperiences.value &&
+      companionName.value.length > 0 &&
+      companionSpecies.value.length > 0;
+  });
 
-      return {
-        traits: [ ...GENERAL.traits ],
-        maxStress: GENERAL.companionMaxStress,
-        exampleExperience: COMPANION.exampleExperience,
-        companionName: this.character.companion.name,
-        companionSpecies: this.character.companion.species,
-        companionTraits: this.character.companion.traits,
-        currentStress: this.character.companion.stress.current,
-        experiences,
-      };
-    },
-    validations() {
-      return {
-        companionName: { required },
-        companionSpecies: { required },
-        experiences: {
-          $each: helpers.forEach({
-            name: { required },
-          }),
-        },
-      };
-    },
-    setup() {
-      const charactersStore = useCharactersStore();
+  const companionConfigIcon = computed(() => {
+    return newTraining.value ? 'meat' : 'cog';
+  });
 
-      return {
-        charactersStore,
-        v$: useVuelidate(),
-      };
-    },
-    computed: {
-      companionValid() {
-        return this.maxTraitsSelected &&
-          !this.newExperiences &&
-          this.companionName.length > 0 &&
-          this.companionSpecies.length > 0;
-      },
-      companionConfigIcon() {
-        return this.newTraining ? 'meat' : 'cog';
-      },
-      companionConfigPriority() {
-        return this.newExperiences || this.newTraining ? 'primary' : 'secondary';
-      },
-      maxTraitsSelected() {
-        return this.companionTraits.length >= 2;
-      },
-      evasion() {
-        const base = this.character.companion.evasion;
-        const modifiers = getFeaturesByAttribute(this.character.companion, 'companionEvasion');
+  const companionConfigPriority = computed(() => {
+    return newExperiences.value || newTraining.value ? 'primary' : 'secondary';
+  });
 
-        return base + calculateModifiers(modifiers, 'companionEvasion');
-      },
-      stressSlots() {
-        const base = this.character.companion.stress.slots;
-        const modifiers = getFeaturesByAttribute(this.character.companion, 'companionStressSlot');
+  const maxTraitsSelected = computed(() => {
+    return companionTraits.value.length >= 2;
+  });
 
-        return base + calculateModifiers(modifiers, 'companionStressSlot');
-      },
-      companionExperience() {
-        return this.character.companion.experience.map((experience) => {
-          const exp = { ...experience };
-          const upgrades = this.character.companion.levelSelections.filter(
-            (selection) => selection.type === 'experience' && selection.options.includes(exp.id),
-          ).length;
+  const evasion = computed(() => {
+    const base = props.character.companion.evasion;
+    const modifiers = getFeaturesByAttribute(props.character.companion, 'companionEvasion');
 
-          exp.score = exp.score + upgrades;
+    return base + calculateModifiers(modifiers, 'companionEvasion');
+  });
 
-          return exp;
-        });
-      },
-      companionFeatures() {
-        const features = [ ...COMPANION.features ];
-        const trainedFeatures = this.character.companion.levelSelections
-          .filter((selection) => selection.type === 'feature')
-          .map(({ options }) => ({ ...options }));
+  const stressSlots = computed(() => {
+    const base = props.character.companion.stress.slots;
+    const modifiers = getFeaturesByAttribute(props.character.companion, 'companionStressSlot');
 
-        return features.concat(trainedFeatures);
-      },
-      newExperiences() {
-        return this.experiences.filter(
-          (experience) => experience.name === null || experience.name === '',
-        ).length > 0;
-      },
-      trainingPointsAvailable() {
-        const pointsSpent = this.character.companion.levelSelections.length;
-        const trainingUpgrades = getFeaturesByAttribute(this.character, 'companionTraining');
-        const bonusPoints = calculateModifiers(trainingUpgrades, 'companionTraining');
-        const basePoints = this.character.level - 1;
+    return base + calculateModifiers(modifiers, 'companionStressSlot');
+  });
 
-        return Math.max(basePoints + bonusPoints - pointsSpent, 0);
-      },
-      newTraining() {
-        return this.trainingPointsAvailable > 0;
-      },
-      damage() {
-        const upgrades = this.character.companion.levelSelections.filter((selection) => {
-          return selection.type === 'companionDamage';
-        });
+  const companionExperience = computed(() => {
+    return props.character.companion.experience.map((experience) => {
+      const exp = { ...experience };
+      const upgrades = props.character.companion.levelSelections.filter(
+        (selection) => selection.type === 'experience' && selection.options.includes(exp.id),
+      ).length;
 
-        return COMPANION.damage[upgrades.length];
-      },
-      range() {
-        const upgrades = this.character.companion.levelSelections.filter((selection) => {
-          return selection.type === 'companionRange';
-        });
+      exp.score = exp.score + upgrades;
 
-        return COMPANION.range[upgrades.length];
-      },
-    },
-    methods: {
-      ucFirst,
-      openEditor() {
-        if (this.companionValid && this.newTraining && !this.newExperience) {
-          this.$refs.companionTraining.open();
-        } else {
-          this.$refs.companionEditor.open();
-        }
-      },
-      async saveCompanion() {
-        const formValid = await this.v$.$validate();
+      return exp;
+    });
+  });
 
-        if (formValid) {
-          const companion = { ...this.character.companion };
+  const companionFeatures = computed(() => {
+    const features = [ ...COMPANION.features ];
+    const trainedFeatures = props.character.companion.levelSelections
+      .filter((selection) => selection.type === 'feature')
+      .map(({ options }) => ({ ...options }));
 
-          companion.name = this.companionName;
-          companion.species = this.companionSpecies;
-          companion.traits = [ ...this.companionTraits ];
-          companion.experience = [ ...this.experiences ];
+    return features.concat(trainedFeatures);
+  });
 
-          this.character.companion = { ...companion };
-          this.charactersStore.saveCharacter(this.character);
-          this.$refs.companionEditor.close();
-        }
-      },
-      closeTraining() {
-        this.$refs.companionTraining.close();
-      },
-    },
-    watch: {
-      currentStress(newVal, oldVal) {
-        if (newVal !== oldVal) {
-          this.character.companion.stress.current = newVal;
-          this.charactersStore.saveCharacter(this.character);
-        }
-      },
-    },
+  const newExperiences = computed(() => {
+    return experiences.value.filter(
+      (experience) => experience.name === null || experience.name === '',
+    ).length > 0;
+  });
+
+  const trainingPointsAvailable = computed(() => {
+    const pointsSpent = props.character.companion.levelSelections.length;
+    const trainingUpgrades = getFeaturesByAttribute(props.character, 'companionTraining');
+    const bonusPoints = calculateModifiers(trainingUpgrades, 'companionTraining');
+    const basePoints = props.character.level - 1;
+
+    return Math.max(basePoints + bonusPoints - pointsSpent, 0);
+  });
+
+  const newTraining = computed(() => {
+    return trainingPointsAvailable.value > 0;
+  });
+
+  const damage = computed(() => {
+    const upgrades = props.character.companion.levelSelections.filter((selection) => {
+      return selection.type === 'companionDamage';
+    });
+
+    return COMPANION.damage[upgrades.length];
+  });
+
+  const range = computed(() => {
+    const upgrades = props.character.companion.levelSelections.filter((selection) => {
+      return selection.type === 'companionRange';
+    });
+
+    return COMPANION.range[upgrades.length];
+  });
+
+  const openEditor = () => {
+    if (companionValid.value && newTraining.value) {
+      companionTraining.value.open();
+    } else {
+      companionEditor.value.open();
+    }
   };
+
+  const saveCompanion = async () => {
+    const formValid = await v$.$validate();
+
+    if (formValid) {
+      const companion = { ...props.character.companion };
+
+      companion.name = companionName.value;
+      companion.species = companionSpecies.value;
+      companion.traits = [ ...companionTraits.value ];
+      companion.experience = [ ...experiences.value ];
+
+      props.character.companion = { ...companion };
+      props.charactersStore.saveCharacter(props.character);
+      companionEditor.value.close();
+    }
+  };
+
+  const closeTraining = () => {
+    companionTraining.value.close();
+  };
+
+  watch(currentStress, (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      props.character.companion.stress.current = newVal;
+      props.charactersStore.saveCharacter(props.character);
+    }
+  });
 </script>

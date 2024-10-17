@@ -57,6 +57,12 @@
 </template>
 
 <script>
+  export default {
+    name: 'BuilderStep7',
+  };
+</script>
+
+<script setup>
   import { mapState } from 'pinia';
   import { useVuelidate } from '@vuelidate/core';
   import { required } from '@vuelidate/validators';
@@ -64,80 +70,64 @@
   import NAMES from '~/data/names.json';
   import { uuidv4 } from '~/helpers/utility';
   import { getRandomNumber } from '~/helpers/dice';
-  import { calculateModifiers, getFeaturesByAttribute } from '~/helpers/character';
 
-  import { useBuilderStore } from '~/stores/builder';
+  const builderStore = useBuilderStore();
+  const { getFeaturesByAttribute, calculateModifiers } = useSheetBonuses();
 
-  export default {
-    name: 'BuilderStep7',
-    data() {
-      const { name, pronouns, experience } = this.builderStore.character;
-      const [ existingExperience1, existingExperience2 ] = experience;
+  const emit = defineEmits(['next']);
 
-      return {
-        experience1: existingExperience1 ? existingExperience1.name : '',
-        experience1Score: existingExperience1 ? existingExperience1.score : 2,
-        experience2: existingExperience2 ? existingExperience2.name : '',
-        experience2Score: existingExperience2 ? existingExperience2.score : 2,
-        name,
-        pronouns,
-        firstNames: NAMES.first,
-        familyNames: NAMES.family,
-      };
+  // todo: need to populate this stuff on page load
+  const name = ref('');
+  const pronouns = ref('');
+  const experience1 = ref('');
+  const experience1Score = ref(2);
+  const experience2 = ref('');
+  const experience2Score = ref(2);
+
+  const v$ = useVuelidate(
+    {
+      name: { required },
+      pronouns: { required },
+      experience1: { required },
+      experience2: { required },
     },
-    validations() {
-      return {
-        name: { required },
-        pronouns: { required },
-        experience1: { required },
-        experience2: { required },
-      };
-    },
-    setup() {
-      const builderStore = useBuilderStore();
+    { name, pronouns, experience1, experience2 },
+  );
 
-      return {
-        builderStore,
-        v$: useVuelidate(),
-      };
-    },
-    computed: {
-      ...mapState(useBuilderStore, ['character']),
-      bonusExperience() {
-        const modifiers = getFeaturesByAttribute(this.character, 'experience');
-        return calculateModifiers(modifiers, 'experience');
-      },
-      remainingExperience() {
-        const totalExperience = this.experience1Score + this.experience2Score;
+  const bonusExperience = computed(() => {
+    const modifiers = getFeaturesByAttribute(builderStore.character, 'experience');
+    return calculateModifiers(modifiers, 'experience');
+  });
 
-        // 4 total is base for all characters, so we need to zero that out
-        return 4 - totalExperience + this.bonusExperience;
-      },
-    },
-    methods: {
-      generateName() {
-        const firstIndex = getRandomNumber(0, NAMES.first.length - 1);
-        const familyIndex = getRandomNumber(0, NAMES.family.length - 1);
+  const remainingExperience = computed(() => {
+    const totalExperience = experience1Score.value + experience2Score.value;
 
-        this.name = `${NAMES.first[firstIndex]} ${NAMES.family[familyIndex]}`;
-      },
-      async next() {
-        const formValid = await this.v$.$validate();
+    // 4 total is base for all characters, so we need to zero that out
+    return 4 - totalExperience + bonusExperience.value;
+  });
 
-        if (formValid) {
-          this.builderStore.updateCharacter({
-            name: this.name,
-            pronouns: this.pronouns,
-            experience: [
-              { id: uuidv4(), name: this.experience1, score: this.experience1Score },
-              { id: uuidv4(), name: this.experience2, score: this.experience2Score },
-            ],
-          });
+  const generateName = () => {
+    const firstIndex = getRandomNumber(0, NAMES.first.length - 1);
+    const familyIndex = getRandomNumber(0, NAMES.family.length - 1);
 
-          this.$emit('next');
-        }
-      },
-    },
+    name.value = `${NAMES.first[firstIndex]} ${NAMES.family[familyIndex]}`;
+  };
+
+  const next = async () => {
+    const formValid = await v$.$validate();
+
+    if (formValid) {
+      builderStore.updateCharacter({
+        name: name.value,
+        pronouns: pronouns.value,
+        experience: [
+          { id: uuidv4(), name: experience1.value, score: experience1Score.value },
+          { id: uuidv4(), name: experience2.value, score: experience2Score.value },
+        ],
+      });
+
+      emit('next');
+    }
   };
 </script>
 
