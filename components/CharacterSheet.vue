@@ -1,5 +1,5 @@
 <template lang="pug">
-  .character-sheet
+  .character-sheet(v-if="character")
     SheetHeader(:character="character" @level-up="levelUp")
       .flex.relative(v-if="mq.mdMinus")
         NavButton(

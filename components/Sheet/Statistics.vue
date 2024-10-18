@@ -14,7 +14,7 @@
         :score="characterArmor"
         @click="showBonuses('armorScore', 'armorSlots')"
       )
-      .flex.items-start.justify-center.ml-1(class="md:ml-4 lg:ml-2")
+      .flex.items-start.justify-center.ml-1(class="lg:ml-2")
         InputCheckboxCounter.grid.grid-cols-3.grid-rows-3.gap-1(
           v-model="currentArmor"
           :max="maxArmor"
