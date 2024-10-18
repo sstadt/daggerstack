@@ -123,6 +123,7 @@
   const companionTraits = ref(props.character.companion.traits);
   const currentStress = ref(props.character.companion.stress.current);
   const experiences = ref([ ...props.character.companion.experience ]);
+  const companionEditor = ref(null);
   const companionTraining = ref(null);
 
   if (props.character.companion.experience.length < props.character.experience.length) {
@@ -247,7 +248,7 @@
   };
 
   const saveCompanion = async () => {
-    const formValid = await v$.$validate();
+    const formValid = await v$.value.$validate();
 
     if (formValid) {
       const companion = { ...props.character.companion };
@@ -258,7 +259,7 @@
       companion.experience = [ ...experiences.value ];
 
       props.character.companion = { ...companion };
-      props.charactersStore.saveCharacter(props.character);
+      charactersStore.saveCharacter(props.character);
       companionEditor.value.close();
     }
   };
@@ -270,7 +271,7 @@
   watch(currentStress, (newVal, oldVal) => {
     if (newVal !== oldVal) {
       props.character.companion.stress.current = newVal;
-      props.charactersStore.saveCharacter(props.character);
+      charactersStore.saveCharacter(props.character);
     }
   });
 </script>

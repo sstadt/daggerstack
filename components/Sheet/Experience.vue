@@ -154,7 +154,7 @@
   watch(hope, (newVal, oldVal) => {
     if (newVal !== oldVal) {
       props.character.hope = newVal;
-      props.charactersStore.saveCharacter(props.character);
+      charactersStore.saveCharacter(props.character);
     }
   });
 </script>
