@@ -114,7 +114,7 @@
   };
 
   const next = async () => {
-    const formValid = await v$.$validate();
+    const formValid = await v$.value.$validate();
 
     if (formValid) {
       builderStore.updateCharacter({
@@ -129,6 +129,23 @@
       emit('next');
     }
   };
+
+  onMounted(() => {
+    const [ exp1, exp2 ] = builderStore.character.experience;
+
+    name.value = builderStore.character?.name || '';
+    pronouns.value = builderStore.character?.pronouns || '';
+
+    if (exp1) {
+      experience1.value = exp1.name;
+      experience1Score.value = exp1.score;
+    }
+
+    if (exp2) {
+      experience2.value = exp2.name;
+      experience2Score.value = exp2.score;
+    }
+  });
 </script>
 
 <style lang="scss" scoped>

@@ -2,42 +2,28 @@
   .max-w-5xl.container.p-8
     form(@submit.prevent="next").space-y-8
       h2.text-center.text-2xl.font-black.uppercase.mb-2 Starting Equipment
-      div
-        h3.text-lg.font-bold.uppercase.mb-2 primary weapon
-        InventoryWeapon(
-          v-if="primaryWeapon.name"
-          :weapon="getWeapon(primaryWeapon.name)"
-          @click="openPicker(primaryWeaponType)"
+      .space-y-4
+        transition-group(name="slide-fade-left")
+          InventoryWeapon.cursor-pointer(
+            v-for="(weapon, index) in weapons"
+            :key="weapon.id"
+            :weapon="weaponsStore.weapon(weapon.itemId)"
+            @click="openPicker('weapon', index)"
+          )
+        transition(name="fade")
+          .flex.justify-end(v-if="weapons.length < 2")
+            BasicButton(size="sm" priority="secondary" @click="openPicker('weapon')") Add Weapon
+      transition(name="fade" mode="out-in")
+        InventoryArmor.cursor-pointer(
+          v-if="armor && armor.itemId"
+          :armor="armorStore.armor(armor.itemId)"
+          @click="openPicker('armor')"
         )
-        BasicButton.block.mx-auto(
-          v-else
-          @click="openPicker(primaryWeaponType)"
-        ) Select Weapon
-      div
-        h3.text-lg.font-bold.uppercase.mb-2 secondary weapon
-        InventoryWeapon(
-          v-if="secondaryWeapon.name"
-          :weapon="getWeapon(secondaryWeapon.name)"
-          @click="openPicker(secondaryWeaponType)"
-        )
-        BasicButton.block.mx-auto(
-          v-else
-          @click="openPicker(secondaryWeaponType)"
-        ) Select Weapon
-      div
-        h3.text-lg.font-bold.uppercase.mb-2 armor
-        InventoryArmor(
-          v-if="armor.name"
-          :armor="getArmor(armor.name)"
-          @click="openPicker(armorType)"
-        )
-        BasicButton.block.mx-auto(
-          v-else
-          @click="openPicker(armorType)"
-        ) Select Armor
+        .flex.justify-end(v-else)
+          BasicButton(size="sm" priority="secondary" @click="openPicker('armor')") Add Armor
       .flex.justify-between.items-center
         NuxtLink(to="/character") Finish Later
-        BasicButton.block(type="submit") Next
+        BasicButton.block(type="submit" :disabled="submitDisabled") Next
     BasicDrawer(ref="equipmentPicker" :title="pickerTitle")
       InventoryEquipmentPicker(
         :character="builderStore.character"
@@ -48,72 +34,77 @@
 </template>
 
 <script>
-  import { useBuilderStore } from '~/stores/builder';
-
-  import { newWeapon, newArmor } from '~/helpers/constructors';
-  import { getWeapon, getArmor } from '~/helpers/character';
-
-  import {
-    PRIMARY_WEAPON_TYPE,
-    SECONDARY_WEAPON_TYPE,
-    ARMOR_TYPE,
-  } from '~/config/equipmentPicker';
-
   export default {
     name: 'BuilderStep4',
-    data() {
-      return {
-        activeType: null,
-        primaryWeaponType: PRIMARY_WEAPON_TYPE,
-        secondaryWeaponType: SECONDARY_WEAPON_TYPE,
-        armorType: ARMOR_TYPE,
-        primaryWeapon: this.builderStore.character.equipment.primaryWeapon.name
-          ? { ...this.builderStore.character.equipment.primaryWeapon }
-          : newWeapon(),
-        secondaryWeapon: this.builderStore.character.equipment.secondaryWeapon.name
-          ? { ...this.builderStore.character.equipment.secondaryWeapon }
-          : newWeapon(),
-        armor: this.builderStore.character.equipment.armor.name
-          ? { ...this.builderStore.character.equipment.armor }
-          : newArmor(),
-      };
-    },
-    computed: {
-      pickerTitle() {
-        return this.activeType === ARMOR_TYPE ? 'Armor' : 'Weapons';
-      },
-    },
-    setup() {
-      const builderStore = useBuilderStore();
-
-      return { builderStore };
-    },
-    methods: {
-      getWeapon,
-      getArmor,
-      openPicker(type) {
-        this.activeType = type;
-        this.$refs.equipmentPicker.open();
-      },
-      selectItem({ item }) {
-        this[this.activeType] = this.activeType === ARMOR_TYPE
-          ? newArmor({ name: item })
-          : newWeapon({ name: item });
-        this.$refs.equipmentPicker.close();
-      },
-      async next() {
-        if (this.primaryWeapon.name && this.armor.name) {
-          this.builderStore.updateCharacter({
-            equipment: {
-              primaryWeapon: { ...this.primaryWeapon },
-              secondaryWeapon: { ...this.secondaryWeapon },
-              armor: { ...this.armor },
-            },
-          });
-
-          this.$emit('next');
-        }
-      },
-    },
   };
+</script>
+
+<script setup>
+  import { newWeapon, newArmor } from '~/helpers/constructors';
+
+  const emit = defineEmits(['next']);
+
+  const builderStore = useBuilderStore();
+  const weaponsStore = useWeaponsStore();
+  const armorStore = useArmorStore();
+
+  const activeType = ref('weapon');
+  const weapons = ref([]);
+  const armor = ref(null);
+  const existingIndex = ref(null);
+  const equipmentPicker = ref(null);
+
+  const pickerTitle = computed(() => {
+    return activeType.value === 'weapon' ? 'Weapons' : 'Armor';
+  });
+
+  const submitDisabled = computed(() => {
+    return weapons.value.length < 1 || !armor.value?.name;
+  });
+
+  const openPicker = (type, index) => {
+    activeType.value = type;
+    existingIndex.value = Number.isInteger(index) ? index : null;
+    equipmentPicker.value.open();
+  };
+
+  const selectItem = (item) => {
+    if (activeType.value === 'weapon') {
+      const weapon = newWeapon({ name: item.name, itemId: item.id });
+
+      if ( Number.isInteger(existingIndex.value)) {
+        weapons.value.splice(existingIndex.value, 1, weapon);
+      } else {
+        weapons.value.push(weapon);
+      }
+    } else {
+      armor.value = newArmor({ name: item.name, itemId: item.id });
+    }
+
+    equipmentPicker.value.close();
+  };
+
+  const next = async () => {
+    builderStore.updateCharacter({
+      inventory: {
+        weapons: [ ...weapons.value ],
+        armor: { ...armor.value },
+      },
+    });
+
+    emit('next');
+  };
+
+  onMounted(() => {
+    if (
+      builderStore.character.inventory?.weapons &&
+      builderStore.character.inventory?.weapons.length > 0
+    ) {
+      weapons.value = [ ...builderStore.character.inventory.weapons ];
+    }
+
+    if (builderStore.character.inventory?.armor?.id) {
+      armor.value = { ...builderStore.character.inventory.armor };
+    }
+  });
 </script>
