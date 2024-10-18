@@ -25,7 +25,7 @@
             :max="2 + remainingExperience"
             modifier
           )
-          InputText(
+          InputText.grow(
             v-model="experience2"
             :errors="v$.experience2.$errors"
             required
