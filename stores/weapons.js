@@ -72,9 +72,9 @@ export const useWeaponsStore = defineStore('weapons', {
           toastStore.postMessage({ body: error.message });
         } else {
           const [ updatedWeapon ] = data;
-          const index = this.items.findIndex((i) => i.id === updatedWeapon.id);
+          const index = this.weapons.findIndex((i) => i.id === updatedWeapon.id);
 
-          this.items.splice(index, 1, updatedWeapon);
+          this.weapons.splice(index, 1, updatedWeapon);
           toastStore.postMessage({ body: `Saved changes to ${updatedWeapon.name}` });
 
           return updatedWeapon.id;
@@ -115,7 +115,7 @@ export const useWeaponsStore = defineStore('weapons', {
         if (error) {
           toastStore.postMessage({ body: error.message });
         } else {
-          this.items.splice(index, 1);
+          this.weapons.splice(index, 1);
           toastStore.postMessage({ body: `Deleted ${weaponName}` });
         }
       }
