@@ -31,7 +31,7 @@ export const excludeArrayItems = (excludeArray, arrayToFilter) => {
  */
 export const createSelectOptions = (arr, capitalize = true) => {
   return structuredClone(arr).map((item) => ({
-    label: capitalize ? titleCase(item) : item,
+    label: capitalize && !Number.isInteger(item) ? titleCase(item) : item,
     value: item,
   }));
 };

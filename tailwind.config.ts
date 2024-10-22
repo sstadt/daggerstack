@@ -14,6 +14,8 @@ module.exports = {
     'text-green-600', // alert
     'text-cyan-950', // alert
     'text-pink-800', // alert
+    'grid-cols-2',
+    'grid-cols-4',
   ],
   darkMode: 'media', // or 'media' or 'class'
   theme: {

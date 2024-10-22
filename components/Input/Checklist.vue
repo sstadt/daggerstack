@@ -1,12 +1,17 @@
 <template lang="pug">
-  .input--checklist.grid.gap-2(:class="`grid-cols-${cols}`")
-    InputCheckbox(
-      v-for="option in options"
-      v-model="currentValue"
-      :value="option.value"
-      :label="option.label"
-      :disabled="isDisabled(option)"
-    )
+  .space-y-2
+    label.uppercase.font-bold.text-slate-500(
+      v-if="label"
+      :class="{ 'sr-only': hideLabel }"
+    ) {{ label }}
+    .input--checklist.grid.gap-2.w-full(:class="`grid-cols-${cols}`")
+      InputCheckbox(
+        v-for="option in options"
+        v-model="currentValue"
+        :value="option.value"
+        :label="option.label"
+        :disabled="isDisabled(option)"
+      )
 </template>
 
 <script>
@@ -32,7 +37,7 @@
         },
       },
       cols: {
-        type: Number,
+        type: [ Number, String ],
         default: 1,
       },
       disabled: {

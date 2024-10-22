@@ -23,7 +23,7 @@
       },
       checked: Boolean,
       label: {
-        type: String,
+        type: [String, Number],
         default: null,
       },
       name: {

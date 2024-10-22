@@ -24,9 +24,8 @@
               )
                 HomebrewCardArmor.h-full(:armor="armor")
     BasicDrawer(title="filters" ref="filters")
-      .px-4
-        .space-y-4
-          p todo: filter options
+      .px-4.space-y-4
+        InputChecklist(label="tier" v-model="armorTier" :cols="4" :options="tierOptions")
       .px-4.space-y-2.mt-auto
         BasicButton.w-full(priority="secondary" @click="resetFilters") Reset
         BasicButton.w-full(@click="filters.close") Show Results
@@ -39,17 +38,21 @@
 </script>
 
 <script setup>
+  import { createSelectOptions } from '~/helpers/array';
   import { waitUntil } from '~/helpers/utility';
 
   const userStore = useUserStore();
   const armorStore = useArmorStore();
 
+  const tierOptions = createSelectOptions([1, 2, 3, 4]);
+
   const search = ref('');
+  const armorTier = ref([]);
   const filters = ref(null);
 
   const filteredWeapons = computed(() => {
     return armorStore.publicArmor.filter((item) => {
-      return true;
+      return armorTier.value.length < 1 || armorTier.value.includes(item.tier);
     });
   });
 
@@ -84,7 +87,7 @@
   };
 
   const resetFilters = () => {
-    type.value = '';
+    armorTier.value = [];
     filters.value.close();
   };
 </script>

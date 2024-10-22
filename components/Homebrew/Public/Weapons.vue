@@ -24,9 +24,10 @@
               )
                 HomebrewCardWeapon.h-full(:weapon="weapon")
     BasicDrawer(title="filters" ref="filters")
-      .px-4
-        .space-y-4
-          p todo: filter options
+      .px-4.space-y-4
+        InputChecklist(label="tier" v-model="weaponTier" :cols="4" :options="tierOptions")
+        InputChecklist(label="trait" v-model="weaponTrait" :cols="2" :options="traitOptions")
+        InputChecklist(label="range" v-model="weaponRange" :cols="2" :options="rangeOptions")
       .px-4.space-y-2.mt-auto
         BasicButton.w-full(priority="secondary" @click="resetFilters") Reset
         BasicButton.w-full(@click="filters.close") Show Results
@@ -39,17 +40,33 @@
 </script>
 
 <script setup>
+  import GENERAL from '~/data/general';
+
+  import { createSelectOptions } from '~/helpers/array';
   import { waitUntil } from '~/helpers/utility';
 
   const userStore = useUserStore();
   const weaponsStore = useWeaponsStore();
 
+  const tierOptions = createSelectOptions([1, 2, 3, 4]);
+  const traitOptions = createSelectOptions(GENERAL.traits);
+  const rangeOptions = createSelectOptions(GENERAL.range);
+
   const search = ref('');
+  const weaponTier = ref([]);
+  const weaponTrait = ref([]);
+  const weaponRange = ref([]);
   const filters = ref(null);
 
   const filteredWeapons = computed(() => {
     return weaponsStore.publicWeapons.filter((item) => {
-      return true;
+      const matchesTier = weaponTier.value.length < 1 || weaponTier.value.includes(item.tier);
+      const matchesTrait = weaponTrait.value.length < 1 || weaponTrait.value.includes(item.trait);
+      const matchesRange = weaponRange.value.length < 1 || weaponRange.value.includes(item.range);
+
+      return matchesTier &&
+        matchesTrait &&
+        matchesRange;
     });
   });
 
@@ -84,7 +101,9 @@
   };
 
   const resetFilters = () => {
-    type.value = '';
+    weaponTier.value = [];
+    weaponTrait.value = [];
+    weaponRange.value = [];
     filters.value.close();
   };
 </script>

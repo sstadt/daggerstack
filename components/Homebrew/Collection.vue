@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  .overflow-hidden
     .sticky.top-0.z-10.relative.transition-colors.bg-black
       .max-w-5xl.container.sheet-header__title.flex-none.py-4.text-white.cursor-pointer(
         :class="{ 'container': mq.lgPlus }"
