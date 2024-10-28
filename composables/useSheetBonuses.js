@@ -64,18 +64,21 @@ export const useSheetBonuses = () => {
     }
 
     // armor
-    if (attribute === 'armorScore' && character.inventory?.armor?.itemId) {
+    if (character.inventory?.armor?.itemId) {
       const armor = armorStore.armor(character.inventory.armor.itemId);
-      const armorScore = options.exclude && options.exclude.includes('armorScore')
-        ? 0
-        : armor.score;
 
-      features.push({
-        name: armor.name,
-        modify: {
-          armorScore,
-        },
-      });
+      if (attribute === 'armorScore') {
+        const armorScore = options.exclude && options.exclude.includes('armorScore')
+          ? 0
+          : armor.score;
+
+        features.push({
+          name: armor.name,
+          modify: {
+            armorScore,
+          },
+        });
+      }
 
       if (armor.feature && armor.feature.modify && armor.feature.modify[attribute]) {
         features.push({ ...armor.feature });
