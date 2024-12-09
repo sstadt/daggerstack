@@ -33,7 +33,7 @@
 
 <script>
   export default {
-    name: 'HomebrewPublicWeapons',
+    name: 'HomebrewPublicArmor',
   };
 </script>
 
@@ -50,14 +50,14 @@
   const armorTier = ref([]);
   const filters = ref(null);
 
-  const filteredWeapons = computed(() => {
+  const filteredArmor = computed(() => {
     return armorStore.publicArmor.filter((item) => {
       return armorTier.value.length < 1 || armorTier.value.includes(item.tier);
     });
   });
 
   const searchArmor = computed(() => {
-    return filteredWeapons.value.filter((armor) => {
+    return filteredArmor.value.filter((armor) => {
       return search.value.length > 0
         ? armor.name.toLowerCase().includes(search.value.toLowerCase())
         : true;

@@ -3,16 +3,16 @@
     .grid.grid-cols-1.gap-4(class="md:grid-cols-2")
       TransitionGroup(name="slide-fade-left")
         .relative(
-          v-for="weapon in weaponsStore.homebrew"
-          :key="weapon.id"
+          v-for="armor in armorStore.homebrew"
+          :key="armor.id"
         )
           NuxtIcon.absolute.top-0.right-14.text-red-900.text-xl(
-            v-if="bookmarks.includes(weapon.id)"
+            v-if="bookmarks.includes(armor.id)"
             name="bookmark"
           )
-          HomebrewCardWeapon.cursor-pointer.h-full(
-            :weapon="weapon"
-            @click="editWeapon(weapon)"
+          HomebrewCardArmor.cursor-pointer.h-full(
+            :armor="armor"
+            @click="editArmor(armor)"
           )
     BasicButton.fixed.bottom-20.right-6.shadow(
       size="sm"
@@ -22,39 +22,39 @@
     )
       NuxtIcon(name="plus")
       span.sr-only New Item
-    HomebrewDrawerWeapon(ref="drawer" @save="saveWeapon" @delete="deleteWeapon")
+    HomebrewDrawerArmor(ref="drawer" @save="saveArmor" @delete="deleteArmor")
 </template>
 
 <script>
   export default {
-    name: 'CollectionWeapons',
+    name: 'HomebrewCollectionArmor',
   };
 </script>
 
 <script setup>
   const userStore = useUserStore();
-  const weaponsStore = useWeaponsStore();
+  const armorStore = useArmorStore();
   const toastStore = useToastStore();
 
   const drawer = ref(null);
 
   const bookmarks = computed(() => {
-    return userStore.profile?.weapons || [];
+    return userStore.profile?.armor || [];
   });
 
   const newItem = () => {
     drawer.value.open();
   };
 
-  const editWeapon = (weapon) => {
-    if (!bookmarks.value.includes(weapon.id)) drawer.value.open(weapon);
+  const editArmor = (armor) => {
+    if (!bookmarks.value.includes(armor.id)) drawer.value.open(armor);
   };
 
-  const saveWeapon = (weapon) => {
-    weaponsStore.saveWeapon(weapon);
+  const saveArmor = (armor) => {
+    armorStore.saveArmor(armor);
   };
 
-  const deleteWeapon = async (id) => {
-    weaponsStore.deleteWeapon(id);
+  const deleteArmor = async (id) => {
+    armorStore.deleteArmor(id);
   };
 </script>

@@ -24,7 +24,7 @@
 
 <script>
   export default {
-    name: 'CollectionItems',
+    name: 'HomebrewCollectionItems',
   };
 </script>
 

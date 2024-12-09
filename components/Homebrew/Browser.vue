@@ -37,11 +37,13 @@
     'Items': resolveComponent('HomebrewPublicItems'),
     'Weapons': resolveComponent('HomebrewPublicWeapons'),
     'Armor': resolveComponent('HomebrewPublicArmor'),
+    'Community': resolveComponent('HomebrewPublicCommunities'),
   };
   const tabs = [
     { id: 'items', name: 'Items', icon: 'gem-pendant' },
     { id: 'weapons', name: 'Weapons', icon: 'axe' },
     { id: 'armor', name: 'Armor', icon: 'armor' },
+    { id: 'community', name: 'Community', icon: 'city' },
   ];
   const { activeTab, tabTransition, setTab, useActiveTabIndex } = useTabs(tabs);
   const activeTabIndex = useActiveTabIndex();

@@ -250,3 +250,25 @@ export const newBuff = (buff = {}) => {
     score: options.score,
   };
 };
+
+/**
+ * Create a feature object; used for putting together
+ * homebrew features with modifiers
+ *
+ * @param {Object} feature The feature options
+ * @returns
+ */
+export const newFeature = (feature = {}) => {
+  const defaults = {
+    name: '',
+    description: '',
+    modify: [],
+  };
+  const options = Object.assign({}, defaults, feature);
+
+  return {
+    name: options.name,
+    description: options.description,
+    modify: [ ...options.modify ],
+  };
+};

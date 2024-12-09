@@ -33,14 +33,16 @@
 
 <script setup>
   const tabComponents = {
-    'Items': resolveComponent('CollectionItems'),
-    'Weapons': resolveComponent('CollectionWeapons'),
-    'Armor': resolveComponent('CollectionArmor'),
+    'Items': resolveComponent('HomebrewCollectionItems'),
+    'Weapons': resolveComponent('HomebrewCollectionWeapons'),
+    'Armor': resolveComponent('HomebrewCollectionArmor'),
+    'Community': resolveComponent('HomebrewCollectionCommunities'),
   };
   const tabs = [
     { id: 'items', name: 'Items', icon: 'gem-pendant' },
     { id: 'weapons', name: 'Weapons', icon: 'axe' },
     { id: 'armor', name: 'Armor', icon: 'armor' },
+    { id: 'community', name: 'Community', icon: 'city' },
   ];
   const { activeTab, tabTransition, setTab, useActiveTabIndex } = useTabs(tabs);
   const activeTabIndex = useActiveTabIndex();

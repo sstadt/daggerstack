@@ -1,19 +1,26 @@
 <template lang="pug">
-  .max-w-5xl.container.flex.space-x-2.py-6
-    .flex-shrink-0(class="w-4/5")
-      .space-y-2
-        InputSelect(v-model="slot" :options="slots" label="slot" required)
-        InputCounter(v-model="tier" :min="0" :max="3" label="Tier")
-        .flex.space-x-2
-          BasicButton(@click="parseWeapons") Parse Weapons
-          BasicButton(@click="parseArmor") Parse Armor
-        InputTextarea(v-model="input")
-    .flex-grow
-      BasicButton(@click="copyToClipboard") Copy to Clipboard
-      pre {{ output }}
+  .container.max-w-5xl
+    .flex.space-x-2.py-6
+      .flex-shrink-0(class="w-4/5")
+        h2 Data Parser
+        .space-y-2
+          InputSelect(v-model="slot" :options="slots" label="slot" required)
+          InputCounter(v-model="tier" :min="0" :max="3" label="Tier")
+          .flex.space-x-2
+            BasicButton(@click="parseWeapons") Parse Weapons
+            BasicButton(@click="parseArmor") Parse Armor
+          InputTextarea(v-model="input")
+      .flex-grow
+        BasicButton(@click="copyToClipboard") Copy to Clipboard
+        pre {{ output }}
+    div
+      h2 Random UIds
+      .columns-2
+        p(v-for="id in ids") {{ id }}
 </template>
 
 <script>
+  import { uuidv4 } from '~/helpers/utility';
   // Weapons expect (one per line):
   // Name       | trait   | range | damage | damage type | Burden     | Feature
   // Broadsword | Agility | Melee | d8     | (Phy)       | One-Handed | Reliable
@@ -45,6 +52,17 @@
       const toastStore = useToastStore();
 
       return { toastStore };
+    },
+    computed: {
+      ids() {
+        const ids = [];
+
+        for (let i = 0; i < 100; i++) {
+          ids.push(uuidv4());
+        }
+
+        return ids;
+      },
     },
     methods: {
       parseWeapons() {

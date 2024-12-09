@@ -1,5 +1,6 @@
 
 export const useEquipment = () => {
+  // TODO: move this to a generic 'homebrew' composable
   const useIsHomebrew = (equipment) => {
     return computed(() => {
       return Number.isInteger(equipment.id);

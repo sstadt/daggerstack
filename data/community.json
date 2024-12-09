@@ -1,6 +1,7 @@
 [
   {
     "name": "Highborne",
+    "id": "87d1ce71-8b77-48b9-b626-29d164447b6d",
     "description": "Being part of a Highborne community means you were born into a life of elegance, opulence, and prestige within the upper echelons of society.",
     "features": [
       {
@@ -14,6 +15,7 @@
   },
   {
     "name": "Ridgeborne",
+    "id": "ffd1c379-e6c2-44e6-9ee7-47a2842e9a47",
     "description": "Being part of a Ridgeborne community meants you call the rocky peaks and sharp cliffs of the mountainside home",
     "features": [
       {
@@ -27,6 +29,7 @@
   },
   {
     "name": "Seaborne",
+    "id": "818976b6-48ee-4882-9360-00648f318d2d",
     "description": "Being part of a Seaborne community means you grew up on or near a large body of water.",
     "features": [
       {
@@ -37,6 +40,7 @@
   },
   {
     "name": "Underborne",
+    "id": "e799e0a9-660a-455a-b356-3bc1a385755c",
     "description": "Being part of an Underborne community means that you're from a subterranean society.",
     "features": [
       {
@@ -47,6 +51,7 @@
   },
   {
     "name": "Wildborne",
+    "id": "6164d1a7-d2fd-4005-8035-7b1a894be433",
     "description": "Being part of a wildborne community means you were raised by a clan deep within the forest.",
     "features": [
       {
@@ -57,6 +62,7 @@
   },
   {
     "name": "Loreborne",
+    "id": "5c3011d0-7c22-4a16-aa54-d27f71745ccd",
     "description": "Being part of a Loreborne community means you were brought up in a place that favored strong academic or political prowess.",
     "features": [
       {
@@ -67,6 +73,7 @@
   },
   {
     "name": "Orderborne",
+    "id": "ae19c182-bfe3-4b45-88f8-a9bd5708c851",
     "description": "Being part of an Orderborne community means you were raised in a place of great discipline or faith, and uphold a set of principles that reflect your experience there.",
     "features": [
       {
@@ -77,6 +84,7 @@
   },
   {
     "name": "Wanderborne",
+    "id": "df055b58-cd56-42e6-8a98-89cb8e31f813",
     "description": "Being part of a Wanderborne community means that you were raised as a nomad, not having a permanent home but experiencing a wide variety of cultures.",
     "features": [
       {
@@ -87,6 +95,7 @@
   },
   {
     "name": "Slyborne",
+    "id": "3a966d4f-2d4e-447d-87a9-3305d81a0aa6",
     "description": "Being part of a Slyborne community means growing up in the underbelly of society, surrounded by criminals and con artists.",
     "features": [
       {
