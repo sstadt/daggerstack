@@ -29,7 +29,7 @@ export const useCommunityStore = defineStore('community', {
       const { data, error } = await userStore.supabase
         .from('homebrew_communities')
         .select()
-        .or(`user_id.eq.${userStore.user.id},id.in.(${userStore.profile.community.join(',')})`);
+        .or(`user_id.eq.${userStore.user.id},id.in.(${userStore.profile.communities.join(',')})`);
 
       if (error) {
         toastStore.postMessage({ body: error.message });
@@ -55,17 +55,17 @@ export const useCommunityStore = defineStore('community', {
         this.publicHydrated = true;
       }
     },
-    async saveArmor(armor) {
+    async saveCommunity(community) {
       const userStore = useUserStore();
       const toastStore = useToastStore();
-      const cleanArmor = cleanProfanity(armor);
+      const cleanCommunity = cleanProfanity(community);
 
-      if (cleanArmor.id) {
+      if (cleanCommunity.id) {
         // update item
         const { error, data } = await userStore.supabase
           .from('homebrew_communities')
-          .update(cleanArmor)
-          .eq('id', cleanArmor.id)
+          .update(cleanCommunity)
+          .eq('id', cleanCommunity.id)
           .select();
 
         if (error) {
@@ -83,16 +83,16 @@ export const useCommunityStore = defineStore('community', {
         // create item
         const { data, error } = await userStore.supabase
           .from('homebrew_communities')
-          .insert(cleanArmor)
+          .insert(cleanCommunity)
           .select();
 
         if (error) {
           toastStore.postMessage({ body: error.message });
         } else {
-          const [ newArmor ] = data;
+          const [ newCommunity ] = data;
 
-          this.communities.push(newArmor);
-          toastStore.postMessage({ body: `Created new item: ${newArmor.name}` });
+          this.communities.push(newCommunity);
+          toastStore.postMessage({ body: `Created new item: ${newCommunity.name}` });
 
           return data.id;
         }
@@ -100,7 +100,7 @@ export const useCommunityStore = defineStore('community', {
 
       return;
     },
-    async deleteArmor(id) {
+    async deleteCommunity(id) {
       const userStore = useUserStore();
       const toastStore = useToastStore();
       const index = this.communities.findIndex((i) => i.id === id);

@@ -22,7 +22,7 @@
                 @add-bookmark="addBookmark(community.id)"
                 @remove-bookmark="removeBookmark(community.id)"
               )
-                HomebrewCardArmor.h-full(:community="community")
+                HomebrewCardCommunity.h-full(:community="community")
 </template>
 
 <script>

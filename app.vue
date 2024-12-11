@@ -27,6 +27,7 @@
   const itemsStore = useItemsStore();
   const weaponsStore = useWeaponsStore();
   const armorStore = useArmorStore();
+  const communityStore = useCommunityStore();
 
   onMounted(() => {
     userStore.init();
@@ -37,6 +38,7 @@
       itemsStore.hydrate();
       weaponsStore.hydrate();
       armorStore.hydrate();
+      communityStore.hydrate();
     });
   });
 </script>

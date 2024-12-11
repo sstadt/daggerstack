@@ -151,11 +151,10 @@
     itemName.value = item?.name || '';
     itemPublic.value = item?.public || false;
     itemDescription.value = item?.description || '';
+    features.value = [];
 
     // load features
     if (item?.features?.length > 0) {
-      const features = [];
-
       item.features.forEach((feature) => {
         const newFeature = {
           name: feature.name,
@@ -164,7 +163,7 @@
         };
 
         if (feature.modify) {
-          for (let [key, value] of Object.entries(item.feature.modify)) {
+          for (let [key, value] of Object.entries(feature.modify)) {
             newFeature.modify.push({
               stat: key,
               score: value,
@@ -172,10 +171,8 @@
           }
         }
 
-        features.push(newFeature);
+        features.value.push(newFeature);
       });
-
-      features.value = features;
     }
 
     // store db values for existing items
@@ -208,12 +205,13 @@
       community.features.push(newFeature);
     });
 
+    console.log('>>> save community', community);
+
     if (id.value) community.id = id.value;
     if (userId.value) community.user_id = userId.value;
 
-    console.log('>>> save', community);
-    // emit('save', community);
-    // editor.value.close();
+    emit('save', community);
+    editor.value.close();
   };
 
   defineExpose({ open });

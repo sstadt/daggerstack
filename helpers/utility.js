@@ -95,12 +95,28 @@ const cleanString = (input) => {
 export const cleanProfanity = (obj) => {
   const target = clone(obj);
 
-  if (typeof target === 'object' && target !== null) {
-    // Iterate through each key in the object (or index in case of arrays)
+  if (Array.isArray(target)) {
+    // If the target is an array, iterate through each element
+    return target.map((item) => {
+      if (typeof item === 'object' && item !== null) {
+        // Recursively clean nested objects or arrays
+        return cleanProfanity(item);
+      } else if (typeof item === 'string') {
+        // Clean string values in arrays
+        return cleanString(item);
+      }
+      // Return non-object and non-string elements unchanged
+      return item;
+    });
+  } else if (typeof target === 'object' && target !== null) {
+    // If the target is an object, iterate through its keys
     for (const key in target) {
       if (target.hasOwnProperty(key)) {
-        if (typeof target[key] === 'object' && target[key] !== null) {
-          // Recursively clean nested objects or arrays
+        if (Array.isArray(target[key])) {
+          // Recursively clean arrays within objects
+          target[key] = cleanProfanity(target[key]);
+        } else if (typeof target[key] === 'object' && target[key] !== null) {
+          // Recursively clean nested objects
           target[key] = { ...cleanProfanity(target[key]) };
         } else if (typeof target[key] === 'string' && !keyBlacklist.includes(key)) {
           // Apply cleanProfanity to string values

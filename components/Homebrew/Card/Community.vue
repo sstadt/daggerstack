@@ -1,6 +1,6 @@
 <template lang="pug">
   .space-y-2.py-3.px-4.border.rounded
-    h3.font-bold.text-xl(:class="titleClass") {{ community.name }}
+    h3.font-bold.text-xl {{ community.name }}
     p {{ community.description }}
     div(v-for="feature in community.features")
       p.font-bold {{ feature.name }}
@@ -17,6 +17,8 @@
 
 <script setup>
   import upgradeStrings from '~/config/upgradeStrings';
+
+  const { modifierString } = useEquipment();
 
   const props = defineProps({
     community: {

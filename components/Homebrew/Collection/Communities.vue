@@ -22,7 +22,7 @@
     )
       NuxtIcon(name="plus")
       span.sr-only New Item
-    HomebrewDrawerCommunity(ref="drawer" @save="saveArmor" @delete="deleteArmor")
+    HomebrewDrawerCommunity(ref="drawer" @save="saveCommunity" @delete="deleteCommunity")
 </template>
 
 <script>
@@ -50,11 +50,11 @@
     if (!bookmarks.value.includes(armor.id)) drawer.value.open(armor);
   };
 
-  const saveArmor = (armor) => {
-    communityStore.saveArmor(armor);
+  const saveCommunity = (armor) => {
+    communityStore.saveCommunity(armor);
   };
 
-  const deleteArmor = async (id) => {
-    communityStore.deleteArmor(id);
+  const deleteCommunity = async (id) => {
+    communityStore.deleteCommunity(id);
   };
 </script>
