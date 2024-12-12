@@ -13,8 +13,11 @@
     div(v-if="item.charge")
       p Charges: {{ item.charge.max }}
       p.text-sm.text-slate-600 Refresh on {{ restStrings[item.charge.recharge.on] }}
-    ul.grid.grid-cols-3(v-if="item.relic")
-      li(v-for="(mod, key) in item.modify") {{ modifierString(mod) }} {{ upgradeStrings[key] }}
+    ul.flex.space-x-2(v-if="item.relic")
+      li.rounded-2xl.text-xs.bg-slate-200(
+        v-for="(mod, key) in item.modify"
+        class="py-1 px-3"
+      ) {{ modifierString(mod) }} {{ upgradeStrings[key] }}
     p(v-if="restore") {{ restore }}
 </template>
 

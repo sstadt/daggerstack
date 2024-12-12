@@ -11,8 +11,13 @@
     div(v-if="weapon.feature?.name")
       p.font-bold {{ weapon.feature.name }}
       p {{ weapon.feature.description }}
-    ul.grid.grid-cols-3(v-if="weapon.feature?.modify && Object.keys(weapon.feature?.modify).length > 0")
-      li(v-for="(mod, key) in weapon.feature.modify") {{ modifierString(mod) }} {{ upgradeStrings[key] }}
+    ul.flex.space-x-2(
+      v-if="weapon.feature?.modify && Object.keys(weapon.feature?.modify).length > 0"
+    )
+      li.rounded-2xl.text-xs.bg-slate-200(
+        v-for="(mod, key) in weapon.feature.modify"
+        class="py-1 px-3"
+      ) {{ modifierString(mod) }} {{ upgradeStrings[key] }}
 </template>
 
 <script>

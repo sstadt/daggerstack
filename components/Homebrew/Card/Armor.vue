@@ -8,8 +8,14 @@
     div(v-if="armor.feature?.name")
       p.font-bold {{ armor.feature.name }}
       p {{ armor.feature.description }}
-    ul.grid.grid-cols-3(v-if="armor.feature?.modify && Object.keys(armor.feature?.modify).length > 0")
-      li(v-for="(mod, key) in armor.feature.modify") {{ modifierString(mod) }} {{ upgradeStrings[key] }}
+    ul.flex.space-x-2(
+      v-if="armor.feature?.modify && Object.keys(armor.feature?.modify).length > 0"
+    )
+      li.rounded-2xl.text-xs.bg-slate-200(
+        v-for="(mod, key) in armor.feature.modify"
+        class="py-1 px-3"
+      )
+        | {{ modifierString(mod) }} {{ upgradeStrings[key] }}
 </template>
 
 <script>

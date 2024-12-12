@@ -1,10 +1,11 @@
 <template lang="pug">
-  .space-y-2.py-3.px-4.border.rounded
+  .py-3.px-4.border.rounded
     h3.font-bold.text-xl {{ community.name }}
-    p {{ community.description }}
-    div(v-for="feature in community.features")
-      p.font-bold {{ feature.name }}
-      p {{ feature.description }}
+    p.text-slate-600.italic {{ community.description }}
+    .mt-2(v-for="feature in community.features")
+      p
+        strong {{ feature.name }}:
+        |  {{ feature.description }}
       ul.grid.grid-cols-3(v-if="feature?.modify && Object.keys(feature?.modify).length > 0")
         li(v-for="(mod, key) in feature.modify") {{ modifierString(mod) }} {{ upgradeStrings[key] }}
 </template>
