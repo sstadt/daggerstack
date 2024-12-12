@@ -5,6 +5,7 @@ const VALID_HOMEBREW_TYPES = [
   'items',
   'weapons',
   'armor',
+  'communities',
 ];
 
 export const useUserStore = defineStore('user', {

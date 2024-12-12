@@ -61,12 +61,12 @@
   });
 
   const addBookmark = (id) => {
-    userStore.addHomebrew('community', id);
+    userStore.addHomebrew('communities', id);
     communityStore.bookmarkAdded(id);
   };
 
   const removeBookmark = (id) => {
-    userStore.removeHomebrew('community', id);
+    userStore.removeHomebrew('communities', id);
     communityStore.bookmarkRemoved(id);
   };
 </script>
