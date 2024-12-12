@@ -10,7 +10,7 @@
         name="bookmark"
       )
     BasicButton.rounded-tl.absolute.bottom-0.right-0.transition-all(
-      size="xs"
+      size="sm"
       :priority="bookmarks.includes(homebrewId) ? 'danger' : 'primary'"
       rounded="none"
       :style="buttonStyle"
