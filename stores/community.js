@@ -71,13 +71,13 @@ export const useCommunityStore = defineStore('community', {
         if (error) {
           toastStore.postMessage({ body: error.message });
         } else {
-          const [ updatedArmor ] = data;
-          const index = this.communities.findIndex((i) => i.id === updatedArmor.id);
+          const [ updatedCommunity ] = data;
+          const index = this.communities.findIndex((i) => i.id === updatedCommunity.id);
 
-          this.communities.splice(index, 1, updatedArmor);
-          toastStore.postMessage({ body: `Saved changes to ${updatedArmor.name}` });
+          this.communities.splice(index, 1, updatedCommunity);
+          toastStore.postMessage({ body: `Saved changes to ${updatedCommunity.name}` });
 
-          return updatedArmor.id;
+          return updatedCommunity.id;
         }
       } else {
         // create item

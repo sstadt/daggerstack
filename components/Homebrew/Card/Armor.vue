@@ -2,8 +2,8 @@
   .space-y-2.py-3.px-4.border.rounded
     .relative.pr-10
       h3.font-bold.text-xl(:class="titleClass") {{ armor.name }}
-      p.u-bg-armor.absolute.-right-2(
-        class="top-1/2 -translate-y-1/2 p-3.5"
+      p.u-bg-armor.absolute.-right-2.w-10.text-center(
+        class="top-1/2 -translate-y-1/2 py-3.5"
       ) {{ armor.score }}
     div(v-if="armor.feature?.name")
       p.font-bold {{ armor.feature.name }}
