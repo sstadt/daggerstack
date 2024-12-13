@@ -56,35 +56,19 @@
                   span(v-if="bonus > 0") +
                   | {{ bonus }}
       .space-y-2
-        InputSelect(
-          v-model="selectedCommunity"
-          :options="communityOptions"
-          label="community"
-          :disabled="communityOptions.length === 0"
-          required
-        )
-        transition(name="slide-fade-left")
-          ul.text-right(v-if="communityDetails && communityDetails.length > 0")
-            template(v-for="feature in communityDetails")
-              li(v-for="(bonus, trait) in feature.modify")
-                | {{ trait }}:
-                span.mr-1
-                  span(v-if="bonus > 0") +
-                  | {{ bonus }}
+        .flex.justify-between
+          h2.text-2xl.uppercase.font-bold Community
+          BasicButton(size="sm" icon @click="openCommunitySelect")
+            NuxtIcon(name="city")
+            span.sr-only Choose Community
       .flex.justify-between.items-center
         NuxtLink(to="/character") Finish Later
         BasicButton.block(type="submit") Next
+    BasicDrawer(title="Community" ref="communityDrawer")
+      SelectCommunity(@select="selectCommunity")
 </template>
 
 <script>
-  import { ucFirst } from '~/helpers/string';
-  import { useBuilderStore } from '~/stores/builder';
-
-  import CLASSES from '~/data/classes';
-  import SUBCLASSES from '~/data/subclasses';
-  import ANCESTRY from '~/data/ancestry';
-  import COMMUNITY from '~/data/community';
-
   export default {
     name: 'BuilderStep1',
   };
@@ -99,6 +83,7 @@
   import COMMUNITY from '~/data/community';
 
   const builderStore = useBuilderStore();
+  const communityStore = useCommunityStore();
 
   const emit = defineEmits(['next']);
 
@@ -114,6 +99,7 @@
   const selectedMixedAncestry = ref('');
   const selectedCommunity = ref(COMMUNITY[0].name);
   const mixedAncestry = ref(false);
+  const communityDrawer = ref(null);
 
   const subclassOptions = computed(() => {
     return SUBCLASSES[selectedClass.value]
@@ -181,17 +167,8 @@
     }));
   });
 
-  const communityDetails = computed(() => {
-    if (!selectedCommunity.value) return null;
-
-    const community = COMMUNITY
-      .find((community) => community.name === selectedCommunity.value);
-
-    return community.features.filter((feature) => Boolean(feature.modify));
-  });
-
   onMounted(() => {
-    loadCharacterFromBuilder();
+    loadBuilderData();
   });
 
   watch(selectedClass, (newVal, oldVal) => {
@@ -202,7 +179,7 @@
   });
 
   // load data from store, if we have already started a character
-  const loadCharacterFromBuilder = () => {
+  const loadBuilderData = () => {
     const {
       baseClass,
       subclass,
@@ -222,7 +199,16 @@
     if (bottomAncestry) selectedMixedAncestry.value = bottomAncestry;
 
     if (community) selectedCommunity.value = community;
+  };
 
+  const openCommunitySelect = () => {
+    communityDrawer.value.open();
+  };
+
+  const selectCommunity = (id) => {
+    console.log('>>> select community with ID', id);
+    selectedCommunity.value = id;
+    communityDrawer.value.close();
   };
 
   const next = async () => {

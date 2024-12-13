@@ -1,5 +1,5 @@
 <template lang="pug">
-  .accordion
+  .accordion(@resize="handleResize")
     button.text-left.py-4.px-6.text-xl.font-bold.w-full(@click="toggle") {{ title }}
     .overflow-hidden(
       ref="$content"
@@ -62,6 +62,12 @@
 
   const setOpenState = () => {
     scrollHeight.value = $content.value.scrollHeight;
+
+    // do this twice, in case opening the accordion creates a scrollbar
+    // and changes the scrollHeight
+    setTimeout(() => {
+      scrollHeight.value = $content.value.scrollHeight;
+    }, 300);
     emit('open', props.id);
   };
 
@@ -76,6 +82,10 @@
 
   const toggle = () => {
     isOpen.value = !isOpen.value;
+  };
+
+  const handleResize = () => {
+    console.log('resize');
   };
 
   onMounted(() => {

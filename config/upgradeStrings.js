@@ -28,4 +28,5 @@ export default {
   shortRestAction: 'Short Rest Action',
   longRestAction: 'Long Rest Action',
   longRestActionOnShortRest: 'Long Rest Action on Short Rest',
+  goldHandful: 'Handful of gold',
 };

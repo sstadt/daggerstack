@@ -6,8 +6,13 @@
       p
         strong {{ feature.name }}:
         |  {{ feature.description }}
-      ul.grid.grid-cols-3(v-if="feature?.modify && Object.keys(feature?.modify).length > 0")
-        li(v-for="(mod, key) in feature.modify") {{ modifierString(mod) }} {{ upgradeStrings[key] }}
+      ul.flex.space-x-2(
+        v-if="feature?.modify && Object.keys(feature?.modify).length > 0"
+      )
+        li.rounded-2xl.text-xs.bg-slate-200(
+          v-for="(mod, key) in feature.modify"
+          class="py-1 px-3"
+        ) {{ modifierString(mod) }} {{ upgradeStrings[key] }}
 </template>
 
 <script>
