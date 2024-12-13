@@ -38,12 +38,13 @@
       router.push('/');
     }
 
-    if (!route.query.new) {
-      builderStore.loadSavedCharacter();
-    } else {
+    if (route.query.new) {
+      builderStore.newCharacter();
       builderStore.currentPage = 0;
       builderStore.savePage();
       router.replace({'query': null});
+    } else {
+      builderStore.loadSavedCharacter();
     }
 
     saveLoaded.value = true;

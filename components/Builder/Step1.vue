@@ -87,144 +87,158 @@
 
   export default {
     name: 'BuilderStep1',
-    data() {
-      // load data from store, if we have already starte a character
-      const {
-        baseClass,
-        subclass,
-        ancestry,
-        community,
-      } = this.builderStore.character;
+  };
+</script>
 
-      const classOptions = Object.keys(CLASSES).map(className => ({
-        label: ucFirst(className),
-        value: className,
-      }));
-      const [ firstClass ] = classOptions;
-      const [ firstCharacterSubclass ] = subclass;
-      const startingClass = baseClass || firstClass.value;
-      const startingSubclass = firstCharacterSubclass
-        ? firstCharacterSubclass.name
-        : SUBCLASSES[startingClass][0] ? SUBCLASSES[startingClass][0].name : null;
-      const [ topAncestry, bottomAncestry ] = ancestry;
-      const startingAncestry = topAncestry || ANCESTRY[0].name;
-      const startingBottomAncestry = bottomAncestry || '';
-      const startingCommunity = community || COMMUNITY[0].name;
+<script setup>
+  import { ucFirst } from '~/helpers/string';
 
-      return {
-        classOptions: classOptions,
-        selectedClass: startingClass,
-        selectedSubclass: startingSubclass,
-        selectedAncestry: startingAncestry,
-        selectedMixedAncestry: startingBottomAncestry,
-        selectedCommunity: startingCommunity,
-        mixedAncestry: startingBottomAncestry !== '',
-      };
-    },
-    computed: {
-      subclassOptions() {
-        return SUBCLASSES[this.selectedClass]
-          ? SUBCLASSES[this.selectedClass].map((subclass) => ({
-              label: subclass.name,
-              value: subclass.name,
-            }))
-          : [];
-      },
-      subclassDetails() {
-        if (!this.selectedSubclass) return null;
+  import CLASSES from '~/data/classes';
+  import SUBCLASSES from '~/data/subclasses';
+  import ANCESTRY from '~/data/ancestry';
+  import COMMUNITY from '~/data/community';
 
-        const subclass = SUBCLASSES[this.selectedClass]
-          .find((subclass) => subclass.name === this.selectedSubclass);
+  const builderStore = useBuilderStore();
 
-        return subclass && Object.keys(subclass.foundation).length > 0
-          ? subclass.foundation
-          : null;
-      },
-      ancestryOptions() {
-        return ANCESTRY.map((ancestry) => ({
-          label: ancestry.name,
-          value: ancestry.name,
-        }));
-      },
-      bottomAncestryOptions() {
-        const index = this.ancestryOptions
-          .findIndex((option) => option.value === this.selectedAncestry);
-        const options = [ ...this.ancestryOptions ];
+  const emit = defineEmits(['next']);
 
-        options.splice(index, 1);
+  const classOptions = Object.keys(CLASSES).map(className => ({
+    label: ucFirst(className),
+    value: className,
+  }));
+  const [ firstClass ] = classOptions;
 
-        return options;
-      },
-      ancestryDetails() {
-        if (!this.selectedAncestry) return null;
+  const selectedClass = ref(firstClass.value);
+  const selectedSubclass = ref(SUBCLASSES[firstClass.value][0].name);
+  const selectedAncestry = ref(ANCESTRY[0].name);
+  const selectedMixedAncestry = ref('');
+  const selectedCommunity = ref(COMMUNITY[0].name);
+  const mixedAncestry = ref(false);
 
-        const ancestry = ANCESTRY
-          .find((ancestry) => ancestry.name === this.selectedAncestry);
-        const [ topFeature ] = ancestry.features;
+  const subclassOptions = computed(() => {
+    return SUBCLASSES[selectedClass.value]
+      ? SUBCLASSES[selectedClass.value].map((subclass) => ({
+          label: subclass.name,
+          value: subclass.name,
+        }))
+      : [];
+  });
 
-        return this.mixedAncestry
-          ? [ topFeature ].filter((feature) => Boolean(feature.modify))
-          : ancestry.features.filter((feature) => Boolean(feature.modify));
-      },
-      mixedAncestryDetails() {
-        if (!this.mixedAncestry || this.selectedMixedAncestry === '') return null;
+  const subclassDetails = computed(() => {
+    if (!selectedSubclass.value) return null;
 
-        const ancestry = ANCESTRY
-          .find((ancestry) => ancestry.name === this.selectedMixedAncestry);
-        const [ _, bottomFeature ] = ancestry.features;
+    const subclass = SUBCLASSES[selectedClass.value]
+      .find((subclass) => subclass.name === selectedSubclass.value);
 
-        return [ bottomFeature ].filter((feature) => Boolean(feature.modify));
-      },
-      communityOptions() {
-        return COMMUNITY.map((community) => ({
-          label: community.name,
-          value: community.name,
-        }));
-      },
-      communityDetails() {
-        if (!this.selectedCommunity) return null;
+    return subclass && Object.keys(subclass.foundation).length > 0
+      ? subclass.foundation
+      : null;
+  });
 
-        const community = COMMUNITY
-          .find((community) => community.name === this.selectedCommunity);
+  const ancestryOptions = computed(() => {
+    return ANCESTRY.map((ancestry) => ({
+      label: ancestry.name,
+      value: ancestry.name,
+    }));
+  });
 
-        return community.features.filter((feature) => Boolean(feature.modify));
-      },
-    },
-    setup() {
-      const builderStore = useBuilderStore();
+  const bottomAncestryOptions = computed(() => {
+    const index = ancestryOptions.value
+      .findIndex((option) => option.value === selectedAncestry.value);
+    const options = [ ...this.ancestryOptions ];
 
-      return { builderStore };
-    },
-    mounted() {
-      if (!this.builderStore.character.id) {
-        this.builderStore.newCharacter();
-      }
-    },
-    watch: {
-      selectedClass(newVal, oldVal) {
-        if (newVal !== oldVal) {
-          const [ firstSubclass ] = this.subclassOptions;
-          this.selectedSubclass = firstSubclass.value;
-        }
-      },
-    },
-    methods: {
-      async next() {
-        const ancestry = [ this.selectedAncestry ];
+    options.splice(index, 1);
 
-        if (this.mixedAncestry && this.selectedMixedAncestry !== '') {
-          ancestry.push(this.selectedMixedAncestry);
-        }
+    return options;
+  });
 
-        this.builderStore.updateCharacter({
-          baseClass: this.selectedClass,
-          subclass: [ this.selectedSubclass ],
-          ancestry,
-          community: this.selectedCommunity,
-        });
+  const ancestryDetails = computed(() => {
+    if (!selectedAncestry.value) return null;
 
-        this.$emit('next');
-      },
-    },
+    const ancestry = ANCESTRY
+      .find((ancestry) => ancestry.name === selectedAncestry.value);
+    const [ topFeature ] = ancestry.features;
+
+    return mixedAncestry.value
+      ? [ topFeature ].filter((feature) => Boolean(feature.modify))
+      : ancestry.features.filter((feature) => Boolean(feature.modify));
+  });
+
+  const mixedAncestryDetails = computed(() => {
+    if (!mixedAncestry.value || selectedMixedAncestry.value === '') return null;
+
+    const ancestry = ANCESTRY
+      .find((ancestry) => ancestry.name === selectedMixedAncestry.value);
+    const [ _, bottomFeature ] = ancestry.features;
+
+    return [ bottomFeature ].filter((feature) => Boolean(feature.modify));
+  });
+
+  const communityOptions = computed(() => {
+    return COMMUNITY.map((community) => ({
+      label: community.name,
+      value: community.name,
+    }));
+  });
+
+  const communityDetails = computed(() => {
+    if (!selectedCommunity.value) return null;
+
+    const community = COMMUNITY
+      .find((community) => community.name === selectedCommunity.value);
+
+    return community.features.filter((feature) => Boolean(feature.modify));
+  });
+
+  onMounted(() => {
+    loadCharacterFromBuilder();
+  });
+
+  watch(selectedClass, (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      const [ firstSubclass ] = subclassOptions.value;
+      selectedSubclass.value = firstSubclass.value;
+    }
+  });
+
+  // load data from store, if we have already started a character
+  const loadCharacterFromBuilder = () => {
+    const {
+      baseClass,
+      subclass,
+      ancestry,
+      community,
+    } = builderStore.character;
+
+    if (baseClass) selectedClass.value = baseClass;
+
+    if (subclass) {
+      const [ savedSubclass ] = subclass;
+      if (savedSubclass) selectedSubclass.value = savedSubclass;
+    }
+
+    const [ topAncestry, bottomAncestry ] = ancestry;
+    if (topAncestry) selectedAncestry.value = topAncestry;
+    if (bottomAncestry) selectedMixedAncestry.value = bottomAncestry;
+
+    if (community) selectedCommunity.value = community;
+
+  };
+
+  const next = async () => {
+    const ancestry = [ selectedAncestry.value ];
+
+    if (mixedAncestry.value && selectedMixedAncestry.value !== '') {
+      ancestry.push(selectedMixedAncestry.value);
+    }
+
+    builderStore.updateCharacter({
+      baseClass: selectedClass.value,
+      subclass: [ selectedSubclass.value ],
+      ancestry,
+      community: selectedCommunity.value,
+    });
+
+    emit('next');
   };
 </script>
