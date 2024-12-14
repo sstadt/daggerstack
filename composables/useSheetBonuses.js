@@ -11,6 +11,7 @@ for (const [key] of Object.entries(SUBCLASSES)) {
 export const useSheetBonuses = () => {
   const weaponsStore = useWeaponsStore();
   const armorStore = useArmorStore();
+  const communityStore = useCommunityStore();
 
   /**
    * Get all character sheet features that modify a given attribute.
@@ -35,8 +36,9 @@ export const useSheetBonuses = () => {
         })
       : [];
     const community = character.community
-      ? COMMUNITY.find((community) => character.community === community.name)
+      ? communityStore.community(character.community)
       : null;
+    console.log(community);
     const ancestry = character.ancestry
       ? character.ancestry.map((ancestryName) => {
           return ANCESTRY.find((ancestry) => ancestry.name === ancestryName);

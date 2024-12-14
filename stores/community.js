@@ -18,7 +18,8 @@ export const useCommunityStore = defineStore('community', {
       return this.communities.filter((community) => community.created_at);
     },
     community() {
-      return (id) => this.communities.find((community) => community.id === id);
+      // some IDs are UUID, some are Indexes; standardize by reading all as strings
+      return (id) => this.communities.find((community) => String(community.id) === id);
     },
   },
   actions: {
