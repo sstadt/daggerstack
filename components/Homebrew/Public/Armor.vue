@@ -22,7 +22,7 @@
                 @add-bookmark="addBookmark(armor.id)"
                 @remove-bookmark="removeBookmark(armor.id)"
               )
-                HomebrewCardArmor.h-full(:armor="armor")
+                CardArmor.h-full(:armor="armor")
     BasicDrawer(title="filters" ref="filters")
       .px-4.space-y-4
         InputChecklist(label="tier" v-model="armorTier" :cols="4" :options="tierOptions")

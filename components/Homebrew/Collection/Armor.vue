@@ -10,7 +10,7 @@
             v-if="bookmarks.includes(armor.id)"
             name="bookmark"
           )
-          HomebrewCardArmor.cursor-pointer.h-full(
+          CardArmor.cursor-pointer.h-full(
             :armor="armor"
             @click="editArmor(armor)"
           )

@@ -22,7 +22,7 @@
                 @add-bookmark="addBookmark(item.id)"
                 @remove-bookmark="removeBookmark(item.id)"
               )
-                HomebrewCardItem.h-full(:item="item")
+                CardItem.h-full(:item="item")
     BasicDrawer(title="filters" ref="filters")
       .px-4
         .space-y-4

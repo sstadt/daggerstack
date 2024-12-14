@@ -22,7 +22,7 @@
                 @add-bookmark="addBookmark(weapon.id)"
                 @remove-bookmark="removeBookmark(weapon.id)"
               )
-                HomebrewCardWeapon.h-full(:weapon="weapon")
+                CardWeapon.h-full(:weapon="weapon")
     BasicDrawer(title="filters" ref="filters")
       .px-4.space-y-4
         InputChecklist(label="tier" v-model="weaponTier" :cols="4" :options="tierOptions")

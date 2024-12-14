@@ -10,7 +10,7 @@
             v-if="bookmarks.includes(weapon.id)"
             name="bookmark"
           )
-          HomebrewCardWeapon.cursor-pointer.h-full(
+          CardWeapon.cursor-pointer.h-full(
             :weapon="weapon"
             @click="editWeapon(weapon)"
           )

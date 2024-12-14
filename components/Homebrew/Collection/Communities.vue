@@ -10,7 +10,7 @@
             v-if="bookmarks.includes(community.id)"
             name="bookmark"
           )
-          HomebrewCardCommunity.cursor-pointer.h-full(
+          CardCommunity.cursor-pointer.h-full(
             :community="community"
             @click="editArmor(community)"
           )

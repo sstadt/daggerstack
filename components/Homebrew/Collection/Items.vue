@@ -10,7 +10,7 @@
             v-if="bookmarks.includes(item.id)"
             name="bookmark"
           )
-          HomebrewCardItem.cursor-pointer.h-full(:item="item" @click="editItem(item)")
+          CardItem.cursor-pointer.h-full(:item="item" @click="editItem(item)")
     BasicButton.fixed.bottom-20.right-6.shadow(
       size="sm"
       priority="secondary"
