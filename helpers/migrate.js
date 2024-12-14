@@ -22,6 +22,7 @@ import GENERAL from '~/data/general';
 import { items } from '~/data/items';
 import WEAPONS from '~/data/weapons';
 import ARMOR from '~/data/armor';
+import COMMUNITY from '~/data/community';
 import { clone, uuidv4 } from '~/helpers/utility';
 import { newWeapon, newArmor } from '~/helpers/constructors';
 
@@ -163,10 +164,28 @@ const equipment = {
   },
 };
 
+const baseCommunityNames = COMMUNITY.map((c) => c.name);
+const community = {
+  isValid(character) {
+    return !baseCommunityNames.find((name) => name === character.community);
+  },
+  migrate(character) {
+    const updatedCharacter = clone(character);
+    const baseCommunity = COMMUNITY.find(
+      (community) => community.name === character.community,
+    );
+
+    updatedCharacter.community = baseCommunity.id;
+
+    return updatedCharacter;
+  },
+};
+
 const migrations = [
   goldConsolidation,
   itemId,
   equipment,
+  community,
 ];
 
 export default (characters) => {
@@ -176,6 +195,7 @@ export default (characters) => {
   characters.forEach((character) => {
     migrations.forEach((migration) => {
       if (!migration.isValid(character)) {
+        console.log('>>> migration needed for', character)
         if (migration.dev) devMode = true;
         migratedCharacters.push(migration.migrate(character));
       }
