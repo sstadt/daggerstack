@@ -1,5 +1,4 @@
 
-import COMMUNITY from '~/data/community';
 import ANCESTRY from '~/data/ancestry';
 import SUBCLASSES from '~/data/subclasses';
 
@@ -38,7 +37,6 @@ export const useSheetBonuses = () => {
     const community = character.community
       ? communityStore.community(character.community)
       : null;
-    console.log(community);
     const ancestry = character.ancestry
       ? character.ancestry.map((ancestryName) => {
           return ANCESTRY.find((ancestry) => ancestry.name === ancestryName);

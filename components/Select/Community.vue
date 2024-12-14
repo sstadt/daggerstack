@@ -9,7 +9,9 @@
       @open="setActiveAccordion"
     )
       .px-6.pb-6.space-y-2
-        p.text-slate-600.italic {{ community.description }}
+        .flex.space-x-2
+          p.text-slate-600.italic.flex-grow {{ community.description }}
+          NuxtIcon.text-blue-600(v-if="Number.isInteger(community.id)" name="homebrew")
         .space-y-2(v-for="feature in community.features")
           BasicMarkdown(:source="`**${feature.name}**: ${feature.description}`")
           ul.flex.space-x-2(
