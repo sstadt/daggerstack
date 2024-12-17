@@ -19,7 +19,9 @@ export const useCommunityStore = defineStore('community', {
     },
     community() {
       // some IDs are UUID, some are Indexes; standardize by reading all as strings
-      return (id) => this.communities.find((community) => String(community.id) === id);
+      return (id) => this.communities.find(
+        (community) => String(community.id) === String(id),
+      );
     },
   },
   actions: {
