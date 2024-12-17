@@ -195,7 +195,6 @@ export default (characters) => {
   characters.forEach((character) => {
     migrations.forEach((migration) => {
       if (!migration.isValid(character)) {
-        console.log('>>> migration needed for', character)
         if (migration.dev) devMode = true;
         migratedCharacters.push(migration.migrate(character));
       }

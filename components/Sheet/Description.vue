@@ -75,11 +75,6 @@
     return domains;
   });
 
-  onMounted(() => {
-    console.log(props.character.community, communityStore.communities);
-    console.log(communityStore.community(props.character.community))
-  });
-
   const saveName = debounce(function () {
     props.character.name = name.value;
     props.charactersStore.saveCharacter(props.character);

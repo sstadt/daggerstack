@@ -220,7 +220,6 @@
   };
 
   const selectCommunity = (id) => {
-    console.log('>>> select community with ID', id);
     selectedCommunity.value = id;
     communityDrawer.value.close();
   };

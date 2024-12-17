@@ -1,5 +1,5 @@
 <template lang="pug">
-  .accordion(@resize="handleResize")
+  .accordion
     button.text-left.py-4.px-6.text-xl.font-bold.w-full(@click="toggle") {{ title }}
     .overflow-hidden(
       ref="$content"
@@ -82,10 +82,6 @@
 
   const toggle = () => {
     isOpen.value = !isOpen.value;
-  };
-
-  const handleResize = () => {
-    console.log('resize');
   };
 
   onMounted(() => {

@@ -205,8 +205,6 @@
       community.features.push(newFeature);
     });
 
-    console.log('>>> save community', community);
-
     if (id.value) community.id = id.value;
     if (userId.value) community.user_id = userId.value;
 
