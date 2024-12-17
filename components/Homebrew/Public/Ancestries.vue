@@ -4,19 +4,19 @@
       .flex.space-x-2
         InputText.flex-grow(label="search" v-model="search")
       transition(name="fade" mode="out-in")
-        BasicLoader.mx-auto.mt-8(v-if="!userStore.loaded && !communityStore.publicHydrated")
+        BasicLoader.mx-auto.mt-8(v-if="!userStore.loaded && !ancestryStore.publicHydrated")
         .space-y-4(v-else)
           .grid.grid-cols-1.gap-4(class="md:grid-cols-2")
             TransitionGroup(name="slide-fade-left")
               HomebrewCardControls(
-                v-for="community in searchCommunities"
-                :key="community.id"
-                :homebrew-id="community.id"
+                v-for="ancestry in searchAncestries"
+                :key="ancestry.id"
+                :homebrew-id="ancestry.id"
                 :bookmarks="bookmarks"
-                @add-bookmark="addBookmark(community.id)"
-                @remove-bookmark="removeBookmark(community.id)"
+                @add-bookmark="addBookmark(ancestry.id)"
+                @remove-bookmark="removeBookmark(ancestry.id)"
               )
-                CardCommunity.h-full(:community="community")
+                CardAncestry.h-full(:ancestry="ancestry")
 </template>
 
 <script>
@@ -30,14 +30,14 @@
   import { waitUntil } from '~/helpers/utility';
 
   const userStore = useUserStore();
-  const communityStore = useCommunityStore();
+  const ancestryStore = useAncestryStore();
 
   const search = ref('');
 
-  const searchCommunities = computed(() => {
-    return communityStore.publicCommunities.filter((community) => {
+  const searchAncestries = computed(() => {
+    return ancestryStore.publicCommunities.filter((ancestry) => {
       return search.value.length > 0
-        ? community.name.toLowerCase().includes(search.value.toLowerCase())
+        ? ancestry.name.toLowerCase().includes(search.value.toLowerCase())
         : true;
     });
   });
@@ -48,19 +48,19 @@
 
   onMounted(() => {
     waitUntil(() => userStore.user?.id).then(() => {
-      if (!communityStore.publicHydrated) {
-        communityStore.hydratePublic();
+      if (!ancestryStore.publicHydrated) {
+        ancestryStore.hydratePublic();
       }
     });
   });
 
   const addBookmark = (id) => {
-    userStore.addHomebrew('communities', id);
-    communityStore.bookmarkAdded(id);
+    userStore.addHomebrew('ancestries', id);
+    ancestryStore.bookmarkAdded(id);
   };
 
   const removeBookmark = (id) => {
-    userStore.removeHomebrew('communities', id);
-    communityStore.bookmarkRemoved(id);
+    userStore.removeHomebrew('ancestries', id);
+    ancestryStore.bookmarkRemoved(id);
   };
 </script>

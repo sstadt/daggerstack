@@ -1,9 +1,9 @@
 <template lang="pug">
   .py-3.px-4.border.rounded
-    h3.font-bold.text-xl {{ community.name }}
+    h3.font-bold.text-xl {{ ancestry.name }}
     .space-y-2
-      p.text-slate-600.italic {{ community.description }}
-      .space-y-2(v-for="feature in community.features")
+      p.text-slate-600.italic {{ ancestry.description }}
+      .space-y-2(v-for="feature in ancestry.features")
         BasicMarkdown(:source="`**${feature.name}**: ${feature.description}`")
         ul.flex.space-x-2(
           v-if="feature?.modify && Object.keys(feature?.modify).length > 0"
@@ -16,7 +16,7 @@
 
 <script>
   export default {
-    name: 'CardCommunity',
+    name: 'CardAncestry',
   };
 </script>
 
@@ -26,7 +26,7 @@
   const { modifierString } = useEquipment();
 
   const props = defineProps({
-    community: {
+    ancestry: {
       type: Object,
       required: true,
     },

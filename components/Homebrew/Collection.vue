@@ -37,12 +37,14 @@
     'Weapons': resolveComponent('HomebrewCollectionWeapons'),
     'Armor': resolveComponent('HomebrewCollectionArmor'),
     'Community': resolveComponent('HomebrewCollectionCommunities'),
+    'Ancestry': resolveComponent('HomebrewCollectionAncestries'),
   };
   const tabs = [
     { id: 'items', name: 'Items', icon: 'gem-pendant' },
     { id: 'weapons', name: 'Weapons', icon: 'axe' },
     { id: 'armor', name: 'Armor', icon: 'armor' },
     { id: 'community', name: 'Community', icon: 'city' },
+    { id: 'ancestry', name: 'Ancestry', icon: 'people' },
   ];
   const { activeTab, tabTransition, setTab, useActiveTabIndex } = useTabs(tabs);
   const activeTabIndex = useActiveTabIndex();
