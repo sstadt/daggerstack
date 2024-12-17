@@ -39,19 +39,19 @@
   const drawer = ref(null);
 
   const bookmarks = computed(() => {
-    return userStore.profile?.armor || [];
+    return userStore.profile?.communities || [];
   });
 
   const newItem = () => {
     drawer.value.open();
   };
 
-  const editArmor = (armor) => {
-    if (!bookmarks.value.includes(armor.id)) drawer.value.open(armor);
+  const editArmor = (community) => {
+    if (!bookmarks.value.includes(community.id)) drawer.value.open(community);
   };
 
-  const saveCommunity = (armor) => {
-    communityStore.saveCommunity(armor);
+  const saveCommunity = (community) => {
+    communityStore.saveCommunity(community);
   };
 
   const deleteCommunity = async (id) => {

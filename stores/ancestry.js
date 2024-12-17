@@ -58,7 +58,7 @@ export const useAncestryStore = defineStore('ancestry', {
         this.publicHydrated = true;
       }
     },
-    async saveCommunity(ancestry) {
+    async saveAncestry(ancestry) {
       const userStore = useUserStore();
       const toastStore = useToastStore();
       const cleanAncestry = cleanProfanity(ancestry);
@@ -92,10 +92,10 @@ export const useAncestryStore = defineStore('ancestry', {
         if (error) {
           toastStore.postMessage({ body: error.message });
         } else {
-          const [ newCommunity ] = data;
+          const [ newAncestry ] = data;
 
-          this.ancestries.push(newCommunity);
-          toastStore.postMessage({ body: `Created new item: ${newCommunity.name}` });
+          this.ancestries.push(newAncestry);
+          toastStore.postMessage({ body: `Created new item: ${newAncestry.name}` });
 
           return data.id;
         }
@@ -103,7 +103,7 @@ export const useAncestryStore = defineStore('ancestry', {
 
       return;
     },
-    async deleteCommunity(id) {
+    async deleteAncestry(id) {
       const userStore = useUserStore();
       const toastStore = useToastStore();
       const index = this.ancestries.findIndex((i) => i.id === id);

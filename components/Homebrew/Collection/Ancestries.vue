@@ -3,7 +3,7 @@
     .grid.grid-cols-1.gap-4(class="md:grid-cols-2")
       TransitionGroup(name="slide-fade-left")
         .relative(
-          v-for="community in communityStore.homebrew"
+          v-for="community in ancestryStore.homebrew"
           :key="community.id"
         )
           NuxtIcon.absolute.top-0.right-14.text-red-900.text-xl(
@@ -22,39 +22,39 @@
     )
       NuxtIcon(name="plus")
       span.sr-only New Item
-    HomebrewDrawerCommunity(ref="drawer" @save="saveCommunity" @delete="deleteCommunity")
+    HomebrewDrawerAncestry(ref="drawer" @save="saveAncestry" @delete="deleteAncestry")
 </template>
 
 <script>
   export default {
-    name: 'HomebrewCollectionCommunities',
+    name: 'HomebrewCollectionAncestries',
   };
 </script>
 
 <script setup>
   const userStore = useUserStore();
-  const communityStore = useCommunityStore();
+  const ancestryStore = useAncestryStore();
   const toastStore = useToastStore();
 
   const drawer = ref(null);
 
   const bookmarks = computed(() => {
-    return userStore.profile?.armor || [];
+    return userStore.profile?.ancestries || [];
   });
 
   const newItem = () => {
     drawer.value.open();
   };
 
-  const editArmor = (armor) => {
-    if (!bookmarks.value.includes(armor.id)) drawer.value.open(armor);
+  const editArmor = (ancestry) => {
+    if (!bookmarks.value.includes(ancestry.id)) drawer.value.open(ancestry);
   };
 
-  const saveCommunity = (armor) => {
-    communityStore.saveCommunity(armor);
+  const saveAncestry = (ancestry) => {
+    ancestryStore.saveAncestry(ancestry);
   };
 
-  const deleteCommunity = async (id) => {
-    communityStore.deleteCommunity(id);
+  const deleteAncestry = async (id) => {
+    ancestryStore.deleteAncestry(id);
   };
 </script>

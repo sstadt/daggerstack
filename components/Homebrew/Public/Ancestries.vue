@@ -21,7 +21,7 @@
 
 <script>
   export default {
-    name: 'HomebrewPublicWeapons',
+    name: 'HomebrewPublicAncestries',
   };
 </script>
 
@@ -35,7 +35,7 @@
   const search = ref('');
 
   const searchAncestries = computed(() => {
-    return ancestryStore.publicCommunities.filter((ancestry) => {
+    return ancestryStore.publicAncestries.filter((ancestry) => {
       return search.value.length > 0
         ? ancestry.name.toLowerCase().includes(search.value.toLowerCase())
         : true;
@@ -43,7 +43,7 @@
   });
 
   const bookmarks = computed(() => {
-    return userStore.profile?.communities || [];
+    return userStore.profile?.ancestries || [];
   });
 
   onMounted(() => {

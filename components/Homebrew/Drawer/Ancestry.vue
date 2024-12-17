@@ -1,6 +1,6 @@
 <template lang="pug">
   DialogConfirm(ref="confirmDialog" @confirm="confirmDelete")
-  BasicDrawer(:title="id ? 'Edit Community' : 'New Community'" ref="editor")
+  BasicDrawer(:title="id ? 'Edit Ancestry' : 'New Ancestry'" ref="editor")
     form.space-y-4.px-4(@submit.prevent="saveItem")
       InputText.flex-grow(
         type="text"
@@ -19,16 +19,7 @@
       .space-y-8
         TransitionGroup(name="slide-fade-left")
           .space-y-2(v-for="(feature, featureIndex) in features" :key="featureIndex")
-            .flex.justify-between.items-center
-              h2.text-xl.uppercase.font-bold {{ featureIndex === 0 ? 'Top' : 'Bottom' }} Feature
-              BasicButton(
-                priority="secondary"
-                size="sm"
-                icon
-                @click="removeFeature(featureIndex)"
-              )
-                NuxtIcon.text-2xl(name="trash")
-                .sr-only Delete Feature
+            h2.text-xl.uppercase.font-bold {{ featureIndex === 0 ? 'Top' : 'Bottom' }} feature
             InputText.flex-grow(
               type="text"
               label="Name"
@@ -85,7 +76,7 @@
 
 <script>
   export default {
-    name: 'HomebrewDrawerCommunity',
+    name: 'HomebrewDrawerAncestry',
   };
 </script>
 
@@ -174,10 +165,10 @@
     }
 
     // always two, there are... no more, no less
-    if (item.features.length < 2) {
+    if (features.value.length < 2) {
       do {
         addFeature();
-      } while (item.features.length < 2);
+      } while (features.value.length < 2);
     }
 
     // store db values for existing items
@@ -189,7 +180,7 @@
     const formValid = await v$.value.$validate();
     if (!formValid) return;
 
-    const community = {
+    const ancestry = {
       name: itemName.value,
       description: itemDescription.value,
       public: itemPublic.value,
@@ -207,13 +198,13 @@
         newFeature.modify[mod.stat] = mod.score;
       });
 
-      community.features.push(newFeature);
+      ancestry.features.push(newFeature);
     });
 
-    if (id.value) community.id = id.value;
-    if (userId.value) community.user_id = userId.value;
+    if (id.value) ancestry.id = id.value;
+    if (userId.value) ancestry.user_id = userId.value;
 
-    emit('save', community);
+    emit('save', ancestry);
     editor.value.close();
   };
 
